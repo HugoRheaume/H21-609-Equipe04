@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
                     helloWorldObj[0] = response.body();
 
                     TextView text = findViewById(R.id.helloWorldTxt);
-                    text.setText(helloWorldObj[0].Text);
+                    text.setText(helloWorldObj[0].text);
 
                     ImageView img = findViewById(R.id.helloWorldImg);
-                    Picasso.get().load(helloWorldObj[0].Image).into(img);
+                    Picasso.get().load(helloWorldObj[0].image).into(img);
 
                     stopLoading();
                 }
