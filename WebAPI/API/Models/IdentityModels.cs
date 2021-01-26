@@ -1,5 +1,7 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using API.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
