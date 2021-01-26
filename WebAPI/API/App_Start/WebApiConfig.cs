@@ -14,7 +14,9 @@ namespace API
     {
         public static void Register(HttpConfiguration config)
         {
-            var cors = new EnableCorsAttribute("https://e4.projet.college-em.info/,https://test.e4.projet.college-em.info/,https://localhost:4200", "*", "*");
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            
+            //e4.projet.college-em.info,test.e4.projet.college-em.info,localhost:4200
             config.EnableCors(cors);
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
