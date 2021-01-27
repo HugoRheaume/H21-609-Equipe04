@@ -7,19 +7,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
 
   title = 'QuizPlayAngular';
-  public obj: HelloWorldObj;
 
-  ngOnInit(): void {
-    this.obj = new HelloWorldObj();
-    this.service.getBogusObject()
-    .subscribe(response => {
-      this.obj = response;
-    })
-  }
 
-  constructor(public service: QuizService){}
+  constructor(){}
 
 }

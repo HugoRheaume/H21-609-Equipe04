@@ -1,0 +1,55 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Create a question
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="staticBackdropLabel">Create a question</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Question's label</mat-label>
+            <input matInput placeholder="Are roses red?" id="inputQuestionLabel" [(ngModel)]="this.question.label">
+          </mat-form-field>
+        </p>
+        <p class="mat-form-field-wrapper">
+            <mat-radio-group aria-label="True or False" [(ngModel)]="this.question.answer">
+              <mat-radio-button [value]="true" style="margin-right: 15px;">Yes</mat-radio-button>
+              <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+        </p>
+        <p class="mat-form-field-wrapper">
+          <mat-checkbox id="inputQuestionHasTime" [(ngModel)]="this.question.hasAMaxTime">Add a maximum amount of time</mat-checkbox>
+        </p>
+        <p *ngIf="this.question.hasAMaxTime">
+          <mat-form-field appearance="outline">
+            <mat-label>Question's allowed time</mat-label>
+            <input matInput type="number" [(ngModel)]="this.question.allowedTime" min="1">
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="discard()">Discard</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sumbit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h1>Question's label</h1>
+<h1>{{this.question.label}}</h1>
+
+<h1>Question's answer</h1>
+<h1>{{this.question.answer}}</h1>
+
+<h1>Question has a time limit</h1>
+<h1>{{this.question.hasAMaxTime}}</h1>
+
+<h1>Question's allowed time</h1>
+<h1>{{this.question.allowedTime}}</h1>
