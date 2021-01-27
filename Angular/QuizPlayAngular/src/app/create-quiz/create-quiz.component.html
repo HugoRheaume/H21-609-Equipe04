@@ -1,16 +1,17 @@
-<div class="container">
+<div class="container p-5">
     <form (ngSubmit)="create()">
-        <mat-form-field>
+        <mat-form-field class="w-100 m-3">
             <mat-label>Titre</mat-label>
             <input matInput type="text" name="quizTitle" id="quizTitle" maxlength="100" minlength="4" [(ngModel)]="title">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="w-100 m-3">
             <mat-label>Description</mat-label>
             <textarea matInput name="quizDescription" id="quizTitle" maxlength="1000" [(ngModel)]="desc"></textarea>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>Privé</mat-label>
-        </mat-form-field>
-        <button type="submit" class="btn btn-primary">Créer</button>
+        <div class="w-100 m-3 align-items-center">
+            <span class="m-3">Privé</span>
+            <mat-slide-toggle>Public</mat-slide-toggle>
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Créer</button>
     </form> 
 </div>

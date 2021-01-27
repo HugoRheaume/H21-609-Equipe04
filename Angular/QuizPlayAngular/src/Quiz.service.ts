@@ -17,7 +17,7 @@ public createQuiz(quiz: QuizRequest): void{
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     })}
-  this.http.post<any>(environment.backend.baseURL+"/", quiz, httpOptions).subscribe(r => {
+  this.http.post<any>(environment.backend.baseURL+"/Quiz/Create", quiz, httpOptions).subscribe(r => {
     console.log(r);
   });
 }

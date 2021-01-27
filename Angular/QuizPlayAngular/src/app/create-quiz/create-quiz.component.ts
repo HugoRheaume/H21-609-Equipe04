@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QuizRequest } from 'src/models/QuizRequest';
+import { QuizService } from 'src/Quiz.service';
 
 @Component({
   selector: 'app-create-quiz',
@@ -8,14 +10,14 @@ import { Component, OnInit } from '@angular/core';
 export class CreateQuizComponent implements OnInit {
   title: string = "";
   desc:string = "";
-  isPublic:boolean;
+  isPublic:boolean = false;
 
-  constructor() { }
+  constructor(public http: QuizService)  {}
 
   ngOnInit(): void {
   }
 
   public create(): void {
-
+    this.http.createQuiz(new QuizRequest(this.title, this.desc, this.isPublic))
   }
 }
