@@ -4,45 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     tools:context=".MainActivity"
     android:padding="10dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/helloWorldBtn"
-            android:onClick="helloWorld"
-            android:text="Get Test"/>
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:indeterminate="true"
-            android:visibility="gone" />
-
-    </LinearLayout>
-
     <TextView
-        android:id="@+id/helloWorldTxt"
+        android:id="@+id/textViewJoinQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="30sp"/>
+        android:text="@string/joinQuiz"
+        android:layout_marginBottom="50dp"
+        android:textSize="36sp" />
 
-    <ImageView
-        android:id="@+id/helloWorldImg"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewEnterCode"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="HelloWorld"
-        android:layout_marginTop="10dp"/>
+        android:text="@string/enterCode"
+        android:layout_marginBottom="15dp"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/editTextCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/hintCode"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/buttonJoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnJoin"
+        android:onClick="ChoosePseudo"/>
+
 
 </LinearLayout>
