@@ -11,6 +11,7 @@ import {
 	CreateQuizConfirmDialog,
 } from 'src/components/create-quiz/create-quiz.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AlphanumericCodeComponent } from './AlphanumericCode/AlphanumericCode.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -31,5 +32,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 	entryComponents: [CreateQuizComponent],
 	providers: [],
 	bootstrap: [AppComponent],
+      AlphanumericCodeComponent
 })
 export class AppModule {}
