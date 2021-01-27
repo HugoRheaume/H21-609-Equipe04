@@ -1,4 +1,4 @@
-﻿using API.Models;
+using API.Models;
 using API.Models.Question;
 using API.Service;
 using System;
@@ -13,7 +13,7 @@ namespace API.Controllers
     public class QuestionController : ApiController
     {
 
-        private QuestionService service = new QuestionService(new ApplicationDbContext());
+        private IQuestionService service = new QuestionService(new ApplicationDbContext());
 
         [HttpGet]
         public List<Question> Get()
@@ -21,13 +21,19 @@ namespace API.Controllers
 
             return service.GetQuestions();
         }
-
-        [HttpGet]
-        public void Add()
+        [HttpGet]        
+        public Question Get(int id)
         {
-            QuestionTrueFalse q = new QuestionTrueFalse() {Answer = true, Statement = "Are you gay?", TimeLimit = 60 };
-            service.AddQuestion(q);
-            
+
+            return service.GetQuestionById(id);
+        }
+
+
+
+        [HttpPost]
+        public void Add(Question question)
+        {
+            service.AddQuestion(question);
         }
     }
 }

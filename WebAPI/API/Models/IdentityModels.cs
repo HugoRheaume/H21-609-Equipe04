@@ -21,7 +21,10 @@ namespace API.Models
             // Add custom user claims here
             return userIdentity;
         }
-    }
+
+        [InverseProperty("User")]
+        public virtual List<Question.Question> Questions { get; set; }
+}
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -35,5 +38,7 @@ namespace API.Models
             return new ApplicationDbContext();
         }
         public virtual DbSet<Question.Question> Question { get; set; }
+        public virtual DbSet<Question.QuestionTrueFalse> QuestionTrueFalse { get; set; }
+        public virtual DbSet<Question.QuestionMultipleChoice> QuestionMultiple { get; set; }
     }
 }

@@ -223,12 +223,13 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Question\Question.cs" />
-    <Compile Include="Models\Question\QuestionMultiple.cs" />
+    <Compile Include="Models\Question\QuestionMultipleChoice.cs" />
     <Compile Include="Models\Question\QuestionTrueFalse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Service\BaseService.cs" />
+    <Compile Include="Service\IQuestionService.cs" />
     <Compile Include="Service\QuestionService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
