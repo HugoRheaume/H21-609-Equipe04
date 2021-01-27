@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using API.Models.Question;
+using System.Data.Entity;
 
 namespace API.Models
 {
@@ -26,10 +29,11 @@ namespace API.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-        
+                
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+        public virtual DbSet<Question.Question> Question { get; set; }
     }
 }
