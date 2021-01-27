@@ -5,5 +5,7 @@ export class QuizResponse {
         public title: string, 
         public isPublic: boolean, 
         public description: string, 
-        public shareCode: string) {}
+        public shareCode: string,
+        public toConfirm: boolean = false,
+        public errorMessage: boolean = false) {}
 }

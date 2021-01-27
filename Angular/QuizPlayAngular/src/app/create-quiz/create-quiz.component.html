@@ -10,8 +10,8 @@
         </mat-form-field>
         <div class="w-100 m-3 align-items-center">
             <span class="m-3">Privé</span>
-            <mat-slide-toggle>Public</mat-slide-toggle>
+            <mat-slide-toggle name="visibility" [(ngModel)]="isPublic">Public</mat-slide-toggle>
         </div>
-        <button type="submit" class="btn btn-primary m-3">Créer</button>
+        <button mat-raised-button type="submit" class="m-3">Créer</button>
     </form> 
 </div>
