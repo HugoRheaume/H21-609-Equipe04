@@ -2,6 +2,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { CreateTrueOrFalseQuestion } from '../components/create-trueorfalse-question/create-trueorfalse-question.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -33,5 +34,15 @@ import { AlphanumericCodeComponent } from './AlphanumericCode/AlphanumericCode.c
 	providers: [],
 	bootstrap: [AppComponent],
       AlphanumericCodeComponent
+   ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
