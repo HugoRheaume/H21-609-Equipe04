@@ -16,7 +16,7 @@ namespace API.Controllers
         private IQuestionService service = new QuestionService(new ApplicationDbContext());
 
         [HttpGet]
-        public List<Question> Get()
+        public List<QuestionDTO> Get()
         {
 
             return service.GetQuestions();

@@ -17,11 +17,7 @@ namespace API.Models.Question
         public QuestionType QuestionType { get; set; }
 
         public int TimeLimit { get; set; }
-
-        public string Answer { get; set; }
-
-
-        public virtual ApplicationUser User { get; set; }
+        
 
         [ForeignKey("QuestionId")]
         public virtual List<QuestionTrueFalse> QuestionTrueFalse { get; set; }

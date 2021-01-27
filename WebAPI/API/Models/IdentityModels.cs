@@ -22,8 +22,7 @@ namespace API.Models
             return userIdentity;
         }
 
-        [InverseProperty("User")]
-        public virtual List<Question.Question> Questions { get; set; }
+        
 }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

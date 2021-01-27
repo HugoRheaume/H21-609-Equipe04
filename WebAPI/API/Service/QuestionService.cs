@@ -13,10 +13,46 @@ namespace API.Service
 
         public QuestionService (ApplicationDbContext db) : base(db) { }
 
-        public List<Question> GetQuestions()
+        public List<QuestionDTO> GetQuestions()
         {
+            
+            List<QuestionDTO> listToShip = new List<QuestionDTO>();
+
             List<Question> questionList = db.Question.Include(x => x.QuestionTrueFalse).ToList();
-            return questionList;
+            foreach (var item in questionList)
+            {
+                QuestionDTO question = new QuestionDTO()
+                {
+                    Id = item.Id,
+                    Label = item.Label,
+                    TimeLimit = item.TimeLimit,
+                    QuestionType = item.QuestionType,
+                   
+                };
+                switch (item.QuestionType)
+                {
+                    case QuestionType.TrueFalse:
+                        question.QuestionTrueFalse = item.QuestionTrueFalse[0];
+                        break;
+                    case QuestionType.MultipleChoice:
+                        question.QuestionMultipleChoice = item.QuestionMultipleChoice;
+                        break;
+                    case QuestionType.Association:
+                        break;
+                    case QuestionType.Image:
+                        break;
+                    default:
+                        break;
+                }
+
+                listToShip.Add(question);
+
+
+
+            }
+
+
+            return listToShip;
 
         }
         public Question GetQuestionById(int id)

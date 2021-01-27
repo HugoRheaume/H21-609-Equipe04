@@ -223,6 +223,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Question\Question.cs" />
+    <Compile Include="Models\Question\QuestionDTO.cs" />
     <Compile Include="Models\Question\QuestionMultipleChoice.cs" />
     <Compile Include="Models\Question\QuestionTrueFalse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

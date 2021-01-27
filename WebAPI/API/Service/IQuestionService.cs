@@ -8,7 +8,7 @@ namespace API.Service
 {
     public interface IQuestionService
     {
-        List<Question> GetQuestions();
+        List<QuestionDTO> GetQuestions();
         Question GetQuestionById(int id);
         List<Question> GetQuestionByUser(int userId);
 
