@@ -4,36 +4,42 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title mb-0" id="staticBackdropLabel">Create a question</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" [formGroup]="TrueFalse">
         <p>
           <mat-form-field appearance="outline">
             <mat-label>Question's label</mat-label>
-            <input matInput placeholder="Are roses red?" id="inputQuestionLabel" [(ngModel)]="this.question.label">
+            <input matInput #questionLabel placeholder="Are roses red?" id="inputQuestionLabel"
+              formControlName="questionLabel">
+            <mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
+            <mat-error *ngIf="TrueFalse.dirty && TrueFalse.get('questionLabel').value.length < 1">The label is <strong>required</strong></mat-error>
+            <mat-error *ngIf="TrueFalse.dirty && TrueFalse.get('questionLabel').value.length > 250">You have <strong>exceeded</strong> the maximum characters</mat-error>
           </mat-form-field>
         </p>
         <p class="mat-form-field-wrapper">
-            <mat-radio-group aria-label="True or False" [(ngModel)]="this.question.answer">
-              <mat-radio-button [value]="true" style="margin-right: 15px;">Yes</mat-radio-button>
-              <mat-radio-button [value]="false">No</mat-radio-button>
-            </mat-radio-group>
+          <mat-radio-group aria-label="True or False radio" formControlName="questionAnswer">
+            <mat-radio-button [value]="true" style="margin-right: 15px;">Yes</mat-radio-button>
+            <mat-radio-button [value]="false">No</mat-radio-button>
+          </mat-radio-group>
         </p>
         <p class="mat-form-field-wrapper">
-          <mat-checkbox id="inputQuestionHasTime" [(ngModel)]="this.question.hasAMaxTime">Add a maximum amount of time</mat-checkbox>
+          <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Add a time limit</mat-checkbox>
         </p>
-        <p *ngIf="this.question.hasAMaxTime">
+        <p *ngIf="this.TrueFalse.controls['questionHasTimeLimit']">
           <mat-form-field appearance="outline">
             <mat-label>Question's allowed time</mat-label>
-            <input matInput type="number" [(ngModel)]="this.question.allowedTime" min="1">
+            <input matInput type="number" required formControlName="questionTimeLimit">
           </mat-form-field>
         </p>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="discard()">Discard</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sumbit()">Submit</button>
@@ -49,7 +55,7 @@
 <h1>{{this.question.answer}}</h1>
 
 <h1>Question has a time limit</h1>
-<h1>{{this.question.hasAMaxTime}}</h1>
+<h1>{{this.hasTimeLimit}}</h1>
 
-<h1>Question's allowed time</h1>
-<h1>{{this.question.allowedTime}}</h1>
+<h1>Question's time limit</h1>
+<h1>{{this.question.timeLimit}}</h1>
