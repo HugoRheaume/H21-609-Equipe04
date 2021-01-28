@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuizRequest } from 'src/models/QuizRequest';
-import { QuizResponse } from 'src/models/QuizResponse';
 import { QuizService } from 'src/Quiz.service';
 
 @Component({
@@ -12,8 +12,9 @@ export class CreateQuizComponent implements OnInit {
   title: string = "";
   desc:string = "";
   isPublic = false;
+  errMessage:string = ""
 
-  constructor(public http: QuizService)  {}
+  constructor(public http: QuizService, public dialog: MatDialog)  {}
 
   ngOnInit(): void {
   }
@@ -24,19 +25,31 @@ export class CreateQuizComponent implements OnInit {
       if (r.toConfirm)
         this.toConfirm();
       else if (r.errorMessage)
-        this.errorMessage("Title is too short");
+        this.errMessage = "Title is too short";
       else if (r == null)
-        this.errorMessage("An unexpected error occured");
+        this.errMessage = "An unexpected error occured";
       else
         console.log("nice!");
     });
   }
 
   public toConfirm(): void {
-    console.log("bruv")
-  }
+    const dialogRef = this.dialog.open(CreateQuizConfirmDialog, {
+      width: '500px',
+    });
 
-  public errorMessage(err: string): void {
-    console.log(err)
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result)
+        this.http.createQuiz(new QuizRequest(this.title, this.desc, this.isPublic, true)).subscribe(r => console.log(r));
+    });
   }
+}
+
+@Component({
+  selector: 'dialog-create-quiz-confirm',
+  templateUrl: './create-quiz-confirm-dialog.html'
+})
+export class CreateQuizConfirmDialog {
+  constructor(public dialogRef: MatDialogRef<CreateQuizConfirmDialog>) {}
 }

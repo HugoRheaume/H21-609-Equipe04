@@ -21,11 +21,11 @@ export class QuizService {
 
         return this.http.post<any>(environment.backend.baseURL + '/Quiz/Create', quiz, {observe: 'response'}).pipe(map(r => {
             console.log(r);
-            if (r.status == 200) 
+            if (r.status == 201) 
               return r.body as QuizResponse;
             else if (r.status == 202) {
                 return new QuizResponse(null, null, null, null, null, null, true);
-            } else if (r.status == 400)
+            } else if (r.status == 200)
                 return new QuizResponse(null, null, null, null, null, null, false, true);
             else return null;
           }));

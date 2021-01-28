@@ -28,7 +28,7 @@ namespace API.Controllers
             };
 
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ModelState));
 
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
@@ -58,7 +58,7 @@ namespace API.Controllers
                 Title = quiz.Title
             };
 
-            return Ok(response);
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, response));
         }
 
         /*[HttpPost]

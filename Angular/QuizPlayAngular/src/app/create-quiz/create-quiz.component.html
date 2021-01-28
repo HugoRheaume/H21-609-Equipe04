@@ -1,5 +1,6 @@
 <div class="container p-5">
     <form (ngSubmit)="create()">
+        <div class="w-100 m-3 text-danger">{{errMessage}}</div>
         <mat-form-field class="w-100 m-3">
             <mat-label>Titre</mat-label>
             <input matInput type="text" name="quizTitle" id="quizTitle" maxlength="100" minlength="4" [(ngModel)]="title">
