@@ -24,11 +24,16 @@ namespace API.Validation
             if(q.QuestionType == 0 || q.Label == "" || q.Label == null)
             {
                 SetBadRequest(actionContext);
-            }            
+            }
+            if(q.Label.Length > 250 || q.Label.Length < 1)
+            {
+                SetBadRequest(actionContext);
+            }
+
             switch (q.QuestionType)
             {
                 case QuestionType.TrueFalse:
-                    if (q.QuestionTrueFalse == null) SetBadRequest(actionContext);
+                    if (q.QuestionTrueFalse == null) SetBadRequest(actionContext);                    
                     break;
                 case QuestionType.MultipleChoice:
                     if (q.QuestionMultipleChoice == null) SetBadRequest(actionContext);
