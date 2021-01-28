@@ -11,6 +11,7 @@ using System.Web.Http.ModelBinding;
 using API.Models;
 using API.Service;
 using API.Validation;
+using API.Models.Question;
 using Microsoft.AspNet.Identity;
 
 namespace API.Controllers
@@ -46,11 +47,39 @@ namespace API.Controllers
                     ReasonPhrase = "Quiz title already exist"
                 };
 
-                return ResponseMessage(message);
+                    return ResponseMessage(message);
+                }
+                quiz.ListQuestions = new List<Question>();
+
+                context.ListQuiz.Add(quiz);
+                context.SaveChanges();
             }
             
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, service.CreateQuiz(quiz, User.Identity.Name)));
+        }
+
+        public IHttpActionResult GetQuizFromUser()
+        {
+            string userId = User.Identity.GetUserId() ?? "1";
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                List<Quiz> list = context.ListQuiz.ToList();
+                List<QuizResponseDTO> listQuiz =
+                    context.ListQuiz.Where(q => q.OwnerId == userId).Select(q => new QuizResponseDTO()
+                    {
+                        Id = q.Id,
+                        Author = User.Identity.Name ?? "Nobody",
+                        Title = q.Title,
+                        IsPublic = q.IsPublic,
+                        Description = q.Description,
+                        ShareCode = q.ShareCode
+                    }).ToList();
+
+
+
+                return Ok(listQuiz);
+            }
         }
 
         [HttpGet]

@@ -1,12 +1,12 @@
+import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { AlphanumericCodeComponent } from './../components/alphanumeric-code/alphanumeric-code.component';
-import { CreateTrueOrFalseQuestion } from './../components/create-trueorfalse-question/create-trueorfalse-question.component';
 import { CreateQuizComponent } from 'src/components/create-quiz/create-quiz.component';
-import { ListQuizComponent } from './components/list-quiz/list-quiz.component';
+import { ListQuizComponent } from '../components/list-quiz/list-quiz.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  	{ path: 'list', component: ListQuizComponent },
+	{ path: 'list', component: ListQuizComponent },
 	{ path: 'createQuestion', component: CreateTrueOrFalseQuestion },
 	{ path: 'createQuiz', component: CreateQuizComponent },
 	{path: 'CreateQuiz/:code', component: AlphanumericCodeComponent}

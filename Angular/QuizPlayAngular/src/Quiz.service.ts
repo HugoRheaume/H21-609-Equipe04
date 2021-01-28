@@ -50,6 +50,21 @@ export class QuizService {
 			pQuestion,
 			httpOptions
 		);
+	}
+
+	public getQuizList(): Observable<QuizResponse[]> {
+		return this.http
+			.get<QuizResponse[]>(
+				environment.backend.baseURL + '/Quiz/GetQuizFromUser'
+			)
+			.pipe(
+				map(res => {
+					console.log(res);
+
+					return res;
+				})
+			);
+	}
   }
 
   public getAlphanumericCode(): Observable<string>{

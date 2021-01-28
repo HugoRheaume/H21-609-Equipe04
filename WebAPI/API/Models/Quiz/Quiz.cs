@@ -23,7 +23,6 @@ namespace API.Models
         [MinLength(0, ErrorMessage = "You need to have a description"), MaxLength(1000, ErrorMessage = "Description is too long")]
         public string Description { get; set; }
         public string ShareCode { get; set; }
-
-        //public List<Question.Question> ListQuestions { get; set; }
+        public List<Question.Question> ListQuestions { get; set; }
     }
 }
