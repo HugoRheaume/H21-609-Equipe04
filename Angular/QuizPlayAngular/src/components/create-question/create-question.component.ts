@@ -26,40 +26,13 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   sumbit() {
-    let questionLabel = this.TrueFalse.get('questionLabel') as FormControl;
-    let questionAnswer = this.TrueFalse.get('questionAnswer') as FormControl;
     let questionTimeLimit = this.TrueFalse.get('questionTimeLimit') as FormControl;
     let questionHasTimeLimit = this.TrueFalse.get('questionHasTimeLimit') as FormControl;
 
     let question = new QuestionTrueOrFalse();
-    //The user didn't change anything
-    if (this.TrueFalse.pristine) {
-      console.log('Form is pristine');
-      alert('The form is has not been modified.');
-      return;
-    }
-    //The user changed the label to nothing
-    if (questionLabel.value === "" || questionLabel.value == null) {
-      console.log('Label value is nothing');
-      alert('The label\'s value is nothing.');
-      return;
-    }
-    if (questionLabel.value.length > 250) {
-      console.log('Label is too long');
-      alert('The label\'s value is too long.');
-      return;
-    }
-    //The user didn't answer
-    if (questionAnswer.value === "" || questionAnswer.value == null) {
-      console.log('Answer is not answered');
-      alert('The answer has not been defined.');
-      return;
-    }
-    if (questionHasTimeLimit.value && (questionTimeLimit.value === "" || questionTimeLimit.value == null)) {
-      console.log('Time limit not defined');
-      alert('The time limit has not defined.');
-      return;
-    }
+
+    if(this.checkForm) return;
+
     //The question doesn't have a time limit
     if (questionHasTimeLimit.value == null || questionHasTimeLimit.value == false || questionHasTimeLimit.value === "") question.timeLimit = -1;
     else question.timeLimit = questionTimeLimit.value;
@@ -75,13 +48,50 @@ export class CreateQuestionComponent implements OnInit {
       "\nThe allowed time is : " + question.timeLimit +
       "\nThe question type : " + question.questionType.toString());
 
-    this.TrueFalse.reset();
+      this.TrueFalse.reset();
     this.service.addQuestion(question.toDTO()).subscribe(res => {
       console.log(res);
     })
-
-
     this.route.navigate['/'];
+  }
+
+  //Checks the form, return false if ok
+  get checkForm(): boolean {
+    let returnValue = false;
+    let questionLabel = this.TrueFalse.get('questionLabel') as FormControl;
+    let questionAnswer = this.TrueFalse.get('questionAnswer') as FormControl;
+    let questionTimeLimit = this.TrueFalse.get('questionTimeLimit') as FormControl;
+    let questionHasTimeLimit = this.TrueFalse.get('questionHasTimeLimit') as FormControl;
+
+    if (this.TrueFalse.pristine) {
+      // console.log('Form is pristine');
+      // alert('The form is has not been modified.');
+      returnValue = true;
+    }
+    //The user changed the label to nothing
+    else if (questionLabel.value === "" || questionLabel.value == null) {
+      // console.log('Label value is nothing');
+      // alert('The label\'s value is nothing.');
+      returnValue = true;
+    }
+    else if (questionLabel.value.length > 250) {
+      // console.log('Label is too long');
+      // alert('The label\'s value is too long.');
+      returnValue = true;
+    }
+    //The user didn't answer
+    else if (questionAnswer.value === "" || questionAnswer.value == null) {
+      // console.log('Answer is not answered');
+      // alert('The answer has not been defined.');
+      returnValue = true;
+    }
+    else if (questionHasTimeLimit.value && (questionTimeLimit.value === "" || questionTimeLimit.value == null)) {
+      // console.log('Time limit not defined');
+      // alert('The time limit has not defined.');
+      returnValue = true;
+    }
+
+    return returnValue;
   }
 
   //#region Error messages

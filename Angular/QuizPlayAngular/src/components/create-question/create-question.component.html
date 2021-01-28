@@ -24,8 +24,8 @@
         </p>
         <p class="mat-form-field-wrapper">
           <mat-radio-group aria-label="True or False radio" formControlName="questionAnswer">
-            <mat-radio-button [value]="true" style="margin-right: 15px;">Yes</mat-radio-button>
-            <mat-radio-button [value]="false">No</mat-radio-button>
+            <mat-radio-button [value]="true" style="margin-right: 15px;">True</mat-radio-button>
+            <mat-radio-button [value]="false">False</mat-radio-button>
           </mat-radio-group><br>
           <mat-error>{{ answerErrorMessage }}</mat-error>
         </p>
@@ -43,7 +43,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="this.TrueFalse.reset()">Discard</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sumbit()">Submit</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sumbit()" [disabled]="this.checkForm ? true : null">Submit</button>
       </div>
     </div>
   </div>
