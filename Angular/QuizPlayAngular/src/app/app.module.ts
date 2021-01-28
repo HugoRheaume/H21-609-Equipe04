@@ -1,4 +1,5 @@
-import { MaterialModule } from './material/material.module';
+import { CreateQuestionComponent } from './../components/create-question/create-question.component';
+import { MaterialModule } from 'src/components/material/material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -8,12 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateQuizComponent, CreateQuizConfirmDialog } from './create-quiz/create-quiz.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateQuizComponent,
     CreateQuizConfirmDialog
+    CreateQuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,9 @@ import { CreateQuizComponent, CreateQuizConfirmDialog } from './create-quiz/crea
     FormsModule,
     HttpClientModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     CreateQuizComponent

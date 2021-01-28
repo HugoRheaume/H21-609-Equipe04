@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using API.Models.Question;
+using System.Data.Entity;
 
 namespace API.Models
 {
@@ -19,7 +22,9 @@ namespace API.Models
             // Add custom user claims here
             return userIdentity;
         }
-    }
+
+        
+}
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -27,12 +32,15 @@ namespace API.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-        
+                
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
         public virtual DbSet<Quiz> ListQuiz { get; set; }
+        public virtual DbSet<Question.Question> Question { get; set; }
+        public virtual DbSet<Question.QuestionTrueFalse> QuestionTrueFalse { get; set; }
+        public virtual DbSet<Question.QuestionMultipleChoice> QuestionMultiple { get; set; }
     }
 }
