@@ -1,18 +1,15 @@
-import { QuizService } from './../Quiz.service';
+import { QuizService } from '../quiz.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
+	title = 'QuizPlayAngular';
 
-  title = 'QuizPlayAngular';
+	ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
-  constructor(public service: QuizService){}
-
+	constructor(public service: QuizService) {}
 }

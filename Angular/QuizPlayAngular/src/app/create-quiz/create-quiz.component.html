@@ -1,18 +1,35 @@
 <div class="container p-5">
-    <form (ngSubmit)="create()">
-        <div class="w-100 m-3 text-danger">{{errMessage}}</div>
-        <mat-form-field class="w-100 m-3">
-            <mat-label>Titre</mat-label>
-            <input matInput type="text" name="quizTitle" id="quizTitle" maxlength="100" minlength="4" [(ngModel)]="title">
-        </mat-form-field>
-        <mat-form-field class="w-100 m-3">
-            <mat-label>Description</mat-label>
-            <textarea matInput name="quizDescription" id="quizTitle" maxlength="1000" [(ngModel)]="desc"></textarea>
-        </mat-form-field>
-        <div class="w-100 m-3 align-items-center">
-            <span class="m-3">Privé</span>
-            <mat-slide-toggle name="visibility" [(ngModel)]="isPublic">Public</mat-slide-toggle>
-        </div>
-        <button mat-raised-button type="submit" class="m-3">Créer</button>
-    </form> 
+	<form (ngSubmit)="create()">
+		<div class="w-100 m-3 text-danger">{{errMessage}}</div>
+		<mat-form-field appearance="outline" class="w-100 m-3 {{titleValidStyle}}">
+			<mat-label>Titre</mat-label>
+			<input
+				(input)="this.updateInputState($event.target.value)"
+				matInput
+				type="text"
+				name="quizTitle"
+				id="quizTitle"
+				maxlength="100"
+				minlength="4"
+				[(ngModel)]="title"
+			/>
+		</mat-form-field>
+		<mat-form-field appearance="outline" class="w-100 m-3">
+			<mat-label>Description</mat-label>
+			<textarea
+				matInput
+				name="quizDescription"
+				id="quizTitle"
+				maxlength="1000"
+				[(ngModel)]="desc"
+			></textarea>
+		</mat-form-field>
+		<div class="w-100 m-3 align-items-center">
+			<span class="m-3">Privé</span>
+			<mat-slide-toggle name="visibility" [(ngModel)]="isPublic"
+				>Public</mat-slide-toggle
+			>
+		</div>
+		<button mat-raised-button type="submit" class="m-3">Créer</button>
+	</form>
 </div>
