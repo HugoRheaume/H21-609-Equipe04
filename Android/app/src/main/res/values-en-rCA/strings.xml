@@ -11,4 +11,5 @@
     <string name="waiting">Waiting...</string>
     <string name="toastEnterCode">" You must enter a code to join a quiz."</string>
     <string name="toastEnterName">You must choose a username to start the quiz.</string>
+    <string name="toastNoQuizFound">The entered code does not correspond to any quiz.</string>
 </resources>

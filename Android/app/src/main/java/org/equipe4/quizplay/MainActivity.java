@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.HelloWorldObj;
+import org.equipe4.quizplay.transfer.QuizResponseDTO;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,23 +25,39 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    QPService service = new RetrofitUtil().service;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
-    public void ChoosePseudo(View v){
+    public void JoinQuiz(View v){
         EditText editTextCode = findViewById(R.id.editTextCode);
+
         if (editTextCode.getText().toString().equals("")){
             Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
         }
         else {
-            Intent intent = new Intent(this, PseudoActivity.class);
-            startActivity(intent);
+            service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
+                @Override
+                public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
+                    if (response.isSuccessful()){
+                        Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
+                    Log.e("RETROFIT", t.getMessage());
+                }
+            });
         }
     }
-
 
 
 

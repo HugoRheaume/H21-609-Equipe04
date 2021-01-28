@@ -14,5 +14,6 @@
     <!-- Toasts -->
     <string name="toastEnterCode">Vous devez rentrer un code pour rejoindre un quiz.</string>
     <string name="toastEnterName">Vous devez choisir un pseudo pour commencer le quiz.</string>
+    <string name="toastNoQuizFound">Le code entré correspond à aucun quiz.</string>
 
 </resources>
