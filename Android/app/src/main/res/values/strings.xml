@@ -11,5 +11,8 @@
     <string name="btnParti">"C'est parti !"</string>
     <!-- WaitingRoom Activity -->
     <string name="waiting">En attente...</string>
+    <!-- Toasts -->
+    <string name="toastEnterCode">Vous devez rentrer un code pour rejoindre un quiz.</string>
+    <string name="toastEnterName">Vous devez choisir un pseudo pour commencer le quiz.</string>
 
 </resources>

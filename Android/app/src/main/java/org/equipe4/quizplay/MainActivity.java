@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +30,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ChoosePseudo(View v){
-        Intent intent = new Intent(this, PseudoActivity.class);
-        startActivity(intent);
+        EditText editTextCode = findViewById(R.id.editTextCode);
+        if (editTextCode.getText().toString().equals("")){
+            Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Intent intent = new Intent(this, PseudoActivity.class);
+            startActivity(intent);
+        }
     }
 
 

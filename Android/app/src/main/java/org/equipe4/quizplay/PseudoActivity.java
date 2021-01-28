@@ -19,7 +19,7 @@ public class PseudoActivity extends AppCompatActivity {
     public void JoinWaitingRoom(View v){
         EditText editTextPseudo = findViewById(R.id.editTextPseudo);
         if (editTextPseudo.getText().toString().equals("")){
-            Toast.makeText(this, "Vous devez choisir un pseudo !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toastEnterName, Toast.LENGTH_SHORT).show();
         }
         else {
             Intent intent = new Intent(this, WaitingRoomActivity.class);
