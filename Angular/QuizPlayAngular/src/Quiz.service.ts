@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HelloWorldObj } from './models/HelloWorldObj';
-import { Question } from './models/question';
+import { Question, QuestionCreateDTO } from './models/question';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ public getBogusObject(): Observable<HelloWorldObj>{
   return this.http.get<HelloWorldObj>(environment.backend.baseURL + '/HelloWorld', httpOptions);
 }
 
-public addQuestion(pQuestion: Question): Observable<any>{
+public addQuestion(pQuestion: QuestionCreateDTO): Observable<any>{
   const httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

@@ -76,9 +76,9 @@ export class CreateQuestionComponent implements OnInit {
       "\nThe question type : " + question.questionType.toString());
 
     this.TrueFalse.reset();
-    // this.service.addQuestion(this.question).subscribe(res => {
-    //   console.log(res)
-    // })
+    this.service.addQuestion(question.toDTO()).subscribe(res => {
+      console.log(res);
+    })
 
 
     this.route.navigate['/'];
