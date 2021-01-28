@@ -4,6 +4,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using API.Models;
@@ -27,12 +28,13 @@ namespace API.Controllers
             };
 
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ModelState));
 
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
-                if (context.ListQuiz.Any(q => q.Title == quizRequestDto.Title && q.OwnerId == userId))
+                if (!quizRequestDto.Confirm && context.ListQuiz.Any(q => q.Title == quizRequestDto.Title && q.OwnerId == userId))
                 {
+                    quizRequestDto.Confirm = true;
                     // Envoie un message pour que l'utilisateur confirme
                     HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.Accepted)
                     {
@@ -55,11 +57,11 @@ namespace API.Controllers
                 ShareCode = quiz.ShareCode,
                 Title = quiz.Title
             };
-            
-            return Ok(response);
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, response));
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public IHttpActionResult ConfirmCreate(QuizRequestDTO quizRequestDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -90,6 +92,6 @@ namespace API.Controllers
             };
 
             return Ok(response);
-        }
+        } */
     }
 }
