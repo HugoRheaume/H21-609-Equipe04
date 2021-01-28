@@ -76,7 +76,6 @@ export class CreateQuestionComponent implements OnInit {
       "\nThe question type : " + question.questionType.toString());
 
     this.TrueFalse.reset();
-    //Test branche merge
     // this.service.addQuestion(this.question).subscribe(res => {
     //   console.log(res)
     // })
