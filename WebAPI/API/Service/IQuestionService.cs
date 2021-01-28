@@ -9,11 +9,11 @@ namespace API.Service
     public interface IQuestionService
     {
         List<QuestionDTO> GetQuestions();
-        Question GetQuestionById(int id);
-        List<Question> GetQuestionByUser(int userId);
+        QuestionDTO GetQuestionById(int id);
+        List<Question> GetQuestionByQuizId(int quizId);
 
 
-        void AddQuestion(Question q);
+        QuestionDTO AddQuestion(Question q);
 
     }
 }

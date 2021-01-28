@@ -223,6 +223,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Question\Question.cs" />
+    <Compile Include="Models\Question\QuestionCreateDTO.cs" />
     <Compile Include="Models\Question\QuestionDTO.cs" />
     <Compile Include="Models\Question\QuestionMultipleChoice.cs" />
     <Compile Include="Models\Question\QuestionTrueFalse.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Service\IQuestionService.cs" />
     <Compile Include="Service\QuestionService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validation\QuestionValidationAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

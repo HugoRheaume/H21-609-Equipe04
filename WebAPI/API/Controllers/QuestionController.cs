@@ -1,6 +1,7 @@
 using API.Models;
 using API.Models.Question;
 using API.Service;
+using API.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,24 +17,33 @@ namespace API.Controllers
         private IQuestionService service = new QuestionService(new ApplicationDbContext());
 
         [HttpGet]
-        public List<QuestionDTO> Get()
+        //Return List<QuestionDTO> 
+        public IHttpActionResult Get()
         {
-
-            return service.GetQuestions();
+            return Ok(service.GetQuestions());            
         }
-        [HttpGet]        
-        public Question Get(int id)
+        [HttpGet]   
+        //Return QuestionDTO
+        public IHttpActionResult Get(int id)
         {
-
-            return service.GetQuestionById(id);
+            return Ok(service.GetQuestionById(id));
         }
-
-
 
         [HttpPost]
-        public void Add(Question question)
+        [QuestionValidation]
+        public HttpResponseMessage Add(QuestionCreateDTO question)
         {
-            service.AddQuestion(question);
+            Question questionToCreate = new Question() 
+            { 
+                Label = question.Label,
+                TimeLimit = question.TimeLimit,
+                QuestionType = question.QuestionType,
+                QuestionTrueFalse = new List<QuestionTrueFalse>() { question.QuestionTrueFalse },
+                QuestionMultipleChoice = question.QuestionMultipleChoice
+            };
+
+            service.AddQuestion(questionToCreate);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

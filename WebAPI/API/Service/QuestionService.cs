@@ -18,61 +18,62 @@ namespace API.Service
             
             List<QuestionDTO> listToShip = new List<QuestionDTO>();
 
-            List<Question> questionList = db.Question.Include(x => x.QuestionTrueFalse).ToList();
+            List<Question> questionList = db.Question.ToList();
             foreach (var item in questionList)
             {
-                QuestionDTO question = new QuestionDTO()
-                {
-                    Id = item.Id,
-                    Label = item.Label,
-                    TimeLimit = item.TimeLimit,
-                    QuestionType = item.QuestionType,
-                   
-                };
-                switch (item.QuestionType)
-                {
-                    case QuestionType.TrueFalse:
-                        question.QuestionTrueFalse = item.QuestionTrueFalse[0];
-                        break;
-                    case QuestionType.MultipleChoice:
-                        question.QuestionMultipleChoice = item.QuestionMultipleChoice;
-                        break;
-                    case QuestionType.Association:
-                        break;
-                    case QuestionType.Image:
-                        break;
-                    default:
-                        break;
-                }
-
-                listToShip.Add(question);
-
-
-
+                listToShip.Add(GenerateQuestionDTO(item));
             }
 
-
             return listToShip;
-
         }
-        public Question GetQuestionById(int id)
+        public QuestionDTO GetQuestionById(int id)
         {
+            Question question = db.Question.Where(x => x.Id == id).FirstOrDefault();
+            if (question != null)
+                return GenerateQuestionDTO(question);
+            else
+                return null;           
+        }
 
-            Question question = db.Question.Include(x => x.QuestionTrueFalse).Where(x => x.Id == id).First();
+        public List<Question> GetQuestionByQuizId(int quizId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public QuestionDTO AddQuestion(Question question)
+        {
+            Question q = db.Question.Add(question);
+            db.SaveChanges();
+            return GenerateQuestionDTO(q);                       
+        }
+
+        private QuestionDTO GenerateQuestionDTO(Question q)
+        {
+            QuestionDTO question = new QuestionDTO()
+            {
+                Id = q.Id,
+                Label = q.Label,
+                TimeLimit = q.TimeLimit,
+                QuestionType = q.QuestionType,
+
+            };
+            switch (q.QuestionType)
+            {
+                case QuestionType.TrueFalse:
+                    question.QuestionTrueFalse = q.QuestionTrueFalse.First();
+                    break;
+                case QuestionType.MultipleChoice:
+                    question.QuestionMultipleChoice = q.QuestionMultipleChoice;
+                    break;
+                case QuestionType.Association:
+                    break;
+                case QuestionType.Image:
+                    break;
+                default:
+                    break;
+            }
+
             return question;
         }
-
-
-        public List<Question> GetQuestionByUser(int userId)
-        {
-            List<Question> questionList = db.Question.ToList();
-            return questionList;
-        }
-        public void AddQuestion(Question question)
-        {
-            db.Question.Add(question);
-            db.SaveChanges();
-                       
-        }        
     }
 }
