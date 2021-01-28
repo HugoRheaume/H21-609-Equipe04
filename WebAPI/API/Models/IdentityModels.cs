@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Controllers;
@@ -31,5 +32,6 @@ namespace API.Models
         {
             return new ApplicationDbContext();
         }
+        public virtual DbSet<Quiz> ListQuiz { get; set; }
     }
 }
