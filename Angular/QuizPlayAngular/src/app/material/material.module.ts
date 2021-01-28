@@ -11,7 +11,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatDividerModule,
     MatSelectModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatSlideToggleModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -38,12 +38,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    MatInputModule,
     MatGridListModule,
+    MatInputModule,
     MatDividerModule,
     MatSelectModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }
