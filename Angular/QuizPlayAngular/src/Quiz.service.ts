@@ -1,5 +1,5 @@
 import { environment } from './environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -38,15 +38,17 @@ export class QuizService {
 				})
 			);
 	}
-}
 
-public addQuestion(pQuestion: QuestionCreateDTO): Observable<any>{
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  }
-  return this.http.post<Question>(environment.backend.baseURL + "/question/add", pQuestion, httpOptions);
-}
-
+	public addQuestion(pQuestion: QuestionCreateDTO): Observable<any> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
+		return this.http.post<Question>(
+			environment.backend.baseURL + '/question/add',
+			pQuestion,
+			httpOptions
+		);
+	}
 }
