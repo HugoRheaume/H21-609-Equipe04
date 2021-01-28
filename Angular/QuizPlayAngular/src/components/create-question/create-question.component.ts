@@ -3,14 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionTrueOrFalse } from 'src/models/question';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 
 @Component({
   selector: 'app-create-question',
@@ -19,51 +12,99 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class CreateQuestionComponent implements OnInit {
 
-  public question: QuestionTrueOrFalse;
   public TrueFalse: FormGroup;
-  public hasTimeLimit: boolean;
   constructor(public service: QuizService, public route: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.question = new QuestionTrueOrFalse();
     this.TrueFalse = this.formBuilder.group({
-      questionLabel: ['', [Validators.required, Validators.min(1), Validators.max(250)]],
+      questionLabel: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(250)]],
       questionAnswer: ['', [Validators.required]],
-      questionTimeLimit: ['', Validators.min(0)]
+      questionTimeLimit: ['', [Validators.required, Validators.min(1)]],
+      questionHasTimeLimit: ['']
     })
+
   }
 
-  sumbit(){
-    if(!this.hasTimeLimit && this.question.timeLimit != null) this.question.timeLimit = -1;
-    if(this.question.label == null) return;
+  sumbit() {
+    let questionLabel = this.TrueFalse.get('questionLabel') as FormControl;
+    let questionAnswer = this.TrueFalse.get('questionAnswer') as FormControl;
+    let questionTimeLimit = this.TrueFalse.get('questionTimeLimit') as FormControl;
+    let questionHasTimeLimit = this.TrueFalse.get('questionHasTimeLimit') as FormControl;
+
+    let question = new QuestionTrueOrFalse();
+    //The user didn't change anything
+    if (this.TrueFalse.pristine) {
+      console.log('Form is pristine');
+      alert('The form is has not been modified.');
+      return;
+    }
+    //The user changed the label to nothing
+    if (questionLabel.value === "" || questionLabel.value == null) {
+      console.log('Label value is nothing');
+      alert('The label\'s value is nothing.');
+      return;
+    }
+    if (questionLabel.value.length > 250) {
+      console.log('Label is too long');
+      alert('The label\'s value is too long.');
+      return;
+    }
+    //The user didn't answer
+    if (questionAnswer.value === "" || questionAnswer.value == null) {
+      console.log('Answer is not answered');
+      alert('The answer has not been defined.');
+      return;
+    }
+    if (questionHasTimeLimit.value && (questionTimeLimit.value === "" || questionTimeLimit.value == null)) {
+      console.log('Time limit not defined');
+      alert('The time limit has not defined.');
+      return;
+    }
+    //The question doesn't have a time limit
+    if (questionHasTimeLimit.value == null || questionHasTimeLimit.value == false || questionHasTimeLimit.value === "") question.timeLimit = -1;
+    else question.timeLimit = questionTimeLimit.value;
+
+    question.answer = this.TrueFalse.get('questionAnswer').value;
+    question.label = this.TrueFalse.get('questionLabel').value;
+
 
     //Submit to the server
-    alert('The question is : ' + this.question.label +
-    "\nThe answer is : " + this.question.answer +
-    "\nThe allowed time is : " + this.question.timeLimit +
-    "\nThe question type : " + this.question.questionType.toString());
+    alert('The question is : ' + question.label +
+      "\nThe answer is : " + question.answer +
+      "\nThe question has a time limit : " + questionHasTimeLimit.value +
+      "\nThe allowed time is : " + question.timeLimit +
+      "\nThe question type : " + question.questionType.toString());
+
+    this.TrueFalse.reset();
+    // this.service.addQuestion(this.question).subscribe(res => {
+    //   console.log(res)
+    // })
 
 
-    this.service.addQuestion(this.question).subscribe(res => {
-      console.log(res)
-    });
-    this.question = new QuestionTrueOrFalse();
     this.route.navigate['/'];
   }
 
-  discard(){
-    this.question = new QuestionTrueOrFalse();
+  //#region Error messages
+  get labelErrorMessage(): string {
+    const formField: FormControl = (this.TrueFalse.get('questionLabel') as FormControl);
+    return formField.hasError('required') ? "The label is required" :
+      formField.hasError('maxlength') ? "You have exceeded the maximum amount of characters" :
+        formField.hasError('nowhitespaceerror') ? '' :
+          ''; // Default
   }
 
-}
+  get answerErrorMessage(): string {
+    const formField: FormControl = (this.TrueFalse.get('questionAnswer') as FormControl);
+    return formField.hasError('required') ? "The answer is required" :
+      ''; // Default
+  }
 
-export class InputErrorStateMatcher {
-  questionLabel = new FormControl('', [
-    Validators.required,
-    Validators.min(1),
-    Validators.max(250)
-  ]);
+  get timeLimitErrorMessage(): string {
+    const formField: FormControl = (this.TrueFalse.get('questionTimeLimit') as FormControl);
+    return formField.hasError('min') ? "The minimum value is 1" :
+      formField.hasError('required') ? "The time limit is required" :
+        ''; // Default
+  }
+  //#endregion
 
-
-  matcher = new MyErrorStateMatcher();
 }
