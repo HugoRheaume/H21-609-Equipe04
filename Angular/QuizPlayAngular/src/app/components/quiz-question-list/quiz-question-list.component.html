@@ -1,6 +1,8 @@
+
+
 <div class="container">
     <div *ngIf="this.service.currentQuiz">
-        <h2>Quiz ID: {{this.service.currentQuiz.id}}</h2>
+        <button [cdkCopyToClipboard]="this.service.currentQuiz.shareCode" class="m-3" mat-raised-button color="primary" >Share Code: {{this.service.currentQuiz.shareCode}} <mat-icon>content_copy</mat-icon></button>
     </div>
 
 

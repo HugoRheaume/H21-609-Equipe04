@@ -13,7 +13,6 @@ import {
 	CreateQuizConfirmDialog,
 } from 'src/components/create-quiz/create-quiz.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alphanumeric-code.component';
 import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
 @NgModule({
 	declarations: [
@@ -21,8 +20,7 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
 		CreateQuizComponent,
 		CreateQuizConfirmDialog,
 		CreateTrueOrFalseQuestion,
-		QuizQuestionListComponent,
-    AlphanumericCodeComponent
+		QuizQuestionListComponent
 	],
 	imports: [
 		BrowserModule,
@@ -32,14 +30,9 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
 		MaterialModule,
 		BrowserAnimationsModule,
 		FormsModule,
-		ReactiveFormsModule,
+		ReactiveFormsModule
 
-		RouterModule.forRoot([
-			{path: 'create/:quizId', component: QuizQuestionListComponent},
-			{path: 'create', component: CreateQuizComponent}
-			
-	  
-		  ]),
+		
 	],
 	entryComponents: [CreateQuizComponent],
 	providers: [],

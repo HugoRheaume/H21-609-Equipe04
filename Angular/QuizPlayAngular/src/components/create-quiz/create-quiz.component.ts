@@ -30,10 +30,10 @@ export class CreateQuizComponent implements OnInit {
 					this.titleValidStyle = 'mat-form-field-invalid';
 				} else if (r == null) this.errMessage = 'An unexpected error occured';
 				else {
-					this.router.navigate(['/CreateQuiz/'+r.shareCode])
+					//this.router.navigate(['/CreateQuiz/'+r.shareCode])
 					this.errMessage = '';
 					this.http.currentQuiz = r;
-					console.log(this.http.currentQuiz);
+					this.router.navigate(['/quiz/'+r.id])
 				}
       });
 	}
@@ -50,10 +50,9 @@ export class CreateQuizComponent implements OnInit {
 						new QuizRequest(this.title, this.desc, this.isPublic, true)
 					)
 					.subscribe(r =>{
-                        this.router.navigate(['/CreateQuiz/'+r.shareCode])
-          
+                       // this.router.navigate(['/sharecode/'+r.shareCode])
 						this.http.currentQuiz = r;
-						console.log(this.http.currentQuiz);
+						this.router.navigate(['/quiz/'+r.id])
 					});
 		});
 	}
