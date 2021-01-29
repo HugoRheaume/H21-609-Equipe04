@@ -1,5 +1,5 @@
 import { MaterialModule } from 'src/app/material/material.module';
-import { CreateQuestionComponent } from './../components/create-question/create-question.component';
+import { CreateTrueOrFalseQuestion } from '../components/create-trueorfalse-question/create-trueorfalse-question.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		AppComponent,
 		CreateQuizComponent,
 		CreateQuizConfirmDialog,
-		CreateQuestionComponent,
+		CreateTrueOrFalseQuestion,
 	],
 	imports: [
 		BrowserModule,
