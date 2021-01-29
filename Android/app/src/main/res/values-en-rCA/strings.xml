@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quiz Play</string>
+    <string name="joinQuiz">Join a quiz !</string>
+    <string name="enterCode">Enter a code</string>
+    <string name="hintCode">" Quiz code"</string>
+    <string name="btnJoin">Join</string>
+    <string name="ChooseName">" Choose your username !"</string>
+    <string name="hintPseudo">Username</string>
+    <string name="btnParti">Let\'s go !</string>
+    <string name="waiting">Waiting...</string>
+    <string name="toastEnterCode">" You must enter a code to join a quiz."</string>
+    <string name="toastEnterName">You must choose a username to start the quiz.</string>
+    <string name="toastNoQuizFound">The entered code does not correspond to any quiz.</string>
+</resources>

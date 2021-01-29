@@ -1,3 +1,19 @@
 <resources>
+    <!-- Main Activity -->
     <string name="app_name">Quiz Play</string>
+    <string name="joinQuiz">Rejoignez un quiz !</string>
+    <string name="enterCode">Entrez un code</string>
+    <string name="hintCode">Code du quiz</string>
+    <string name="btnJoin">Rejoindre</string>
+    <!-- Pseudo Activity -->
+    <string name="ChooseName">Choisissez votre pseudo !</string>
+    <string name="hintPseudo">Pseudo</string>
+    <string name="btnParti">"C'est parti !"</string>
+    <!-- WaitingRoom Activity -->
+    <string name="waiting">En attente...</string>
+    <!-- Toasts -->
+    <string name="toastEnterCode">Vous devez rentrer un code pour rejoindre un quiz.</string>
+    <string name="toastEnterName">Vous devez choisir un pseudo pour commencer le quiz.</string>
+    <string name="toastNoQuizFound">Le code entré correspond à aucun quiz.</string>
+
 </resources>
