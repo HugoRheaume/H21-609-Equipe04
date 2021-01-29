@@ -151,5 +151,8 @@
       }
     }
   },
-  "defaultProject": "QuizPlayAngular"
+  "defaultProject": "QuizPlayAngular",
+  "cli": {
+    "analytics": false
+  }
 }
