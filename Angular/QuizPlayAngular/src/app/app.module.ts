@@ -1,3 +1,5 @@
+import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
+import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material.module';
 import { CreateTrueOrFalseQuestion } from '../components/create-trueorfalse-question/create-trueorfalse-question.component';
@@ -19,8 +21,10 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
 		AppComponent,
 		CreateQuizComponent,
 		CreateQuizConfirmDialog,
-		CreateTrueOrFalseQuestion,
-		QuizQuestionListComponent
+		QuizQuestionListComponent,
+        CreateQuestionComponent,
+        CreateMultiplechoicesQuestionComponent,
+        CreateTrueOrFalseQuestion
 	],
 	imports: [
 		BrowserModule,
