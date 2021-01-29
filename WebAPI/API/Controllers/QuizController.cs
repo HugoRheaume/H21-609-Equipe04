@@ -72,6 +72,13 @@ namespace API.Controllers
 
             return BadRequest();
         }
+        [HttpGet]
+        [Route("api/quiz/getquizbyid/{quizId}")]
+
+        public IHttpActionResult GetGuizById(int quizId)
+        {
+            return Ok(service.GetGuizById(quizId));
+        }
 
         [HttpGet]
         public IHttpActionResult GetQuizByCode([FromUri(Name = "code")] string pCode)

@@ -21,17 +21,7 @@ namespace API.Service
             db.SaveChanges();
 
 
-            QuizResponseDTO response = new QuizResponseDTO()
-            {
-                Id = newQuiz.Id,
-                Title = newQuiz.Title,
-                Author = username ?? "Nobody",
-                Description = newQuiz.Description,
-                IsPublic = newQuiz.IsPublic,
-                ShareCode = newQuiz.ShareCode,
-                Date = quiz.Date
-            };
-            return response;
+            return GenerateQuizResponseDTO(newQuiz, username);
         }
         public bool QuizCheck(string userId, string quizTitle)
         {
@@ -41,6 +31,26 @@ namespace API.Service
         public bool CheckCodeExist(string code)
         {
             return db.ListQuiz.Any(q => q.ShareCode == code);
+        }
+
+        public QuizResponseDTO GetGuizById(int quizId)
+        {
+            Quiz quizToShip = db.ListQuiz.Where(x => x.Id == quizId).FirstOrDefault();
+            if (quizToShip == null)
+                return null;
+            return GenerateQuizResponseDTO(quizToShip, null);
+        }
+        private QuizResponseDTO GenerateQuizResponseDTO(Quiz quiz, string username)
+        {
+            return new QuizResponseDTO()
+            {
+                Id = quiz.Id,
+                Author = username ?? "Nobody",
+                Description = quiz.Description,
+                IsPublic = quiz.IsPublic,
+                ShareCode = quiz.ShareCode,
+                Title = quiz.Title
+            };
         }
 
         public List<QuizResponseDTO> GetQuizFromUser(string userId, string username)

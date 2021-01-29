@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
 	ListQuizComponent,
@@ -21,6 +22,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
 import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alphanumeric-code.component';
+import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -30,6 +32,7 @@ import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alph
 		ListQuizComponent,
 		AlphanumericCodeComponent,
 		DeleteQuizDialog,
+		QuizQuestionListComponent,
 	],
 	imports: [
 		BrowserModule,

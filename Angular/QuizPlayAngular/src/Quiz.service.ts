@@ -11,15 +11,17 @@ import { Question, QuestionCreateDTO } from './models/question';
 	providedIn: 'root',
 })
 export class QuizService {
+  
 	constructor(public http: HttpClient) {}
+
+	public currentQuestions: Question[] = [];
+	public currentQuiz: QuizResponse;
 
 	public createQuiz(quiz: QuizRequest): Observable<QuizResponse> {
 		return this.http
 			.post<any>(environment.backend.baseURL + '/Quiz/Create', quiz, {
 				observe: 'response',
-			})
-			.pipe(
-				map(r => {
+			}).pipe(map(r => {
 					if (r.status == 201) return r.body as QuizResponse;
 					else if (r.status == 202) {
 						return new QuizResponse(
@@ -39,19 +41,68 @@ export class QuizService {
 			);
 	}
 
-	public addQuestion(pQuestion: QuestionCreateDTO): Observable<any> {
+	public addQuestion(pQuestion: QuestionCreateDTO): /*Observable<any>*/void {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
 			}),
 		};
-		return this.http.post<Question>(
-			environment.backend.baseURL + '/question/add',
-			pQuestion,
-			httpOptions
-		);
-	}
 
+		if(this.currentQuiz)
+			pQuestion.quizId = this.currentQuiz.id;
+
+		this.http.post<Question>(environment.backend.baseURL + '/question/add',pQuestion,httpOptions).subscribe(response => {
+			this.currentQuestions.push(response as Question);
+			console.log(this.currentQuestions);
+		});
+		
+	}
+	deleteQuestion(questionId: number) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
+
+		this.http.get<Question[]>(environment.backend.baseURL + '/question/delete/' + questionId, httpOptions).subscribe(response => {
+			this.currentQuestions = response
+		});
+	  }
+	getQuiz(quizId: number)
+	{
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
+
+		this.http.get<QuizResponse>(environment.backend.baseURL + '/quiz/getquizbyid/' + quizId, httpOptions).subscribe(response => {
+			this.currentQuiz = response
+			console.log(response);
+		});
+	}
+	getQuestionFromQuiz(quizId: number)
+	{
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
+
+		this.http.get<Question[]>(environment.backend.baseURL + '/question/getquizquestion/' + quizId, httpOptions).subscribe(response => {
+			this.currentQuestions = response
+			console.log(response);
+		});
+	}
+    public getAlphanumericCode(): Observable<string>
+    {
+        const httpOptions = {
+            headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            })
+        }
+        return this.http.get<any>(environment.backend.baseURL+ '/Quiz/GenerateAlphanumeric', httpOptions);
+    }
 	public getQuizList(): Observable<QuizResponse[]> {
 		return this.http
 			.get<QuizResponse[]>(
@@ -63,26 +114,12 @@ export class QuizService {
 				})
 			);
 	}
-
-	public getAlphanumericCode(): Observable<string> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type': 'application/json',
-			}),
-		};
-
-		return this.http.get<any>(
-			environment.backend.baseURL + '/Quiz/GenerateAlphanumeric',
-			httpOptions
-		);
-	}
-
 	public deleteQuiz(quiz: QuizResponse): Observable<boolean> {
 		return this.http
 			.get<boolean>(environment.backend.baseURL + `/Quiz/DeleteQuiz/${quiz.id}`)
 			.pipe(
-				map(
 					r => {
+				map(
 						return true;
 					},
 					e => {
