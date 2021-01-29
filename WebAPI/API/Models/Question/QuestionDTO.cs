@@ -9,6 +9,7 @@ namespace API.Models.Question
     {
 
         public int Id;
+        public int QuizId;
         public string Label;
         public QuestionType QuestionType;
         public int TimeLimit;

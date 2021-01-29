@@ -24,6 +24,8 @@ namespace API.Models
         public string Description { get; set; }
         public string ShareCode { get; set; }
 
-        //public List<Question.Question> ListQuestions { get; set; }
+
+        
+        public virtual List<Question.Question> Questions { get; set; }
     }
 }

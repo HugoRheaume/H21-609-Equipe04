@@ -1,5 +1,6 @@
 export abstract class Question {
   public id: number;
+  public quizId: number;
   public label: string;
   public timeLimit: number;
   public questionType: QuestionType;
@@ -14,6 +15,7 @@ export abstract class Question {
     questionToExport.QuestionType = this.questionType;
     questionToExport.TimeLimit = this.timeLimit;
     questionToExport.QuestionTrueFalse = questionTrueFalse;
+    questionToExport.quizId = this.quizId;
 
     return questionToExport;
   }
@@ -39,4 +41,5 @@ export class QuestionCreateDTO {
   public QuestionType: QuestionType;
   public TimeLimit: number;
   public QuestionTrueFalse: QuestionTrueOrFalse;
+  public quizId: number;
 }
