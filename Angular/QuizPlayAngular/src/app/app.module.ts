@@ -1,4 +1,6 @@
 import { RouterModule } from '@angular/router';
+import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
+import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
 	ListQuizComponent,
@@ -28,7 +30,9 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
 		AppComponent,
 		CreateQuizComponent,
 		CreateQuizConfirmDialog,
-		CreateTrueOrFalseQuestion,
+    CreateTrueOrFalseQuestion,
+    CreateQuestionComponent,
+    CreateMultiplechoicesQuestionComponent,
 		ListQuizComponent,
 		AlphanumericCodeComponent,
 		DeleteQuizDialog,
