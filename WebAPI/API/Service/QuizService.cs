@@ -35,5 +35,10 @@ namespace API.Service
         {
             return db.ListQuiz.Any(q => q.Title == quizTitle && q.OwnerId == userId);
         }
+
+        public bool CheckCodeExist(string code)
+        {
+            return db.ListQuiz.Any(q => q.ShareCode == code);
+        }
     }
 }

@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
 	declarations: [],
@@ -34,7 +35,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 		MatProgressSpinnerModule,
 		MatCheckboxModule,
 		MatRadioModule,
-		MatSlideToggleModule,
+    MatSlideToggleModule,
+    ClipboardModule,
 	],
 	exports: [
 		BrowserAnimationsModule,
@@ -51,7 +53,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 		MatProgressSpinnerModule,
 		MatCheckboxModule,
 		MatRadioModule,
-		MatSlideToggleModule,
+    MatSlideToggleModule,
+    ClipboardModule,
 	],
 })
 export class MaterialModule {}

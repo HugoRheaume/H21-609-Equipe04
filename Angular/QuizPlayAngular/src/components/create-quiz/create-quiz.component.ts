@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { QuizRequest } from 'src/models/QuizRequest';
 import { QuizService } from 'src/quiz.service';
 
@@ -13,8 +14,9 @@ export class CreateQuizComponent implements OnInit {
 	desc: string = '';
 	isPublic = false;
 	errMessage: string = '';
-	titleValidStyle = '';
-	constructor(public http: QuizService, public dialog: MatDialog) {}
+  titleValidStyle = '';
+  alphanumericCode: string = '';
+	constructor(public http: QuizService, public dialog: MatDialog, public router: Router) {}
 
 	ngOnInit(): void {}
 
@@ -28,9 +30,9 @@ export class CreateQuizComponent implements OnInit {
 					this.titleValidStyle = 'mat-form-field-invalid';
 				} else if (r == null) this.errMessage = 'An unexpected error occured';
 				else {
-					this.errMessage = '';
+					this.router.navigate(['/CreateQuiz/'+r.shareCode])
 				}
-			});
+      });
 	}
 
 	public toConfirm(): void {
@@ -44,14 +46,16 @@ export class CreateQuizComponent implements OnInit {
 					.createQuiz(
 						new QuizRequest(this.title, this.desc, this.isPublic, true)
 					)
-					.subscribe();
+					.subscribe(r =>
+            this.router.navigate(['/CreateQuiz/'+r.shareCode])
+          );
 		});
 	}
 
 	public updateInputState(event: string) {
 		if (event.length >= 4) this.titleValidStyle = '';
 		else this.titleValidStyle = 'mat-form-field-invalid';
-	}
+  }
 }
 
 @Component({
