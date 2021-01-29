@@ -22,8 +22,6 @@ export class QuizService {
 				map(r => {
 					if (r.status == 201) return r.body as QuizResponse;
 					else if (r.status == 202) {
-						return new QuizResponse(null, null, null, null, null, null, true);
-					} else if (r.status == 200)
 						return new QuizResponse(
 							null,
 							null,
@@ -31,10 +29,12 @@ export class QuizService {
 							null,
 							null,
 							null,
+							true,
 							false,
-							true
+							null,
+							null
 						);
-					else return null;
+					} else return null;
 				})
 			);
 	}
@@ -59,8 +59,6 @@ export class QuizService {
 			)
 			.pipe(
 				map(res => {
-					console.log(res);
-
 					return res;
 				})
 			);
@@ -76,4 +74,19 @@ export class QuizService {
 
     return this.http.get<any>(environment.backend.baseURL+ '/Quiz/GenerateAlphanumeric', httpOptions);
   }
+
+	public deleteQuiz(quiz: QuizResponse): Observable<boolean> {
+		return this.http
+			.get<boolean>(environment.backend.baseURL + `/Quiz/DeleteQuiz/${quiz.id}`)
+			.pipe(
+				map(
+					r => {
+						return true;
+					},
+					e => {
+						return false;
+					}
+				)
+			);
+	}
 }

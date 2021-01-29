@@ -35,51 +35,42 @@ namespace API.Controllers
                 Description = quizRequestDto.Description,
                 IsPublic = quizRequestDto.IsPublic,
                 OwnerId = userId,
-                ShareCode = GenerateAlphanumeric()
+                ShareCode = GenerateAlphanumeric(),
+                Date = DateTime.Now,
+                ListQuestions = new List<Question>()
             };
 
-            if (!quizRequestDto.Confirm && service.QuizCheck(userId, quizRequestDto.Title))
+            if (quizRequestDto.Confirm || !service.QuizCheck(userId, quizRequestDto.Title))
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created,
+                    service.CreateQuiz(quiz, User.Identity.Name)));
+
+
+            quizRequestDto.Confirm = true;
+            // Envoie un message pour que l'utilisateur confirme
+            HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.Accepted)
             {
-                quizRequestDto.Confirm = true;
-                // Envoie un message pour que l'utilisateur confirme
-                HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.Accepted)
-                {
-                    ReasonPhrase = "Quiz title already exist"
-                };
+                ReasonPhrase = "Quiz title already exist"
+            };
 
-                    return ResponseMessage(message);
-                }
-                quiz.ListQuestions = new List<Question>();
+            return ResponseMessage(message);
 
-                context.ListQuiz.Add(quiz);
-                context.SaveChanges();
-            }
-            
-
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, service.CreateQuiz(quiz, User.Identity.Name)));
         }
-
+        
+        [HttpGet]
         public IHttpActionResult GetQuizFromUser()
         {
             string userId = User.Identity.GetUserId() ?? "1";
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-                List<Quiz> list = context.ListQuiz.ToList();
-                List<QuizResponseDTO> listQuiz =
-                    context.ListQuiz.Where(q => q.OwnerId == userId).Select(q => new QuizResponseDTO()
-                    {
-                        Id = q.Id,
-                        Author = User.Identity.Name ?? "Nobody",
-                        Title = q.Title,
-                        IsPublic = q.IsPublic,
-                        Description = q.Description,
-                        ShareCode = q.ShareCode
-                    }).ToList();
+            
+            return Ok(service.GetQuizFromUser(userId, User.Identity.Name ?? "Nobody"));
+        }
 
+        [HttpGet]
+        public IHttpActionResult DeleteQuiz(int id)
+        {
+            if (service.DeleteQuiz(id))
+                return Ok();
 
-
-                return Ok(listQuiz);
-            }
+            return BadRequest();
         }
 
         [HttpGet]

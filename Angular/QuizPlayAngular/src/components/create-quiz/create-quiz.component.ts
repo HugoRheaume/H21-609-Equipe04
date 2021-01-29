@@ -23,14 +23,19 @@ export class CreateQuizComponent implements OnInit {
 	public create(): void {
 		this.http
 			.createQuiz(new QuizRequest(this.title, this.desc, this.isPublic))
-			.subscribe(r => {
-				if (r.toConfirm) this.toConfirm();
-				else if (r.errorMessage) {
+			.subscribe(
+				r => {
+					if (r.toConfirm) this.toConfirm();
+					else if (r == null) this.errMessage = 'An unexpected error occured';
+					else {
+                        this.router.navigate(['/CreateQuiz/'+r.shareCode])
+						this.errMessage = '';
+					}
+				},
+				e => {
 					this.errMessage = 'Title is too short';
 					this.titleValidStyle = 'mat-form-field-invalid';
-				} else if (r == null) this.errMessage = 'An unexpected error occured';
-				else {
-					this.router.navigate(['/CreateQuiz/'+r.shareCode])
+					
 				}
       });
 	}

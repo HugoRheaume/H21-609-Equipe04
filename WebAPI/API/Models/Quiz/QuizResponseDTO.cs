@@ -19,5 +19,10 @@ namespace API.Models
         public string Description { get; set; }
 
         public string ShareCode { get; set; }
+
+        public int NumberOfQuestions { get; set; }
+
+        public DateTime Date { get; set; }
+
     }
 }

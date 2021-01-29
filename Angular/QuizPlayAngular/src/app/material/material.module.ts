@@ -18,6 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
 	declarations: [],
@@ -41,6 +42,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 		MatTableModule,
 		MatPaginatorModule,
         ClipboardModule,
+		MatSortModule,
 	],
 	exports: [
 		BrowserAnimationsModule,
@@ -60,6 +62,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 		MatSlideToggleModule,
 		MatTableModule,
 		MatPaginatorModule,
+		MatSortModule,
         ClipboardModule,
 	],
 })
