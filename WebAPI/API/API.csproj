@@ -236,8 +236,11 @@
     <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\IQuestionService.cs" />
     <Compile Include="Service\QuestionService.cs" />
+    <Compile Include="Service\QuizService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validation\ModelValidationAttribute.cs" />
     <Compile Include="Validation\QuestionValidationAttribute.cs" />
+    <Compile Include="Validation\QuizValidationAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
