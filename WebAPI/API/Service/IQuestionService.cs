@@ -10,10 +10,12 @@ namespace API.Service
     {
         List<QuestionDTO> GetQuestions();
         QuestionDTO GetQuestionById(int id);
-        List<Question> GetQuestionByQuizId(int quizId);
+        List<QuestionDTO> GetQuestionByQuizId(int quizId);
 
 
-        QuestionDTO AddQuestion(Question q);
+        QuestionDTO AddQuestion(QuestionCreateDTO q);
+
+        List<QuestionDTO> DeleteQuestion(int id);
 
     }
 }

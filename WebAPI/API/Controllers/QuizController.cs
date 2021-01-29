@@ -52,6 +52,13 @@ namespace API.Controllers
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, service.CreateQuiz(quiz, User.Identity.Name)));
         }
+        [HttpGet]
+        [Route("api/quiz/getquizbyid/{quizId}")]
+
+        public IHttpActionResult GetGuizById(int quizId)
+        {
+            return Ok(service.GetGuizById(quizId));
+        }
 
         [HttpGet]
         public IHttpActionResult GetQuizByCode([FromUri(Name = "code")] string pCode)

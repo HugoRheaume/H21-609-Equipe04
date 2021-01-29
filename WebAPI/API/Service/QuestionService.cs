@@ -18,7 +18,7 @@ namespace API.Service
             
             List<QuestionDTO> listToShip = new List<QuestionDTO>();
 
-            List<Question> questionList = db.Question.ToList();
+            List<Question> questionList = db.Question.Include(x => x.Quiz).ToList();
             foreach (var item in questionList)
             {
                 listToShip.Add(GenerateQuestionDTO(item));
@@ -35,23 +35,54 @@ namespace API.Service
                 return null;           
         }
 
-        public List<Question> GetQuestionByQuizId(int quizId)
+        public List<QuestionDTO> GetQuestionByQuizId(int quizId)
         {
-            throw new NotImplementedException();
+            List<QuestionDTO> listToShip = new List<QuestionDTO>();
+            Quiz quiz = db.ListQuiz.Where(x => x.Id == quizId).FirstOrDefault();
+            if (quiz == null)
+                return null;
+            List<Question> questionList = db.Question.Where(x => x.Quiz.Id == quizId).ToList();
+            foreach (var item in questionList)
+            {
+                listToShip.Add(GenerateQuestionDTO(item));
+            }
+            return listToShip;
+
+
+
         }
 
-        public QuestionDTO AddQuestion(Question question)
+        public QuestionDTO AddQuestion(QuestionCreateDTO question)
         {
-            Question q = db.Question.Add(question);
+
+            Quiz quiz = db.ListQuiz.Where(x => x.Id == question.QuizId).FirstOrDefault();
+
+
+
+            Question questionToCreate = new Question()
+            {
+                Quiz = quiz,
+                Label = question.Label,
+                TimeLimit = question.TimeLimit,
+                QuestionType = question.QuestionType,
+                QuestionTrueFalse = new List<QuestionTrueFalse>() { question.QuestionTrueFalse },
+                QuestionMultipleChoice = question.QuestionMultipleChoice
+            };
+
+
+
+            Question q = db.Question.Add(questionToCreate);
             db.SaveChanges();
             return GenerateQuestionDTO(q);                       
         }
 
+        
         private QuestionDTO GenerateQuestionDTO(Question q)
         {
             QuestionDTO question = new QuestionDTO()
             {
                 Id = q.Id,
+                QuizId = q.Quiz.Id,
                 Label = q.Label,
                 TimeLimit = q.TimeLimit,
                 QuestionType = q.QuestionType,
@@ -74,6 +105,20 @@ namespace API.Service
             }
 
             return question;
+        }
+
+        public List<QuestionDTO> DeleteQuestion(int id)
+        {
+            Question question = db.Question.Where(x => x.Id == id).Include(x => x.Quiz).FirstOrDefault();
+            if (question == null)
+                return null;
+
+            int quizId = question.Quiz.Id;
+
+            db.Question.Remove(question);
+            db.SaveChanges();
+            return GetQuestionByQuizId(quizId);
+
         }
     }
 }

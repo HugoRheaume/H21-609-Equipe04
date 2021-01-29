@@ -1,0 +1,48 @@
+<div class="container">
+    <div *ngIf="this.service.currentQuiz">
+        <h2>Quiz ID: {{this.service.currentQuiz.id}}</h2>
+    </div>
+
+
+    <h1 class="text-center">Ajouter des questions </h1>
+    <div>
+        <div class="row">
+            <div class="col-10">
+                <button class="questionButtonAddRemove" mat-fab color="primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <mat-icon>add</mat-icon>
+                </button>
+                
+                
+            </div>
+            <div class="col-2">
+                <button mat-raised-button class="m-3" color="primary">Suivant</button>
+            </div>
+            
+        </div>
+        
+        <div class="questionBox">
+            
+            <div *ngIf="this.service.currentQuestions">
+                <div class="questionDisplay align-middle" *ngFor="let item of this.service.currentQuestions"> 
+                    <div class="row">
+                        <div class="col-10">
+                            <h2>{{item.label}} </h2>
+                        </div>
+                        
+                        <div class="col-2">
+                            <button  class="questionButtonAddRemove" id="add-button" mat-fab color="primary" (click)="deleteQuestion(item.id)" aria-label="Example icon button with a delete icon">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button  class="questionButtonAddRemove" id="delete-button" mat-fab color="primary" [routerLink]="['/r/create']" aria-label="Example icon button with a delete icon">
+                                <mat-icon>edit</mat-icon>
+                            </button>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+

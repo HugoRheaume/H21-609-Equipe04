@@ -28,22 +28,25 @@ namespace API.Controllers
         {
             return Ok(service.GetQuestionById(id));
         }
+        [HttpGet]
+        [Route("api/question/getquizquestion/{quizid}")]
+        public IHttpActionResult GetQuizQuestion(int quizId)
+        {
+            return Ok(service.GetQuestionByQuizId(quizId));
+        }
 
         [HttpPost]
         [QuestionValidation]
-        public HttpResponseMessage Add(QuestionCreateDTO question)
+        public IHttpActionResult Add(QuestionCreateDTO question)
         {
-            Question questionToCreate = new Question() 
-            { 
-                Label = question.Label,
-                TimeLimit = question.TimeLimit,
-                QuestionType = question.QuestionType,
-                QuestionTrueFalse = new List<QuestionTrueFalse>() { question.QuestionTrueFalse },
-                QuestionMultipleChoice = question.QuestionMultipleChoice
-            };
+            return Ok(service.AddQuestion(question));
+        }
 
-            service.AddQuestion(questionToCreate);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+        [HttpGet]
+        [Route("api/question/delete/{questionId}")]
+        public IHttpActionResult Delete(int questionId)
+        {
+            return Ok(service.DeleteQuestion(questionId));
         }
     }
 }

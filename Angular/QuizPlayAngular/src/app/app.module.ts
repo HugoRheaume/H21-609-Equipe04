@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material.module';
 import { CreateTrueOrFalseQuestion } from '../components/create-trueorfalse-question/create-trueorfalse-question.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,12 +14,14 @@ import {
 } from 'src/components/create-quiz/create-quiz.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alphanumeric-code.component';
+import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
 @NgModule({
 	declarations: [
 		AppComponent,
 		CreateQuizComponent,
 		CreateQuizConfirmDialog,
-    CreateTrueOrFalseQuestion,
+		CreateTrueOrFalseQuestion,
+		QuizQuestionListComponent,
     AlphanumericCodeComponent
 	],
 	imports: [
@@ -29,7 +32,14 @@ import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alph
 		MaterialModule,
 		BrowserAnimationsModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+
+		RouterModule.forRoot([
+			{path: 'create/:quizId', component: QuizQuestionListComponent},
+			{path: 'create', component: CreateQuizComponent}
+			
+	  
+		  ]),
 	],
 	entryComponents: [CreateQuizComponent],
 	providers: [],
