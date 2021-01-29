@@ -48,8 +48,6 @@ namespace API.Controllers
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, service.CreateQuiz(quiz, User.Identity.Name)));
         }
-    }
-}
 
         [HttpGet]
         public IHttpActionResult GetQuizByCode([FromUri(Name = "code")] string pCode)
@@ -58,27 +56,29 @@ namespace API.Controllers
             {
                 Quiz quiz;
                 try
+                {
                     quiz = context.ListQuiz.First(q => q.ShareCode == pCode);
-                {
                 }
-                {
                 catch (Exception)
+                {
                     return BadRequest("Aucun quiz n'a été trouvé.");
                 }
                 if (quiz != null)
-                
                 {
-                    {
+                
                     QuizResponseDTO response = new QuizResponseDTO()
+                    {
                         Author = User.Identity.Name ?? "Nobody",
                         Id = quiz.Id,
                         IsPublic = quiz.IsPublic,
                         Description = quiz.Description,
                         ShareCode = quiz.ShareCode,
                         Title = quiz.Title
-                    return Ok(response);
                     };
+                    return Ok(response);
                 }
-            return null;
+                return null;
             }
         }
+    }
+}
