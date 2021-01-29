@@ -63,17 +63,19 @@ export class QuizService {
 				})
 			);
 	}
-  }
 
-  public getAlphanumericCode(): Observable<string>{
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    }
+	public getAlphanumericCode(): Observable<string> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
 
-    return this.http.get<any>(environment.backend.baseURL+ '/Quiz/GenerateAlphanumeric', httpOptions);
-  }
+		return this.http.get<any>(
+			environment.backend.baseURL + '/Quiz/GenerateAlphanumeric',
+			httpOptions
+		);
+	}
 
 	public deleteQuiz(quiz: QuizResponse): Observable<boolean> {
 		return this.http
@@ -89,16 +91,4 @@ export class QuizService {
 				)
 			);
 	}
-}
-
-public getAlphanumericCode(): Observable<string>{
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  }
-
-  return this.http.get<any>(environment.backend.baseURL+ '/Alphanumeric/GenerateAlphanumeric', httpOptions);
-}
-
 }

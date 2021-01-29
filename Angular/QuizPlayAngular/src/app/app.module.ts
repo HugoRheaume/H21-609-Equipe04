@@ -28,7 +28,7 @@ import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alph
 		CreateQuizConfirmDialog,
 		CreateTrueOrFalseQuestion,
 		ListQuizComponent,
-        AlphanumericCodeComponent
+		AlphanumericCodeComponent,
 		DeleteQuizDialog,
 	],
 	imports: [
@@ -39,11 +39,11 @@ import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alph
 		MaterialModule,
 		BrowserAnimationsModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
 		CommonModule,
 	],
 	entryComponents: [CreateQuizComponent],
 	providers: [],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
 })
 export class AppModule {}
