@@ -50,17 +50,15 @@ export class QuizService {
 			pQuestion,
 			httpOptions
 		);
-	}
-}
-
-public getAlphanumericCode(): Observable<string>{
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
   }
 
-  return this.http.get<any>(environment.backend.baseURL+ '/Alphanumeric/GenerateAlphanumeric', httpOptions);
-}
+  public getAlphanumericCode(): Observable<string>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    }
 
+    return this.http.get<any>(environment.backend.baseURL+ '/Quiz/GenerateAlphanumeric', httpOptions);
+  }
 }

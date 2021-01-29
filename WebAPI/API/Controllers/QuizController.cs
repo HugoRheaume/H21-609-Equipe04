@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using API.Models;
@@ -17,6 +18,8 @@ namespace API.Controllers
     public class QuizController : ApiController
     {
         private QuizService service = new QuizService(new ApplicationDbContext());
+        private const string ALPHANUMERIC_CHARACTER_LIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        private static Random random = new Random();
 
         [HttpPost]
         [ModelValidation]
@@ -30,7 +33,8 @@ namespace API.Controllers
                 Title = quizRequestDto.Title,
                 Description = quizRequestDto.Description,
                 IsPublic = quizRequestDto.IsPublic,
-                OwnerId = userId
+                OwnerId = userId,
+                ShareCode = GenerateAlphanumeric()
             };
 
             if (!quizRequestDto.Confirm && service.QuizCheck(userId, quizRequestDto.Title))
@@ -79,6 +83,22 @@ namespace API.Controllers
                 }
                 return null;
             }
+        }
+
+        public string GenerateAlphanumeric()
+        {
+            StringBuilder code;
+            do
+            {
+                code = new StringBuilder();
+                char ch;
+                for (int i = 0; i < 6; i++)
+                {
+                    ch = ALPHANUMERIC_CHARACTER_LIST[random.Next(0, ALPHANUMERIC_CHARACTER_LIST.Length)];
+                    code.Append(ch);
+                }
+            } while (service.CheckCodeExist(code.ToString()));
+            return code.ToString();
         }
     }
 }

@@ -12,13 +12,14 @@ import {
 	CreateQuizConfirmDialog,
 } from 'src/components/create-quiz/create-quiz.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AlphanumericCodeComponent } from './AlphanumericCode/AlphanumericCode.component';
+import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alphanumeric-code.component';
 @NgModule({
 	declarations: [
 		AppComponent,
 		CreateQuizComponent,
 		CreateQuizConfirmDialog,
-		CreateTrueOrFalseQuestion,
+    CreateTrueOrFalseQuestion,
+    AlphanumericCodeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -28,21 +29,10 @@ import { AlphanumericCodeComponent } from './AlphanumericCode/AlphanumericCode.c
 		MaterialModule,
 		BrowserAnimationsModule,
 		FormsModule,
-		ReactiveFormsModule,
+		ReactiveFormsModule
 	],
 	entryComponents: [CreateQuizComponent],
 	providers: [],
-	bootstrap: [AppComponent],
-      AlphanumericCodeComponent
-   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MaterialModule,
-    BrowserAnimationsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	bootstrap: [AppComponent]
 })
 export class AppModule {}
