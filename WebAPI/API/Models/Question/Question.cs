@@ -18,6 +18,7 @@ namespace API.Models.Question
         public QuestionType QuestionType { get; set; }
 
         public int TimeLimit { get; set; }
+        public bool NeedsAllAnswers { get; set; }
         
 
         [ForeignKey("QuestionId")]
