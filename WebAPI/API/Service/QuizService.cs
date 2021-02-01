@@ -34,7 +34,7 @@ namespace API.Service
             return db.ListQuiz.Any(q => q.ShareCode == code);
         }
 
-        public QuizResponseDTO GetGuizById(int quizId)
+        public QuizResponseDTO GetQuizById(int quizId)
         {
             Quiz quizToShip = db.ListQuiz.Where(x => x.Id == quizId).FirstOrDefault();
             if (quizToShip == null)

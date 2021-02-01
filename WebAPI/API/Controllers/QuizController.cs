@@ -75,9 +75,9 @@ namespace API.Controllers
         [HttpGet]
         [Route("api/quiz/getquizbyid/{quizId}")]
 
-        public IHttpActionResult GetGuizById(int quizId)
+        public IHttpActionResult GetQuizById(int quizId)
         {
-            return Ok(service.GetGuizById(quizId));
+            return Ok(service.GetQuizById(quizId));
         }
 
         [HttpGet]
