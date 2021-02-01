@@ -15,7 +15,7 @@
             <mat-label>Question type</mat-label>
             <mat-select [(value)]="this.selectedValue">
               <mat-option>None</mat-option>
-              <mat-option *ngFor="let i of this.iterator" value="{{i}}">{{this.enumNames[i-1]}}</mat-option>
+              <mat-option *ngFor="let i of this.iterator" value="{{this.enumValues[i]}}">{{this.enumNames[i]}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
