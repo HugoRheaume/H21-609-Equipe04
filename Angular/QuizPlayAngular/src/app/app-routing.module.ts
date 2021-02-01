@@ -1,4 +1,3 @@
-import { AlphanumericCodeComponent } from './../components/alphanumeric-code/alphanumeric-code.component';
 import { CreateTrueOrFalseQuestion } from './../components/create-trueorfalse-question/create-trueorfalse-question.component';
 import { CreateQuizComponent } from 'src/components/create-quiz/create-quiz.component';
 import { ListQuizComponent } from '../components/list-quiz/list-quiz.component';

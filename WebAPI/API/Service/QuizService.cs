@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Models.Question;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,8 +77,14 @@ namespace API.Service
             Quiz quizToDelete = db.ListQuiz.Find(quizId);
             if (quizToDelete == null) return false;
 
+            List<Question> questionsToDelete = db.Question.Where(x => x.Quiz.Id == quizToDelete.Id).ToList();
 
+            foreach (var item in questionsToDelete)
+            {
+                db.Question.Remove(item);
+            }
             db.ListQuiz.Remove(quizToDelete);
+
             db.SaveChanges();
             return true;
 

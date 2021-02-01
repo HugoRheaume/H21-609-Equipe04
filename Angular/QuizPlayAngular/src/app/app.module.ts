@@ -23,7 +23,6 @@ import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
-import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alphanumeric-code.component';
 import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
 @NgModule({
 	declarations: [
@@ -34,7 +33,6 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
     CreateQuestionComponent,
     CreateMultiplechoicesQuestionComponent,
 		ListQuizComponent,
-		AlphanumericCodeComponent,
 		DeleteQuizDialog,
 		QuizQuestionListComponent,
 	],

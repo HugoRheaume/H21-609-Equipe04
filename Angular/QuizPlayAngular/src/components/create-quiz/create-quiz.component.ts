@@ -32,19 +32,14 @@ export class CreateQuizComponent implements OnInit {
 					if (r.toConfirm) this.toConfirm();
 					else if (r == null) this.errMessage = 'An unexpected error occured';
 					else {
-						this.router.navigate(['/CreateQuiz/' + r.shareCode]);
+						this.http.currentQuiz = r;
+					this.router.navigate(['/quiz/'+r.id])
 						this.errMessage = '';
 					}
 				},
 				e => {
 					this.errMessage = 'Title is too short';
 					this.titleValidStyle = 'mat-form-field-invalid';
-				} else if (r == null) this.errMessage = 'An unexpected error occured';
-				else {
-					//this.router.navigate(['/CreateQuiz/'+r.shareCode])
-					this.errMessage = '';
-					this.http.currentQuiz = r;
-					this.router.navigate(['/quiz/'+r.id])
 				}
 			);
 	}

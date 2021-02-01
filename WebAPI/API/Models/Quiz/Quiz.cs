@@ -27,6 +27,5 @@ namespace API.Models
         public virtual List<Question.Question> ListQuestions { get; set; }
 
         public DateTime Date { get; set; }
-        public virtual List<Question.Question> Questions { get; set; }
     }
 }

@@ -118,8 +118,8 @@ export class QuizService {
 		return this.http
 			.get<boolean>(environment.backend.baseURL + `/Quiz/DeleteQuiz/${quiz.id}`)
 			.pipe(
-					r => {
 				map(
+					r => {
 						return true;
 					},
 					e => {
