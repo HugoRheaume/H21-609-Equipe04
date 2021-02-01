@@ -11,6 +11,7 @@ using System.Web.Http.ModelBinding;
 using API.Models;
 using API.Service;
 using API.Validation;
+using API.Models.Question;
 using Microsoft.AspNet.Identity;
 
 namespace API.Controllers
@@ -34,23 +35,42 @@ namespace API.Controllers
                 Description = quizRequestDto.Description,
                 IsPublic = quizRequestDto.IsPublic,
                 OwnerId = userId,
-                ShareCode = GenerateAlphanumeric()
+                ShareCode = GenerateAlphanumeric(),
+                Date = DateTime.Now,
+                ListQuestions = new List<Question>()
             };
 
-            if (!quizRequestDto.Confirm && service.QuizCheck(userId, quizRequestDto.Title))
+            if (quizRequestDto.Confirm || !service.QuizCheck(userId, quizRequestDto.Title))
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created,
+                    service.CreateQuiz(quiz, User.Identity.Name)));
+
+
+            quizRequestDto.Confirm = true;
+            // Envoie un message pour que l'utilisateur confirme
+            HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.Accepted)
             {
-                quizRequestDto.Confirm = true;
-                // Envoie un message pour que l'utilisateur confirme
-                HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.Accepted)
-                {
-                    ReasonPhrase = "Quiz title already exist"
-                };
+                ReasonPhrase = "Quiz title already exist"
+            };
 
-                return ResponseMessage(message);
-            }
+            return ResponseMessage(message);
+
+        }
+        
+        [HttpGet]
+        public IHttpActionResult GetQuizFromUser()
+        {
+            string userId = User.Identity.GetUserId() ?? "1";
             
+            return Ok(service.GetQuizFromUser(userId, User.Identity.Name ?? "Nobody"));
+        }
 
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created, service.CreateQuiz(quiz, User.Identity.Name)));
+        [HttpGet]
+        public IHttpActionResult DeleteQuiz(int id)
+        {
+            if (service.DeleteQuiz(id))
+                return Ok();
+
+            return BadRequest();
         }
 
         [HttpGet]

@@ -1,3 +1,5 @@
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
 	declarations: [],
@@ -35,8 +38,11 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 		MatProgressSpinnerModule,
 		MatCheckboxModule,
 		MatRadioModule,
-    MatSlideToggleModule,
-    ClipboardModule,
+		MatSlideToggleModule,
+		MatTableModule,
+		MatPaginatorModule,
+        ClipboardModule,
+		MatSortModule,
 	],
 	exports: [
 		BrowserAnimationsModule,
@@ -53,8 +59,11 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 		MatProgressSpinnerModule,
 		MatCheckboxModule,
 		MatRadioModule,
-    MatSlideToggleModule,
-    ClipboardModule,
+		MatSlideToggleModule,
+		MatTableModule,
+		MatPaginatorModule,
+		MatSortModule,
+        ClipboardModule,
 	],
 })
 export class MaterialModule {}

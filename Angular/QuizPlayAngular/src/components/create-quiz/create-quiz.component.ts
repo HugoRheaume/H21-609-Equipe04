@@ -14,25 +14,33 @@ export class CreateQuizComponent implements OnInit {
 	desc: string = '';
 	isPublic = false;
 	errMessage: string = '';
-  titleValidStyle = '';
-  alphanumericCode: string = '';
-	constructor(public http: QuizService, public dialog: MatDialog, public router: Router) {}
+	titleValidStyle = '';
+	alphanumericCode: string = '';
+	constructor(
+		public http: QuizService,
+		public dialog: MatDialog,
+		public router: Router
+	) {}
 
 	ngOnInit(): void {}
 
 	public create(): void {
 		this.http
 			.createQuiz(new QuizRequest(this.title, this.desc, this.isPublic))
-			.subscribe(r => {
-				if (r.toConfirm) this.toConfirm();
-				else if (r.errorMessage) {
+			.subscribe(
+				r => {
+					if (r.toConfirm) this.toConfirm();
+					else if (r == null) this.errMessage = 'An unexpected error occured';
+					else {
+						this.router.navigate(['/CreateQuiz/' + r.shareCode]);
+						this.errMessage = '';
+					}
+				},
+				e => {
 					this.errMessage = 'Title is too short';
 					this.titleValidStyle = 'mat-form-field-invalid';
-				} else if (r == null) this.errMessage = 'An unexpected error occured';
-				else {
-					this.router.navigate(['/CreateQuiz/'+r.shareCode])
 				}
-      });
+			);
 	}
 
 	public toConfirm(): void {
@@ -46,16 +54,14 @@ export class CreateQuizComponent implements OnInit {
 					.createQuiz(
 						new QuizRequest(this.title, this.desc, this.isPublic, true)
 					)
-					.subscribe(r =>
-            this.router.navigate(['/CreateQuiz/'+r.shareCode])
-          );
+					.subscribe(r => this.router.navigate(['/CreateQuiz/' + r.shareCode]));
 		});
 	}
 
 	public updateInputState(event: string) {
 		if (event.length >= 4) this.titleValidStyle = '';
 		else this.titleValidStyle = 'mat-form-field-invalid';
-  }
+	}
 }
 
 @Component({
