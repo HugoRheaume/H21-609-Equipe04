@@ -41,7 +41,7 @@ export class QuizService {
 			);
 	}
 
-	public addQuestion(pQuestion: any): Observable<any> {
+	public addQuestion(pQuestion: any) {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',

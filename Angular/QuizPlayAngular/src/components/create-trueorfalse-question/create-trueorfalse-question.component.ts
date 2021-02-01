@@ -79,10 +79,8 @@ export class CreateTrueOrFalseQuestion implements OnInit {
       console.log(question.toTrueOrFalseDTO());
 
     this.TrueFalse.reset();
-    this.service.addQuestion(question.toDTO());//.subscribe(res => {
-    this.service.addQuestion(question.toTrueOrFalseDTO()).subscribe(res => {
-      console.log(res);
-    });*/
+    
+    this.service.addQuestion(question.toTrueOrFalseDTO());
     this.route.navigate['/'];
   }
 

@@ -18,11 +18,10 @@ export class QuestionTrueOrFalse extends Question {
     let questionToExport = new QuestionCreateTrueFalseDTO();
     let questionTrueFalse = new QuestionTrueOrFalse();
     questionTrueFalse.answer = this.answer;
-
+    questionToExport.quizId = this.quizId;
     questionToExport.label = this.label;
     questionToExport.QuestionType = this.questionType;
     questionToExport.TimeLimit = this.timeLimit;
-    questionToExport.quizId = this.quizId;
     questionToExport.QuestionTrueFalse = questionTrueFalse;
 
     return questionToExport;
@@ -47,6 +46,7 @@ export class QuestionMultipleChoice extends Question{
     questionToExport.TimeLimit = this.timeLimit;
     questionToExport.NeedsAllAnswers = this.needsAllAnswers;
     questionToExport.QuestionMultipleChoice = this.questionChoices;
+    questionToExport.quizId = this.quizId;
 
     return questionToExport;
   }
@@ -65,6 +65,7 @@ export class QuestionCreateTrueFalseDTO {
   public QuestionType: QuestionType;
   public TimeLimit: number;
   public QuestionTrueFalse: QuestionTrueOrFalse;
+  public quizId: number;
 }
 
 export class QuestionCreateMultipleChoiceDTO {
