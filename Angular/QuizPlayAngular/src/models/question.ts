@@ -18,6 +18,7 @@ export abstract class Question {
     questionToExport.TimeLimit = this.timeLimit;
     questionToExport.QuestionTrueFalse = this.questionType == QuestionType.TrueFalse ? questionTrueFalse : null;
     questionToExport.QuestionMultipleChoice = this.questionType == QuestionType.MultipleChoices ?  this.questionChoices : null;
+    questionToExport.quizId = this.quizId;
 
     return questionToExport;
   }
@@ -50,6 +51,7 @@ export class QuestionCreateDTO {
   public label: string;
   public QuestionType: QuestionType;
   public TimeLimit: number;
+  public quizId: number;
   public QuestionTrueFalse: QuestionTrueOrFalse;
   public QuestionMultipleChoice: QuestionChoice[];
   public quizId: number;

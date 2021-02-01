@@ -25,7 +25,6 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
         CreateQuestionComponent,
         CreateMultiplechoicesQuestionComponent,
         CreateTrueOrFalseQuestion,
-		QuizQuestionListComponent
 	],
 	imports: [
 		BrowserModule,

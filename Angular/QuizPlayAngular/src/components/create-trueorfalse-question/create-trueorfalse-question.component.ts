@@ -63,18 +63,7 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     question.label = this.TrueFalse.get('questionLabel').value;
 
     //Submit to the server
-    /*alert(
-      'The question is : ' +
-      question.label +
-      '\nThe answer is : ' +
-      question.answer +
-      '\nThe question has a time limit : ' +
-      questionHasTimeLimit.value +
-      '\nThe allowed time is : ' +
-      question.timeLimit +
-      '\nThe question type : ' +
-      question.questionType.toString()
-    );*/
+    
 
       console.log(question.toDTO());
 
