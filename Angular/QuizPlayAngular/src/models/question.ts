@@ -54,5 +54,4 @@ export class QuestionCreateDTO {
   public quizId: number;
   public QuestionTrueFalse: QuestionTrueOrFalse;
   public QuestionMultipleChoice: QuestionChoice[];
-  public quizId: number;
 }
