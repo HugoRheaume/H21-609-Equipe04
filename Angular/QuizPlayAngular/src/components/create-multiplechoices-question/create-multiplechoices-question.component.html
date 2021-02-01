@@ -1,0 +1,54 @@
+<div class="modal-body" [formGroup]="MultipleChoice">
+  <p>
+    <mat-form-field appearance="outline" class="form-field-full-width">
+      <mat-label>Question's label</mat-label>
+      <input matInput #questionLabel placeholder="Do you like flowers?" id="inputQuestionLabel"
+        formControlName="questionLabel">
+      <mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
+      <mat-error>{{ labelErrorMessage }}</mat-error>
+    </mat-form-field>
+  </p>
+  <p class="mat-form-field-wrapper">
+    <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Add a time limit</mat-checkbox>
+  </p>
+  <p *ngIf="this.MultipleChoice.get('questionHasTimeLimit').value">
+    <mat-form-field appearance="outline">
+      <mat-label>Question's allowed time</mat-label>
+      <input matInput type="number" formControlName="questionTimeLimit">
+      <mat-error>{{ timeLimitErrorMessage }}</mat-error>
+    </mat-form-field>
+  </p>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="addChoice()"
+      style="margin-top: 1.34375em; margin-bottom: 1.34375em;" [disabled]="this.choices.length == 8">
+      Add a choice
+    </button>
+    <div *ngIf="this.choices.length != 0">
+      <mat-label style="padding-left: 0.75em;">Question's choices<span
+          style="font-size: x-small; color: gainsboro; margin-left: 5px;">(min 2, max 8)</span></mat-label><br>
+      <div *ngFor="let choice of choices" >
+        <mat-checkbox value="{{choice.answer}}" style="margin-right: 30px;"
+          [(ngModel)]="choice.answer" [ngModelOptions]="{standalone: true}">
+          <mat-form-field>
+            <mat-label>Choice number {{choice.choiceNumber}}</mat-label>
+            <span matPrefix><strong>{{choice.choiceNumber}}. &nbsp;</strong></span>
+            <input matInput type="text" [(ngModel)]="choice.statement" [ngModelOptions]="{standalone: true}"
+              style="margin-left: 10px; padding-right: 10px;" placeholder="A little bit.">
+          </mat-form-field>
+        </mat-checkbox>
+        <button mat-mini-fab color="primary" (click)="removeChoice(choice.choiceNumber)">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="this.discard()">Discard</button>
+  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="submit()"
+    [disabled]="checkForm">Submit</button>
+</div>
