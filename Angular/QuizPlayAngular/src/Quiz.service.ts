@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { QuizRequest } from './models/QuizRequest';
 import { QuizResponse } from './models/QuizResponse';
-import { Question, QuestionCreateDTO } from './models/question';
+import { Question } from './models/question';
 
 @Injectable({
 	providedIn: 'root',
@@ -41,7 +41,7 @@ export class QuizService {
 			);
 	}
 
-	public addQuestion(pQuestion: QuestionCreateDTO): /*Observable<any>*/void {
+	public addQuestion(pQuestion: any): Observable<any> {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
