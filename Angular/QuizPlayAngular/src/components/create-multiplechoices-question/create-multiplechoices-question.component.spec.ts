@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { AlphanumericCodeComponent } from './alphanumeric-code.component';
+import { CreateMultiplechoicesQuestionComponent } from './create-multiplechoices-question.component';
 
-describe('AlphanumericCodeComponent', () => {
-  let component: AlphanumericCodeComponent;
-  let fixture: ComponentFixture<AlphanumericCodeComponent>;
+describe('CreateMultiplechoicesQuestionComponent', () => {
+  let component: CreateMultiplechoicesQuestionComponent;
+  let fixture: ComponentFixture<CreateMultiplechoicesQuestionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AlphanumericCodeComponent ]
+      declarations: [ CreateMultiplechoicesQuestionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AlphanumericCodeComponent);
+    fixture = TestBed.createComponent(CreateMultiplechoicesQuestionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

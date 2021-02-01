@@ -10,3 +10,12 @@ body {
 	background-color: #303030;
 	color: rgb(223, 210, 210);
 }
+.cdk-overlay-container, .cdk-overlay-pane {
+  z-index: 9999 !important;
+}
+div.mat-form-field-wrapper.ng-tns-c30-0{
+  padding-bottom: 0em !important;
+}
+.form-field-full-width{
+  width: 100%;
+}

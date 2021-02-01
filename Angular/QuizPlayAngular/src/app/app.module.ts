@@ -1,3 +1,6 @@
+import { RouterModule } from '@angular/router';
+import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
+import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
 	ListQuizComponent,
@@ -20,16 +23,18 @@ import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
-import { AlphanumericCodeComponent } from 'src/components/alphanumeric-code/alphanumeric-code.component';
+import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
 @NgModule({
 	declarations: [
 		AppComponent,
 		CreateQuizComponent,
 		CreateQuizConfirmDialog,
-		CreateTrueOrFalseQuestion,
+    CreateTrueOrFalseQuestion,
+    CreateQuestionComponent,
+    CreateMultiplechoicesQuestionComponent,
 		ListQuizComponent,
-		AlphanumericCodeComponent,
 		DeleteQuizDialog,
+		QuizQuestionListComponent,
 	],
 	imports: [
 		BrowserModule,

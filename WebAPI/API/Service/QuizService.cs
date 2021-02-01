@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Models.Question;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,17 +22,7 @@ namespace API.Service
             db.SaveChanges();
 
 
-            QuizResponseDTO response = new QuizResponseDTO()
-            {
-                Id = newQuiz.Id,
-                Title = newQuiz.Title,
-                Author = username ?? "Nobody",
-                Description = newQuiz.Description,
-                IsPublic = newQuiz.IsPublic,
-                ShareCode = newQuiz.ShareCode,
-                Date = quiz.Date
-            };
-            return response;
+            return GenerateQuizResponseDTO(newQuiz, username);
         }
         public bool QuizCheck(string userId, string quizTitle)
         {
@@ -41,6 +32,26 @@ namespace API.Service
         public bool CheckCodeExist(string code)
         {
             return db.ListQuiz.Any(q => q.ShareCode == code);
+        }
+
+        public QuizResponseDTO GetQuizById(int quizId)
+        {
+            Quiz quizToShip = db.ListQuiz.Where(x => x.Id == quizId).FirstOrDefault();
+            if (quizToShip == null)
+                return null;
+            return GenerateQuizResponseDTO(quizToShip, null);
+        }
+        private QuizResponseDTO GenerateQuizResponseDTO(Quiz quiz, string username)
+        {
+            return new QuizResponseDTO()
+            {
+                Id = quiz.Id,
+                Author = username ?? "Nobody",
+                Description = quiz.Description,
+                IsPublic = quiz.IsPublic,
+                ShareCode = quiz.ShareCode,
+                Title = quiz.Title
+            };
         }
 
         public List<QuizResponseDTO> GetQuizFromUser(string userId, string username)
@@ -66,8 +77,14 @@ namespace API.Service
             Quiz quizToDelete = db.ListQuiz.Find(quizId);
             if (quizToDelete == null) return false;
 
+            List<Question> questionsToDelete = db.Question.Where(x => x.Quiz.Id == quizToDelete.Id).ToList();
 
+            foreach (var item in questionsToDelete)
+            {
+                db.Question.Remove(item);
+            }
             db.ListQuiz.Remove(quizToDelete);
+
             db.SaveChanges();
             return true;
 

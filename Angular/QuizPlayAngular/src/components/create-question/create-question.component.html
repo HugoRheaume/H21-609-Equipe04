@@ -1,0 +1,22 @@
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div style="display: flex; justify-content: center; flex-direction: column;">
+          <h3 class="modal-title mb-0" id="staticBackdropLabel">Create a question</h3>
+          <mat-form-field appearance="outline">
+            <mat-label>Question type</mat-label>
+            <mat-select [(value)]="this.selectedValue">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let i of this.iterator" value="{{this.enumValues[i]}}">{{this.enumNames[i]}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <app-create-trueorfalse-question *ngIf="this.selectedValue==='1'"></app-create-trueorfalse-question>
+      <app-create-multiplechoices-question *ngIf="this.selectedValue==='2'"></app-create-multiplechoices-question>
+    </div>
+  </div>
+</div>

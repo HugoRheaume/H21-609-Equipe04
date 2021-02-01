@@ -8,6 +8,7 @@ namespace API.Models.Question
     public class QuestionCreateDTO
     {
         public string Label;
+        public int QuizId;
         public QuestionType QuestionType;
         public int TimeLimit;
         public QuestionTrueFalse QuestionTrueFalse;

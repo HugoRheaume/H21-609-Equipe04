@@ -12,6 +12,7 @@ namespace API.Models.Question
     {
         [Key]
         public int Id { get; set; }
+        
         public string Label { get; set; }        
 
         public QuestionType QuestionType { get; set; }
@@ -25,5 +26,7 @@ namespace API.Models.Question
 
         [ForeignKey("QuestionId")]
         public virtual List<QuestionMultipleChoice> QuestionMultipleChoice { get; set; }
+
+        public Quiz Quiz { get; set; }
     }
 }

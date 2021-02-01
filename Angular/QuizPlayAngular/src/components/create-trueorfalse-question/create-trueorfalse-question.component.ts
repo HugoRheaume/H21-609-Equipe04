@@ -1,6 +1,6 @@
 import { QuizService } from '../../quiz.service';
 import { Component, OnInit } from '@angular/core';
-import { QuestionTrueOrFalse } from 'src/models/question';
+import { Question, QuestionTrueOrFalse } from 'src/models/question';
 import { Router } from '@angular/router';
 import {
   FormBuilder,
@@ -63,7 +63,7 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     question.label = this.TrueFalse.get('questionLabel').value;
 
     //Submit to the server
-    alert(
+    /*alert(
       'The question is : ' +
       question.label +
       '\nThe answer is : ' +
@@ -74,12 +74,14 @@ export class CreateTrueOrFalseQuestion implements OnInit {
       question.timeLimit +
       '\nThe question type : ' +
       question.questionType.toString()
-    );
+    );*/
+
+      console.log(question.toDTO());
 
     this.TrueFalse.reset();
-    this.service.addQuestion(question.toDTO()).subscribe(res => {
+    this.service.addQuestion(question.toDTO());/*.subscribe(res => {
       console.log(res);
-    });
+    });*/
     this.route.navigate['/'];
   }
 

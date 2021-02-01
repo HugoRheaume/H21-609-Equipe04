@@ -32,7 +32,8 @@ export class CreateQuizComponent implements OnInit {
 					if (r.toConfirm) this.toConfirm();
 					else if (r == null) this.errMessage = 'An unexpected error occured';
 					else {
-						this.router.navigate(['/CreateQuiz/' + r.shareCode]);
+						this.http.currentQuiz = r;
+					this.router.navigate(['/quiz/'+r.id])
 						this.errMessage = '';
 					}
 				},
@@ -54,7 +55,11 @@ export class CreateQuizComponent implements OnInit {
 					.createQuiz(
 						new QuizRequest(this.title, this.desc, this.isPublic, true)
 					)
-					.subscribe(r => this.router.navigate(['/CreateQuiz/' + r.shareCode]));
+					.subscribe(r =>{
+                       // this.router.navigate(['/sharecode/'+r.shareCode])
+						this.http.currentQuiz = r;
+						this.router.navigate(['/quiz/'+r.id])
+					});
 		});
 	}
 
