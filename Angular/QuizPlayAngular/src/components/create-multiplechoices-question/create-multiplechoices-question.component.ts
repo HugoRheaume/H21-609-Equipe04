@@ -1,3 +1,4 @@
+import { QuestionMultipleChoice } from './../../models/question';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -53,6 +54,36 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
   //#endregion
 
   submit() {
+    let questionTimeLimit = this.MultipleChoice.get(
+      'questionTimeLimit'
+    ) as FormControl;
+    let questionHasTimeLimit = this.MultipleChoice.get(
+      'questionHasTimeLimit'
+    ) as FormControl;
+
+    let question = new QuestionMultipleChoice();
+
+    if(this.checkForm) return;
+
+    //The question doesn't have a time limit
+    if (
+      questionHasTimeLimit.value == null ||
+      questionHasTimeLimit.value == false ||
+      questionHasTimeLimit.value === ''
+    )
+      question.timeLimit = -1;
+    else question.timeLimit = questionTimeLimit.value;
+
+    question.questionChoices = this.choices;
+    question.label = this.MultipleChoice.get('questionLabel').value;
+
+    this.discard();
+
+    this.service.addQuestion(question.toDTO()).subscribe(res => {
+      console.log(res);
+    });
+    this.route.navigate['/'];
+
     return;
   }
 
