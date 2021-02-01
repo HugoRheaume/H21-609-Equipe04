@@ -9,20 +9,35 @@ import { Question, QuestionType } from 'src/models/question';
 export class CreateQuestionComponent implements OnInit {
 
   public enumNames: string[];
+  public enumValues: number[];
   public iterator: Array<number>;
   public selectedValue: string;
   constructor() { }
 
   ngOnInit() {
     this.enumNames = [];
+    this.enumValues = [];
+    let unsortedNames = [];
     for (var type in QuestionType) {
       if (isNaN(Number(type))) {
-        this.enumNames.push(type);
-        console.log(type)
+        unsortedNames.push(type);
       }
     }
-    this.iterator = Array(this.enumNames.length).fill(1).map((x, i) => i +1);
-    console.log(this.iterator)
-    console.log(this.selectedValue)
+    this.enumNames = unsortedNames.sort((a, b) => {
+      if (a > b) {
+        return 1;
+      }
+
+      if (a < b) {
+        return -1;
+      }
+
+      return 0;
+    });
+    for (let i = 0; i < this.enumNames.length; i++) {
+      this.enumValues.push(QuestionType[this.enumNames[i]]);
+    }
+    this.iterator = Array(this.enumNames.length).fill(0).map((x, i) => i);
+
   }
 }
