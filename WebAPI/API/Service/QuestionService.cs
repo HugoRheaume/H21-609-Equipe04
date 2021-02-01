@@ -28,36 +28,27 @@ namespace API.Service
         }
         public QuestionDTO GetQuestionById(int id)
         {
-            Question question = db.Question.Where(x => x.Id == id).FirstOrDefault();
+            Question question = db.Question.Include(q => q.Quiz).FirstOrDefault(x => x.Id == id);
             if (question != null)
                 return GenerateQuestionDTO(question);
-            else
-                return null;           
+
+            return null;           
         }
 
         public List<QuestionDTO> GetQuestionByQuizId(int quizId)
         {
-            List<QuestionDTO> listToShip = new List<QuestionDTO>();
-            Quiz quiz = db.ListQuiz.Where(x => x.Id == quizId).FirstOrDefault();
+            Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.Id == quizId);
             if (quiz == null)
                 return null;
             List<Question> questionList = db.Question.Where(x => x.Quiz.Id == quizId).ToList();
-            foreach (var item in questionList)
-            {
-                listToShip.Add(GenerateQuestionDTO(item));
-            }
-            return listToShip;
 
-
-
+            return questionList.Select(item => GenerateQuestionDTO(item)).ToList();
         }
 
         public QuestionDTO AddQuestion(QuestionCreateDTO question)
         {
 
-            Quiz quiz = db.ListQuiz.Where(x => x.Id == question.QuizId).FirstOrDefault();
-
-
+            Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.Id == question.QuizId);
 
             Question questionToCreate = new Question()
             {
@@ -68,8 +59,6 @@ namespace API.Service
                 QuestionTrueFalse = new List<QuestionTrueFalse>() { question.QuestionTrueFalse },
                 QuestionMultipleChoice = question.QuestionMultipleChoice
             };
-
-
 
             Question q = db.Question.Add(questionToCreate);
             db.SaveChanges();

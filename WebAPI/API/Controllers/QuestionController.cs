@@ -29,7 +29,7 @@ namespace API.Controllers
             return Ok(service.GetQuestionById(id));
         }
         [HttpGet]
-        [Route("api/question/getquizquestion/{quizid}")]
+        [Route("api/Question/GetQuizQuestion/{quizid}")]
         public IHttpActionResult GetQuizQuestion(int quizId)
         {
             return Ok(service.GetQuestionByQuizId(quizId));
@@ -43,7 +43,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/question/delete/{questionId}")]
+        [Route("api/Question/Delete/{questionId}")]
         public IHttpActionResult Delete(int questionId)
         {
             return Ok(service.DeleteQuestion(questionId));

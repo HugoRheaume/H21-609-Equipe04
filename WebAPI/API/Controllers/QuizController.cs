@@ -73,7 +73,7 @@ namespace API.Controllers
             return BadRequest();
         }
         [HttpGet]
-        [Route("api/quiz/getquizbyid/{quizId}")]
+        [Route("api/Quiz/GetQuizById/{quizId}")]
 
         public IHttpActionResult GetQuizById(int quizId)
         {
