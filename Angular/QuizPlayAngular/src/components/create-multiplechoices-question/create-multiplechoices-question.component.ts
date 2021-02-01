@@ -12,6 +12,7 @@ import { QuestionChoice } from 'src/models/questionChoice';
 export class CreateMultiplechoicesQuestionComponent implements OnInit {
   public MultipleChoice: FormGroup;
   public choices: QuestionChoice[];
+  public needsAllRightAnswers: boolean;
   constructor(public service: QuizService,
     public route: Router,
     private formBuilder: FormBuilder) { }
@@ -25,6 +26,7 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
       questionAnswers: ['', Validators.required],
     });
     this.choices = [];
+    this.needsAllRightAnswers = true;
   }
 
   //#region Error messages
@@ -75,11 +77,14 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
     else question.timeLimit = questionTimeLimit.value;
 
     question.questionChoices = this.choices;
+    question.needsAllAnswers = this.needsAllRightAnswers;
     question.label = this.MultipleChoice.get('questionLabel').value;
 
     this.discard();
+    console.log(question.toMultipleChoiceDTO());
 
-    this.service.addQuestion(question.toDTO());
+    this.service.addQuestion(question.toMultipleChoiceDTO());
+    //this.service.addQuestion(question.toDTO());
     this.route.navigate['/'];
 
     return;
@@ -88,6 +93,7 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
   discard(){
     this.MultipleChoice.reset();
     this.choices = [];
+    this.needsAllRightAnswers = true;
   }
 
   addChoice(){
@@ -148,5 +154,13 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
     if(oneChoiceEmpty) return true;
 
     return false;
+  }
+
+  get trueAnswers(): number{
+    let amount = 0;
+    this.choices.forEach(choice => {
+      if (choice.answer) amount++;
+    })
+    return amount;
   }
 }
