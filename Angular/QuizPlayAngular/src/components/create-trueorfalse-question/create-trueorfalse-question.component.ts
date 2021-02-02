@@ -76,7 +76,7 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     //   question.questionType.toString()
     // );
 
-      console.log(question.toTrueOrFalseDTO());
+    
 
     this.TrueFalse.reset();
     

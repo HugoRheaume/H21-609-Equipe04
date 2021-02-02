@@ -53,7 +53,6 @@ export class QuizService {
 
 		this.http.post<Question>(environment.backend.baseURL + '/question/add',pQuestion,httpOptions).subscribe(response => {
 			this.currentQuestions.push(response as Question);
-			console.log(this.currentQuestions);
 		});
 		
 	}
@@ -77,8 +76,7 @@ export class QuizService {
 		};
 
 		this.http.get<QuizResponse>(environment.backend.baseURL + '/quiz/getquizbyid/' + quizId, httpOptions).subscribe(response => {
-			this.currentQuiz = response
-			console.log(response);
+			this.currentQuiz = response;			
 		});
 	}
 	getQuestionFromQuiz(quizId: number)

@@ -21,7 +21,7 @@ export class QuizQuestionListComponent implements OnInit {
   enum = QuestionType;
   ngOnInit(): void {
     
-    console.log(this.route.snapshot.paramMap.get('quizId'));
+    
     var quizId: number = +this.route.snapshot.paramMap.get('quizId');
     this.service.getQuiz(quizId);
     this.service.getQuestionFromQuiz(quizId);
@@ -33,7 +33,7 @@ export class QuizQuestionListComponent implements OnInit {
     this.service.deleteQuestion(questionId)
   }
   drop(event: CdkDragDrop<string[]>) {
-        
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

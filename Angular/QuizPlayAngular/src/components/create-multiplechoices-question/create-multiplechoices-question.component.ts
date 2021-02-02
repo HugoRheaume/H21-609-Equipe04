@@ -81,7 +81,7 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
     question.label = this.MultipleChoice.get('questionLabel').value;
 
     this.discard();
-    console.log(question.toMultipleChoiceDTO());
+    
 
     this.service.addQuestion(question.toMultipleChoiceDTO());
     //this.service.addQuestion(question.toDTO());
