@@ -25,7 +25,6 @@ namespace API.Service
                     Credential = GoogleCredential.FromFile("C:\\Users\\Nicolas\\Desktop\\QuizPlay\\WebAPI\\API\\quizplay-eq4-firebase-adminsdk-lokv6-c6ae35aade.json"),
                 });
 
-            FirebaseToken decodedToken1 = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(tokenFromUser);
             FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(tokenFromUser);
             string uid = decodedToken.Uid;
 
@@ -35,9 +34,12 @@ namespace API.Service
                 ApplicationUser user = new ApplicationUser();
                 user.Id = uid;
                 user.Email = decodedToken.Claims["email"].ToString();
-                user.UserName = decodedToken.Claims["name"].ToString();
+                user.UserName = user.Email;
+                user.Name = decodedToken.Claims["name"].ToString();
                 user.Picture = decodedToken.Claims["picture"].ToString();
                 await userManager.CreateAsync(user);
+
+                db.SaveChanges();
             }
             return new UserDTO(db.Users.Find(uid));
         }

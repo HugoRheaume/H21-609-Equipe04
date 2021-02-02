@@ -13,7 +13,9 @@ namespace API.Models
 
         public UserDTO(ApplicationUser user)
         {
-            Name = user.UserName;
+            if (user == null) return;
+            
+            Name = user.Name;
             Email = user.Email;
             Picture = user.Picture;
         }

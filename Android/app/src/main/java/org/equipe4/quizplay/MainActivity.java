@@ -3,13 +3,18 @@ package org.equipe4.quizplay;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import org.equipe4.quizplay.databinding.ActivityMainBinding;
 import org.equipe4.quizplay.http.RetrofitUtil;
+import org.equipe4.quizplay.transfer.UserDTO;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,15 +43,21 @@ public class MainActivity extends AppCompatActivity {
 
                                         // TODO Envoie le token Firebase à notre serveur .NET
                                         String idToken = task.getResult().getToken();
-                                        Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
-                                        new RetrofitUtil().service.Login(idToken).enqueue(new Callback<String>() {
+                                        //Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
+                                        new RetrofitUtil().service.Login(idToken).enqueue(new Callback<UserDTO>() {
                                             @Override
-                                            public void onResponse(Call<String> call, Response<String> response) {
-                                                Toast.makeText(MainActivity.this, "Ok " + response.body(), Toast.LENGTH_SHORT).show();
+                                            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                                                Log.i("REQUEST","Ok " + response.body());
+                                                UserDTO user = response.body();
+
+                                                TextView name = findViewById(R.id.name);
+                                                name.setText(user.name);
+                                                ImageView profilePic = findViewById(R.id.profilePic);
+                                                Picasso.get().load(user.picture).into(profilePic);
                                             }
 
                                             @Override
-                                            public void onFailure(Call<String> call, Throwable t) {
+                                            public void onFailure(Call<UserDTO> call, Throwable t) {
                                                 Toast.makeText(MainActivity.this, "Ko " + t.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });

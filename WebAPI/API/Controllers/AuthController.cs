@@ -14,9 +14,9 @@ namespace API.Controllers
         private AuthService service = new AuthService(new ApplicationDbContext());
 
         [HttpPost]
-        public IHttpActionResult Token()
+        public IHttpActionResult Token([FromUri(Name = "token")] string token)
         {
-            UserDTO user = service.LoginTokenAsync(Request.Headers.Authorization.ToString()).Result;
+            UserDTO user = service.LoginTokenAsync(token).Result;
 
             return Ok(user);
         }
