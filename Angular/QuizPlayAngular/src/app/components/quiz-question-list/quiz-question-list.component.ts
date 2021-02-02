@@ -16,7 +16,7 @@ export class QuizQuestionListComponent implements OnInit {
 
   @Input() quizId: number;
   constructor(private router: Router, private route: ActivatedRoute, public service: QuizService) { }
-
+  selectedQuestion: Question;
 
   enum = QuestionType;
   ngOnInit(): void {
@@ -33,8 +33,7 @@ export class QuizQuestionListComponent implements OnInit {
     this.service.deleteQuestion(questionId)
   }
   drop(event: CdkDragDrop<string[]>) {
-
-    
+        
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -56,5 +55,34 @@ export class QuizQuestionListComponent implements OnInit {
 
     
   }
-
+  putFirst()
+  {
+    
+    let i = 0;
+    this.service.currentQuestions.forEach(item =>{
+      
+      if(item.id === this.selectedQuestion.id)
+      {
+        moveItemInArray(this.service.currentQuestions, i, 0);        
+      }
+      else
+        i++;
+    });
+  }
+  putLast()
+  {
+    
+    let i = 0;    
+    this.service.currentQuestions.forEach(item =>{
+      if(item.id === this.selectedQuestion.id)
+      {
+        
+        moveItemInArray(this.service.currentQuestions, i, this.service.currentQuestions.length-1);
+      
+       
+      }
+      i++;
+    });
+  }
+  
 }

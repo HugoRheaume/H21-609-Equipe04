@@ -19,24 +19,33 @@
             </div>
         </div>
         <div class="questionBox">
-            <div cdkDropListGroup>
+            <div cdkDropListGroup >
                   <div cdkDropList [cdkDropListData]="this.service.currentQuestions" class="example-list" (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of this.service.currentQuestions" cdkDrag>
+                    <div class="example-box" cdkDragLockAxis='y' cdkDragBoundary='.example-list' *ngFor="let item of this.service.currentQuestions" cdkDrag  [class.activeQuestion]="selectedQuestion === item" (click)="selectedQuestion = item" (cdkDragStarted)="selectedQuestion = item">
                         <div class="row">
-                            <div class="col-7">
+                            <div class="col-5">
                                 <h2>{{item.label}} </h2>
                             </div>
                             <div class="col-2">
                                 <h2>{{this.enum[item.questionType]}} </h2>
                             </div>
                             <div class="col-1"></div>
-                            <div class="col-2">
+                            <div class="col-3" >
+                                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary" (click)="putFirst()">
+                                    <mat-icon>expand_less</mat-icon>
+                                </button>
+                                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary" (click)="putLast()">
+                                    <mat-icon>expand_more</mat-icon>
+                                </button>
+                                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </div>
+                            <div class="col-1">
+                                   
                                 <button  class="questionButtonAddRemove" id="add-button" mat-fab color="primary" (click)="deleteQuestion(item.id)" aria-label="Example icon button with a delete icon">
                                     <mat-icon>delete</mat-icon>
                                 </button>
-                                <button  class="questionButtonAddRemove" id="delete-button" mat-fab color="primary" [routerLink]="['/r/create']" aria-label="Example icon button with a delete icon">
-                                    <mat-icon>edit</mat-icon>
-                                </button>   
                             </div>
                         </div>
                     </div>
