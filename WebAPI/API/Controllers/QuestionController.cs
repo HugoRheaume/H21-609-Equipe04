@@ -48,5 +48,14 @@ namespace API.Controllers
         {
             return Ok(service.DeleteQuestion(questionId));
         }
+
+
+        [HttpPost]
+        [Route("api/question/updatequizindex")]
+        public IHttpActionResult UpdateQuizIndex(List<QuestionDTO> questions)
+        {
+            
+            return Ok(service.UpdateQuizIndex(questions));
+        }
     }
 }

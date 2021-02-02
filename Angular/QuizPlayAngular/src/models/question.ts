@@ -5,6 +5,7 @@ export abstract class Question {
   public label: string;
   public timeLimit: number;
   public questionType: QuestionType;
+  public quizIndex: number
 }
 
 export class QuestionTrueOrFalse extends Question {

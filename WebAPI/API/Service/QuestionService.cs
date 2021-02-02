@@ -75,6 +75,9 @@ namespace API.Service
                 Label = q.Label,
                 TimeLimit = q.TimeLimit,
                 QuestionType = q.QuestionType,
+                QuizIndex = q.QuizIndex,
+                NeedsAllAnswers = q.NeedsAllAnswers,
+                
 
             };
             switch (q.QuestionType)
@@ -107,6 +110,19 @@ namespace API.Service
             db.Question.Remove(question);
             db.SaveChanges();
             return GetQuestionByQuizId(quizId);
+
+        }
+        public bool UpdateQuizIndex(List<QuestionDTO> questions )
+        {
+            foreach (var item in questions)
+            {
+                Question q = db.Question.Include(x => x.Quiz).FirstOrDefault(x => x.Id == item.Id);
+                if (q == null)
+                    continue;
+                q.QuizIndex = item.QuizIndex;
+            }
+            db.SaveChanges();
+            return true;
 
         }
     }
