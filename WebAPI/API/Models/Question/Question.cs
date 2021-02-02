@@ -29,5 +29,7 @@ namespace API.Models.Question
         public virtual List<QuestionMultipleChoice> QuestionMultipleChoice { get; set; }
 
         public Quiz Quiz { get; set; }
+
+        public int QuizIndex { get; set; }
     }
 }

@@ -90,8 +90,8 @@ export class QuizService {
 		};
 
 		this.http.get<Question[]>(environment.backend.baseURL + '/question/getquizquestion/' + quizId, httpOptions).subscribe(response => {
-			this.currentQuestions = response
-			console.log(response);
+			this.currentQuestions = response;
+    		this.currentQuestions.sort((a, b) => (a.quizIndex > b.quizIndex) ? 1 : -1);
 		});
 	}
     public getAlphanumericCode(): Observable<string>
@@ -127,5 +127,18 @@ export class QuizService {
 					}
 				)
 			);
+	}
+	public updateQuizIndex()
+	{
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
+		this.http.post<boolean>(environment.backend.baseURL + '/question/updatequizindex',this.currentQuestions,httpOptions).subscribe(response =>{
+			response;
+		});
+		
+		
 	}
 }

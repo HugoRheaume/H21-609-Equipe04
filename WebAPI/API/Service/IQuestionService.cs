@@ -16,6 +16,7 @@ namespace API.Service
         QuestionDTO AddQuestion(QuestionCreateDTO q);
 
         List<QuestionDTO> DeleteQuestion(int id);
+        bool UpdateQuizIndex(List<QuestionDTO> questions);
 
     }
 }
