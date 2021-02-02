@@ -16,6 +16,7 @@ namespace API.Models.Question
         public QuestionTrueFalse QuestionTrueFalse;
         public List<QuestionMultipleChoice> QuestionMultipleChoice;
         public bool NeedsAllAnswers;
+        public int QuizIndex;
 
     }
 }
