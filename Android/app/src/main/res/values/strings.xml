@@ -1,4 +1,5 @@
 <resources>
+    <string name="client_id" translatable="false">453297139558-an8ht01qc9flek0dkrl41sc8e8v8c72p.apps.googleusercontent.com</string>
     <!-- Main Activity -->
     <string name="app_name">Quiz Play</string>
     <string name="joinQuiz">Rejoignez un quiz !</string>
