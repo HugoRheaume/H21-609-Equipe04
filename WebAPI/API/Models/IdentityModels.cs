@@ -22,6 +22,7 @@ namespace API.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public string Picture { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
