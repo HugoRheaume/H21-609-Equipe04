@@ -20,11 +20,11 @@ export class QuizQuestionListComponent implements OnInit {
 
   enum = QuestionType;
   ngOnInit(): void {
+    
     console.log(this.route.snapshot.paramMap.get('quizId'));
     var quizId: number = +this.route.snapshot.paramMap.get('quizId');
     this.service.getQuiz(quizId);
     this.service.getQuestionFromQuiz(quizId);
-
     
   }
 
@@ -47,15 +47,14 @@ export class QuizQuestionListComponent implements OnInit {
 
   finish()
   {
-    
     let i = 0;
     this.service.currentQuestions.forEach(item => {
       item.quizIndex = i;
       i++;
     });
+    this.service.updateQuizIndex();
 
-    console.log(this.service.currentQuestions);
-    console.log(this.service.currentQuestions.sort((a, b) => (a.quizIndex > b.quizIndex) ? 1 : -1));
+    
   }
 
 }

@@ -67,6 +67,7 @@ h2
     box-shadow: 0 5px 5px -3px rgba(99, 99, 99, 0.2),
                 0 8px 10px 1px rgba(99, 99, 99, 0.14),
                 0 3px 14px 2px rgba(99, 99, 99, 0.12);
+    background-color: rgb(69, 69, 69);
   }
   
   .cdk-drag-placeholder {

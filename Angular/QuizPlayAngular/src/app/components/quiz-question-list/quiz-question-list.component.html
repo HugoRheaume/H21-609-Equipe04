@@ -15,7 +15,7 @@
                 </button>
             </div>
             <div class="col-2">
-                <button mat-raised-button class="m-3" color="primary" (click)="finish()">Suivant</button>
+                <button [disabled]="this.service.currentQuestions.length < 1" mat-raised-button class="m-3" color="primary" (click)="finish()" [routerLink]="['/list']">Terminé</button>
             </div>
         </div>
         <div class="questionBox">
