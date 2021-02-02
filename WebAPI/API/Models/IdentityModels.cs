@@ -23,8 +23,8 @@ namespace API.Models
             return userIdentity;
         }
 
-        
-}
+        public string Picture { get; set; }
+    }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
