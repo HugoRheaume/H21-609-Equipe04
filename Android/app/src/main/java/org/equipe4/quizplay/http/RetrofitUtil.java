@@ -1,5 +1,8 @@
 package org.equipe4.quizplay.http;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
@@ -7,6 +10,9 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -26,9 +32,34 @@ public class RetrofitUtil {
         service = retrofit.create(QPService.class);
     }
 
+    public static class MyCookieJar implements CookieJar {
+
+        private List<Cookie> cookies;
+
+        @Override
+        public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+            this.cookies =  cookies;
+        }
+
+        @Override
+        public List<Cookie> loadForRequest(HttpUrl url) {
+            List<Cookie> res = new ArrayList<>();
+            if (cookies != null){
+                for(Cookie c : cookies){
+                    if (c.expiresAt() > System.currentTimeMillis()) res.add(c);
+                }
+            }
+            return res;
+        }
+    }
+
+
     public static OkHttpClient getClient() {
         try {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+            CookieJar cookieJar = new MyCookieJar();
+            builder.cookieJar(cookieJar);
 
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
