@@ -19,7 +19,7 @@ import {
 	CreateQuizConfirmDialog,
 } from 'src/components/create-quiz/create-quiz.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
@@ -48,7 +48,9 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
 		CommonModule,
 	],
 	entryComponents: [CreateQuizComponent],
-	providers: [],
+	providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
