@@ -18,7 +18,7 @@ public class RetrofitUtil {
 
     public RetrofitUtil() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.e4.projet.college-em.info/api/")                //https://192.168.0.135:45455/api/
+                .baseUrl("https://10.0.2.2:45455/api/")                //https://192.168.0.135:45455/api/     //https://api.e4.projet.college-em.info/api/
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
