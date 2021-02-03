@@ -2,7 +2,7 @@
   <p>
     <mat-form-field appearance="outline" class="form-field-full-width">
       <mat-label>Question's label</mat-label>
-      <input matInput #questionLabel placeholder="Do you like flowers?" id="inputQuestionLabel"
+      <input matInput #questionLabel placeholder="Question's label" id="inputQuestionLabel"
         formControlName="questionLabel">
       <mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
       <mat-error>{{ labelErrorMessage }}</mat-error>
@@ -10,10 +10,7 @@
   </p>
   <div class="mat-form-field-wrapper">
     <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Add a time limit</mat-checkbox>
-    <div *ngIf="this.trueAnswers > 1" class="form-field-full-width d-flex align-items-center" style="margin-top: 1.34375em;">
-      <span>1 answer to get the point&nbsp;&nbsp;</span>
-      <mat-slide-toggle [(ngModel)]="this.needsAllRightAnswers" [ngModelOptions]="{standalone: true}">All answers to get the point</mat-slide-toggle>
-    </div>
+
   </div>
   <p *ngIf="this.MultipleChoice.get('questionHasTimeLimit').value">
     <mat-form-field appearance="outline" class="form-field-full-width">
@@ -37,14 +34,22 @@
             <mat-label>Choice number {{choice.choiceNumber}}</mat-label>
             <span matPrefix><strong>{{choice.choiceNumber}}. &nbsp;</strong></span>
             <input matInput type="text" [(ngModel)]="choice.statement" [ngModelOptions]="{standalone: true}"
-              style="margin-left: 10px; padding-right: 10px;" placeholder="A little bit.">
+              style="margin-left: 10px; padding-right: 10px;" placeholder="Choice number {{choice.choiceNumber}}">
           </mat-form-field>
         </mat-checkbox>
         <button mat-mini-fab color="primary" (click)="removeChoice(choice.choiceNumber)">
           <mat-icon>delete</mat-icon>
         </button>
-
       </div>
+    </div>
+    <div *ngIf="this.trueAnswers > 1" class="form-field-full-width d-flex align-items-center"
+      style="margin-top: 1.34375em;">
+      <mat-radio-group aria-label="Need all the answers" [(ngModel)]="this.needsAllRightAnswers"
+        [ngModelOptions]="{standalone: true}">
+        <mat-radio-button [value]="false" style="margin-bottom: 0.75em;">1 answer to get the point</mat-radio-button>
+        <br>
+        <mat-radio-button [value]="true">All answers to get the point</mat-radio-button>
+      </mat-radio-group>
     </div>
   </div>
 

@@ -62,24 +62,9 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     question.answer = this.TrueFalse.get('questionAnswer').value;
     question.label = this.TrueFalse.get('questionLabel').value;
 
-    //Submit to the server
-    // alert(
-    //   'The question is : ' +
-    //   question.label +
-    //   '\nThe answer is : ' +
-    //   question.answer +
-    //   '\nThe question has a time limit : ' +
-    //   questionHasTimeLimit.value +
-    //   '\nThe allowed time is : ' +
-    //   question.timeLimit +
-    //   '\nThe question type : ' +
-    //   question.questionType.toString()
-    // );
-
-    
 
     this.TrueFalse.reset();
-    
+
     this.service.addQuestion(question.toTrueOrFalseDTO());
     this.route.navigate['/'];
   }

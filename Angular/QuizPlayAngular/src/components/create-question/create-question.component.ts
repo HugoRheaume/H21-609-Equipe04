@@ -10,6 +10,7 @@ export class CreateQuestionComponent implements OnInit {
 
   public enumNames: string[];
   public enumValues: number[];
+  public enumFormated: string[];
   public iterator: Array<number>;
   public selectedValue: string;
   constructor() { }
@@ -17,6 +18,8 @@ export class CreateQuestionComponent implements OnInit {
   ngOnInit() {
     this.enumNames = [];
     this.enumValues = [];
+    this.enumFormated = [];
+
     let unsortedNames = [];
     for (var type in QuestionType) {
       if (isNaN(Number(type))) {
@@ -36,7 +39,19 @@ export class CreateQuestionComponent implements OnInit {
     });
     for (let i = 0; i < this.enumNames.length; i++) {
       this.enumValues.push(QuestionType[this.enumNames[i]]);
+      console.log(this.enumNames[i]);
+      switch(this.enumNames[i]){
+        case 'TrueFalse':
+          this.enumFormated.push('True or False');
+          break;
+        case 'MultipleChoices':
+          this.enumFormated.push('Multiple Choices');
+          break;
+        default:
+          break;
+      }
     }
+
     this.iterator = Array(this.enumNames.length).fill(0).map((x, i) => i);
 
   }
