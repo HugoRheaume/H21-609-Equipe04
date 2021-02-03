@@ -32,45 +32,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // TODO Envoyer un token Firebase pour vérification serveur avec le compte sur lequel on est connecté.
-
-        binding.btnServerRequest.setOnClickListener(view -> {
-            FirebaseUser mUser = mAuth.getCurrentUser();
-            if (mUser != null) {
-                mUser.getIdToken(true)
-                        .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-
-                                        // TODO Envoie le token Firebase à notre serveur .NET
-                                        String idToken = task.getResult().getToken();
-                                        //Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
-                                        new RetrofitUtil().service.Login(idToken).enqueue(new Callback<UserDTO>() {
-                                            @Override
-                                            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-                                                Log.i("REQUEST","Ok " + response.body());
-                                                UserDTO user = response.body();
-
-                                                TextView name = findViewById(R.id.name);
-                                                name.setText(user.name);
-                                                ImageView profilePic = findViewById(R.id.profilePic);
-                                                Picasso.get().load(user.picture).into(profilePic);
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<UserDTO> call, Throwable t) {
-                                                Toast.makeText(MainActivity.this, "Ko " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    } else {
-                                        // Handle error -> task.getException();
-                                    }
-                                }
-                        );
-            }
-
-        });
-
-
     }
 
 
@@ -83,9 +44,37 @@ public class MainActivity extends AppCompatActivity {
         if (mUser == null) {
             Toast.makeText(this, "Not logged firebase", Toast.LENGTH_SHORT).show();
         }
+        else {
 
-        if (mUser != null) {
-            binding.TextViewUser.setText(mUser.getDisplayName());
+            mUser.getIdToken(true)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+
+                        // TODO Envoie le token Firebase à notre serveur .NET
+                        String idToken = task.getResult().getToken();
+                        //Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
+                        new RetrofitUtil().service.Login(idToken).enqueue(new Callback<UserDTO>() {
+                            @Override
+                            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                                Log.i("REQUEST","Ok " + response.body());
+                                UserDTO user = response.body();
+
+                                TextView name = binding.name;
+                                name.setText(user.name);
+                                ImageView profilePic = binding.profilePic;
+                                Picasso.get().load(user.picture).into(profilePic);
+                            }
+
+                            @Override
+                            public void onFailure(Call<UserDTO> call, Throwable t) {
+                                Toast.makeText(MainActivity.this, "Ko " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        // Handle error -> task.getException();
+                    }
+                });
         }
+
     }
 }

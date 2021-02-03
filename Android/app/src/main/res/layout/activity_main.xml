@@ -8,21 +8,6 @@
     android:orientation="vertical"
     android:gravity="center">
 
-    <TextView
-        android:id="@+id/TextViewUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="30sp"
-        />
-
-    <Button
-        android:id="@+id/btnServerRequest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Envoyer une requête au serveur"
-        />
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

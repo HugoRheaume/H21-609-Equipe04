@@ -19,10 +19,12 @@ namespace API.Service
 
         public async Task<UserDTO> LoginTokenAsync(string tokenFromUser)
         {
+            string test = HttpRuntime.AppDomainAppPath;
+            string path = test + "quizplay-eq4-firebase-adminsdk-lokv6-c6ae35aade.json";
             if (FirebaseApp.GetInstance("[DEFAULT]") == null)
                 FirebaseApp.Create(new AppOptions()
                 {
-                    Credential = GoogleCredential.FromFile("C:\\Users\\Nicolas\\Desktop\\QuizPlay\\WebAPI\\API\\quizplay-eq4-firebase-adminsdk-lokv6-c6ae35aade.json"),
+                    Credential = GoogleCredential.FromFile(path),
                 });
 
             FirebaseToken decodedToken = FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(tokenFromUser).Result;
