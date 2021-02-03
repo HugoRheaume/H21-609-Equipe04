@@ -15,7 +15,7 @@ export class QuestionTrueOrFalse extends Question {
     this.questionType = QuestionType.TrueFalse;
   }
 
-  public toTrueOrFalseDTO(): QuestionCreateTrueFalseDTO{
+  public toTrueOrFalseDTO(): QuestionCreateTrueFalseDTO {
     let questionToExport = new QuestionCreateTrueFalseDTO();
     let questionTrueFalse = new QuestionTrueOrFalse();
     questionTrueFalse.answer = this.answer;
@@ -29,7 +29,7 @@ export class QuestionTrueOrFalse extends Question {
   }
 }
 
-export class QuestionMultipleChoice extends Question{
+export class QuestionMultipleChoice extends Question {
   public needsAllAnswers: boolean;
   public questionChoices: QuestionChoice[];
   constructor() {
@@ -56,8 +56,8 @@ export class QuestionMultipleChoice extends Question{
 export enum QuestionType {
   'TrueFalse' = 1,
   'MultipleChoices' = 2,
-  'Association' = 3,
-  'Image' = 4
+  // 'Association' = 3,
+  // 'Image' = 4
 }
 
 

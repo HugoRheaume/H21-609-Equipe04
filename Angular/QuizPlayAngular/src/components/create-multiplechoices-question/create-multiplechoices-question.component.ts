@@ -81,7 +81,7 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
     question.label = this.MultipleChoice.get('questionLabel').value;
 
     this.discard();
-    
+
 
     this.service.addQuestion(question.toMultipleChoiceDTO());
     //this.service.addQuestion(question.toDTO());
@@ -148,10 +148,13 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
       return true;
     }
     let oneChoiceEmpty = false;
+    let noChoiceChecked = true;
     this.choices.forEach(element => {
       if(element.statement === "") oneChoiceEmpty = true;
+      if(element.answer === true) noChoiceChecked = false;
     });
     if(oneChoiceEmpty) return true;
+    if(noChoiceChecked) return true;
 
     return false;
   }
