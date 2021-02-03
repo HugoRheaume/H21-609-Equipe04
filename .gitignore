@@ -1,2 +1,6 @@
 
 Angular/QuizPlayAngular/.vscode/launch.json
+
+*.sqlite
+
+.vs/
