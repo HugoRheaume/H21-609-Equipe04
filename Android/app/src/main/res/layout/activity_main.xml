@@ -26,12 +26,13 @@
 
     <EditText
         android:id="@+id/editTextCode"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
         android:hint="@string/hintCode"
         android:maxLength="6"
+        android:textAlignment="center"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         android:layout_marginBottom="10dp"/>
 
