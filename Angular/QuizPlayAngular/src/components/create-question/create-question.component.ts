@@ -42,10 +42,10 @@ export class CreateQuestionComponent implements OnInit {
       console.log(this.enumNames[i]);
       switch(this.enumNames[i]){
         case 'TrueFalse':
-          this.enumFormated.push('True or False');
+          this.enumFormated.push('Vrai ou faux');
           break;
         case 'MultipleChoices':
-          this.enumFormated.push('Multiple Choices');
+          this.enumFormated.push('Choix multiples');
           break;
         default:
           break;

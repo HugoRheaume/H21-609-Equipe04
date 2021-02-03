@@ -1,7 +1,7 @@
 <div class="container">
   <div *ngIf="this.service.currentQuiz">
     <button [cdkCopyToClipboard]="this.service.currentQuiz.shareCode" class="m-3" mat-raised-button
-      color="primary">Share Code: {{this.service.currentQuiz.shareCode}} <mat-icon>content_copy</mat-icon></button>
+      color="primary">Code de partage: {{this.service.currentQuiz.shareCode}} <mat-icon>content_copy</mat-icon></button>
   </div>
 
 
@@ -32,7 +32,11 @@
                 <h2>{{item.label}} </h2>
               </div>
               <div class="col-2">
-                <h2>{{this.enum[item.questionType]}} </h2>
+                <h2 [ngSwitch]="this.enum[item.questionType]">
+                  <span *ngSwitchCase="'TrueFalse'">Vrai ou Faux</span>
+                  <span *ngSwitchCase="'MultipleChoices'">Choix Multiples</span>
+                  <span *ngSwitchDefault></span>
+                </h2>
               </div>
               <div class="col-1"></div>
               <div class="col-3">
