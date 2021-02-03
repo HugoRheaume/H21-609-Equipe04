@@ -25,7 +25,7 @@ namespace API.Service
                     Credential = GoogleCredential.FromFile("C:\\Users\\Nicolas\\Desktop\\QuizPlay\\WebAPI\\API\\quizplay-eq4-firebase-adminsdk-lokv6-c6ae35aade.json"),
                 });
 
-            FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(tokenFromUser);
+            FirebaseToken decodedToken = FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(tokenFromUser).Result;
             string uid = decodedToken.Uid;
 
             if (db.Users.Find(uid) == null)
