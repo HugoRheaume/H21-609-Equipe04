@@ -1,44 +1,39 @@
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-	<!-- Les colonnes -->
-	<ng-container matColumnDef="title">
-		<th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-		<td mat-cell *matCellDef="let element"> {{element.title}} </td>
-	</ng-container>
+  <!-- Les colonnes -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
 
-	<ng-container matColumnDef="numberOfQuestions">
-		<th mat-header-cell *matHeaderCellDef mat-sort-header>
-			Nombre de questions
-		</th>
-		<td mat-cell *matCellDef="let element">
-			{{element.numberOfQuestions}}
-		</td>
-	</ng-container>
+  <ng-container matColumnDef="numberOfQuestions">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Nombre de questions
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.numberOfQuestions}}
+    </td>
+  </ng-container>
 
-	<ng-container matColumnDef="date">
-		<th mat-header-cell *matHeaderCellDef mat-sort-header>
-			Date de création
-		</th>
-		<td mat-cell *matCellDef="let element">
-			<!-- Changer la locale pour i18n -->
-			{{element.date | date: undefined : 'fr' : 'fr' }}
-		</td>
-	</ng-container>
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      Date de création
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <!-- Changer la locale pour i18n -->
+      {{element.date | date: undefined : 'fr' : 'fr' }}
+    </td>
+  </ng-container>
 
-	<ng-container matColumnDef="actions">
-		<th mat-header-cell *matHeaderCellDef></th>
-		<td mat-cell *matCellDef="let row">
-			<button (click)="openDialog(row)" mat-mini-fab color="warn"
-				><mat-icon aria-hidden="false" aria-label="Example home icon"
-					>delete</mat-icon
-				>
-			</button>
-		</td>
-	</ng-container>
-	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let row">
+      <button (click)="openDialog(row)" mat-mini-fab color="warn">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <!-- La pagination -->
-<mat-paginator
-	[pageSizeOptions]="[5, 10, 20]"
-	showFirstLastButtons
-></mat-paginator>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

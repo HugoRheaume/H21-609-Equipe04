@@ -1,51 +1,36 @@
-<!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Create a question
-</button> -->
+<div class="modal-body" [formGroup]="TrueFalse">
+  <p>
+    <mat-form-field appearance="outline" class="form-field-full-width">
+      <mat-label>Énoncé de la question</mat-label>
+      <input matInput #questionLabel placeholder="Énoncé de la question" id="inputQuestionLabel"
+        formControlName="questionLabel">
+      <mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
+      <mat-error>{{ labelErrorMessage }}</mat-error>
+    </mat-form-field>
+  </p>
+  <p class="mat-form-field-wrapper">
+    <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Ajouter un temps maximum</mat-checkbox>
+  </p>
+  <p *ngIf="this.TrueFalse.get('questionHasTimeLimit').value">
+    <mat-form-field appearance="outline" class="form-field-full-width">
+      <mat-label>Temps maximum de la question</mat-label>
+      <input matInput type="number" formControlName="questionTimeLimit">
+      <mat-error>{{ timeLimitErrorMessage }}</mat-error>
+    </mat-form-field>
+  </p>
+  <p class="mat-form-field-wrapper">
+    <mat-label style="padding-left: 0.75em;">Bonne réponse à la question</mat-label><br>
+    <mat-radio-group aria-label="True or False radio" formControlName="questionAnswer">
+      <mat-radio-button [value]="true" style="margin-right: 15px; padding-top: 1em;">Vrai</mat-radio-button>
+      <mat-radio-button [value]="false">Faux</mat-radio-button>
+    </mat-radio-group><br>
+    <mat-error>{{ answerErrorMessage }}</mat-error>
+  </p>
+</div>
 
-<!-- Modal -->
-<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title mb-0" id="staticBackdropLabel">Create a question</h3>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div> -->
-      <div class="modal-body" [formGroup]="TrueFalse">
-        <p>
-          <mat-form-field appearance="outline" class="form-field-full-width">
-            <mat-label>Question's label</mat-label>
-            <input matInput #questionLabel placeholder="Are roses red?" id="inputQuestionLabel"
-              formControlName="questionLabel">
-            <mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
-            <mat-error>{{ labelErrorMessage }}</mat-error>
-          </mat-form-field>
-        </p>
-        <p class="mat-form-field-wrapper">
-          <mat-label style="padding-left: 0.75em;">Question's answer</mat-label><br>
-          <mat-radio-group aria-label="True or False radio" formControlName="questionAnswer">
-            <mat-radio-button [value]="true" style="margin-right: 15px; padding-top: 1em;">True</mat-radio-button>
-            <mat-radio-button [value]="false">False</mat-radio-button>
-          </mat-radio-group><br>
-          <mat-error>{{ answerErrorMessage }}</mat-error>
-        </p>
-        <p class="mat-form-field-wrapper">
-          <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Add a time limit</mat-checkbox>
-        </p>
-        <p *ngIf="this.TrueFalse.get('questionHasTimeLimit').value">
-          <mat-form-field appearance="outline" class="form-field-full-width">
-            <mat-label>Question's allowed time</mat-label>
-            <input matInput type="number" formControlName="questionTimeLimit">
-            <mat-error>{{ timeLimitErrorMessage }}</mat-error>
-          </mat-form-field>
-        </p>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="this.TrueFalse.reset()">Discard</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sumbit()" [disabled]="this.checkForm ? true : false">Submit</button>
-      </div>
-    <!-- </div>
-  </div>
-</div> -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+    (click)="this.TrueFalse.reset()">Annuler</button>
+  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sumbit()"
+    [disabled]="this.checkForm ? true : false">Soumettre</button>
+</div>

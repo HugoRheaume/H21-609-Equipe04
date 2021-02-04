@@ -62,24 +62,9 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     question.answer = this.TrueFalse.get('questionAnswer').value;
     question.label = this.TrueFalse.get('questionLabel').value;
 
-    //Submit to the server
-    // alert(
-    //   'The question is : ' +
-    //   question.label +
-    //   '\nThe answer is : ' +
-    //   question.answer +
-    //   '\nThe question has a time limit : ' +
-    //   questionHasTimeLimit.value +
-    //   '\nThe allowed time is : ' +
-    //   question.timeLimit +
-    //   '\nThe question type : ' +
-    //   question.questionType.toString()
-    // );
-
-    
 
     this.TrueFalse.reset();
-    
+
     this.service.addQuestion(question.toTrueOrFalseDTO());
     this.route.navigate['/'];
   }
@@ -137,9 +122,9 @@ export class CreateTrueOrFalseQuestion implements OnInit {
       'questionLabel'
     ) as FormControl;
     return formField.hasError('required')
-      ? 'The label is required'
+      ? "L'énoncé est requis"
       : formField.hasError('maxlength')
-        ? 'You have exceeded the maximum amount of characters'
+        ? "Vous avez dépassé le nombre de caractères maximum"
         : formField.hasError('nowhitespaceerror')
           ? ''
           : ''; // Default
@@ -149,7 +134,7 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     const formField: FormControl = this.TrueFalse.get(
       'questionAnswer'
     ) as FormControl;
-    return formField.hasError('required') ? 'The answer is required' : ''; // Default
+    return formField.hasError('required') ? 'La réponse est requise' : ''; // Default
   }
 
   get timeLimitErrorMessage(): string {
@@ -157,9 +142,9 @@ export class CreateTrueOrFalseQuestion implements OnInit {
       'questionTimeLimit'
     ) as FormControl;
     return formField.hasError('min')
-      ? 'The minimum value is 1'
+      ? 'La valeur minimale est 1'
       : formField.hasError('required')
-        ? 'The time limit is required'
+        ? 'Le temps maximum est requis'
         : ''; // Default
   }
   //#endregion

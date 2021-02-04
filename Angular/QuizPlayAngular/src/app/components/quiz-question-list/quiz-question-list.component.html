@@ -1,58 +1,68 @@
-
-
 <div class="container">
-    <div *ngIf="this.service.currentQuiz">
-        <button [cdkCopyToClipboard]="this.service.currentQuiz.shareCode" class="m-3" mat-raised-button color="primary" >Share Code: {{this.service.currentQuiz.shareCode}} <mat-icon>content_copy</mat-icon></button>
+  <div *ngIf="this.service.currentQuiz">
+    <button [cdkCopyToClipboard]="this.service.currentQuiz.shareCode" class="m-3" mat-raised-button
+      color="primary">Code de partage: {{this.service.currentQuiz.shareCode}} <mat-icon>content_copy</mat-icon></button>
+  </div>
+
+
+  <h1 class="text-center">Ajouter des questions </h1>
+  <div>
+    <div class="row">
+      <div class="col-10">
+        <button class="questionButtonAddRemove" mat-fab color="primary" data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="col-2">
+        <button [disabled]="this.service.currentQuestions.length < 1" mat-raised-button class="m-3" color="primary"
+          (click)="finish()" [routerLink]="['/list']">Terminé</button>
+      </div>
     </div>
-
-
-    <h1 class="text-center">Ajouter des questions </h1>
-    <div>
-        <div class="row">
-            <div class="col-10">
-                <button class="questionButtonAddRemove" mat-fab color="primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    <mat-icon>add</mat-icon>
+    <div class="questionBox">
+      <div cdkDropListGroup>
+        <div cdkDropList [cdkDropListData]="this.service.currentQuestions" class="example-list"
+          (cdkDropListDropped)="drop($event)">
+          <div class="example-box" cdkDragLockAxis='y' cdkDragBoundary='.example-list'
+            *ngFor="let item of this.service.currentQuestions" cdkDrag
+            [class.activeQuestion]="selectedQuestion === item" (click)="selectedQuestion = item"
+            (cdkDragStarted)="selectedQuestion = item">
+            <div class="row">
+              <div class="col-5">
+                <h2>{{item.label}} </h2>
+              </div>
+              <div class="col-2">
+                <h2 [ngSwitch]="this.enum[item.questionType]">
+                  <span *ngSwitchCase="'TrueFalse'">Vrai ou Faux</span>
+                  <span *ngSwitchCase="'MultipleChoices'">Choix Multiples</span>
+                  <span *ngSwitchDefault></span>
+                </h2>
+              </div>
+              <div class="col-1"></div>
+              <div class="col-3">
+                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary"
+                  (click)="putFirst()">
+                  <mat-icon>expand_less</mat-icon>
                 </button>
+                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary"
+                  (click)="putLast()">
+                  <mat-icon>expand_more</mat-icon>
+                </button>
+                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <div class="col-1">
+
+                <button class="questionButtonAddRemove" id="add-button" mat-fab color="primary"
+                  (click)="deleteQuestion(item.id)" aria-label="Example icon button with a delete icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
             </div>
-            <div class="col-2">
-                <button [disabled]="this.service.currentQuestions.length < 1" mat-raised-button class="m-3" color="primary" (click)="finish()" [routerLink]="['/list']">Terminé</button>
-            </div>
+          </div>
         </div>
-        <div class="questionBox">
-            <div cdkDropListGroup >
-                  <div cdkDropList [cdkDropListData]="this.service.currentQuestions" class="example-list" (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" cdkDragLockAxis='y' cdkDragBoundary='.example-list' *ngFor="let item of this.service.currentQuestions" cdkDrag  [class.activeQuestion]="selectedQuestion === item" (click)="selectedQuestion = item" (cdkDragStarted)="selectedQuestion = item">
-                        <div class="row">
-                            <div class="col-5">
-                                <h2>{{item.label}} </h2>
-                            </div>
-                            <div class="col-2">
-                                <h2>{{this.enum[item.questionType]}} </h2>
-                            </div>
-                            <div class="col-1"></div>
-                            <div class="col-3" >
-                                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary" (click)="putFirst()">
-                                    <mat-icon>expand_less</mat-icon>
-                                </button>
-                                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary" (click)="putLast()">
-                                    <mat-icon>expand_more</mat-icon>
-                                </button>
-                                <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                            </div>
-                            <div class="col-1">
-                                   
-                                <button  class="questionButtonAddRemove" id="add-button" mat-fab color="primary" (click)="deleteQuestion(item.id)" aria-label="Example icon button with a delete icon">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
-
-

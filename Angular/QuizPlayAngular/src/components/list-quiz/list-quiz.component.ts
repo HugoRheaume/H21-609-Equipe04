@@ -43,8 +43,8 @@ export class ListQuizComponent implements OnInit {
 				length: number
 			) => {
 				const start = page * pageSize + 1;
-				const end = (page + 1) * pageSize;
-				return `${start} - ${end} de ${this.decimalPipe.transform(length)}`;
+        const end = (page + 1) * pageSize;
+				return `${start} - ${end > length ? length : end} de ${this.decimalPipe.transform(length)}`;
 			};
 			this.dataSource.paginator = this.paginator;
 
