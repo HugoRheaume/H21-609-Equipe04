@@ -23,7 +23,7 @@ public class RetrofitUtil {
 
     public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://192.168.0.172:45455//api/")                //https://192.168.0.136:45455/api/     //https://api.e4.projet.college-em.info/api/
+                .baseUrl("https://192.168.0.172:45455/api/")                //https://192.168.0.136:45455/api/     //https://api.e4.projet.college-em.info/api/
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

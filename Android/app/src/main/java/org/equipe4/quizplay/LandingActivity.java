@@ -1,10 +1,14 @@
 package org.equipe4.quizplay;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +23,15 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.squareup.picasso.Picasso;
 
 import org.equipe4.quizplay.databinding.ActivityLandingBinding;
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
+import org.equipe4.quizplay.transfer.UserDTO;
+
+import java.io.Serializable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,11 +108,43 @@ public class LandingActivity extends AppCompatActivity {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+
                         // On est connecté
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(i);
-                        finish();
+                        mAuth.getCurrentUser().getIdToken(true).addOnCompleteListener(taskToken -> {
+                            if (taskToken.isSuccessful()){
+
+                                String firebaseToken = taskToken.getResult().getToken();
+
+                                service.login("\"" + firebaseToken + "\"").enqueue(new Callback<UserDTO>() {
+                                    @Override
+                                    public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                                        UserDTO user = response.body();
+
+                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+
+                                        SharedPreferences sharedPreferences = getSharedPreferences("connectedUser", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("username", user.name);
+                                        editor.putString("picture", user.picture);
+                                        editor.putString("email", user.email);
+                                        editor.apply();
+
+                                        //i.putExtra("name", (Serializable) user);
+                                        //i.putExtra("picture", user.picture);
+
+                                        startActivity(i);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<UserDTO> call, Throwable t) {
+                                        Toast.makeText(LandingActivity.this, "Erreur " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
+                        });
+
                     } else {
                         Toast.makeText(LandingActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                     }
