@@ -1,6 +1,8 @@
 package org.equipe4.quizplay;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -38,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        SharedPreferences sharedPreferences = this.getSharedPreferences("connectedUser", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
+        String picture = sharedPreferences.getString("picture", "");
+
+        binding.name.setText(username);
+        Picasso.get().load(picture).into(binding.profilePic);
+
         binding.btnLogout.setOnClickListener(v -> {
 
             GoogleSignInClient client;
@@ -54,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     Intent i = new Intent(getApplicationContext(), LandingActivity.class);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.apply();
+
                     i.putExtra("loggedOut", true);
                     startActivity(i);
                     finish();
@@ -68,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
         });
-
     }
 
 
@@ -78,41 +89,36 @@ public class MainActivity extends AppCompatActivity {
         // Firebase - Vérifier si déjà connecté
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        if (mUser == null) {
-            Intent i = new Intent(getApplicationContext(), LandingActivity.class);
-            startActivity(i);
-            finish();
-        }
-        else {
-            mUser.getIdToken(true)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-
-                        // TODO Envoie le token Firebase à notre serveur .NET
-                        String idToken = task.getResult().getToken();
-                        //Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
-
-                        service.login("\"" + idToken + "\"").enqueue(new Callback<UserDTO>() {
-                            @Override
-                            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-                                Log.i("REQUEST","Ok " + response.body());
-                                UserDTO user = response.body();
-                                TextView name = binding.name;
-                                name.setText(user.name);
-                                ImageView profilePic = binding.profilePic;
-                                Picasso.get().load(user.picture).into(profilePic);
-                            }
-
-                            @Override
-                            public void onFailure(Call<UserDTO> call, Throwable t) {
-                                Toast.makeText(MainActivity.this, "Ko " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        // Handle error -> task.getException();
-                    }
-                });
-        }
-
+//        if (mUser == null) {
+//            Intent i = new Intent(getApplicationContext(), LandingActivity.class);
+//            startActivity(i);
+//            finish();
+//        }
+//        else {
+//            mUser.getIdToken(true)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//
+//                        // TODO Envoie le token Firebase à notre serveur .NET
+//                        String idToken = task.getResult().getToken();
+//                        //Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
+//
+//                        service.login("\"" + idToken + "\"").enqueue(new Callback<UserDTO>() {
+//                            @Override
+//                            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+//                                Log.i("REQUEST","Ok " + response.body());
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<UserDTO> call, Throwable t) {
+//                                Toast.makeText(MainActivity.this, "Ko " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    } else {
+//                        // Handle error -> task.getException();
+//                    }
+//                });
+//        }
     }
 }

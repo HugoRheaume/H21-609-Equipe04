@@ -11,6 +11,10 @@ using API.Service;
 
 namespace API.Validation
 {
+    /// <summary>
+    /// Valide les cookies et les headers qui sont envoyés dans la requête.
+    /// Si il a des tokens, il va accepter la requête, sinon, la requête sera redirigée vers Logout()
+    /// </summary>
     public class CookieValidationAttribute : AuthorizeAttribute
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
