@@ -138,9 +138,9 @@ namespace API.Service
 
         public bool StoreQuestionResult(QuestionResultDTO result, CookieHeaderValue cookie)
         {
-            if (cookie == null) return false;
+            //if (cookie == null) return false;
 
-            string token = cookie["token"].Value;
+            //string token = cookie["token"].Value;
 
             //ApplicationUser user = db.Token.Find(token).User;
 

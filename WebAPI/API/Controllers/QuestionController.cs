@@ -60,9 +60,11 @@ namespace API.Controllers
         [HttpPost]
         public IHttpActionResult GetNextQuestion(QuestionResultDTO result)
         {
-            if (service.StoreQuestionResult(result, Request.Headers.GetCookies("token").FirstOrDefault()))
+            if (result.QuestionId == -1)
                 return Ok(service.GetNextQuestion(result.QuestionId));
-            return BadRequest("Pas de Biscuit");
+            else if (service.StoreQuestionResult(result, Request.Headers.GetCookies("token").FirstOrDefault()))
+                return Ok(service.GetNextQuestion(result.QuestionId));
+            else return BadRequest("Pas de Biscuit");
         }
     }
 }
