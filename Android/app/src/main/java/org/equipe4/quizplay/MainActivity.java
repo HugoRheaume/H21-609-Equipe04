@@ -1,18 +1,23 @@
 package org.equipe4.quizplay;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import org.equipe4.quizplay.databinding.ActivityMainBinding;
+import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.UserDTO;
 
@@ -25,12 +30,44 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private QPService service = RetrofitUtil.get();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.btnLogout.setOnClickListener(v -> {
+
+            GoogleSignInClient client;
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.client_id))      // TODO Très important, mauvaise valeur = marche pas
+                    .requestEmail()
+                    .build();
+            client = GoogleSignIn.getClient(this, gso);
+            client.signOut();
+
+            mAuth.signOut();
+
+            service.logout().enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    Intent i = new Intent(getApplicationContext(), LandingActivity.class);
+                    i.putExtra("loggedOut", true);
+                    startActivity(i);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                    Log.e("RETROFIT", t.getMessage());
+                    Toast.makeText(MainActivity.this, "An error occured", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        });
 
     }
 
@@ -42,10 +79,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         if (mUser == null) {
-            Toast.makeText(this, "Not logged firebase", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(getApplicationContext(), LandingActivity.class);
+            startActivity(i);
+            finish();
         }
         else {
-
             mUser.getIdToken(true)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -53,12 +91,12 @@ public class MainActivity extends AppCompatActivity {
                         // TODO Envoie le token Firebase à notre serveur .NET
                         String idToken = task.getResult().getToken();
                         //Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
-                        new RetrofitUtil().service.Login(idToken).enqueue(new Callback<UserDTO>() {
+
+                        service.login("\"" + idToken + "\"").enqueue(new Callback<UserDTO>() {
                             @Override
                             public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                                 Log.i("REQUEST","Ok " + response.body());
                                 UserDTO user = response.body();
-
                                 TextView name = binding.name;
                                 name.setText(user.name);
                                 ImageView profilePic = binding.profilePic;

@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using Google.Api.Gax;
 
 namespace API.Service
 {
@@ -17,33 +19,66 @@ namespace API.Service
     {
         public AuthService(ApplicationDbContext db) : base(db) { }
 
-        public async Task<UserDTO> LoginTokenAsync(string tokenFromUser)
+        public async Task<FirebaseToken> LoginTokenAsync(string tokenFromUser)
         {
-            string test = HttpRuntime.AppDomainAppPath;
-            string path = test + "quizplay-eq4-firebase-adminsdk-lokv6-c6ae35aade.json";
-            if (FirebaseApp.GetInstance("[DEFAULT]") == null)
-                FirebaseApp.Create(new AppOptions()
-                {
-                    Credential = GoogleCredential.FromFile(path),
-                });
+            //string appPath = HttpRuntime.AppDomainAppPath;
+            //string path = appPath + "quizplay-eq4-firebase-adminsdk-lokv6-e158b65c6f.json";
+            //if (FirebaseApp.DefaultInstance == null)
+            //    FirebaseApp.Create(new AppOptions()
+            //    {
+            //        Credential = GoogleCredential.FromFile(path),
+            //    });
 
             FirebaseToken decodedToken = FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(tokenFromUser).Result;
             string uid = decodedToken.Uid;
 
-            if (db.Users.Find(uid) == null)
+            ApplicationUser user = db.Users.Find(uid);
+            if (user == null)
             {
                 UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                ApplicationUser user = new ApplicationUser();
-                user.Id = uid;
-                user.Email = decodedToken.Claims["email"].ToString();
+                user = new ApplicationUser
+                {
+                    Id = uid,
+                    Email = decodedToken.Claims["email"].ToString()
+                };
                 user.UserName = user.Email;
                 user.Name = decodedToken.Claims["name"].ToString();
                 user.Picture = decodedToken.Claims["picture"].ToString();
                 await userManager.CreateAsync(user);
 
-                db.SaveChanges();
             }
-            return new UserDTO(db.Users.Find(uid));
+            user.Token = GenerateCustomToken();
+            db.SaveChanges();
+
+            return decodedToken;
+        }
+
+        public ApplicationUser GetUser(string id)
+        {
+            return db.Users.Find(id);
+        }
+
+        public ApplicationUser GetUserWithToken(HttpRequestMessage request)
+        {
+            string token = request.Headers.Authorization.ToString().Split(' ')[1];
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
+
+            return user;
+        }
+
+        public ApplicationUser GetUserWithToken(string token)
+        {
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
+
+            return user;
+        }
+
+        public string GenerateCustomToken()
+        {
+            Random random = new Random();
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 64)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

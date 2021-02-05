@@ -20,16 +20,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitUtil {
-    public QPService service;
 
-    public RetrofitUtil() {
+    public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://192.168.0.172:45455/api/")             //https://api.e4.projet.college-em.info/api/
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        service = retrofit.create(QPService.class);
+        return retrofit.create(QPService.class);
     }
 
     public static class MyCookieJar implements CookieJar {
@@ -59,7 +58,7 @@ public class RetrofitUtil {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
             CookieJar cookieJar = new MyCookieJar();
-            builder.cookieJar(cookieJar);
+            builder = builder.cookieJar(cookieJar);
 
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {

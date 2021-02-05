@@ -19,7 +19,11 @@ import {
 	CreateQuizConfirmDialog,
 } from 'src/components/create-quiz/create-quiz.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {
+	CommonModule,
+	LocationStrategy,
+	PathLocationStrategy,
+} from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
@@ -29,9 +33,9 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
 		AppComponent,
 		CreateQuizComponent,
 		CreateQuizConfirmDialog,
-    CreateTrueOrFalseQuestion,
-    CreateQuestionComponent,
-    CreateMultiplechoicesQuestionComponent,
+		CreateTrueOrFalseQuestion,
+		CreateQuestionComponent,
+		CreateMultiplechoicesQuestionComponent,
 		ListQuizComponent,
 		DeleteQuizDialog,
 		QuizQuestionListComponent,
@@ -48,7 +52,7 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
 		CommonModule,
 	],
 	entryComponents: [CreateQuizComponent],
-	providers: [],
+	providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

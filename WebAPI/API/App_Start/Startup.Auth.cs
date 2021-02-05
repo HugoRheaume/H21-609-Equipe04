@@ -32,6 +32,8 @@ namespace API
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
+
+            
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {

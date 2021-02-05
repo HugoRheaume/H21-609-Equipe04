@@ -6,9 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
 const routes: Routes = [
 	{ path: 'list', component: ListQuizComponent },
-  { path: '', component: CreateQuizComponent },
-  { path: 'quiz/:quizId', component: QuizQuestionListComponent },
-  { path: 'quiz', component: CreateQuizComponent }
+	{ path: '', component: CreateQuizComponent },
+	{ path: 'quiz/:quizId', component: QuizQuestionListComponent },
+	{ path: 'quiz', component: CreateQuizComponent },
 ];
 
 @NgModule({

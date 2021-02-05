@@ -31,15 +31,15 @@ import retrofit2.Response;
 
 public class LandingActivity extends AppCompatActivity {
 
-    QPService service = new RetrofitUtil().service;
+    QPService service = RetrofitUtil.get();
 
     private static final int GOOGLE_SIGN_IN_CODE = 123;
 
     private FirebaseAuth mAuth;
-    private GoogleSignInClient mGoogleSignInClient;
 
     private ActivityLandingBinding binding;
 
+    private GoogleSignInClient mGoogleSignInClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +78,8 @@ public class LandingActivity extends AppCompatActivity {
 
     }
 
+
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             // On a le compte google et toutes les informations
@@ -86,7 +88,6 @@ public class LandingActivity extends AppCompatActivity {
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Toast.makeText(this, ""+e.getStatusCode(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
 
         }
@@ -94,16 +95,15 @@ public class LandingActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-
         // TODO C'est ici qu'on envoie la requête à Firebase avec le token google
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // On est connecté
                         FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(getApplicationContext(), "account " +user.getEmail(), Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
+                        finish();
                     } else {
                         Toast.makeText(LandingActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                     }
@@ -116,9 +116,6 @@ public class LandingActivity extends AppCompatActivity {
         // Firebase - Vérifier si déjà connecté
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            Toast.makeText(this, "Not logged firebase", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void JoinQuiz(View v){
@@ -134,6 +131,7 @@ public class LandingActivity extends AppCompatActivity {
                     if (response.isSuccessful()){
                         Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                     else {
                         Toast.makeText(LandingActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
@@ -147,53 +145,4 @@ public class LandingActivity extends AppCompatActivity {
             });
         }
     }
-
-
-
-//    public void helloWorld(View v) {
-//        QPService service = new RetrofitUtil().service;
-//        final HelloWorldObj[] helloWorldObj = new HelloWorldObj[1];
-//
-//        startLoading();
-//        service.helloWorld().enqueue(new Callback<HelloWorldObj>() {
-//            @Override
-//            public void onResponse(Call<HelloWorldObj> call, Response<HelloWorldObj> response) {
-//                if (response.isSuccessful()) {
-//                    helloWorldObj[0] = response.body();
-//
-//                    TextView text = findViewById(R.id.helloWorldTxt);
-//                    text.setText(helloWorldObj[0].text);
-//
-//                    ImageView img = findViewById(R.id.helloWorldImg);
-//                    Picasso.get().load(helloWorldObj[0].image).into(img);
-//
-//                    stopLoading();
-//                }
-//                else {
-//                    Log.i("RETROFIT", response.code()+"");
-//                    Toast.makeText(getApplicationContext(), "not stonks", Toast.LENGTH_SHORT).show();
-//
-//                    stopLoading();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HelloWorldObj> call, Throwable t) {
-//                Log.i("RETROFIT", t.getMessage());
-//                Toast.makeText(getApplicationContext(), "Connection problems???", Toast.LENGTH_SHORT).show();
-//
-//                stopLoading();
-//            }
-//        });
-//    }
-//
-//    private void startLoading() {
-//        findViewById(R.id.progress).setVisibility(View.VISIBLE);
-//        findViewById(R.id.helloWorldBtn).setClickable(false);
-//    }
-//
-//    private void stopLoading() {
-//        findViewById(R.id.progress).setVisibility(View.GONE);
-//        findViewById(R.id.helloWorldBtn).setClickable(true);
-//    }
 }
