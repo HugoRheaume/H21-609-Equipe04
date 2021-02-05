@@ -1,0 +1,20 @@
+<div *ngIf="this.service.currentShareCode">
+    <button [cdkCopyToClipboard]="this.service.currentShareCode" class="m-3" mat-raised-button color="primary" >Share Code: {{this.service.currentShareCode}} <mat-icon>content_copy</mat-icon></button>
+</div>
+<button class="questionButtonAddRemove" mat-fab color="primary" (click)="create()" color="primary" ><mat-icon>add</mat-icon> </button>
+
+<div class="row">
+    <div class="col-6">
+        <div *ngFor="let item of this.service.messages" class="card bg-dark">
+            <p>{{item}}</p>
+        </div>
+    </div>
+    <div class="col-6">
+        <div *ngFor="let item of this.service.users"  class="card bg-dark">
+            <p>{{item}}</p>
+        </div>
+    </div>
+</div>
+
+
+

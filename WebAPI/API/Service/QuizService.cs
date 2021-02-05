@@ -89,5 +89,15 @@ namespace API.Service
             return true;
 
         }
+        public QuizResponseDTO GetQuizByShareCode(string shareCode)
+        {
+            Quiz quizToShip = db.ListQuiz.Where(x => x.ShareCode == shareCode).FirstOrDefault();
+            if(quizToShip == null)
+            {
+                return null;
+            }
+            return GenerateQuizResponseDTO(quizToShip, null);
+
+        }
     }
 }

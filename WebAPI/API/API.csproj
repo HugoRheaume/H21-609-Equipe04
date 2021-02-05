@@ -49,6 +49,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WebSockets, Version=0.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WebSockets.0.2.3.1\lib\net45\Microsoft.WebSockets.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -215,9 +218,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\WebSocketController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Global.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -235,12 +240,18 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\IQuestionService.cs" />
+    <Compile Include="Service\LogService.cs" />
     <Compile Include="Service\QuestionService.cs" />
     <Compile Include="Service\QuizService.cs" />
+    <Compile Include="Service\RoomService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validation\ModelValidationAttribute.cs" />
     <Compile Include="Validation\QuestionValidationAttribute.cs" />
     <Compile Include="Validation\QuizValidationAttribute.cs" />
+    <Compile Include="WebSocket\Room.cs" />
+    <Compile Include="WebSocket\RoomHandler.cs" />
+    <Compile Include="WebSocket\RoomUser.cs" />
+    <Compile Include="WebSocket\WebSocketDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
