@@ -1,3 +1,4 @@
+import { WaitingRoomComponent } from './../components/waiting-room/waiting-room.component';
 import { RouterModule } from '@angular/router';
 import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
 import { CreateQuestionComponent } from './../components/create-question/create-question.component';
@@ -35,6 +36,7 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
     ListQuizComponent,
     DeleteQuizDialog,
     QuizQuestionListComponent,
+    WaitingRoomComponent
   ],
   imports: [
     BrowserModule,
