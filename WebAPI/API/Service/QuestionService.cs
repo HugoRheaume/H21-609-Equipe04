@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.Net.Http.Headers;
 
 namespace API.Service
 {
@@ -42,7 +43,16 @@ namespace API.Service
                 return null;
             List<Question> questionList = db.Question.Where(x => x.Quiz.Id == quizId).ToList();
 
-            return questionList.Select(item => GenerateQuestionDTO(item)).ToList();
+            return questionList.Select(item => GenerateQuestionDTO(item)).OrderBy(x => x.QuizIndex).ToList();
+        }
+
+        public QuestionDTO GetNextQuestion(int questionId)
+        {
+            List<QuestionDTO> list = GetQuestionByQuizId(db.Question.Find(questionId).Quiz.Id);
+            int index = list.IndexOf(GenerateQuestionDTO(db.Question.Find(questionId)));
+            if (list.Count >= index + 1)
+                return GenerateQuestionDTO(new Question() { QuizIndex = -1 });
+            return list[index + 1];
         }
 
         public QuestionDTO AddQuestion(QuestionCreateDTO question)
@@ -124,6 +134,25 @@ namespace API.Service
             db.SaveChanges();
             return true;
 
+        }
+
+        public bool StoreQuestionResult(QuestionResultDTO result, CookieHeaderValue cookie)
+        {
+            if (cookie == null) return false;
+
+            string token = cookie["token"].Value;
+
+            //ApplicationUser user = db.Token.Find(token).User;
+
+            db.QuestionResult.Add(new QuestionResult()
+            {
+                Question = db.Question.Find(result.QuestionId),
+                User = new ApplicationUser() { UserName = "temp", Email = "temp@temp.temp" },  //User = user,
+                Score = result.Score
+            });
+
+            db.SaveChanges();
+            return true;
         }
     }
 }

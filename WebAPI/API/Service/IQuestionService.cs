@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web;
 
 namespace API.Service
@@ -11,12 +12,12 @@ namespace API.Service
         List<QuestionDTO> GetQuestions();
         QuestionDTO GetQuestionById(int id);
         List<QuestionDTO> GetQuestionByQuizId(int quizId);
-
+        QuestionDTO GetNextQuestion(int questionId);
 
         QuestionDTO AddQuestion(QuestionCreateDTO q);
 
         List<QuestionDTO> DeleteQuestion(int id);
         bool UpdateQuizIndex(List<QuestionDTO> questions);
-
+        bool StoreQuestionResult(QuestionResultDTO result, CookieHeaderValue cookie);
     }
 }

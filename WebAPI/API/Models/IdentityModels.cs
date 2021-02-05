@@ -23,7 +23,7 @@ namespace API.Models
             return userIdentity;
         }
 
-        
+        public virtual List<QuestionResult> QuestionResults { get; set; }
 }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -42,5 +42,6 @@ namespace API.Models
         public virtual DbSet<Question.Question> Question { get; set; }
         public virtual DbSet<Question.QuestionTrueFalse> QuestionTrueFalse { get; set; }
         public virtual DbSet<Question.QuestionMultipleChoice> QuestionMultiple { get; set; }
+        public virtual DbSet<QuestionResult> QuestionResult { get; set; }
     }
 }

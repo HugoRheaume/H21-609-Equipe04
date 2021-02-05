@@ -54,8 +54,15 @@ namespace API.Controllers
         [Route("api/question/updatequizindex")]
         public IHttpActionResult UpdateQuizIndex(List<QuestionDTO> questions)
         {
-            
             return Ok(service.UpdateQuizIndex(questions));
+        }
+
+        [HttpPost]
+        public IHttpActionResult GetNextQuestion(QuestionResultDTO result)
+        {
+            if (service.StoreQuestionResult(result, Request.Headers.GetCookies("token").FirstOrDefault()))
+                return Ok(service.GetNextQuestion(result.QuestionId));
+            return BadRequest("Pas de Biscuit");
         }
     }
 }
