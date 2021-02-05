@@ -1,23 +1,25 @@
 package org.equipe4.quizplay;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
+import org.equipe4.quizplay.databinding.ActivityMainBinding;
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
-import org.equipe4.quizplay.transfer.HelloWorldObj;
-import org.equipe4.quizplay.transfer.QuizResponseDTO;
+import org.equipe4.quizplay.transfer.UserDTO;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,86 +27,96 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    QPService service = new RetrofitUtil().service;
+    private ActivityMainBinding binding;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private QPService service = RetrofitUtil.get();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-    public void JoinQuiz(View v){
-        EditText editTextCode = findViewById(R.id.editTextCode);
+        binding.btnLogout.setOnClickListener(v -> {
 
-        if (editTextCode.getText().toString().equals("")){
-            Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
-        }
-        else {
-            service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
+            GoogleSignInClient client;
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.client_id))      // TODO Très important, mauvaise valeur = marche pas
+                    .requestEmail()
+                    .build();
+            client = GoogleSignIn.getClient(this, gso);
+            client.signOut();
+
+            mAuth.signOut();
+
+            service.logout().enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
-                    if (response.isSuccessful()){
-                        Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
-                        startActivity(intent);
-                    }
-                    else {
-                        Toast.makeText(MainActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
-                    }
+                public void onResponse(Call<String> call, Response<String> response) {
+                    Intent i = new Intent(getApplicationContext(), LandingActivity.class);
+                    i.putExtra("loggedOut", true);
+                    startActivity(i);
+                    finish();
                 }
 
                 @Override
-                public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
+                public void onFailure(Call<String> call, Throwable t) {
+
                     Log.e("RETROFIT", t.getMessage());
+                    Toast.makeText(MainActivity.this, "An error occured", Toast.LENGTH_SHORT).show();
                 }
             });
-        }
+
+        });
+
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Firebase - Vérifier si déjà connecté
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        if (mUser == null) {
+            Intent i = new Intent(getApplicationContext(), LandingActivity.class);
+            startActivity(i);
+            finish();
+        }
+        else {
+            mUser.getIdToken(true)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 
-//    public void helloWorld(View v) {
-//        QPService service = new RetrofitUtil().service;
-//        final HelloWorldObj[] helloWorldObj = new HelloWorldObj[1];
-//
-//        startLoading();
-//        service.helloWorld().enqueue(new Callback<HelloWorldObj>() {
-//            @Override
-//            public void onResponse(Call<HelloWorldObj> call, Response<HelloWorldObj> response) {
-//                if (response.isSuccessful()) {
-//                    helloWorldObj[0] = response.body();
-//
-//                    TextView text = findViewById(R.id.helloWorldTxt);
-//                    text.setText(helloWorldObj[0].text);
-//
-//                    ImageView img = findViewById(R.id.helloWorldImg);
-//                    Picasso.get().load(helloWorldObj[0].image).into(img);
-//
-//                    stopLoading();
-//                }
-//                else {
-//                    Log.i("RETROFIT", response.code()+"");
-//                    Toast.makeText(getApplicationContext(), "not stonks", Toast.LENGTH_SHORT).show();
-//
-//                    stopLoading();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HelloWorldObj> call, Throwable t) {
-//                Log.i("RETROFIT", t.getMessage());
-//                Toast.makeText(getApplicationContext(), "Connection problems???", Toast.LENGTH_SHORT).show();
-//
-//                stopLoading();
-//            }
-//        });
-//    }
-//
-//    private void startLoading() {
-//        findViewById(R.id.progress).setVisibility(View.VISIBLE);
-//        findViewById(R.id.helloWorldBtn).setClickable(false);
-//    }
-//
-//    private void stopLoading() {
-//        findViewById(R.id.progress).setVisibility(View.GONE);
-//        findViewById(R.id.helloWorldBtn).setClickable(true);
-//    }
+                        // TODO Envoie le token Firebase à notre serveur .NET
+                        String idToken = task.getResult().getToken();
+                        //Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
+
+                        service.login("\"" + idToken + "\"").enqueue(new Callback<UserDTO>() {
+                            @Override
+                            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                                Log.i("REQUEST","Ok " + response.body());
+                                UserDTO user = response.body();
+                                TextView name = binding.name;
+                                name.setText(user.name);
+                                ImageView profilePic = binding.profilePic;
+                                Picasso.get().load(user.picture).into(profilePic);
+                            }
+
+                            @Override
+                            public void onFailure(Call<UserDTO> call, Throwable t) {
+                                Toast.makeText(MainActivity.this, "Ko " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        // Handle error -> task.getException();
+                    }
+                });
+        }
+
+    }
 }

@@ -1,5 +1,8 @@
 package org.equipe4.quizplay.http;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
@@ -7,6 +10,9 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -14,21 +20,45 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitUtil {
-    public QPService service;
 
-    public RetrofitUtil() {
+    public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://10.0.2.2:45455/api/")                //https://192.168.0.135:45455/api/     //https://api.e4.projet.college-em.info/api/
+                .baseUrl("https://192.168.0.172:45455//api/")                //https://192.168.0.136:45455/api/     //https://api.e4.projet.college-em.info/api/
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        service = retrofit.create(QPService.class);
+        return retrofit.create(QPService.class);
     }
+
+    public static class MyCookieJar implements CookieJar {
+
+        private List<Cookie> cookies;
+
+        @Override
+        public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+            this.cookies =  cookies;
+        }
+
+        @Override
+        public List<Cookie> loadForRequest(HttpUrl url) {
+            List<Cookie> res = new ArrayList<>();
+            if (cookies != null){
+                for(Cookie c : cookies){
+                    if (c.expiresAt() > System.currentTimeMillis()) res.add(c);
+                }
+            }
+            return res;
+        }
+    }
+
 
     public static OkHttpClient getClient() {
         try {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+            CookieJar cookieJar = new MyCookieJar();
+            builder = builder.cookieJar(cookieJar);
 
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {

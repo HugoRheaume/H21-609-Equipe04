@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".LandingActivity"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/textViewJoinQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joinQuiz"
+        android:layout_marginBottom="50dp"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/textViewEnterCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enterCode"
+        android:layout_marginBottom="15dp"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/editTextCode"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textAlignment="center"
+        android:inputType="text"
+        android:hint="@string/hintCode"
+        android:maxLength="6"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/buttonJoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnJoin"
+        android:onClick="JoinQuiz"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+
+</LinearLayout>

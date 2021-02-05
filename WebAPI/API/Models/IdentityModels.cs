@@ -1,14 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using API.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using API.Models.Question;
-using System.Data.Entity;
 
 namespace API.Models
 {
@@ -22,9 +16,12 @@ namespace API.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public string Name { get; set; }
 
-        
-}
+        public string Picture { get; set; }
+
+        public string Token { get; set; }
+    }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

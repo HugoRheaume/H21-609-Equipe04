@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "453297139558",
+    "project_id": "quizplay-eq4",
+    "storage_bucket": "quizplay-eq4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453297139558:android:4479c155d598936d11a2a7",
+        "android_client_info": {
+          "package_name": "org.equipe4.quizplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453297139558-9ntqigkps4ujkcb3hmtnsdpnu8rebe55.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.equipe4.quizplay",
+            "certificate_hash": "76fa9ca08418ad2f0fdc27a7f41281a6bf3b6b6f"
+          }
+        },
+        {
+          "client_id": "453297139558-9spiev0vstkbu3v9103pt3c8vuito0f0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.equipe4.quizplay",
+            "certificate_hash": "286c988162f3f0b28e3c0e84aca189505a1f6a29"
+          }
+        },
+        {
+          "client_id": "453297139558-c5k59l5dreroub92fmibm1cbq277o29s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.equipe4.quizplay",
+            "certificate_hash": "433aaecb206491ce6d42e3a5ac7766ba0948a2aa"
+          }
+        },
+        {
+          "client_id": "453297139558-kd5b6tsv3pdvrjf2rqtistatesq0rp1j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.equipe4.quizplay",
+            "certificate_hash": "e7ef064f1ff5d65394ad506b6b563c2d5881aec9"
+          }
+        },
+        {
+          "client_id": "453297139558-an8ht01qc9flek0dkrl41sc8e8v8c72p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDrgi407RNTIHLjFDlsdhR3tSs82dY4II"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453297139558-an8ht01qc9flek0dkrl41sc8e8v8c72p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,7 +19,6 @@ namespace API.Models.Question
 
         public int TimeLimit { get; set; }
         public bool NeedsAllAnswers { get; set; }
-        
 
         [ForeignKey("QuestionId")]
         public virtual List<QuestionTrueFalse> QuestionTrueFalse { get; set; }
