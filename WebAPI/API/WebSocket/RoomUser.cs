@@ -10,7 +10,7 @@ namespace API.WebSocket
     {
         //public ApplicationUser user { get; set; }
         public string Username { get; set; }
-        public ApplicationUser User { get; set; }
+        public UserWS User { get; set; }
         public RoomHandler Handler { get; set; }
 
         public RoomUser(string username, RoomHandler handler)

@@ -25,7 +25,6 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
 import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
-import { JoinQuizComponent } from './components/websocket/join-quiz/join-quiz.component';
 
 @NgModule({
   declarations: [
@@ -38,8 +37,7 @@ import { JoinQuizComponent } from './components/websocket/join-quiz/join-quiz.co
     ListQuizComponent,
     DeleteQuizDialog,
     QuizQuestionListComponent,
-		JoinQuizComponent,
-    WaitingRoomComponent
+		WaitingRoomComponent
   ],
   imports: [
     BrowserModule,

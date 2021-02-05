@@ -1,31 +1,34 @@
+<button class="questionButtonAddRemove" mat-fab color="primary" (click)="create()" color="primary" ><mat-icon>add</mat-icon> </button>
+
 <div style="width: 100%; background-color: #303030; height: 100%;" class="d-flex flex-column">
-  <button mat-flat-button style="background-color: purple; width: 100px;" [cdkCopyToClipboard]="this.shareCode">
+  <button *ngIf="this.service.currentShareCode" mat-flat-button style="background-color: purple; width: 100px;" [cdkCopyToClipboard]="this.service.currentShareCode">
     <div class="d-flex align-items-center justify-content-center">
       <mat-icon>content_copy</mat-icon>
-      <span style="margin-left: 5px;">{{this.shareCode}}</span>
+      <span style="margin-left: 5px;">{{this.service.currentShareCode}}</span>
     </div>
   </button>
   <div class="d-flex justify-content-evenly align-items-center pt-5 mt-5 pb-5">
     <div>
-      <button mat-flat-button style="background-color: purple;" (click)="endGame()"
-        [disabled]="this.users.length < 2">Annuler la partie</button>
+      <button mat-flat-button style="background-color: purple;" (click)="endQuiz()">
+        Annuler la partie
+      </button>
     </div>
     <div>
       <div class="d-flex flex-column align-items-center">
-        <h1 style="color: tomato; margin-bottom: 0px;" (click)="addPlayer()"><strong>Utilisateurs dans la salle</strong></h1>
-        <h3 style="color: rgb(253, 172, 163);"><strong>{{this.users.length}} joueurs</strong></h3>
+        <h1 style="color: tomato; margin-bottom: 0px;" ><strong>Utilisateurs dans la salle</strong></h1>
+        <h3 style="color: rgb(253, 172, 163);"><strong>{{this.service.users.length}} joueurs</strong></h3>
       </div>
     </div>
-    <div><button mat-flat-button style="background-color: tomato;" (click)="startGame()"
-        [disabled]="this.users.length < 2">Commencer la partie</button>
+    <div><button mat-flat-button style="background-color: tomato;" (click)="starQuiz()"
+        [disabled]="this.service.users.length < 2">Commencer la partie</button>
     </div>
   </div>
   <mat-grid-list cols="3" rowHeight="4:1">
-    <mat-grid-tile *ngFor="let i of this.iterator">
+    <mat-grid-tile *ngFor="let i of this.service.usersDisplay">
       <div class="userCard">
-        <img src="../../assets/png_64/{{this.randomInt(1,15)}}.png" alt="userImage" style="width: 64px; height: 64px;">
-        <span matTooltip="{{this.users[i]}}" [matTooltipClass]="'toolTipCustom'"
-          [matTooltipHideDelay]="50">{{this.usersFormated[i]}}</span>
+        <img src="../../assets/png_64/{{this.service.users[i].Picture}}.png" alt="userImage" style="width: 64px; height: 64px;">
+        <span matTooltip="{{this.service.users[i].Username}}" [matTooltipClass]="'toolTipCustom'"
+          [matTooltipHideDelay]="50">{{this.service.usersFormated[i]}}</span>
       </div>
     </mat-grid-tile>
   </mat-grid-list>
@@ -58,3 +61,5 @@
     <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
   </table> -->
 </div>
+
+

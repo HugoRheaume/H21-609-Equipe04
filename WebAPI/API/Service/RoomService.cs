@@ -65,7 +65,7 @@ namespace API.Service
             {
                 clients.Add(u.Handler);
             }
-            //clients.Add(rooms[shareCode].GetOwner.Handler);
+            clients.Add(rooms[shareCode].GetOwner.Handler);
 
             clients.Broadcast(Json.Encode(new SendLogMessage(value.ToString())));
             RoomStateWS r = new RoomStateWS();
@@ -97,14 +97,15 @@ namespace API.Service
 
         #region UTIL
         //======================================================
-        private static List<string> GetUsers(string shareCode)
+        private static List<UserWS> GetUsers(string shareCode)
         {
-            List<string> users = new List<string>();
+            List<UserWS> users = new List<UserWS>();
             foreach (var u in rooms[shareCode].Users)
             {
-                users.Add(u.Username);
+
+                users.Add(new UserWS(u.Username));
             }
-            users.Add(rooms[shareCode].GetOwner.Username);
+            //users.Add(rooms[shareCode].GetOwner.Username);
             return users;
         }        
         private static string GetUsername(string shareCode, string username)

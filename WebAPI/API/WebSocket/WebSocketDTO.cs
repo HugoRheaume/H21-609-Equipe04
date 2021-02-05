@@ -24,7 +24,7 @@ namespace API.WebSocket
     }
     public class RoomStateWS : WebSocketDTO
     {
-        public List<string> users { get; set; }
+        public List<UserWS> users { get; set; }
         public RoomStateWS()
         {
             this.MessageType = MessageType.RoomSate;
@@ -56,5 +56,15 @@ namespace API.WebSocket
             this.ErrorType = error;
         }
         public ErrorType ErrorType;
+    }
+    public class UserWS
+    {
+        public UserWS(string username)
+        {
+            this.Username = username;
+            this.Picture = Global.random.Next(1, 15).ToString();
+        }
+        public string Username { get; set; }
+        public string Picture { get; set; }
     }
 }
