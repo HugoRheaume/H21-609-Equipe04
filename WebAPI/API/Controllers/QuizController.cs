@@ -81,6 +81,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [CookieValidation]
         public IHttpActionResult GetQuizByCode([FromUri(Name = "code")] string pCode)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
@@ -104,7 +105,8 @@ namespace API.Controllers
                         IsPublic = quiz.IsPublic,
                         Description = quiz.Description,
                         ShareCode = quiz.ShareCode,
-                        Title = quiz.Title
+                        Title = quiz.Title,
+                        Date = quiz.Date
                     };
                     return Ok(response);
                 }

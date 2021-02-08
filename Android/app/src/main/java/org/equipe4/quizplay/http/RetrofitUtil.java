@@ -27,7 +27,7 @@ public class RetrofitUtil {
 
     public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP_MARCO)
+                .baseUrl(IP_XAV)
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -37,11 +37,11 @@ public class RetrofitUtil {
 
     public static class MyCookieJar implements CookieJar {
 
-        private List<Cookie> cookies;
+        private static List<Cookie> cookies;
 
         @Override
         public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-            this.cookies =  cookies;
+            MyCookieJar.cookies =  cookies;
         }
 
         @Override
