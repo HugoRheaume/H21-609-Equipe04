@@ -21,9 +21,13 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitUtil {
 
+    private static final String IP_PROD = "https://api.e4.projet.college-em.info/api/";
+    private static final String IP_MARCO = "https://192.168.0.136:45455/api/";
+    private static final String IP_XAV = "https://192.168.0.172:45455/api/";
+
     public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://192.168.0.172:45455/api/")                //https://192.168.0.136:45455/api/     //https://api.e4.projet.college-em.info/api/
+                .baseUrl(IP_MARCO)
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -33,11 +37,11 @@ public class RetrofitUtil {
 
     public static class MyCookieJar implements CookieJar {
 
-        private List<Cookie> cookies;
+        private static List<Cookie> cookies;
 
         @Override
         public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-            this.cookies =  cookies;
+            MyCookieJar.cookies =  cookies;
         }
 
         @Override

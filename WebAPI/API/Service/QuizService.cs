@@ -89,5 +89,34 @@ namespace API.Service
             return true;
 
         }
+        public QuizResponseDTO GetQuizByCode(string pCode)
+        {
+                Quiz quiz;
+                try
+                {
+                    quiz = db.ListQuiz.First(q => q.ShareCode == pCode);
+                }
+                catch (Exception)
+                {
+                return null;
+                }
+                if (quiz != null)
+                {
+
+                    QuizResponseDTO response = new QuizResponseDTO()
+                    {
+                        Author = db.Users.Find(quiz.OwnerId)?.Name ?? "Nobody",
+                        Id = quiz.Id,
+                        IsPublic = quiz.IsPublic,
+                        Description = quiz.Description,
+                        ShareCode = quiz.ShareCode,
+                        Title = quiz.Title,
+                        Date = quiz.Date
+                    };
+                return response;
+                }
+                return null;
+            
+        }
     }
 }

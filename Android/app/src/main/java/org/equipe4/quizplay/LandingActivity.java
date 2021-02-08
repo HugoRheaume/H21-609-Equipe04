@@ -59,6 +59,34 @@ public class LandingActivity extends AppCompatActivity {
             startSignIn();
         });
 
+        //Bouton join quiz
+        binding.buttonJoin.setOnClickListener(v -> {
+            EditText editTextCode = binding.editTextCode;
+
+            if (editTextCode.getText().toString().equals("")){
+                Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
+                    @Override
+                    public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
+                        if (response.isSuccessful()){
+                            Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(LandingActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
+                        Log.e("RETROFIT", t.getMessage());
+                    }
+                });
+            }
+        });
+
     }
 
     private void startSignIn() {
@@ -157,33 +185,10 @@ public class LandingActivity extends AppCompatActivity {
         // Firebase - Vérifier si déjà connecté
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
-
-    public void JoinQuiz(View v){
-        EditText editTextCode = binding.editTextCode;
-
-        if (editTextCode.getText().toString().equals("")){
-            Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
-        }
-        else {
-            service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
-                @Override
-                public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
-                    if (response.isSuccessful()){
-                        Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else {
-                        Toast.makeText(LandingActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
-                    Log.e("RETROFIT", t.getMessage());
-                }
-            });
+        if (currentUser != null){
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
+            finish();
         }
     }
 }

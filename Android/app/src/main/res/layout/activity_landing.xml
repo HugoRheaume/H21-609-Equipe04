@@ -40,8 +40,7 @@
         android:id="@+id/buttonJoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnJoin"
-        android:onClick="JoinQuiz"/>
+        android:text="@string/btnJoin"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
