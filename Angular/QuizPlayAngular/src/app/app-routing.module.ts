@@ -4,15 +4,17 @@ import { ListQuizComponent } from '../components/list-quiz/list-quiz.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
+import { LoginComponent } from 'src/components/login/login.component';
 const routes: Routes = [
-	{ path: 'list', component: ListQuizComponent },
-	{ path: '', component: CreateQuizComponent },
-	{ path: 'quiz/:quizId', component: QuizQuestionListComponent },
-	{ path: 'quiz', component: CreateQuizComponent },
+  { path: 'list', component: ListQuizComponent },
+  { path: '', component: LoginComponent },
+  { path: 'create', component: CreateQuizComponent },
+  { path: 'quiz/:quizId', component: QuizQuestionListComponent },
+  { path: 'quiz', component: CreateQuizComponent }
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

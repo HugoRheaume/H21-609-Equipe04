@@ -1,7 +1,7 @@
 export class QuizRequest {
-    constructor (
+  constructor(
     public title: string,
     public description: string,
     public isPublic: boolean,
-    public confirm: boolean = false) {}
+    public confirm: boolean = false) { }
 }

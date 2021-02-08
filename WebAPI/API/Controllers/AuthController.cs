@@ -28,15 +28,18 @@ namespace API.Controllers
         public HttpResponseMessage Login([FromBody] string fireBaseToken)
         {
 
-            FirebaseToken decodedToken = service.LoginToken(fireBaseToken);
-
-            CookieHeaderValue cookie = new CookieHeaderValue("token", service.GetUser(decodedToken.Uid).Token)
+            FirebaseToken decodedToken = service.LoginTokenAsync(fireBaseToken).Result;
+            ApplicationUser currentUser = service.GetUser(decodedToken.Uid);
+            CookieHeaderValue cookie = new CookieHeaderValue("token", currentUser.Token)
             {
-                MaxAge = new TimeSpan(7,0,0,0),
+                Expires = DateTimeOffset.Now.AddYears(1),
                 Path = "/",
-                Secure = true
+                Domain = Request.RequestUri.Host,
+                Secure = false,
+                HttpOnly = false,
+                
             };
-            UserDTO user = new UserDTO(service.GetUser(decodedToken.Uid));
+            UserDTO user = new UserDTO(currentUser);
 
             HttpResponseMessage resp = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -55,8 +58,10 @@ namespace API.Controllers
             CookieHeaderValue cookie = new CookieHeaderValue("token", "")
             {
                 Expires = DateTimeOffset.Now.AddDays(-1),
+                Path = "/",
                 Domain = Request.RequestUri.Host,
-                Path = "/"
+                Secure = false,
+                HttpOnly = false,
             };
 
             resp.Headers.AddCookies(new[] {cookie});

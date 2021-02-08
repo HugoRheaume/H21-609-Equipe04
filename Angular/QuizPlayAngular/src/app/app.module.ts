@@ -1,4 +1,4 @@
-import { RouterModule } from '@angular/router';
+import { environment } from './../environments/environment';
 import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
 import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { MaterialModule } from 'src/app/material/material.module';
@@ -24,6 +24,11 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
 import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from 'src/components/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +40,7 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
     ListQuizComponent,
     DeleteQuizDialog,
     QuizQuestionListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +52,10 @@ import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
   ],
   entryComponents: [CreateQuizComponent],
   providers: [

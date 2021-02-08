@@ -65,7 +65,7 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
 
     let question = new QuestionMultipleChoice();
 
-    if(this.checkForm) return;
+    if (this.checkForm) return;
 
     //The question doesn't have a time limit
     if (
@@ -90,13 +90,13 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
     return;
   }
 
-  discard(){
+  discard() {
     this.MultipleChoice.reset();
     this.choices = [];
     this.needsAllRightAnswers = true;
   }
 
-  addChoice(){
+  addChoice() {
     let newChoice = new QuestionChoice();
     newChoice.choiceNumber = this.choices.length + 1;
     newChoice.answer = false;
@@ -104,8 +104,8 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
     this.choices.push(newChoice);
   }
 
-  removeChoice(i: number){
-    this.choices.splice(i-1, 1);
+  removeChoice(i: number) {
+    this.choices.splice(i - 1, 1);
 
     let iterator = 1;
     this.choices.forEach(choice => {
@@ -115,7 +115,7 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
   }
 
   // Returns false if ok
-  get checkForm(): boolean{
+  get checkForm(): boolean {
 
     let questionLabel = this.MultipleChoice.get('questionLabel') as FormControl;
     let questionTimeLimit = this.MultipleChoice.get(
@@ -125,8 +125,8 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
       'questionHasTimeLimit'
     ) as FormControl;
 
-    if(this.choices.length < 2) return true;
-    if(this.MultipleChoice.pristine) return true;
+    if (this.choices.length < 2) return true;
+    if (this.MultipleChoice.pristine) return true;
     if (questionLabel.value === '' || questionLabel.value == null) {
       // console.log('Label value is nothing');
       // alert('The label\'s value is nothing.');
@@ -150,16 +150,16 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
     let oneChoiceEmpty = false;
     let noChoiceChecked = true;
     this.choices.forEach(element => {
-      if(element.statement === "") oneChoiceEmpty = true;
-      if(element.answer === true) noChoiceChecked = false;
+      if (element.statement === "") oneChoiceEmpty = true;
+      if (element.answer === true) noChoiceChecked = false;
     });
-    if(oneChoiceEmpty) return true;
-    if(noChoiceChecked) return true;
+    if (oneChoiceEmpty) return true;
+    if (noChoiceChecked) return true;
 
     return false;
   }
 
-  get trueAnswers(): number{
+  get trueAnswers(): number {
     let amount = 0;
     this.choices.forEach(choice => {
       if (choice.answer) amount++;

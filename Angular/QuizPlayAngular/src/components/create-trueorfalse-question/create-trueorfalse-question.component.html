@@ -9,7 +9,8 @@
     </mat-form-field>
   </p>
   <p class="mat-form-field-wrapper">
-    <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Ajouter un temps maximum</mat-checkbox>
+    <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Ajouter un temps maximum
+    </mat-checkbox>
   </p>
   <p *ngIf="this.TrueFalse.get('questionHasTimeLimit').value">
     <mat-form-field appearance="outline" class="form-field-full-width">

@@ -9,7 +9,8 @@
     </mat-form-field>
   </p>
   <div class="mat-form-field-wrapper">
-    <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Ajouter un temps maximum</mat-checkbox>
+    <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Ajouter un temps maximum
+    </mat-checkbox>
 
   </div>
   <p *ngIf="this.MultipleChoice.get('questionHasTimeLimit').value">
@@ -46,7 +47,8 @@
       style="margin-top: 1.34375em;">
       <mat-radio-group aria-label="Need all the answers" [(ngModel)]="this.needsAllRightAnswers"
         [ngModelOptions]="{standalone: true}">
-        <mat-radio-button [value]="false" style="margin-bottom: 0.75em;">1 bonne réponse pour avoir le point</mat-radio-button>
+        <mat-radio-button [value]="false" style="margin-bottom: 0.75em;">1 bonne réponse pour avoir le point
+        </mat-radio-button>
         <br>
         <mat-radio-button [value]="true">Toutes les bonnes réponses pour avoir le point</mat-radio-button>
       </mat-radio-group>

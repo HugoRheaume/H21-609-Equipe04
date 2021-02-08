@@ -40,7 +40,7 @@ export class CreateQuestionComponent implements OnInit {
     for (let i = 0; i < this.enumNames.length; i++) {
       this.enumValues.push(QuestionType[this.enumNames[i]]);
       console.log(this.enumNames[i]);
-      switch(this.enumNames[i]){
+      switch (this.enumNames[i]) {
         case 'TrueFalse':
           this.enumFormated.push('Vrai ou faux');
           break;

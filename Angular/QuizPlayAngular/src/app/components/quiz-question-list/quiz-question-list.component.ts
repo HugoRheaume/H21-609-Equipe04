@@ -20,16 +20,16 @@ export class QuizQuestionListComponent implements OnInit {
 
   enum = QuestionType;
   ngOnInit(): void {
-    
-    
+
+
     var quizId: number = +this.route.snapshot.paramMap.get('quizId');
     this.service.getQuiz(quizId);
     this.service.getQuestionFromQuiz(quizId);
-    
+
   }
 
 
-  deleteQuestion(questionId: number): void { 
+  deleteQuestion(questionId: number): void {
     this.service.deleteQuestion(questionId)
   }
   drop(event: CdkDragDrop<string[]>) {
@@ -38,14 +38,13 @@ export class QuizQuestionListComponent implements OnInit {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     }
   }
 
-  finish()
-  {
+  finish() {
     let i = 0;
     this.service.currentQuestions.forEach(item => {
       item.quizIndex = i;
@@ -53,36 +52,32 @@ export class QuizQuestionListComponent implements OnInit {
     });
     this.service.updateQuizIndex();
 
-    
+
   }
-  putFirst()
-  {
-    
+  putFirst() {
+
     let i = 0;
-    this.service.currentQuestions.forEach(item =>{
-      
-      if(item.id === this.selectedQuestion.id)
-      {
-        moveItemInArray(this.service.currentQuestions, i, 0);        
+    this.service.currentQuestions.forEach(item => {
+
+      if (item.id === this.selectedQuestion.id) {
+        moveItemInArray(this.service.currentQuestions, i, 0);
       }
       else
         i++;
     });
   }
-  putLast()
-  {
-    
-    let i = 0;    
-    this.service.currentQuestions.forEach(item =>{
-      if(item.id === this.selectedQuestion.id)
-      {
-        
-        moveItemInArray(this.service.currentQuestions, i, this.service.currentQuestions.length-1);
-      
-       
+  putLast() {
+
+    let i = 0;
+    this.service.currentQuestions.forEach(item => {
+      if (item.id === this.selectedQuestion.id) {
+
+        moveItemInArray(this.service.currentQuestions, i, this.service.currentQuestions.length - 1);
+
+
       }
       i++;
     });
   }
-  
+
 }
