@@ -9,165 +9,198 @@ import { QuizResponse } from './models/QuizResponse';
 import { Question } from './models/question';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class QuizService {
+	constructor(public http: HttpClient) {}
 
-  constructor(public http: HttpClient) { }
+	public currentQuestions: Question[] = [];
+	public currentQuiz: QuizResponse;
 
-  public currentQuestions: Question[] = [];
-  public currentQuiz: QuizResponse;
+	public createQuiz(quiz: QuizRequest): Observable<QuizResponse> {
+		return this.http
+			.post<any>(environment.backend.baseURL + '/Quiz/Create', quiz, {
+				observe: 'response',
+			})
+			.pipe(
+				map(r => {
+					if (r.status == 201) return r.body as QuizResponse;
+					else if (r.status == 202) {
+						return new QuizResponse(
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							true,
+							false,
+							null,
+							null
+						);
+					} else return null;
+				})
+			);
+	}
 
-  public createQuiz(quiz: QuizRequest): Observable<QuizResponse> {
-    return this.http
-      .post<any>(environment.backend.baseURL + '/Quiz/Create', quiz, {
-        observe: 'response',
-      }).pipe(map(r => {
-        if (r.status == 201) return r.body as QuizResponse;
-        else if (r.status == 202) {
-          return new QuizResponse(
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            true,
-            false,
-            null,
-            null
-          );
-        } else return null;
-      })
-      );
-  }
+	public addQuestion(pQuestion: any) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
 
-  public addQuestion(pQuestion: any) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+		if (this.currentQuiz) pQuestion.quizId = this.currentQuiz.id;
 
-    if (this.currentQuiz)
-      pQuestion.quizId = this.currentQuiz.id;
+		this.http
+			.post<Question>(
+				environment.backend.baseURL + '/question/add',
+				pQuestion,
+				httpOptions
+			)
+			.subscribe(response => {
+				this.currentQuestions.push(response as Question);
+			});
+	}
+	deleteQuestion(questionId: number) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
 
-    this.http.post<Question>(environment.backend.baseURL + '/question/add', pQuestion, httpOptions).subscribe(response => {
-      this.currentQuestions.push(response as Question);
-    });
+		this.http
+			.get<Question[]>(
+				environment.backend.baseURL + '/question/delete/' + questionId,
+				httpOptions
+			)
+			.subscribe(response => {
+				this.currentQuestions = response;
+			});
+	}
+	getQuiz(quizId: number) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
 
-  }
-  deleteQuestion(questionId: number) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+		this.http
+			.get<QuizResponse>(
+				environment.backend.baseURL + '/quiz/getquizbyid/' + quizId,
+				httpOptions
+			)
+			.subscribe(response => {
+				this.currentQuiz = response;
+			});
+	}
+	getQuestionFromQuiz(quizId: number) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
 
-    this.http.get<Question[]>(environment.backend.baseURL + '/question/delete/' + questionId, httpOptions).subscribe(response => {
-      this.currentQuestions = response
-    });
-  }
-  getQuiz(quizId: number) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+		this.http
+			.get<Question[]>(
+				environment.backend.baseURL + '/question/getquizquestion/' + quizId,
+				httpOptions
+			)
+			.subscribe(response => {
+				this.currentQuestions = response;
+				this.currentQuestions.sort((a, b) =>
+					a.quizIndex > b.quizIndex ? 1 : -1
+				);
+			});
+	}
+	public getAlphanumericCode(): Observable<string> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
+		return this.http.get<any>(
+			environment.backend.baseURL + '/Quiz/GenerateAlphanumeric',
+			httpOptions
+		);
+	}
+	public getQuizList(): Observable<QuizResponse[]> {
+		return this.http
+			.get<QuizResponse[]>(
+				environment.backend.baseURL + '/Quiz/GetQuizFromUser'
+			)
+			.pipe(
+				map(res => {
+					return res;
+				})
+			);
+	}
+	public deleteQuiz(quiz: QuizResponse): Observable<boolean> {
+		return this.http
+			.get<boolean>(environment.backend.baseURL + `/Quiz/DeleteQuiz/${quiz.id}`)
+			.pipe(
+				map(
+					r => {
+						return true;
+					},
+					e => {
+						return false;
+					}
+				)
+			);
+	}
+	public updateQuizIndex() {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
+		this.http
+			.post<boolean>(
+				environment.backend.baseURL + '/question/updatequizindex',
+				this.currentQuestions,
+				httpOptions
+			)
+			.subscribe(response => {
+				response;
+			});
+	}
 
-    this.http.get<QuizResponse>(environment.backend.baseURL + '/quiz/getquizbyid/' + quizId, httpOptions).subscribe(response => {
-      this.currentQuiz = response;
-    });
-  }
-  getQuestionFromQuiz(quizId: number) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+	public login(firebaseToken: string) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
 
-    this.http.get<Question[]>(environment.backend.baseURL + '/question/getquizquestion/' + quizId, httpOptions).subscribe(response => {
-      this.currentQuestions = response;
-      this.currentQuestions.sort((a, b) => (a.quizIndex > b.quizIndex) ? 1 : -1);
-    });
-  }
-  public getAlphanumericCode(): Observable<string> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    }
-    return this.http.get<any>(environment.backend.baseURL + '/Quiz/GenerateAlphanumeric', httpOptions);
-  }
-  public getQuizList(): Observable<QuizResponse[]> {
-    return this.http
-      .get<QuizResponse[]>(
-        environment.backend.baseURL + '/Quiz/GetQuizFromUser'
-      )
-      .pipe(
-        map(res => {
-          return res;
-        })
-      );
-  }
-  public deleteQuiz(quiz: QuizResponse): Observable<boolean> {
-    return this.http
-      .get<boolean>(environment.backend.baseURL + `/Quiz/DeleteQuiz/${quiz.id}`)
-      .pipe(
-        map(
-          r => {
-            return true;
-          },
-          e => {
-            return false;
-          }
-        )
-      );
-  }
-  public updateQuizIndex() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-    this.http.post<boolean>(environment.backend.baseURL + '/question/updatequizindex', this.currentQuestions, httpOptions).subscribe(response => {
-      response;
-    });
-  }
+		this.http
+			.post<UserDTO>(
+				environment.backend.baseURL + '/auth/login',
+				firebaseToken,
+				httpOptions
+			)
+			.subscribe(response => {
+				localStorage.setItem('token', response.token);
+				localStorage.setItem('name', response.name);
+				localStorage.setItem('email', response.email);
+				localStorage.setItem('picture', response.picture);
+			});
+	}
 
-  public login(firebaseToken: string) {
+	public logout() {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			}),
+		};
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-    };
-
-    this.http.post<UserDTO>(environment.backend.baseURL + '/auth/login', firebaseToken, httpOptions).subscribe(response => {
-      console.log(response);
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('name', response.name);
-      localStorage.setItem('email', response.email);
-      localStorage.setItem('picture', response.picture);
-    })
-
-  }
-
-  public logout() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-    };
-
-    this.http.get<any>(environment.backend.baseURL + '/auth/logout', httpOptions).subscribe(response => {
-      console.log(response);
-      localStorage.setItem('token', '');
-      localStorage.setItem('name', '');
-      localStorage.setItem('email', '');
-      localStorage.setItem('picture', '');
-    })
-  }
-
+		this.http
+			.get<any>(environment.backend.baseURL + '/auth/logout', httpOptions)
+			.subscribe(response => {
+				localStorage.setItem('token', '');
+				localStorage.setItem('name', '');
+				localStorage.setItem('email', '');
+				localStorage.setItem('picture', '');
+			});
+	}
 }
-

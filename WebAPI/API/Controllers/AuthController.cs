@@ -62,7 +62,6 @@ namespace API.Controllers
             };
 
             resp.Headers.AddCookies(new[] {cookie});
-            resp.Content = new StringContent("logged out");
             return resp;
         }
 
