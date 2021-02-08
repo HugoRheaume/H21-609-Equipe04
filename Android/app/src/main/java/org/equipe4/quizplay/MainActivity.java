@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import org.equipe4.quizplay.databinding.ActivityMainBinding;
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
+import org.equipe4.quizplay.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.transfer.UserDTO;
 
 import retrofit2.Call;
@@ -79,6 +81,34 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+        });
+
+        //Bouton join quiz
+        binding.buttonJoin.setOnClickListener(v -> {
+            EditText editTextCode = binding.editTextCode;
+
+            if (editTextCode.getText().toString().equals("")){
+                Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
+                    @Override
+                    public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
+                        if (response.isSuccessful()){
+                            Intent intent = new Intent(getApplicationContext(), WaitingRoomActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
+                        Log.e("RETROFIT", t.getMessage());
+                    }
+                });
+            }
         });
     }
 

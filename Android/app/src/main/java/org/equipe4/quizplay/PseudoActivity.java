@@ -8,12 +8,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.equipe4.quizplay.databinding.ActivityPseudoBinding;
+
 public class PseudoActivity extends AppCompatActivity {
+
+    private ActivityPseudoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pseudo);
+        binding = ActivityPseudoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
     }
 
     public void JoinWaitingRoom(View v){

@@ -3,13 +3,13 @@ package org.equipe4.quizplay.transfer;
 public class QuizResponseDTO {
     public int Id;
 
-    public String Author;
+    public String author;
 
-    public String Title;
+    public String title;
 
-    public boolean IsPublic;
+    public boolean isPublic;
 
-    public String Description;
+    public String description;
 
-    public String ShareCode;
+    public String shareCode;
 }
