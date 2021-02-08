@@ -28,7 +28,7 @@ namespace API.Controllers
         public HttpResponseMessage Login([FromBody] string fireBaseToken)
         {
 
-            FirebaseToken decodedToken = service.LoginTokenAsync(fireBaseToken).Result;
+            FirebaseToken decodedToken = service.LoginToken(fireBaseToken);
 
             CookieHeaderValue cookie = new CookieHeaderValue("token", service.GetUser(decodedToken.Uid).Token)
             {

@@ -19,16 +19,8 @@ namespace API.Service
     {
         public AuthService(ApplicationDbContext db) : base(db) { }
 
-        public async Task<FirebaseToken> LoginTokenAsync(string tokenFromUser)
+        public FirebaseToken LoginToken(string tokenFromUser)
         {
-            //string appPath = HttpRuntime.AppDomainAppPath;
-            //string path = appPath + "quizplay-eq4-firebase-adminsdk-lokv6-e158b65c6f.json";
-            //if (FirebaseApp.DefaultInstance == null)
-            //    FirebaseApp.Create(new AppOptions()
-            //    {
-            //        Credential = GoogleCredential.FromFile(path),
-            //    });
-
             FirebaseToken decodedToken = FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(tokenFromUser).Result;
             string uid = decodedToken.Uid;
 
