@@ -84,34 +84,13 @@ namespace API.Controllers
         [CookieValidation]
         public IHttpActionResult GetQuizByCode([FromUri(Name = "code")] string pCode)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            QuizResponseDTO response = service.GetQuizByCode(pCode);
+
+            if (response == null)
             {
-                Quiz quiz;
-                try
-                {
-                    quiz = context.ListQuiz.First(q => q.ShareCode == pCode);
-                }
-                catch (Exception)
-                {
-                    return BadRequest("Aucun quiz n'a été trouvé.");
-                }
-                if (quiz != null)
-                {
-                
-                    QuizResponseDTO response = new QuizResponseDTO()
-                    {
-                        Author = User.Identity.Name ?? "Nobody",
-                        Id = quiz.Id,
-                        IsPublic = quiz.IsPublic,
-                        Description = quiz.Description,
-                        ShareCode = quiz.ShareCode,
-                        Title = quiz.Title,
-                        Date = quiz.Date
-                    };
-                    return Ok(response);
-                }
-                return null;
+                return BadRequest("Aucun quiz n'a été trouvé");
             }
+            return Ok(service.GetQuizByCode(pCode));
         }
 
         public string GenerateAlphanumeric()

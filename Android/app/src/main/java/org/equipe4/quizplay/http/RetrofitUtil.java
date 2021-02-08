@@ -27,7 +27,7 @@ public class RetrofitUtil {
 
     public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP_XAV)
+                .baseUrl(IP_MARCO)
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
