@@ -81,7 +81,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [CookieValidation]
+        [TokenAuthorize]
         public IHttpActionResult GetQuizByCode([FromUri(Name = "code")] string pCode)
         {
             QuizResponseDTO response = service.GetQuizByCode(pCode);

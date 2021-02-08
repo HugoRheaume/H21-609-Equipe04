@@ -36,7 +36,7 @@ namespace API.Service
 
         public QuizResponseDTO GetQuizById(int quizId)
         {
-            Quiz quizToShip = db.ListQuiz.Where(x => x.Id == quizId).FirstOrDefault();
+            Quiz quizToShip = db.ListQuiz.FirstOrDefault(x => x.Id == quizId);
             if (quizToShip == null)
                 return null;
             return GenerateQuizResponseDTO(quizToShip, null);
@@ -98,7 +98,7 @@ namespace API.Service
                 }
                 catch (Exception)
                 {
-                return null;
+                    return null;
                 }
                 if (quiz != null)
                 {

@@ -303,7 +303,7 @@
     <Compile Include="Service\QuestionService.cs" />
     <Compile Include="Service\QuizService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Validation\CookieValidationAttribute.cs" />
+    <Compile Include="Validation\TokenAuthorizeAttribute.cs" />
     <Compile Include="Validation\ModelValidationAttribute.cs" />
     <Compile Include="Validation\QuestionValidationAttribute.cs" />
     <Compile Include="Validation\QuizValidationAttribute.cs" />
