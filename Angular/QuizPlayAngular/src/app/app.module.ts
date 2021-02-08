@@ -1,4 +1,6 @@
 import { environment } from './../environments/environment';
+import { WaitingRoomComponent } from './../components/waiting-room/waiting-room.component';
+import { RouterModule } from '@angular/router';
 import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
 import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { MaterialModule } from 'src/app/material/material.module';
@@ -33,36 +35,40 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from 'src/components/login/login.component';
+
 @NgModule({
-	declarations: [
-		AppComponent,
-		CreateQuizComponent,
-		CreateQuizConfirmDialog,
-		CreateTrueOrFalseQuestion,
-		CreateQuestionComponent,
-		CreateMultiplechoicesQuestionComponent,
-		ListQuizComponent,
-		DeleteQuizDialog,
-		QuizQuestionListComponent,
-		LoginComponent,
-	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		FormsModule,
-		HttpClientModule,
-		MaterialModule,
-		BrowserAnimationsModule,
-		FormsModule,
-		ReactiveFormsModule,
-		CommonModule,
-		AngularFireModule.initializeApp(environment.firebase),
-		AngularFirestoreModule,
-		AngularFireStorageModule,
-		AngularFireAuthModule,
-	],
-	entryComponents: [CreateQuizComponent],
-	providers: [],
-	bootstrap: [AppComponent],
+  declarations: [
+    AppComponent,
+    CreateQuizComponent,
+    CreateQuizConfirmDialog,
+    CreateTrueOrFalseQuestion,
+    CreateQuestionComponent,
+    CreateMultiplechoicesQuestionComponent,
+    ListQuizComponent,
+    DeleteQuizDialog,
+    QuizQuestionListComponent,
+    LoginComponent,
+    WaitingRoomComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+  ],
+  entryComponents: [CreateQuizComponent],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

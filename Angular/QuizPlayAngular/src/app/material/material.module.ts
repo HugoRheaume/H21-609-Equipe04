@@ -20,6 +20,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSortModule } from '@angular/material/sort';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
 	declarations: [],
@@ -44,7 +45,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 		MatPaginatorModule,
         ClipboardModule,
 		MatSortModule,
-		DragDropModule
+		DragDropModule,
+    MatTooltipModule,
+
 	],
 	exports: [
 		BrowserAnimationsModule,
@@ -67,6 +70,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 		MatSortModule,
 		ClipboardModule,
 		DragDropModule,
+    MatTooltipModule
 	],
 })
 export class MaterialModule {}
