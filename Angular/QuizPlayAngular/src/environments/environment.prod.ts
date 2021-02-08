@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   backend: {
+    webSocketURL: 'wss://api.e4.projet.college-em.info/websocket',
     baseURL: 'https://api.e4.projet.college-em.info/api'
   },
   firebase: {

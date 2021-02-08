@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   backend: {
+    webSocketURL: 'wss://localhost:44351/websocket',
     baseURL: 'https://localhost:44351/api'
   },
   firebase: {
