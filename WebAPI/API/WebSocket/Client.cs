@@ -52,6 +52,12 @@ namespace API.WebSocket
         }
         public override void OnClose()
         {
+            if(!RoomService.IsShareCodeExist(this.ShareCode))
+            {
+                socketClients.Remove(this);
+                base.OnClose();
+                return;
+            }
             if (RoomService.IsRoomOwner(this.ShareCode, this.connectedUser))
             {
                 RoomService.DestroyRoom(this.ShareCode);
