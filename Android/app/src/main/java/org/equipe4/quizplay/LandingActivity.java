@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -39,7 +42,7 @@ import retrofit2.Response;
 
 public class LandingActivity extends AppCompatActivity {
 
-    QPService service = RetrofitUtil.get();
+    QPService service;
 
     private static final int GOOGLE_SIGN_IN_CODE = 123;
 
@@ -182,6 +185,8 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        RetrofitUtil.cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this.getApplicationContext()));
+        service = RetrofitUtil.get();
         // Firebase - Vérifier si déjà connecté
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
