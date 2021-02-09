@@ -1,3 +1,12 @@
+<button
+	[routerLink]="['/quiz']"
+	routerLinkActive="router-link-active"
+	class="mb-3"
+	mat-raised-button
+	color="primary"
+	>Créer un nouveau quiz</button
+>
+
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 	<!-- Les colonnes -->
 	<ng-container matColumnDef="title">
@@ -40,7 +49,7 @@
 	<tr
 		mat-row
 		*matRowDef="let row; columns: displayedColumns;"
-		(click)="goToQuizDetails($event, row.id)"
+		(click)="goToQuizDetails(row.id)"
 	></tr>
 </table>
 <!-- La pagination -->

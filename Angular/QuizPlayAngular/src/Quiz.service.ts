@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { UserDTO } from './models/userDTO';
 import { environment } from './environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -12,7 +13,7 @@ import { Question } from './models/question';
 	providedIn: 'root',
 })
 export class QuizService {
-	constructor(public http: HttpClient) {}
+	constructor(public http: HttpClient, public router: Router) {}
 
 	public currentQuestions: Question[] = [];
 	public currentQuiz: QuizResponse;
@@ -184,6 +185,7 @@ export class QuizService {
 				localStorage.setItem('name', response.name);
 				localStorage.setItem('email', response.email);
 				localStorage.setItem('picture', response.picture);
+				this.router.navigate(['/list']);
 			});
 	}
 
