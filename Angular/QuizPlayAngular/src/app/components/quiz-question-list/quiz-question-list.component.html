@@ -25,7 +25,7 @@
           (cdkDropListDropped)="drop($event)">
           <div class="example-box" cdkDragLockAxis='y' cdkDragBoundary='.example-list'
             *ngFor="let item of this.service.currentQuestions" cdkDrag
-            [class.activeQuestion]="selectedQuestion === item" (click)="selectedQuestion = item"
+            [class.activeQuestion]="selectedQuestion === item" (mouseover)="selectedQuestion = item"
             (cdkDragStarted)="selectedQuestion = item">
             <div class="row">
               <div class="col-5">
