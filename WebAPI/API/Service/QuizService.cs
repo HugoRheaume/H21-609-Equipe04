@@ -50,7 +50,8 @@ namespace API.Service
                 Description = quiz.Description,
                 IsPublic = quiz.IsPublic,
                 ShareCode = quiz.ShareCode,
-                Title = quiz.Title
+                Title = quiz.Title,
+                NumberOfQuestions = quiz.ListQuestions.Count
             };
         }
 

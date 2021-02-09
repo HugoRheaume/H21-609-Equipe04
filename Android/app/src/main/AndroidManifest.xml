@@ -12,8 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".TrueFalseActivity" />
+        <activity android:name=".QuizActivity" />
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".WaitingRoomActivity" />
         <activity android:name=".PseudoActivity" />
         <activity android:name=".LandingActivity">
             <intent-filter>

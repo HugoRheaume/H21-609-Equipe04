@@ -30,5 +30,7 @@ namespace API.Models.Question
         public Quiz Quiz { get; set; }
 
         public int QuizIndex { get; set; }
+
+        public virtual List<QuestionResult> QuestionResults { get; set; }
     }
 }

@@ -19,6 +19,8 @@ namespace API.Models
         public string Name { get; set; }
 
         public string Picture { get; set; }
+        
+        public virtual List<QuestionResult> QuestionResults { get; set; }
 
         public string Token { get; set; }
     }
@@ -39,5 +41,6 @@ namespace API.Models
         public virtual DbSet<Question.Question> Question { get; set; }
         public virtual DbSet<Question.QuestionTrueFalse> QuestionTrueFalse { get; set; }
         public virtual DbSet<Question.QuestionMultipleChoice> QuestionMultiple { get; set; }
+        public virtual DbSet<QuestionResult> QuestionResult { get; set; }
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -82,34 +83,35 @@ public class MainActivity extends AppCompatActivity {
             });
 
         });
+    }
 
-        //Bouton join quiz
-        binding.buttonJoin.setOnClickListener(v -> {
-            EditText editTextCode = binding.editTextCode;
+    public void JoinQuiz(View v){
+        EditText editTextCode = findViewById(R.id.editTextCode);
 
-            if (editTextCode.getText().toString().equals("")){
-                Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
-            }
-            else {
-                service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
-                    @Override
-                    public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
-                        if (response.isSuccessful()){
-                            Intent intent = new Intent(getApplicationContext(), WaitingRoomActivity.class);
-                            startActivity(intent);
-                        }
-                        else {
-                            Toast.makeText(MainActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
-                        }
+        if (editTextCode.getText().toString().equals("")){
+            Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
+                @Override
+                public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
+                    if (response.isSuccessful()){
+                        QuizResponseDTO quiz = response.body();
+                        Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
+                        intent.putExtra("quiz", quiz);
+                        startActivity(intent);
                     }
-
-                    @Override
-                    public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
-                        Log.e("RETROFIT", t.getMessage());
+                    else {
+                        Toast.makeText(MainActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
                     }
-                });
-            }
-        });
+                }
+
+                @Override
+                public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
+                    Log.e("RETROFIT", t.getMessage());
+                }
+            });
+        }
     }
 
     @Override

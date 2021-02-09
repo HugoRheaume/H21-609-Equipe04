@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.Net.Http.Headers;
 
 namespace API.Service
 {
@@ -42,7 +43,27 @@ namespace API.Service
                 return null;
             List<Question> questionList = db.Question.Where(x => x.Quiz.Id == quizId).ToList();
 
-            return questionList.Select(item => GenerateQuestionDTO(item)).ToList();
+            return questionList.Select(item => GenerateQuestionDTO(item)).OrderBy(x => x.QuizIndex).ToList();
+        }
+
+        public QuestionDTO GetNextQuestion(int quizId, int questionId)
+        {
+            List<QuestionDTO> list = GetQuestionByQuizId(quizId);
+            Question question = db.Question.Find(questionId);
+            int index = -1;
+            if (questionId > -1)
+                index = question.QuizIndex;
+            if (list.Count <= index + 1)
+                return new QuestionDTO() {
+                    Id = 0,
+                    QuizId = quizId,
+                    Label = "",
+                    TimeLimit = 0,
+                    QuestionType = QuestionType.TrueFalse,
+                    QuizIndex = -1,
+                    NeedsAllAnswers = false,
+                };
+            return list[index + 1];
         }
 
         public QuestionDTO AddQuestion(QuestionCreateDTO question)
@@ -83,7 +104,7 @@ namespace API.Service
             switch (q.QuestionType)
             {
                 case QuestionType.TrueFalse:
-                    question.QuestionTrueFalse = q.QuestionTrueFalse.First();
+                    question.QuestionTrueFalse = q.QuestionTrueFalse.FirstOrDefault();
                     break;
                 case QuestionType.MultipleChoice:
                     question.QuestionMultipleChoice = q.QuestionMultipleChoice;
@@ -124,6 +145,25 @@ namespace API.Service
             db.SaveChanges();
             return true;
 
+        }
+
+        public bool StoreQuestionResult(QuestionResultDTO result, CookieHeaderValue cookie)
+        {
+            //if (cookie == null) return false;
+
+            //string token = cookie["token"].Value;
+
+            //ApplicationUser user = db.Token.Find(token).User;
+
+            db.QuestionResult.Add(new QuestionResult()
+            {
+                Question = db.Question.Find(result.QuestionId),
+                User = db.Users.Find("a57096df-dd81-4ba3-a28f-2a7320e8163c"),  //User = user,
+                Score = result.Score
+            });
+
+            db.SaveChanges();
+            return true;
         }
     }
 }

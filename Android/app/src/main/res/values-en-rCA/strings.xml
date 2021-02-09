@@ -8,8 +8,22 @@
     <string name="ChooseName">" Choose your username !"</string>
     <string name="hintPseudo">Username</string>
     <string name="btnParti">Let\'s go !</string>
-    <string name="waiting">Waiting...</string>
     <string name="toastEnterCode">" You must enter a code to join a quiz."</string>
     <string name="toastEnterName">You must choose a username to start the quiz.</string>
     <string name="toastNoQuizFound">The entered code does not correspond to any quiz.</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="bestScores">Best scores</string>
+    <string name="startQuiz">Start the Quiz!</string>
+    <string name="answerTrue">True</string>
+    <string name="answerFalse">False</string>
+    <string name="skipQuestion">Skip this question</string>
+    <string name="nextQuestion">Go to next question</string>
+    <string name="timesup">Time\'s up!</string>
+    <plurals name="secondsRemaining">
+        <item quantity="one">%d second remaining</item>
+        <item quantity="other">%d seconds remaining</item>
+    </plurals>
+    <string name="rightAnswer">Right answer!</string>
+    <string name="wrongAnswer">Wrong answer!</string>
+    <string name="finishQuiz">Finish the Quiz</string>
 </resources>

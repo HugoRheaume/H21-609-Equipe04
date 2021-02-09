@@ -10,11 +10,28 @@
     <string name="ChooseName">Choisissez votre pseudo !</string>
     <string name="hintPseudo">Pseudo</string>
     <string name="btnParti">"C'est parti !"</string>
-    <!-- WaitingRoom Activity -->
-    <string name="waiting">En attente...</string>
+    <!-- Quiz Activity -->
+    <string name="lorem" translatable="false">Lorem ipsum, dolor sit amet</string>
+    <string name="leaderboard">Classement</string>
+    <string name="bestScores">Meilleurs pointages</string>
+    <string name="startQuiz">Commencer le Quiz!</string>
     <!-- Toasts -->
     <string name="toastEnterCode">Vous devez rentrer un code pour rejoindre un quiz.</string>
     <string name="toastEnterName">Vous devez choisir un pseudo pour commencer le quiz.</string>
     <string name="toastNoQuizFound">Le code entré correspond à aucun quiz.</string>
+
+    <string name="answerTrue">Vrai</string>
+    <string name="answerFalse">Faux</string>
+    <string name="skipQuestion">Passer cette question</string>
+    <string name="nextQuestion">Passer à la question suivante</string>
+    <string name="finishQuiz">Terminer le Quiz</string>
+    <string name="timesup">Temps écoulé!</string>
+    <string name="rightAnswer">Bonne réponse!</string>
+    <string name="wrongAnswer">Mauvaise réponse!</string>
+    <plurals name="secondsRemaining">
+        <item quantity="zero">%d seconde restante</item>
+        <item quantity="one">%d seconde restante</item>
+        <item quantity="other">%d secondes restantes</item>
+    </plurals>
 
 </resources>

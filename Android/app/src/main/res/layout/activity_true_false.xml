@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TrueFalseActivity"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/timeLimit"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/tvTime"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginEnd="20dp"/>
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/progressTime"
+            android:indeterminate="false"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:progressDrawable="@drawable/progress_circle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/questionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/lorem"
+            android:textSize="40sp" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioTrue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:onClick="answer"
+                android:text="@string/answerTrue"
+                android:textSize="20sp"/>
+
+            <RadioButton
+                android:id="@+id/radioFalse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:onClick="answer"
+                android:text="@string/answerFalse"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem"
+            android:textSize="18sp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nextQuestion"
+        android:onClick="nextQuestion"
+        android:text="@string/skipQuestion"
+        android:layout_marginBottom="15dp" />
+
+    <ProgressBar
+        android:id="@+id/progressQuiz"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/quizTitle"
+        android:text="@string/lorem"
+        android:textAlignment="center" />
+
+
+</LinearLayout>

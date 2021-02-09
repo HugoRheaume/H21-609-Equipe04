@@ -27,8 +27,8 @@ public class PseudoActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.toastEnterName, Toast.LENGTH_SHORT).show();
         }
         else {
-            Intent intent = new Intent(this, WaitingRoomActivity.class);
-            intent.putExtra("playerPseudo", editTextPseudo.getText().toString());
+            Intent intent = new Intent(this, QuizActivity.class);
+            intent.putExtra("quiz", getIntent().getSerializableExtra("quiz"));
             startActivity(intent);
         }
     }

@@ -1,7 +1,9 @@
 package org.equipe4.quizplay.transfer;
 
-public class QuizResponseDTO {
-    public int Id;
+import java.io.Serializable;
+
+public class QuizResponseDTO implements Serializable {
+    public int id;
 
     public String author;
 
@@ -12,4 +14,6 @@ public class QuizResponseDTO {
     public String description;
 
     public String shareCode;
+
+    public int numberOfQuestions;
 }
