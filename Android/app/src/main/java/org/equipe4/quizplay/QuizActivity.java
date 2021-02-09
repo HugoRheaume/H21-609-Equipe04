@@ -22,7 +22,7 @@ import retrofit2.Response;
 public class QuizActivity extends AppCompatActivity {
 
 
-    QPService service = new RetrofitUtil().service;
+    QPService service = RetrofitUtil.get();
     QuizResponseDTO quiz;
 
     @Override

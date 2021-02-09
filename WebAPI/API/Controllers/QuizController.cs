@@ -13,6 +13,7 @@ using API.Service;
 using API.Validation;
 using API.Models.Question;
 using Microsoft.AspNet.Identity;
+using System.Net.Http.Headers;
 
 namespace API.Controllers
 {
@@ -107,6 +108,20 @@ namespace API.Controllers
                 }
             } while (service.CheckCodeExist(code.ToString()));
             return code.ToString();
+        }
+
+        [HttpPost]
+        [TokenAuthorize]
+        public IHttpActionResult GetFinalScore(QuizResponseDTO quiz)
+        {
+            CookieHeaderValue cookie = Request.Headers.GetCookies("token").FirstOrDefault();
+            if (cookie == null) return BadRequest("Pas de Biscuit");
+
+            int score = service.GetFinalScore(quiz.Id, cookie);
+
+            service.DeleteQuestionResults(quiz.Id, cookie);
+
+            return Ok(score);
         }
     }
 }

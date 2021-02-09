@@ -26,4 +26,11 @@
     <string name="rightAnswer">Right answer!</string>
     <string name="wrongAnswer">Wrong answer!</string>
     <string name="finishQuiz">Finish the Quiz</string>
+    <string name="quizCompleted">Quiz completed!</string>
+    <string name="yourScore">Your score :</string>
+    <plurals name="points">
+        <item quantity="one">%d point</item>
+        <item quantity="other">%d points</item>
+    </plurals>
+    <string name="returnHomePage">Return to home page</string>
 </resources>

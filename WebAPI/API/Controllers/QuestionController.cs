@@ -57,6 +57,7 @@ namespace API.Controllers
             return Ok(service.UpdateQuizIndex(questions));
         }
 
+        [TokenAuthorize]
         [HttpPost]
         public IHttpActionResult GetNextQuestion(QuestionResultDTO result)
         {

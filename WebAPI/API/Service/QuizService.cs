@@ -2,10 +2,13 @@
 using API.Models.Question;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.ModelBinding;
 
@@ -92,42 +95,64 @@ namespace API.Service
         }
         public QuizResponseDTO GetQuizByCode(string pCode)
         {
-                Quiz quiz;
-                try
-                {
-                    quiz = db.ListQuiz.First(q => q.ShareCode == pCode);
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-                if (quiz != null)
-                {
-
-                    QuizResponseDTO response = new QuizResponseDTO()
-                    {
-                        Author = db.Users.Find(quiz.OwnerId)?.Name ?? "Nobody",
-                        Id = quiz.Id,
-                        IsPublic = quiz.IsPublic,
-                        Description = quiz.Description,
-                        ShareCode = quiz.ShareCode,
-                        Title = quiz.Title,
-                        Date = quiz.Date
-                    };
-                return response;
-                }
+            Quiz quiz;
+            try
+            {
+                quiz = db.ListQuiz.First(q => q.ShareCode == pCode);
+            }
+            catch (Exception)
+            {
                 return null;
-            
+            }
+            if (quiz != null)
+            {
+                QuizResponseDTO response = new QuizResponseDTO()
+                {
+                    Author = db.Users.Find(quiz.OwnerId)?.Name ?? "Nobody",
+                    Id = quiz.Id,
+                    IsPublic = quiz.IsPublic,
+                    Description = quiz.Description,
+                    ShareCode = quiz.ShareCode,
+                    Title = quiz.Title,
+                    Date = quiz.Date,
+                    NumberOfQuestions = quiz.ListQuestions.Count
+                };
+                return response;
+            }
+            return null;
+
         }
         public QuizResponseDTO GetQuizByShareCode(string shareCode)
         {
             Quiz quizToShip = db.ListQuiz.Where(x => x.ShareCode == shareCode).FirstOrDefault();
-            if(quizToShip == null)
+            if (quizToShip == null)
             {
                 return null;
             }
             return GenerateQuizResponseDTO(quizToShip, null);
 
+        }
+
+        public int GetFinalScore(int quizId, CookieHeaderValue cookie)
+        {
+            string token = cookie["token"].Value;
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
+
+            int scoreTotal = 0;
+
+            List<QuestionResult> list = db.QuestionResult.Where(q => q.User.Id == user.Id && q.Question.Quiz.Id == quizId).ToList();
+            list.ForEach(q => scoreTotal += q.Score);
+
+            return scoreTotal;
+        }
+
+        public void DeleteQuestionResults(int quizId, CookieHeaderValue cookie)
+        {
+            string token = cookie["token"].Value;
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
+
+            db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User.Id == user.Id && q.Question.Quiz.Id == quizId));
+            db.SaveChanges();
         }
     }
 }

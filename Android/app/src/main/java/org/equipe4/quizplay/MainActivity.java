@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
                     if (response.isSuccessful()){
                         QuizResponseDTO quiz = response.body();
-                        Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                         intent.putExtra("quiz", quiz);
                         startActivity(intent);
                     }

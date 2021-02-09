@@ -24,10 +24,11 @@ public class RetrofitUtil {
     private static final String IP_PROD = "https://api.e4.projet.college-em.info/api/";
     private static final String IP_MARCO = "https://192.168.0.136:45455/api/";
     private static final String IP_XAV = "https://192.168.0.172:45455/api/";
+    private static final String IP_NIC = "https://192.168.2.28:45455/api/";
 
     public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP_XAV)
+                .baseUrl(IP_NIC)
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

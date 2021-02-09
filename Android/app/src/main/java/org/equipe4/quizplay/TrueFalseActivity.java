@@ -32,7 +32,7 @@ public class TrueFalseActivity extends AppCompatActivity {
     QuestionDTO question;
     QuizResponseDTO quiz;
     CountDownTimer timer;
-    QPService service = new RetrofitUtil().service;
+    QPService service = RetrofitUtil.get();
     QuestionDTO nextQuestion;
 
     @Override

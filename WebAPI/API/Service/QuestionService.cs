@@ -149,16 +149,14 @@ namespace API.Service
 
         public bool StoreQuestionResult(QuestionResultDTO result, CookieHeaderValue cookie)
         {
-            //if (cookie == null) return false;
-
-            //string token = cookie["token"].Value;
-
-            //ApplicationUser user = db.Token.Find(token).User;
+            if (cookie == null) return false;
+            string token = cookie["token"].Value;
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
 
             db.QuestionResult.Add(new QuestionResult()
             {
                 Question = db.Question.Find(result.QuestionId),
-                User = db.Users.Find("a57096df-dd81-4ba3-a28f-2a7320e8163c"),  //User = user,
+                User = user,
                 Score = result.Score
             });
 

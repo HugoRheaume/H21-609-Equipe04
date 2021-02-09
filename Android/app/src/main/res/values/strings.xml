@@ -34,4 +34,13 @@
         <item quantity="other">%d secondes restantes</item>
     </plurals>
 
+    <string name="quizCompleted">Quiz terminé!</string>
+    <string name="yourScore">Votre pointage :</string>
+    <string name="returnHomePage">Retourner à l\'accueil</string>
+    <plurals name="points">
+        <item quantity="zero">%d point</item>
+        <item quantity="one">%d point</item>
+        <item quantity="other">%d points</item>
+    </plurals>
+
 </resources>

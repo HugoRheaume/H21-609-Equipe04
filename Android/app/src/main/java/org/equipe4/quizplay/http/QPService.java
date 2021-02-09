@@ -1,6 +1,5 @@
 package org.equipe4.quizplay.http;
 
-import org.equipe4.quizplay.transfer.HelloWorldObj;
 import org.equipe4.quizplay.transfer.QuestionDTO;
 import org.equipe4.quizplay.transfer.QuestionResultDTO;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
@@ -30,4 +29,7 @@ public interface QPService {
 
     @GET("Auth/Logout")
     Call<String> logout();
+
+    @POST("Quiz/GetFinalScore")
+    Call<Integer> getFinalScore(@Body QuizResponseDTO quiz);
 }
