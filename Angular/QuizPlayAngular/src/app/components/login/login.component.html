@@ -1,0 +1,22 @@
+<div *ngIf="afAuth.user | async as user; else showLogin">
+	<button mat-raised-button class="btnEpic" (click)="logout()">
+		<div class="d-flex align-items-center justify-content-center">
+			<span>Déconnexion</span>
+			<i class="fas fa-sign-out-alt ms-3"></i>
+		</div>
+	</button>
+</div>
+
+<ng-template #showLogin>
+	<button mat-raised-button class="btnEpic" (click)="login()">
+		<div class="d-flex align-items-center justify-content-center">
+			<span>C'est parti!</span>
+			<i class="fas fa-arrow-right ms-3 me-4"></i>
+			<img
+				src="../../assets/google_logo.png"
+				alt="google logo"
+				style="height: 1.34375em;"
+			/>
+		</div>
+	</button>
+</ng-template>

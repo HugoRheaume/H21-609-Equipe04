@@ -4,8 +4,8 @@ import {
 	MatDialogRef,
 	MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { QuizResponse } from './../../models/QuizResponse';
-import { QuizService } from 'src/quiz.service';
+import { QuizResponse } from 'src/models/QuizResponse';
+import { QuizService } from 'src/app/services/Quiz.service';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';

@@ -1,40 +1,34 @@
-import { environment } from './../environments/environment';
-import { WaitingRoomComponent } from './../components/waiting-room/waiting-room.component';
-import { RouterModule } from '@angular/router';
-import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
-import { CreateQuestionComponent } from './../components/create-question/create-question.component';
-import { MaterialModule } from 'src/app/material/material.module';
-import {
-	ListQuizComponent,
-	DeleteQuizDialog,
-} from './../components/list-quiz/list-quiz.component';
-import { CreateTrueOrFalseQuestion } from '../components/create-trueorfalse-question/create-trueorfalse-question.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import localeFr from '@angular/common/locales/fr';
+import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from 'src/app/material/material.module';
 import {
 	CreateQuizComponent,
 	CreateQuizConfirmDialog,
-} from 'src/components/create-quiz/create-quiz.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+} from '../app/components/create-quiz/create-quiz.component';
+import { LoginComponent } from '../app/components/login/login.component';
+import { CreateTrueOrFalseQuestion } from '../app/components/create-trueorfalse-question/create-trueorfalse-question.component';
+import { CreateQuestionComponent } from '../app/components/create-question/create-question.component';
 import {
-	CommonModule,
-	HashLocationStrategy,
-	LocationStrategy,
-} from '@angular/common';
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
-registerLocaleData(localeFr, 'fr');
+	DeleteQuizDialog,
+	ListQuizComponent,
+} from '../app/components/list-quiz/list-quiz.component';
+import { WaitingRoomComponent } from '../app/components/waiting-room/waiting-room.component';
+import { environment } from './../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CreateMultiplechoicesQuestionComponent } from './components/create-multiplechoices-question/create-multiplechoices-question.component';
 import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { LoginComponent } from 'src/components/login/login.component';
+
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
 	declarations: [

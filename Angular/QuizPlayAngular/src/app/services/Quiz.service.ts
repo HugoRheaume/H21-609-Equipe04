@@ -1,12 +1,12 @@
-import { UserDTO } from './models/userDTO';
-import { environment } from './environments/environment';
+import { UserDTO } from '../../models/userDTO';
+import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { QuizRequest } from './models/QuizRequest';
-import { QuizResponse } from './models/QuizResponse';
-import { Question } from './models/question';
+import { QuizRequest } from '../../models/QuizRequest';
+import { QuizResponse } from '../../models/QuizResponse';
+import { Question } from '../../models/question';
 
 @Injectable({
 	providedIn: 'root',
@@ -163,44 +163,6 @@ export class QuizService {
 			)
 			.subscribe(response => {
 				response;
-			});
-	}
-
-	public login(firebaseToken: string) {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type': 'application/json',
-			}),
-		};
-
-		this.http
-			.post<UserDTO>(
-				environment.backend.baseURL + '/auth/login',
-				firebaseToken,
-				httpOptions
-			)
-			.subscribe(response => {
-				localStorage.setItem('token', response.token);
-				localStorage.setItem('name', response.name);
-				localStorage.setItem('email', response.email);
-				localStorage.setItem('picture', response.picture);
-			});
-	}
-
-	public logout() {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type': 'application/json',
-			}),
-		};
-
-		this.http
-			.get<any>(environment.backend.baseURL + '/auth/logout', httpOptions)
-			.subscribe(response => {
-				localStorage.setItem('token', '');
-				localStorage.setItem('name', '');
-				localStorage.setItem('email', '');
-				localStorage.setItem('picture', '');
 			});
 	}
 }
