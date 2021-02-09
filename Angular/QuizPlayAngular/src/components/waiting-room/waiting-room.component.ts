@@ -41,7 +41,7 @@ export class WaitingRoomComponent implements OnInit {
   } 
 
   starQuiz() {
-    return;
+    this.service.beginQuiz();
   }
 
   

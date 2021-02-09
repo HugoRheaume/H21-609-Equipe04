@@ -1,4 +1,5 @@
 ﻿using API.Controllers;
+using API.Models;
 using Microsoft.ServiceModel.WebSockets;
 using Microsoft.Web.WebSockets;
 using System;
@@ -11,32 +12,33 @@ namespace API.WebSocket
 {
     public class Room
     {
-        public List<Client> UsersV2 = new List<Client>();
-        public List<RoomUser> Users = new List<RoomUser>();
+        public List<Client> Users = new List<Client>();
 
         private string m_shareCode;
-
         public string GetShareCode
         {
             get { return m_shareCode; }
         }
-        private RoomUser m_owner;
+        private bool m_enable;
 
-        public RoomUser GetOwner
+        public bool IsEnable
+        {
+            get { return m_enable; }
+            set { m_enable = value; }
+        }
+        private ApplicationUser m_owner;
+        public ApplicationUser GetOwner
         {
             get { return m_owner; }
-            
-        }
-        public RoomUser SetOwner
-        {
-            set { m_owner = value; }
         }
 
-
-
-        public Room()
+        public Client handler;
+        public Room(Client client, ApplicationUser owner)
         {
             m_shareCode = GenerateAlphanumeric();
+            m_enable = true;
+            m_owner = owner;
+            handler = client;
             
         }
 

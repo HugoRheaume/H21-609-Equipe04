@@ -24,9 +24,12 @@ namespace API.WebSocket.Command
             this.Username = drc.Username;
         }
 
-        public override void Run(Client handler)
+        public override void Run(Client client)
         {
-            RoomService.DestroyRoom(this.ShareCode);
+            if (RoomService.IsRoomOwner(this.ShareCode, client.connectedUser))
+                RoomService.DestroyRoom(this.ShareCode);
+            else
+                LogService.Log(client, MessageType.ErrorNotOwnerOfRoom);
         }
     }
 }

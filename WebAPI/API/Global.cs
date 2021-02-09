@@ -1,4 +1,5 @@
 ﻿using API.WebSocket.Command;
+using API.WebSocket.Command.QuizCommand;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace API
 {
-    public enum MessageType { LogRoomCreated, LogRoomJoined, LogRoomLeft, LogRoomDeleted, ErrorShareCodeNotExist, ErrorInvalidRequest, ErrorUserAlreadyJoined,  }
+    public enum MessageType { LogRoomCreated = 200, LogRoomJoined, LogRoomLeft, LogRoomDeleted, LogRoomDisable, ErrorShareCodeNotExist = 400, ErrorNotConnected, ErrorUserAlreadyJoined, ErrorNotOwnerOfRoom, ErrorInvalidRequest, ErrorNotInRoom  }
     public static class Global
     {
         public const string ALPHANUMERIC_CHARACTER_LIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -21,6 +22,8 @@ namespace API
             { "Room.Leave", new LeaveRoomCommand()},
             { "Room.Destroy", new DestroyRoomCommand()},
             { "Log.Message", new LogMessageCommand()},
+
+            { "Quiz.Begin", new QuizBeginCommand()},
 
         };
     }

@@ -36,18 +36,25 @@ export class WebSocketService {
     {
       let ws = new CreateRoomWS();     
       ws.owner = "Angular Master";
-
+      ws.token = localStorage.getItem('token');
       this.subject.next(ws);
     }
     public cancel()
     {
       let ws = new DeleteRoomWS();  
-      ws.username = "Angular Master";   
+      ws.name = "Angular Master";   
       ws.shareCode = this.currentShareCode;
       this.subject.next(ws);
       this.currentShareCode = '';
       this.users = [];
       this.updateUserDisplay();
+    }
+    public beginQuiz()
+    {
+      console.log('Quiz Begin!');
+        let ws = new BeginQuizWS();
+        ws.shareCode = this.currentShareCode;
+        this.subject.next(ws);
     }
     
 
@@ -105,12 +112,12 @@ export class WebSocketService {
     {
       for (let i = 0; i < this.users.length; i++) {
         let user = this.users[i];
-        if (user.Username.length > 14) {
-          let firstChars = user.Username.substring(0, 11);
+        if (user.Name.length > 14) {
+          let firstChars = user.Name.substring(0, 11);
           this.usersFormated[i] = firstChars + '...';
           continue;
         }
-        this.usersFormated[i] = user.Username;
+        this.usersFormated[i] = user.Name;
       }
       this.usersDisplay = Array(this.users.length).fill(0).map((x, i) => i);
       
@@ -123,18 +130,24 @@ export class CreateRoomWS
 {
     public owner: string;
     public shareCode: string;
+    public token: string;
     private readonly CommandName: string = CommandName.CreateRoom;
 }
 export class DeleteRoomWS
 {
-    public username: string;
+    public name: string;
     public shareCode: string;
     private readonly CommandName: string = CommandName.RoomDestroy;
+}
+export class BeginQuizWS
+{
+  public shareCode: string;
+  private readonly CommandName: string = CommandName.QuizBegin;
 }
 
 export interface User
 {
-  Username: string;
+  Name: string;
   Picture: string;
 }
 export enum CommandName { 
@@ -144,6 +157,7 @@ export enum CommandName {
   RoomLeave = 'Room.Leave', 
   RoomDestroy = 'Room.Destroy', 
   LogMessage = 'Log.Message', 
+  QuizBegin = 'Quiz.Begin',
 }
 export enum MessageType { 
   LogRoomCreated, 

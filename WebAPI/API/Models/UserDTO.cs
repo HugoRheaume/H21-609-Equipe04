@@ -21,5 +21,6 @@ namespace API.Models
             Picture = user.Picture;
             Token = user.Token;
         }
+        public UserDTO() { }
     }
 }

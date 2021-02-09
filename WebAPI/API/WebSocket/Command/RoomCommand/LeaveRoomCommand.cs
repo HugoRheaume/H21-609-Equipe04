@@ -25,26 +25,28 @@ namespace API.WebSocket.Command
             this.ShareCode = lrc.ShareCode;
             this.Username = lrc.Username;
         }
-        public override void Run(Client handler)
+        public override void Run(Client client)
         {
 
 
             if (!RoomService.IsShareCodeExist(this.ShareCode))
             {
-                LogService.Log(handler, MessageType.ErrorShareCodeNotExist);
+                LogService.Log(client, MessageType.ErrorShareCodeNotExist);
                 return;
             }
-            if (RoomService.IsUserExist(this.ShareCode, this.Username))
+            if (!RoomService.IsUserExist(this.ShareCode, this.Username))
             {
-                LogService.Log(handler, MessageType.ErrorUserAlreadyJoined);
+                LogService.Log(client, MessageType.ErrorNotInRoom);
                 return;
             }
 
 
-            handler.ShareCode = this.ShareCode;
-            handler.Username = this.Username;
+            client.ShareCode = this.ShareCode;
+            client.Username = this.Username;
 
-            //TODO
+            RoomService.RemoveUser(ShareCode, Username);
+            LogService.Log(client, MessageType.LogRoomLeft);
+            RoomService.Broadcast(ShareCode, MessageType.LogRoomLeft);
         }
     }
 }

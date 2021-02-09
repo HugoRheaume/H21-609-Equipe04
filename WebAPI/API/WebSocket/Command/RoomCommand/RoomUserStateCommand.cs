@@ -10,7 +10,7 @@ namespace API.WebSocket.Command
 {
     public class RoomUserStateCommand: BaseCommand
     {
-        public List<UserWS> users { get; set; }
+        public List<UserDTO> users { get; set; }
 
         public RoomUserStateCommand()
         {

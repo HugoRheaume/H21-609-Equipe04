@@ -9,8 +9,8 @@ namespace API.WebSocket.Command
 {
     public class CreateRoomCommand : BaseCommand
     {
-        public string Owner { get; set; }
         public string ShareCode { get; set; }
+        
 
         public CreateRoomCommand()
         {
@@ -21,20 +21,22 @@ namespace API.WebSocket.Command
         public override void Handle(string message)
         {
             CreateRoomCommand crc =  Json.Decode<CreateRoomCommand>(message);
-
-            this.Owner = crc.Owner;
-            this.ShareCode = crc.ShareCode;
+            
+            this.Token = crc.Token;
         }
-        public override void Run(Client handler)
+        public override void Run(Client client)
         {
-            string waitingRoomCode = RoomService.NewRoom(new RoomUser(this.Owner, handler));
-            this.ShareCode = waitingRoomCode;
-            handler.Username = this.Owner;
-            handler.ShareCode = waitingRoomCode;
-            LogService.Log(handler, this);
-            LogService.Log(handler, MessageType.LogRoomCreated);
+            if(this.Token == null)
+            {
+                LogService.Log(client, MessageType.ErrorNotConnected);
+                return;
+            }
 
-            //LogService.Log(this, "Waiting Room #"+waitingRoomCode+ " created");
+            string waitingRoomCode = RoomService.NewRoom(client, client.connectedUser);
+            this.ShareCode = waitingRoomCode;
+            client.ShareCode = waitingRoomCode;
+            LogService.Log(client, this);
+            LogService.Log(client, MessageType.LogRoomCreated);            
         }
     }
 }

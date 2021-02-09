@@ -14,23 +14,27 @@ namespace API.Service
     {
         private static Dictionary<string, Room> rooms = new Dictionary<string, Room>();
 
-        internal static string NewRoom(RoomUser owner)
+        internal static string NewRoom(Client client, ApplicationUser applicationUser)
         {
-            Room room = new Room();
-            room.SetOwner = owner;
+            Room room = new Room(client, applicationUser);
             rooms.Add(room.GetShareCode, room);
             return room.GetShareCode;
         }
-        internal static void AddUser(string shareCode, RoomUser roomUser)
+        internal static void AddUser(string shareCode, Client client)
         {
-            rooms[shareCode].Users.Add(roomUser);
+            if(!rooms[shareCode].IsEnable)
+            {
+                LogService.Log(client, MessageType.LogRoomDisable);
+                return;
+            }    
+            rooms[shareCode].Users.Add(client);
         }
         internal static void RemoveUser(string sharecode, string username)
         {
             if (!IsShareCodeExist(sharecode))
                 return;
 
-            RoomUser r = null;
+            Client r = null;
             foreach (var item in rooms[sharecode].Users)
             {
                 if (item.Username == username)
@@ -45,19 +49,24 @@ namespace API.Service
 
             foreach (var item in rooms[shareCode].Users)
             {
-                LogService.Log(item.Handler, MessageType.LogRoomDeleted);
+                LogService.Log(item, MessageType.LogRoomDeleted);
             }
             rooms.Remove(shareCode);
+        }
+        internal static void SetRoomDisable(string shareCode)
+        {
+            rooms[shareCode].IsEnable = false;
+
         }
         internal static void Broadcast(string shareCode, MessageType messageType)
         {
             WebSocketCollection clients = new WebSocketCollection();
             foreach (var u in rooms[shareCode].Users)
             {
-                LogService.Log(u.Handler, messageType);
-                clients.Add(u.Handler);
+                LogService.Log(u, messageType);
+                clients.Add(u);
             }
-            clients.Add(rooms[shareCode].GetOwner.Handler);
+            clients.Add(rooms[shareCode].handler);
 
             //clients.Broadcast(Json.Encode(LogService.Log()));
             RoomUserStateCommand command = Global.CommandList["Room.UserState"] as RoomUserStateCommand;
@@ -68,11 +77,13 @@ namespace API.Service
         }
         #region CHECKER
         //======================================================
-        internal static bool IsRoomOwner(string shareCode, string username)
+        internal static bool IsRoomOwner(string shareCode, ApplicationUser user)
         {
             if (!IsShareCodeExist(shareCode))
                 return false;
-            if (username == rooms[shareCode].GetOwner.Username)
+            if (user == null)
+                return false;
+            if (rooms[shareCode].GetOwner == user)
                 return true;
             else
                 return false;
@@ -100,13 +111,13 @@ namespace API.Service
         #endregion
         #region UTIL
         //======================================================
-        private static List<UserWS> GetUsers(string shareCode)
+        private static List<UserDTO> GetUsers(string shareCode)
         {
-            List<UserWS> users = new List<UserWS>();
+            List<UserDTO> users = new List<UserDTO>();
             foreach (var u in rooms[shareCode].Users)
             {
-
-                users.Add(new UserWS(u.Username));
+                var userDTO = new UserDTO() { Name = u.Username, Picture = u.Picture };
+                users.Add(userDTO);
             }
             //users.Add(rooms[shareCode].GetOwner.Username);
             return users;

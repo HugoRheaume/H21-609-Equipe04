@@ -13,9 +13,11 @@ namespace API.WebSocket
     public class Client : WebSocketHandler
     {
         private static WebSocketCollection socketClients = new WebSocketCollection();
+        private AuthService service = new AuthService(new ApplicationDbContext());
         public string Username;
         public string ShareCode;
-        private ApplicationUser connectedUser;
+        public string Picture = "../../assets/png_64/" + Global.random.Next(1, 15).ToString() + ".png";
+        public ApplicationUser connectedUser;
 
         public override void OnOpen()
         {
@@ -34,6 +36,15 @@ namespace API.WebSocket
                 LogService.Log(this, MessageType.ErrorInvalidRequest);
                 return;
             }
+            if(bc.Token != null)
+            {
+                connectedUser = service.GetUserWithToken(bc.Token);
+                if (connectedUser != null)
+                {
+                    this.Picture = connectedUser.Picture;
+                    this.Username = connectedUser.Name;
+                }
+            }
             var command = Global.CommandList[bc.CommandName];
             command.Handle(message);
             command.Run(this);
@@ -41,13 +52,7 @@ namespace API.WebSocket
         }
         public override void OnClose()
         {
-            if(!RoomService.IsShareCodeExist(this.ShareCode))
-            {
-                socketClients.Remove(this);
-                base.OnClose();
-                return;
-            }
-            if (RoomService.IsRoomOwner(this.ShareCode, this.Username))
+            if (RoomService.IsRoomOwner(this.ShareCode, this.connectedUser))
             {
                 RoomService.DestroyRoom(this.ShareCode);
                 return;
