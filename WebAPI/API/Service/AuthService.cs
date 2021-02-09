@@ -72,5 +72,35 @@ namespace API.Service
             return new string(Enumerable.Repeat(chars, 64)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        
+        public UserDTO GenerateAnonymousUser(string username)
+        {
+            string token = GenerateCustomToken();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            ApplicationUser anonymous = new ApplicationUser
+            {
+                UserName = GenerateCustomToken()
+            };
+            anonymous.Name = username;
+            anonymous.Picture = "https://www.minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg";
+            anonymous.Token = token;
+            userManager.Create(anonymous);
+
+            db.SaveChanges();
+            return new UserDTO(anonymous);
+        }
+
+        public bool DeleteUser(string tohoken)
+        {
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == tohoken);
+            if (user != null)
+            {
+                db.Users.Remove(user);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

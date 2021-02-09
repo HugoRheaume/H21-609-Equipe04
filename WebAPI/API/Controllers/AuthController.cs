@@ -70,8 +70,19 @@ namespace API.Controllers
         public string TestCookie()
         {
             ApplicationUser user = service.GetUserWithToken(Request);
-
             return user.Name;
+        }
+
+        [HttpPost]
+        public UserDTO GenerateAnonymousUser([FromBody] string username)
+        {
+            return service.GenerateAnonymousUser(username);
+        }
+
+        [HttpPost]
+        public bool DeleteUser([FromBody]string tohoken)
+        {
+            return service.DeleteUser(tohoken);
         }
     }
 }
