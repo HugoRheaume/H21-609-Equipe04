@@ -2,17 +2,18 @@ package org.equipe4.quizplay;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TrueFalseActivity extends AppCompatActivity {
+public class MultipleChoiceActivity extends AppCompatActivity {
 
     QuestionDTO question;
     QuizResponseDTO quiz;
@@ -38,7 +39,7 @@ public class TrueFalseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_true_false);
+        setContentView(R.layout.activity_multiple_choice);
 
         question = (QuestionDTO)getIntent().getSerializableExtra("question");
         quiz = (QuizResponseDTO)getIntent().getSerializableExtra("quiz");
@@ -53,11 +54,12 @@ public class TrueFalseActivity extends AppCompatActivity {
         progressQuiz.setMax(quiz.numberOfQuestions);
         progressQuiz.setProgress(question.quizIndex + 1);
 
+        initRecycler();
+
         if (question.timeLimit > 0) {
             findViewById(R.id.timeLimit).setVisibility(View.VISIBLE);
             startTimer();
         }
-
     }
 
     private void startTimer() {
@@ -92,7 +94,7 @@ public class TrueFalseActivity extends AppCompatActivity {
         boolean rightAnswer = false;
 
         if (v != null) {
-            boolean checked = ((RadioButton) v).isChecked();
+            boolean checked = ((CheckBox) v).isChecked();
 
             switch (v.getId()) {
                 case R.id.radioTrue:
@@ -180,5 +182,22 @@ public class TrueFalseActivity extends AppCompatActivity {
         i.putExtra("quiz", quiz);
         startActivity(i);
         finish();
+    }
+
+    private void initRecycler() {
+        RecyclerView choiceRecyclerView = findViewById(R.id.choiceRecyclerView);
+
+        choiceRecyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager memeLayoutManager = new LinearLayoutManager(this);
+        choiceRecyclerView.setLayoutManager(memeLayoutManager);
+
+        RecyclerView.Adapter memeAdapter = new ChoiceAdapter(question.questionMultipleChoice);
+        choiceRecyclerView.setAdapter(memeAdapter);
+    }
+
+    public void test(View v) {
+        Log.i("testYeet", findViewById(R.id.checkboxChoice).toString());
+        Log.i("testYeet", v.toString());
     }
 }
