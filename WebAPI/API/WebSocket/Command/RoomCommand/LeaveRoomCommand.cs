@@ -34,7 +34,7 @@ namespace API.WebSocket.Command
                 LogService.Log(client, MessageType.ErrorShareCodeNotExist);
                 return;
             }
-            if (!RoomService.IsUserExist(this.ShareCode, this.Username))
+            if (!RoomService.IsUserExist(this.ShareCode, client))
             {
                 LogService.Log(client, MessageType.ErrorNotInRoom);
                 return;
@@ -42,9 +42,8 @@ namespace API.WebSocket.Command
 
 
             client.ShareCode = this.ShareCode;
-            client.Username = this.Username;
 
-            RoomService.RemoveUser(ShareCode, Username);
+            RoomService.RemoveUser(ShareCode, client);
             LogService.Log(client, MessageType.LogRoomLeft);
             RoomService.Broadcast(ShareCode, MessageType.LogRoomLeft);
         }

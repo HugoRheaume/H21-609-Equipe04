@@ -29,18 +29,18 @@ namespace API.Service
             }    
             rooms[shareCode].Users.Add(client);
         }
-        internal static void RemoveUser(string sharecode, string username)
+        internal static void RemoveUser(string sharecode, Client client)
         {
             if (!IsShareCodeExist(sharecode))
                 return;
-
-            Client r = null;
+            rooms[sharecode].Users.Remove(client);
+            /*Client r = null;
             foreach (var item in rooms[sharecode].Users)
             {
-                if (item.Username == username)
+                if (item.connectedUser == user)
                     r = item;
             }
-            rooms[sharecode].Users.Remove(r);
+            rooms[sharecode].Users.Remove(r);*/
         }
         internal static void DestroyRoom(string shareCode)
         {
@@ -98,11 +98,11 @@ namespace API.Service
                 return false;
             return true;
         }
-        internal static bool IsUserExist(string shareCode, string username)
+        internal static bool IsUserExist(string shareCode, Client client)
         {
             if (!IsShareCodeExist(shareCode))
                 return false;
-            else if (GetUsername(shareCode, username) == null)
+            else if (GetUsername(shareCode, client) == null)
                 return false;
             else
             return true;
@@ -116,24 +116,23 @@ namespace API.Service
             List<UserDTO> users = new List<UserDTO>();
             foreach (var u in rooms[shareCode].Users)
             {
-                var userDTO = new UserDTO() { Name = u.Username, Picture = u.Picture };
-                users.Add(userDTO);
+                users.Add(new UserDTO(u.connectedUser));
             }
             //users.Add(rooms[shareCode].GetOwner.Username);
             return users;
         }        
-        private static string GetUsername(string shareCode, string username)
+        private static string GetUsername(string shareCode, Client client)
         {
             if (!IsShareCodeExist(shareCode))
                 return null;
-            if (username == null)
+            if (client == null)
                 return null;
 
             foreach (var item in rooms[shareCode].Users)
             {
-                if (item.Username == username)
+                if (item == client)
                 {
-                    return item.Username;
+                    return item.connectedUser.Name;
                 }
             }
             return null;

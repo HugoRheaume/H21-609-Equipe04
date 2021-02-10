@@ -83,7 +83,8 @@ namespace API.Service
                 UserName = GenerateCustomToken()
             };
             anonymous.Name = username;
-            anonymous.Picture = "https://www.minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg";
+            //anonymous.Picture = "https://www.minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg";
+            anonymous.Picture = "../../assets/png_64/" + Global.random.Next(1, 15).ToString() + ".png";
             anonymous.Token = token;
             userManager.Create(anonymous);
 

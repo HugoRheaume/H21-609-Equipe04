@@ -7,7 +7,7 @@ using System.Web;
 
 namespace API
 {
-    public enum MessageType { LogRoomCreated = 200, LogRoomJoined, LogRoomLeft, LogRoomDeleted, LogRoomDisable, ErrorShareCodeNotExist = 400, ErrorNotConnected, ErrorUserAlreadyJoined, ErrorNotOwnerOfRoom, ErrorInvalidRequest, ErrorNotInRoom  }
+    public enum MessageType { LogRoomCreated = 200, LogRoomJoined, LogRoomLeft, LogRoomDeleted, LogRoomDisable, ErrorShareCodeNotExist = 400, ErrorNotConnected, ErrorUserAlreadyJoined, ErrorNotOwnerOfRoom, ErrorInvalidRequest, ErrorNotInRoom, ErrorInvalidToken  }
     public static class Global
     {
         public const string ALPHANUMERIC_CHARACTER_LIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

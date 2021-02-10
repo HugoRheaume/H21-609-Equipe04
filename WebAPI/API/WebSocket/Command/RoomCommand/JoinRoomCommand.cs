@@ -35,16 +35,11 @@ namespace API.WebSocket.Command
                 LogService.Log(client, MessageType.ErrorShareCodeNotExist);
                 return;
             }
-            if (RoomService.IsUserExist(this.ShareCode, this.Username))
+            if (RoomService.IsUserExist(this.ShareCode, client))
             {
                 LogService.Log(client, MessageType.ErrorUserAlreadyJoined);
                 return;
             }
-            
-
-            if(client.Username == null || client.Username == "")
-                client.Username = this.Username;
-             
             client.ShareCode = this.ShareCode;
             
             RoomService.AddUser(this.ShareCode, client);

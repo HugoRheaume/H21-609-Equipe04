@@ -14,9 +14,9 @@ namespace API.WebSocket
     {
         private static WebSocketCollection socketClients = new WebSocketCollection();
         private AuthService service = new AuthService(new ApplicationDbContext());
-        public string Username;
+        //public string Username;
         public string ShareCode;
-        public string Picture = "../../assets/png_64/" + Global.random.Next(1, 15).ToString() + ".png";
+        //public string Picture = "../../assets/png_64/" + Global.random.Next(1, 15).ToString() + ".png";
         public ApplicationUser connectedUser;
 
         public override void OnOpen()
@@ -36,14 +36,17 @@ namespace API.WebSocket
                 LogService.Log(this, MessageType.ErrorInvalidRequest);
                 return;
             }
-            if(bc.Token != null)
+            if (bc.Token == null)
             {
-                connectedUser = service.GetUserWithToken(bc.Token);
-                if (connectedUser != null)
-                {
-                    this.Picture = connectedUser.Picture;
-                    this.Username = connectedUser.Name;
-                }
+                LogService.Log(this, MessageType.ErrorInvalidToken);
+                return;
+            }
+            
+            connectedUser = service.GetUserWithToken(bc.Token);
+            if (connectedUser == null)
+            {
+                LogService.Log(this, MessageType.ErrorInvalidToken);
+                return;
             }
             var command = Global.CommandList[bc.CommandName];
             command.Handle(message);
@@ -64,7 +67,7 @@ namespace API.WebSocket
                 return;
             }
 
-            RoomService.RemoveUser(this.ShareCode, this.Username);
+            RoomService.RemoveUser(this.ShareCode, this);
             RoomService.Broadcast(this.ShareCode, MessageType.LogRoomLeft);
             socketClients.Remove(this);
             base.OnClose();
