@@ -36,6 +36,18 @@ namespace API.Service
             return null;           
         }
 
+        public List<QuestionDTO> GetQuestionsByShareCode(string shareCode)
+        {
+            Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.ShareCode == shareCode);
+            if (quiz == null)
+                return null;
+
+            List<Question> questionList = quiz.ListQuestions;
+
+            return questionList.Select(item => GenerateQuestionDTO(item)).OrderBy(x => x.QuizIndex).ToList();
+        }
+
+
         public List<QuestionDTO> GetQuestionByQuizId(int quizId)
         {
             Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.Id == quizId);

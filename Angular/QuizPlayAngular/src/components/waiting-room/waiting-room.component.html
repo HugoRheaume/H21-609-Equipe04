@@ -17,7 +17,7 @@
 				mat-flat-button
 				style="background-color: purple;"
 				(click)="cancel()"
-				[routerLink]="['/list']"
+				[routerLink]="['/quiz/' + this.quizService.currentQuiz.shareCode]"
 			>
 				Annuler la partie
 			</button>

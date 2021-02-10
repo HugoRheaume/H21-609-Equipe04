@@ -80,8 +80,13 @@ export class ListQuizComponent implements OnInit {
 		});
 	}
 
-	goToQuizDetails(quizId: Number) {
-		this.router.navigate([`/quiz/${quizId}`]);
+	goToQuizDetails(quizShareCode: Number) {
+		this.router.navigate([`/quiz/${quizShareCode}`]);
+	}
+
+	goLive(event: Event, quizId: Number) {
+		event.stopPropagation();
+		this.router.navigate([`/live/${quizId}`]);
 	}
 }
 
