@@ -49,10 +49,7 @@ namespace API.Validation
 
         protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
         {
-            var response = actionContext.Request.CreateResponse(HttpStatusCode.Redirect);
-            response.Headers.Location =
-                new Uri(actionContext.Request.RequestUri.GetLeftPart(UriPartial.Authority) + "/api/Auth/Logout");
-            actionContext.Response = response;
+            base.HandleUnauthorizedRequest(actionContext);
         }
     }
 }

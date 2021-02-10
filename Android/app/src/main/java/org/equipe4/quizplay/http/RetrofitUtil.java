@@ -1,5 +1,10 @@
 package org.equipe4.quizplay.http;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +31,12 @@ public class RetrofitUtil {
     private static final String IP_XAV = "https://192.168.0.172:45455/api/";
     private static final String IP_NIC = "https://192.168.2.28:45455/api/";
 
+    public static ClearableCookieJar cookieJar;
+
+
     public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP_NIC)
+                .baseUrl(IP_MARCO)
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,11 +66,12 @@ public class RetrofitUtil {
     }
 
 
+
     public static OkHttpClient getClient() {
         try {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-            CookieJar cookieJar = new MyCookieJar();
+
             builder = builder.cookieJar(cookieJar);
 
             final TrustManager[] trustAllCerts = new TrustManager[]{
