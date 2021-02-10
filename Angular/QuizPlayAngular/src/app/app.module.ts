@@ -25,6 +25,7 @@ import {
 	CommonModule,
 	HashLocationStrategy,
 	LocationStrategy,
+	PathLocationStrategy,
 } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -66,7 +67,7 @@ import { LoginComponent } from 'src/components/login/login.component';
 		AngularFireAuthModule,
 	],
 	entryComponents: [CreateQuizComponent],
-	providers: [],
+	providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
