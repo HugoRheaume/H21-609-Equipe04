@@ -1,5 +1,5 @@
 <div class="container">
-	<div *ngIf="this.service.currentQuiz">
+	<div *ngIf="this.service.currentQuiz" class="justify-content-between d-flex">
 		<button
 			[cdkCopyToClipboard]="this.service.currentQuiz.shareCode"
 			class="m-3"
@@ -8,46 +8,57 @@
 			>Code de partage: {{this.service.currentQuiz.shareCode}}
 			<mat-icon>content_copy</mat-icon></button
 		>
+		<button
+			[disabled]="this.service.currentQuestions.length < 1"
+			mat-raised-button
+			class="m-3"
+			color="primary"
+			(click)="finish()"
+			[routerLink]="['/list']"
+			>Terminé</button
+		>
+	</div>
+	<h2 class="sectionHeader">Informations du quiz</h2>
+	<div class="quizHeader">
+		<h1 class="text-center mb-5">{{this.service.currentQuiz.title}}</h1>
+		<h2>
+			{{this.service.currentQuiz.description}}
+		</h2>
+
+		<h3 class="text-end m-0">
+			<mat-icon
+				style="font-size: 30px;"
+				[matTooltip]="this.service.currentQuiz.isPublic ? 'Le quiz est public' : 'Le quiz est privé'"
+				>{{this.service.currentQuiz.isPublic ? 'public' : 'public_off'}}
+			</mat-icon>
+		</h3>
 	</div>
 
-	<h1 class="text-center">Ajouter des questions </h1>
 	<div>
-		<div class="row">
-			<div class="col-10">
-				<button
-					class="questionButtonAddRemove"
-					mat-fab
-					color="primary"
-					data-bs-toggle="modal"
-					data-bs-target="#staticBackdrop"
-				>
-					<mat-icon>add</mat-icon>
-				</button>
-			</div>
-			<div class="col-2">
-				<button
-					[disabled]="this.service.currentQuestions.length < 1"
-					mat-raised-button
-					class="m-3"
-					color="primary"
-					(click)="finish()"
-					[routerLink]="['/list']"
-					>Terminé</button
-				>
-			</div>
+		<div class="d-flex justify-content-between">
+			<h2 class="sectionHeader">Questions du quiz</h2>
+			<button
+				class="questionButtonAddRemove"
+				mat-fab
+				color="primary"
+				data-bs-toggle="modal"
+				data-bs-target="#staticBackdrop"
+			>
+				<mat-icon>add</mat-icon>
+			</button>
 		</div>
 		<div class="questionBox">
-			<div cdkDropListGroup>
+			<div cdkDropListGroup (mouseleave)="this.selectedQuestion = null;">
 				<div
 					cdkDropList
 					[cdkDropListData]="this.service.currentQuestions"
-					class="example-list"
+					class="question-list"
 					(cdkDropListDropped)="drop($event)"
 				>
 					<div
-						class="example-box"
+						class="questionItem"
 						cdkDragLockAxis="y"
-						cdkDragBoundary=".example-list"
+						cdkDragBoundary=".question-list"
 						*ngFor="let item of this.service.currentQuestions"
 						cdkDrag
 						[class.activeQuestion]="selectedQuestion === item"
@@ -101,7 +112,6 @@
 									mat-fab
 									color="primary"
 									(click)="deleteQuestion(item.id)"
-									aria-label="Example icon button with a delete icon"
 								>
 									<mat-icon>delete</mat-icon>
 								</button>
