@@ -21,8 +21,12 @@ import android.widget.TextView;
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.QuestionDTO;
+import org.equipe4.quizplay.transfer.QuestionMultipleChoice;
 import org.equipe4.quizplay.transfer.QuestionResultDTO;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,45 +86,60 @@ public class MultipleChoiceActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 tvTime.setText(R.string.timesup);
-                answer(null);
+                answer();
             }
         };
         timer.start();
     }
 
-    public void answer(View v) {
+    public void answer() {
         if (timer != null)
             timer.cancel();
         boolean rightAnswer = false;
 
-        if (v != null) {
-            boolean checked = ((CheckBox) v).isChecked();
+        List<CheckBox> checkBoxes = getCheckboxList();
 
-            switch (v.getId()) {
-                case R.id.radioTrue:
-                    if (checked && question.questionTrueFalse.answer)
-                        rightAnswer = true;
+        boolean allAnswer = true;
+        boolean oneAnswer = false;
+        for(int i = 0; i < question.questionMultipleChoice.size(); i++) {
+            QuestionMultipleChoice q = question.questionMultipleChoice.get(i);
+            CheckBox c = checkBoxes.get(i);
+            if (question.needsAllAnswers) {
+                if (q.answer && !c.isChecked()) {
+                    allAnswer = false;
                     break;
-                case R.id.radioFalse:
-                    if (checked && !question.questionTrueFalse.answer)
-                        rightAnswer = true;
-                    break;
+                }
             }
-            if (!rightAnswer)
-                ((RadioButton)v).getButtonDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wrong), PorterDuff.Mode.SRC_IN);
-
+            else {
+                if (q.answer && c.isChecked())
+                    oneAnswer = true;
+            }
+            if (!q.answer && c.isChecked()) {
+                allAnswer = false;
+                oneAnswer = false;
+                break;
+            }
         }
 
-        findViewById(R.id.radioTrue).setClickable(false);
-        findViewById(R.id.radioFalse).setClickable(false);
+        if (question.needsAllAnswers)
+            rightAnswer = allAnswer;
+        else
+            rightAnswer = oneAnswer;
 
 
-        if (question.questionTrueFalse.answer) {
-            RadioButton radioTrue = findViewById(R.id.radioTrue);
-            radioTrue.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
-        } else {
-            RadioButton radioFalse = findViewById(R.id.radioFalse);
-            radioFalse.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
+        for(int i = 0; i < question.questionMultipleChoice.size(); i++) {
+            QuestionMultipleChoice q = question.questionMultipleChoice.get(i);
+            CheckBox c = checkBoxes.get(i);
+
+            if (q.answer) {
+                c.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
+            }
+
+            if (!q.answer && c.isChecked()) {
+                c.getButtonDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wrong), PorterDuff.Mode.SRC_IN);
+            }
+
+            c.setClickable(false);
         }
 
         Button button = findViewById(R.id.nextQuestion);
@@ -158,7 +177,7 @@ public class MultipleChoiceActivity extends AppCompatActivity {
 
     public void nextQuestion(View v) {
         if (nextQuestion == null) {
-            answer(null);
+            answer();
             return;
         }
 
@@ -196,8 +215,26 @@ public class MultipleChoiceActivity extends AppCompatActivity {
         choiceRecyclerView.setAdapter(memeAdapter);
     }
 
-    public void test(View v) {
-        Log.i("testYeet", findViewById(R.id.checkboxChoice).toString());
-        Log.i("testYeet", v.toString());
+    private List<CheckBox> getCheckboxList()
+    {
+        List<CheckBox> list = new ArrayList<>();
+        int numberOfChoices = question.questionMultipleChoice.size();
+
+        list.add(findViewById(R.id.checkboxChoice1));
+        list.add(findViewById(R.id.checkboxChoice2));
+        if (numberOfChoices >= 3)
+            list.add(findViewById(R.id.checkboxChoice3));
+        if (numberOfChoices >= 4)
+            list.add(findViewById(R.id.checkboxChoice4));
+        if (numberOfChoices >= 5)
+            list.add(findViewById(R.id.checkboxChoice5));
+        if (numberOfChoices >= 6)
+            list.add(findViewById(R.id.checkboxChoice6));
+        if (numberOfChoices >= 7)
+            list.add(findViewById(R.id.checkboxChoice7));
+        if (numberOfChoices >= 8)
+            list.add(findViewById(R.id.checkboxChoice8));
+
+        return list;
     }
 }

@@ -34,4 +34,5 @@
     </plurals>
     <string name="returnHomePage">Return to home page</string>
     <string name="logout">Logout</string>
+    <string name="submitAnswer">Submit answer</string>
 </resources>

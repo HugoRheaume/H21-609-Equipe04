@@ -28,6 +28,7 @@
     <string name="timesup">Temps écoulé!</string>
     <string name="rightAnswer">Bonne réponse!</string>
     <string name="wrongAnswer">Mauvaise réponse!</string>
+    <string name="submitAnswer">Soumettre ma réponse</string>
     <plurals name="secondsRemaining">
         <item quantity="zero">%d seconde restante</item>
         <item quantity="one">%d seconde restante</item>

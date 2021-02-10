@@ -50,6 +50,32 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ChoiceView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.tvChoice.setText(list.get(position).statement);
+        switch (position) {
+            case 0:
+                holder.checkboxChoice.setId(R.id.checkboxChoice1);
+                break;
+            case 1:
+                holder.checkboxChoice.setId(R.id.checkboxChoice2);
+                break;
+            case 2:
+                holder.checkboxChoice.setId(R.id.checkboxChoice3);
+                break;
+            case 3:
+                holder.checkboxChoice.setId(R.id.checkboxChoice4);
+                break;
+            case 4:
+                holder.checkboxChoice.setId(R.id.checkboxChoice5);
+                break;
+            case 5:
+                holder.checkboxChoice.setId(R.id.checkboxChoice6);
+                break;
+            case 6:
+                holder.checkboxChoice.setId(R.id.checkboxChoice7);
+                break;
+            case 7:
+                holder.checkboxChoice.setId(R.id.checkboxChoice8);
+                break;
+        }
         holder.checkboxChoice.setTag(list.get(position).id);
     }
 
