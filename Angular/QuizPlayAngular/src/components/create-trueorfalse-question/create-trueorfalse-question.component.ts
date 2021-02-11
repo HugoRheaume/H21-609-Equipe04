@@ -137,13 +137,6 @@ export class CreateTrueOrFalseQuestion implements OnInit {
 			: ''; // Default
 	}
 
-	get answerErrorMessage(): string {
-		const formField: FormControl = this.TrueFalse.get(
-			'questionAnswer'
-		) as FormControl;
-		return formField.hasError('required') ? 'La réponse est requise' : ''; // Default
-	}
-
 	get timeLimitErrorMessage(): string {
 		const formField: FormControl = this.TrueFalse.get(
 			'questionTimeLimit'
