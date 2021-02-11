@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -109,8 +111,7 @@ public class MultipleChoiceActivity extends AppCompatActivity {
                     allAnswer = false;
                     break;
                 }
-            }
-            else {
+            } else {
                 if (q.answer && c.isChecked())
                     oneAnswer = true;
             }
@@ -132,7 +133,7 @@ public class MultipleChoiceActivity extends AppCompatActivity {
             CheckBox c = checkBoxes.get(i);
 
             if (q.answer) {
-                c.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
+                ((LinearLayout)c.getParent()).setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
             }
 
             if (!q.answer && c.isChecked()) {
@@ -236,5 +237,9 @@ public class MultipleChoiceActivity extends AppCompatActivity {
             list.add(findViewById(R.id.checkboxChoice8));
 
         return list;
+    }
+
+    public void test(View v) {
+        Log.i("yeetTest", v.toString());
     }
 }

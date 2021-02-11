@@ -1,11 +1,13 @@
 package org.equipe4.quizplay;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.equipe4.quizplay.transfer.QuestionMultipleChoice;
@@ -85,3 +87,4 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ChoiceView
         return list.size();
     }
 }
+
