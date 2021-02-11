@@ -23,27 +23,31 @@ namespace API.Controllers
         private const string ALPHANUMERIC_CHARACTER_LIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         private static Random random = new Random();
 
+        [TokenAuthorize]
         [HttpPost]
         [ModelValidation]
         public IHttpActionResult Create(QuizRequestDTO quizRequestDto)
         {
-            // Enlever le "1" lorsque les user seront implémentés
-            string userId = User.Identity.GetUserId() ?? "1";
 
-            Quiz quiz = new Quiz()
+            AuthService authService = new AuthService(new ApplicationDbContext());
+
+            ApplicationUser user = authService.GetUserWithToken(Request);
+            // Enlever le "1" lorsque les user seront implémentés
+
+            Quiz quiz = new Quiz
             {
                 Title = quizRequestDto.Title,
                 Description = quizRequestDto.Description,
                 IsPublic = quizRequestDto.IsPublic,
-                OwnerId = userId,
+                OwnerId = user.Id,
                 ShareCode = GenerateAlphanumeric(),
                 Date = DateTime.Now,
                 ListQuestions = new List<Question>()
             };
 
-            if (quizRequestDto.Confirm || !service.QuizCheck(userId, quizRequestDto.Title))
+            if (quizRequestDto.Confirm || !service.QuizCheck(user.Id, quizRequestDto.Title))
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created,
-                    service.CreateQuiz(quiz, User.Identity.Name)));
+                    service.CreateQuiz(quiz, user.Name)));
 
 
             quizRequestDto.Confirm = true;
@@ -54,15 +58,17 @@ namespace API.Controllers
             };
 
             return ResponseMessage(message);
-
         }
-        
+
+        [TokenAuthorize]
         [HttpGet]
         public IHttpActionResult GetQuizFromUser()
         {
-            string userId = User.Identity.GetUserId() ?? "1";
-            
-            return Ok(service.GetQuizFromUser(userId, User.Identity.Name ?? "Nobody"));
+            AuthService authService = new AuthService(new ApplicationDbContext());
+
+            ApplicationUser user = authService.GetUserWithToken(Request);
+
+            return Ok(service.GetQuizFromUser(user.Id, user.Name));
         }
 
         [HttpGet]
@@ -73,9 +79,9 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
         [HttpGet]
         [Route("api/Quiz/GetQuizById/{quizId}")]
-
         public IHttpActionResult GetQuizById(int quizId)
         {
             return Ok(service.GetQuizById(quizId));
