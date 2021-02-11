@@ -206,6 +206,7 @@ export class QuizService {
 				localStorage.setItem('name', '');
 				localStorage.setItem('email', '');
 				localStorage.setItem('picture', '');
+				this.router.navigate(['/']);
 			});
 	}
 }
