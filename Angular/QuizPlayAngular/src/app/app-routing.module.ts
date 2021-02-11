@@ -8,9 +8,9 @@ import { WaitingRoomComponent } from 'src/components/waiting-room/waiting-room.c
 const routes: Routes = [
 	{ path: 'list', component: ListQuizComponent },
 	{ path: '', component: LoginComponent },
-	{ path: 'quiz/:quizId', component: QuizQuestionListComponent },
+	{ path: 'quiz/:quizShareCode', component: QuizQuestionListComponent },
 	{ path: 'quiz', component: CreateQuizComponent },
-	{ path: 'live', component: WaitingRoomComponent },
+	{ path: 'live/:quizId', component: WaitingRoomComponent },
 ];
 
 @NgModule({

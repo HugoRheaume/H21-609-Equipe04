@@ -35,6 +35,14 @@ namespace API.Controllers
             return Ok(service.GetQuestionByQuizId(quizId));
         }
 
+        [HttpGet]
+        [Route("api/Question/GetQuizQuestionsFromShareCode/{shareCode}")]
+        public IHttpActionResult GetQuizQuestionsFromShareCode(string shareCode)
+        {
+            return Ok(service.GetQuestionsByShareCode(shareCode));
+        }
+
+
         [HttpPost]
         [QuestionValidation]
         public IHttpActionResult Add(QuestionCreateDTO question)

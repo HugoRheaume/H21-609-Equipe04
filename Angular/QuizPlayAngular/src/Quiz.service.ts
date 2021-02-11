@@ -79,23 +79,25 @@ export class QuizService {
 				this.currentQuestions = response;
 			});
 	}
-	getQuiz(quizId: number) {
+	getQuiz(quizShareCode: string) {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + localStorage.getItem('token'),
 			}),
 		};
 
 		this.http
 			.get<QuizResponse>(
-				environment.backend.baseURL + '/quiz/getquizbyid/' + quizId,
+				environment.backend.baseURL +
+					`/quiz/GetQuizByCode?code=${quizShareCode}`,
 				httpOptions
 			)
 			.subscribe(response => {
 				this.currentQuiz = response;
 			});
 	}
-	getQuestionFromQuiz(quizId: number) {
+	getQuestionFromQuiz(quizShareCode: string) {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
@@ -104,7 +106,8 @@ export class QuizService {
 
 		this.http
 			.get<Question[]>(
-				environment.backend.baseURL + '/question/getquizquestion/' + quizId,
+				environment.backend.baseURL +
+					`/question/GetQuizQuestionsFromShareCode/${quizShareCode}`,
 				httpOptions
 			)
 			.subscribe(response => {

@@ -41,6 +41,15 @@ export class ListQuizComponent implements OnInit {
 	loadList() {
 		this.service.getQuizList().subscribe(r => {
 			this.dataSource = new MatTableDataSource(r);
+			this.dataSource.sortingDataAccessor = (
+				data: any,
+				sortHeaderId: string
+			): string => {
+				if (typeof data[sortHeaderId] === 'string') {
+					return data[sortHeaderId].toLocaleLowerCase();
+				}
+				return data[sortHeaderId];
+			};
 			this.paginator._intl.itemsPerPageLabel = 'Quiz par page';
 			this.paginator._intl.getRangeLabel = (
 				page: number,
@@ -80,8 +89,13 @@ export class ListQuizComponent implements OnInit {
 		});
 	}
 
-	goToQuizDetails(quizId: Number) {
-		this.router.navigate([`/quiz/${quizId}`]);
+	goToQuizDetails(quizShareCode: Number) {
+		this.router.navigate([`/quiz/${quizShareCode}`]);
+	}
+
+	goLive(event: Event, quizId: Number) {
+		event.stopPropagation();
+		this.router.navigate([`/live/${quizId}`]);
 	}
 }
 

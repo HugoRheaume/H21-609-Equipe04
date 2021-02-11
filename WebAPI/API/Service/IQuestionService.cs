@@ -12,6 +12,8 @@ namespace API.Service
         List<QuestionDTO> GetQuestions();
         QuestionDTO GetQuestionById(int id);
         List<QuestionDTO> GetQuestionByQuizId(int quizId);
+
+        List<QuestionDTO> GetQuestionsByShareCode(string shareCode);
         QuestionDTO GetNextQuestion(int quizId, int questionId);
 
         QuestionDTO AddQuestion(QuestionCreateDTO q);

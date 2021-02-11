@@ -42,5 +42,6 @@
         <item quantity="one">%d point</item>
         <item quantity="other">%d points</item>
     </plurals>
+    <string name="logout">Déconnexion</string>
 
 </resources>
