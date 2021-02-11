@@ -129,5 +129,13 @@ namespace API.Controllers
 
             return Ok(score);
         }
+
+        [HttpPost]
+        [ModelValidation]
+        public IHttpActionResult ModifyQuiz(QuizModifyDTO modifiedDTO)
+        {
+            if (service.ModifyQuiz(modifiedDTO)) return Ok("Quiz modifié.");
+            return BadRequest("Une erreur s'est produite.");
+        }
     }
 }
