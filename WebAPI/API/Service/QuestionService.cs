@@ -12,11 +12,11 @@ namespace API.Service
     public class QuestionService : BaseService, IQuestionService
     {
 
-        public QuestionService(ApplicationDbContext db) : base(db) { }
+        public QuestionService (ApplicationDbContext db) : base(db) { }
 
         public List<QuestionDTO> GetQuestions()
         {
-
+            
             List<QuestionDTO> listToShip = new List<QuestionDTO>();
 
             List<Question> questionList = db.Question.Include(x => x.Quiz).ToList();
@@ -33,7 +33,7 @@ namespace API.Service
             if (question != null)
                 return GenerateQuestionDTO(question);
 
-            return null;
+            return null;           
         }
 
         public List<QuestionDTO> GetQuestionsByShareCode(string shareCode)
@@ -66,8 +66,7 @@ namespace API.Service
             if (questionId > -1)
                 index = question.QuizIndex;
             if (list.Count <= index + 1)
-                return new QuestionDTO()
-                {
+                return new QuestionDTO() {
                     Id = 0,
                     QuizId = quizId,
                     Label = "",
@@ -96,10 +95,10 @@ namespace API.Service
 
             Question q = db.Question.Add(questionToCreate);
             db.SaveChanges();
-            return GenerateQuestionDTO(q);
+            return GenerateQuestionDTO(q);                       
         }
 
-
+        
         private QuestionDTO GenerateQuestionDTO(Question q)
         {
             QuestionDTO question = new QuestionDTO()
@@ -111,7 +110,7 @@ namespace API.Service
                 QuestionType = q.QuestionType,
                 QuizIndex = q.QuizIndex,
                 NeedsAllAnswers = q.NeedsAllAnswers,
-
+                
 
             };
             switch (q.QuestionType)
@@ -146,7 +145,7 @@ namespace API.Service
             return GetQuestionByQuizId(quizId);
 
         }
-        public bool UpdateQuizIndex(List<QuestionDTO> questions)
+        public bool UpdateQuizIndex(List<QuestionDTO> questions )
         {
             foreach (var item in questions)
             {
@@ -175,66 +174,6 @@ namespace API.Service
 
             db.SaveChanges();
             return true;
-        }
-
-
-        public bool ModifyQuesiton(QuestionDTO modifiedDTO)
-        {
-            Question questionToModify = db.Question.FirstOrDefault(q => q.Id == modifiedDTO.Id);
-            if (questionToModify != null)
-            {
-                //Modifications communes a toutes les questions
-                questionToModify.Label = modifiedDTO.Label;
-                questionToModify.TimeLimit = modifiedDTO.TimeLimit;
-
-                //Modifications uniques a certains types de questions
-                switch (questionToModify.QuestionType)
-                {
-                    case QuestionType.TrueFalse:
-                        {
-                            QuestionTrueFalse question = db.QuestionTrueFalse.FirstOrDefault(q => q.QuestionId == questionToModify.Id);
-                            question.Answer = modifiedDTO.QuestionTrueFalse.Answer;
-                            break;
-                        }
-                    case QuestionType.MultipleChoice:
-                        {
-                            List<QuestionMultipleChoice> choicesInDB = db.QuestionMultiple.Where(q => q.QuestionId == questionToModify.Id).ToList();
-                            List<QuestionMultipleChoice> newChoices = modifiedDTO.QuestionMultipleChoice;
-
-                            for (int i = 0; i < newChoices.Count; i++)
-                            {
-                                QuestionMultipleChoice newChoice = newChoices[i];
-                                QuestionMultipleChoice oldChoice = choicesInDB.FirstOrDefault(c => c.Id == newChoice.Id);
-                                if (oldChoice == null) // Create a new choice in the DB
-                                {
-                                    newChoice.QuestionId = questionToModify.Id;
-                                    db.QuestionMultiple.Add(newChoice);
-                                    continue;
-                                }
-                                //Modifies the choice in the DB
-                                oldChoice.Answer = newChoice.Answer;
-                                oldChoice.Statement = newChoice.Statement;
-                                choicesInDB.Remove(oldChoice);
-                            }
-
-                            // Choice has been removed from the question
-                            if (choicesInDB.Count > 0)
-                            {
-                                foreach (QuestionMultipleChoice choice in choicesInDB)
-                                {
-                                    db.QuestionMultiple.Remove(choice);
-                                }
-                            }
-
-                            questionToModify.NeedsAllAnswers = modifiedDTO.NeedsAllAnswers;
-                            break;
-                        }
-                }
-
-                db.SaveChanges();
-                return true;
-            }
-            return false;
         }
     }
 }

@@ -292,7 +292,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Question\QuestionResult.cs" />
     <Compile Include="Models\Question\QuestionResultDTO.cs" />
-    <Compile Include="Models\Quiz\QuizModifyDTO.cs" />
     <Compile Include="Models\Quiz\Quiz.cs" />
     <Compile Include="Models\Quiz\QuizRequestDTO.cs" />
     <Compile Include="Models\Quiz\QuizResponseDTO.cs" />
