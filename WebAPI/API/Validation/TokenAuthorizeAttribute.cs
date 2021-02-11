@@ -40,7 +40,13 @@ namespace API.Validation
                 return true;
             }
 
-            string stringHeader = HttpContext.Current.Request.Headers["Authorization"]?.Split(' ')[1];
+            string authorization = HttpContext.Current.Request.Headers["Authorization"];
+
+            if (authorization == null || authorization == "Bearer")
+                return false;
+            
+            string stringHeader = authorization.Split(' ')[1];
+            
             if (service.GetUserWithToken(stringHeader) != null)
                 return true;
 

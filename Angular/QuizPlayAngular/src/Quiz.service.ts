@@ -19,8 +19,16 @@ export class QuizService {
 	public currentQuiz: QuizResponse;
 
 	public createQuiz(quiz: QuizRequest): Observable<QuizResponse> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			}),
+		};
+
 		return this.http
 			.post<any>(environment.backend.baseURL + '/Quiz/Create', quiz, {
+				headers: httpOptions.headers,
 				observe: 'response',
 			})
 			.pipe(
@@ -48,6 +56,7 @@ export class QuizService {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
 			}),
 		};
 
@@ -63,10 +72,12 @@ export class QuizService {
 				this.currentQuestions.push(response as Question);
 			});
 	}
+
 	deleteQuestion(questionId: number) {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
 			}),
 		};
 
@@ -117,6 +128,7 @@ export class QuizService {
 				);
 			});
 	}
+
 	public getAlphanumericCode(): Observable<string> {
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -129,9 +141,16 @@ export class QuizService {
 		);
 	}
 	public getQuizList(): Observable<QuizResponse[]> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			}),
+		};
 		return this.http
 			.get<QuizResponse[]>(
-				environment.backend.baseURL + '/Quiz/GetQuizFromUser'
+				environment.backend.baseURL + '/Quiz/GetQuizFromUser',
+				httpOptions
 			)
 			.pipe(
 				map(res => {
@@ -157,6 +176,7 @@ export class QuizService {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
 			}),
 		};
 		this.http

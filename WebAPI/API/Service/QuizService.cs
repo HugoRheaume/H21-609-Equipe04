@@ -154,5 +154,19 @@ namespace API.Service
             db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User.Id == user.Id && q.Question.Quiz.Id == quizId));
             db.SaveChanges();
         }
+
+        /// <summary>
+        /// Indique si le user passé en paramètre est le propriétaire du quiz
+        /// </summary>
+        /// <param name="userId">Id du user</param>
+        /// <param name="quizId">Id du quiz</param>
+        /// <returns>true si le user est le propriétaire du quiz et false si il ne l'est pas</returns>
+        public bool IsUserOwnerOfQuiz(string userId, int quizId)
+        {
+            Quiz quiz = db.ListQuiz.Find(quizId);
+            if (quiz != null)
+                return quiz.OwnerId == userId;
+            return false;
+        }
     }
 }
