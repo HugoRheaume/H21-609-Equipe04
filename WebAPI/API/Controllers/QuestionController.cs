@@ -99,5 +99,14 @@ namespace API.Controllers
                 return Ok(service.GetNextQuestion(result.QuizId, result.QuestionId));
             else return BadRequest("Pas de Biscuit");
         }
+
+
+        [HttpPost]
+        [ModelValidation]
+        public IHttpActionResult ModifyQuestion(QuestionDTO modifiedDTO)
+        {
+            if (service.ModifyQuesiton(modifiedDTO)) return Ok("Question modifiée.");
+            return BadRequest("Une erreur s'est produite.");
+        }
     }
 }
