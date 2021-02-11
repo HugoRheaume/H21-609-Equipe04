@@ -33,35 +33,46 @@
             android:progressDrawable="@drawable/progress_circle" />
     </LinearLayout>
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/questionLabel"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/lorem"
+        android:textSize="40sp" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:scrollbars="vertical"
+        android:scrollbarFadeDuration="0">
 
-        <TextView
-            android:id="@+id/questionLabel"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="@string/lorem"
-            android:textSize="40sp" />
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/choiceRecyclerView"
-            android:layout_marginBottom="10dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/choiceRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:nestedScrollingEnabled="false"/>
 
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lorem"
-            android:textSize="18sp"
-            android:visibility="invisible" />
+        </LinearLayout>
 
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lorem"
+        android:textSize="18sp"
+        android:visibility="invisible" />
+
 
     <Button
         android:layout_width="match_parent"

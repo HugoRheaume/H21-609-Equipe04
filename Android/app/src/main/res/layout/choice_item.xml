@@ -6,17 +6,24 @@
     android:orientation="horizontal"
     android:layout_marginBottom="10dp">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkboxChoice"/>
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/tvChoice"
-        android:text="@string/lorem"
-        android:gravity="center"
-        android:textSize="20sp" />
+        android:layout_gravity="center">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkboxChoice"
+            android:onClick="test"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/tvChoice"
+            android:text="@string/lorem"
+            android:gravity="center"
+            android:textSize="20sp" />
+    </LinearLayout>
 
 </LinearLayout>
