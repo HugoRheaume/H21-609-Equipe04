@@ -13,6 +13,6 @@ namespace API.Models.Question
 
         public int Statement { get; set; }
 
-        public int CategorieIndex { get; set; }
+        public int CategoryIndex { get; set; }
     }
 }
