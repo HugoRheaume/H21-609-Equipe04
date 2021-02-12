@@ -18,11 +18,16 @@ namespace API.Models.Question
         public QuestionType QuestionType { get; set; }
 
         public int TimeLimit { get; set; }
+
         public bool NeedsAllAnswers { get; set; }
+
+        public List<string> Categories { get; set; }
+
+        [ForeignKey("QuestionId")]
+        public virtual List<QuestionAssociation> QuestionAssociation { get; set; }
 
         [ForeignKey("QuestionId")]
         public virtual List<QuestionTrueFalse> QuestionTrueFalse { get; set; }
-
 
         [ForeignKey("QuestionId")]
         public virtual List<QuestionMultipleChoice> QuestionMultipleChoice { get; set; }

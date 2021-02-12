@@ -13,5 +13,8 @@ namespace API.Models.Question
         public int TimeLimit;
         public QuestionTrueFalse QuestionTrueFalse;
         public List<QuestionMultipleChoice> QuestionMultipleChoice;
+        public List<QuestionAssociation> QuestionAssociation;
+        public List<string> Categories;
+        public bool NeedsAllAnswers;
     }
 }

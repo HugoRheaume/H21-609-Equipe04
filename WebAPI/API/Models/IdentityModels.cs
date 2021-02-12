@@ -41,8 +41,9 @@ namespace API.Models
 
         public virtual DbSet<Quiz> ListQuiz { get; set; }
         public virtual DbSet<Question.Question> Question { get; set; }
-        public virtual DbSet<Question.QuestionTrueFalse> QuestionTrueFalse { get; set; }
-        public virtual DbSet<Question.QuestionMultipleChoice> QuestionMultiple { get; set; }
+        public virtual DbSet<QuestionTrueFalse> QuestionTrueFalse { get; set; }
+        public virtual DbSet<QuestionMultipleChoice> QuestionMultiple { get; set; }
         public virtual DbSet<QuestionResult> QuestionResult { get; set; }
+        public virtual DbSet<QuestionAssociation> QuestionAssociation { get; set; }
     }
 }
