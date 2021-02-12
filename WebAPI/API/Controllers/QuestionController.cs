@@ -103,6 +103,7 @@ namespace API.Controllers
 
         [HttpPost]
         [ModelValidation]
+        [TokenAuthorize]
         public IHttpActionResult ModifyQuestion(QuestionDTO modifiedDTO)
         {
             if (service.ModifyQuesiton(modifiedDTO)) return Ok("Question modifiée.");

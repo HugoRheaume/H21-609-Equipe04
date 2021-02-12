@@ -205,19 +205,19 @@ namespace API.Service
                             {
                                 QuestionMultipleChoice newChoice = newChoices[i];
                                 QuestionMultipleChoice oldChoice = choicesInDB.FirstOrDefault(c => c.Id == newChoice.Id);
-                                if (oldChoice == null) // Create a new choice in the DB
+                                if (oldChoice == null) // Crée le nouveau choix dans la BD
                                 {
                                     newChoice.QuestionId = questionToModify.Id;
                                     db.QuestionMultiple.Add(newChoice);
                                     continue;
                                 }
-                                //Modifies the choice in the DB
+                                // Modifie l'ancien choix dans la BD
                                 oldChoice.Answer = newChoice.Answer;
                                 oldChoice.Statement = newChoice.Statement;
                                 choicesInDB.Remove(oldChoice);
                             }
 
-                            // Choice has been removed from the question
+                            // Si le choix a été enlevé au cour de la modification.
                             if (choicesInDB.Count > 0)
                             {
                                 foreach (QuestionMultipleChoice choice in choicesInDB)

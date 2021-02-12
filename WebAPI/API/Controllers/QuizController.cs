@@ -132,6 +132,7 @@ namespace API.Controllers
 
         [HttpPost]
         [ModelValidation]
+        [TokenAuthorize]
         public IHttpActionResult ModifyQuiz(QuizModifyDTO modifiedDTO)
         {
             if (service.ModifyQuiz(modifiedDTO)) return Ok("Quiz modifié.");

@@ -170,6 +170,8 @@ namespace API.Service
             return false;
         }
 
+
+
         public bool ModifyQuiz(QuizModifyDTO modifiedDTO)
         {
             Quiz quizToModify = db.ListQuiz.FirstOrDefault(q => q.Id == modifiedDTO.Id);
