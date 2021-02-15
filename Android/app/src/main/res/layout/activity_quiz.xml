@@ -24,12 +24,19 @@
             android:layout_marginBottom="30dp"
             android:textSize="40sp" />
 
-        <TextView
-            android:id="@+id/quizDesc"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lorem"
-            android:textSize="20sp"/>
+            android:scrollbars="vertical"
+            android:scrollbarFadeDuration="0">
+            <TextView
+                android:id="@+id/quizDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lorem"
+                android:textSize="20sp"/>
+        </androidx.core.widget.NestedScrollView>
+
     </LinearLayout>
 
     <LinearLayout
