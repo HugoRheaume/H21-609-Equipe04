@@ -46,12 +46,12 @@
 		<mat-grid-tile *ngFor="let i of this.service.usersDisplay">
 			<div class="userCard">
 				<img
-					src="{{this.service.users[i].Picture}}"
+					src="{{this.service.users[i].picture}}"
 					alt="userImage"
 					style="width: 64px; height: 64px;"
 				/>
 				<span
-					matTooltip="{{this.service.users[i].Name}}"
+					matTooltip="{{this.service.users[i].name}}"
 					[matTooltipClass]="'toolTipCustom'"
 					[matTooltipHideDelay]="50"
 					>{{this.service.usersFormated[i]}}</span

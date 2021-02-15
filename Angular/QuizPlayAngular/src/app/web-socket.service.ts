@@ -62,10 +62,10 @@ export class WebSocketService {
     private messageReceiver(data: any)
     {
       var d = JSON.parse(data)
-      switch (d.CommandName)
+      switch (d.commandName)
       {
         case CommandName.CreateRoom:
-          this.currentShareCode = JSON.parse(data).ShareCode;
+          this.currentShareCode = JSON.parse(data).shareCode;
           break;
           case CommandName.RoomSate:
           this.users = JSON.parse(data).users;
@@ -80,7 +80,7 @@ export class WebSocketService {
     }
     private handleLogMessage(data: any)
     {
-      switch (data.MessageType)
+      switch (data.messageType)
       {
         case MessageType.LogRoomCreated:
           this.messages$.next(['Room Created!']);
@@ -112,12 +112,12 @@ export class WebSocketService {
     {
       for (let i = 0; i < this.users.length; i++) {
         let user = this.users[i];
-        if (user.Name.length > 14) {
-          let firstChars = user.Name.substring(0, 11);
+        if (user.name.length > 14) {
+          let firstChars = user.name.substring(0, 11);
           this.usersFormated[i] = firstChars + '...';
           continue;
         }
-        this.usersFormated[i] = user.Name;
+        this.usersFormated[i] = user.name;
       }
       this.usersDisplay = Array(this.users.length).fill(0).map((x, i) => i);
       
@@ -147,8 +147,8 @@ export class BeginQuizWS
 
 export interface User
 {
-  Name: string;
-  Picture: string;
+  name: string;
+  picture: string;
 }
 export enum CommandName { 
   CreateRoom = 'Room.Create', 

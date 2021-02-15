@@ -2,6 +2,8 @@
 using API.WebSocket;
 using API.WebSocket.Command;
 using Microsoft.Web.WebSockets;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,8 +74,9 @@ namespace API.Service
             RoomUserStateCommand command = Global.CommandList["Room.UserState"] as RoomUserStateCommand;
             command.users = GetUsers(shareCode);
 
-            clients.Broadcast(Json.Encode(command));
-           
+            string m = JsonConvert.SerializeObject(command, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            clients.Broadcast(m);
+
         }
         #region CHECKER
         //======================================================

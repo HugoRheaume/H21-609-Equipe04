@@ -1,5 +1,7 @@
 ﻿using API.WebSocket;
 using API.WebSocket.Command;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,8 @@ namespace API.Service
     {
         public static void Log(Client handler, object value)
         {
-            handler.Send(Json.Encode(value));
+            string m = JsonConvert.SerializeObject(value, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            handler.Send(m);
         }
         public static void LogRoom(string shareCode, object value)
         {
@@ -27,7 +30,8 @@ namespace API.Service
         {
             LogMessageCommand command = new LogMessageCommand();
             command.MessageType = type;
-            handler.Send(Json.Encode(command));
+            string m = JsonConvert.SerializeObject(command, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            handler.Send(m);
         }
 
     }
