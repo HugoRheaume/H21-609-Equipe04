@@ -1,24 +1,21 @@
 package org.equipe4.quizplay;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.equipe4.quizplay.databinding.ActivityMainBinding;
@@ -26,7 +23,10 @@ import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.transfer.UserDTO;
+import org.equipe4.quizplay.util.SharedPrefUtil;
+import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.JoinRoomCommand;
 
+import okhttp3.Cookie;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     private QPService service = RetrofitUtil.get();
 
     @Override
@@ -44,12 +43,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences("connectedUser", MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", "");
-        String picture = sharedPreferences.getString("picture", "");
+        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
+        UserDTO user = sharedPrefUtil.getCurrentUser();
 
-        binding.name.setText(username);
-        Picasso.get().load(picture).into(binding.profilePic);
+        binding.name.setText(user.name);
+        Picasso.get().load(user.picture).into(binding.profilePic);
 
         binding.btnLogout.setOnClickListener(v -> {
 
@@ -67,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     Intent i = new Intent(getApplicationContext(), LandingActivity.class);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.apply();
+
+                    sharedPrefUtil.clearCurrentUser();
 
                     i.putExtra("loggedOut", true);
                     startActivity(i);
@@ -87,20 +85,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void JoinQuiz(View v){
-        EditText editTextCode = findViewById(R.id.editTextCode);
+        EditText editTextCode = binding.editTextCode;
 
-        if (editTextCode.getText().toString().equals("")){
+        String shareCode = editTextCode.getText().toString().toUpperCase();
+        if (shareCode.equals("")){
             Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
         }
         else {
-            service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
+            service.GetObjectByShareCode(shareCode).enqueue(new Callback<Object>() {
                 @Override
-                public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
+                public void onResponse(Call<Object> call, Response<Object> response) {
                     if (response.isSuccessful()){
-                        QuizResponseDTO quiz = response.body();
-                        Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-                        intent.putExtra("quiz", quiz);
-                        startActivity(intent);
+
+                        if (response.body().getClass().getName().equals(String.class.getName())) {
+                            Log.i("TEST", "LA RÉPONSE EST UN STRING");
+
+                            String token = SharedPrefUtil.getTokenFromCookie(getApplicationContext(), response.raw().request().url().host());
+
+                            Intent intent = new Intent(getApplicationContext(), WaitingRoomActivity.class);
+                            intent.putExtra("shareCode", shareCode);
+                            intent.putExtra("token", token);
+                            startActivity(intent);
+                        }
+                        else {
+                            Gson gson = new Gson();
+                            String json = gson.toJson(response.body());
+                            QuizResponseDTO quiz = gson.fromJson(json, QuizResponseDTO.class);
+
+
+                            Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                            intent.putExtra("quiz", quiz);
+                            startActivity(intent);
+                        }
+
                     }
                     else {
                         Toast.makeText(MainActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
@@ -108,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
+                public void onFailure(Call<Object> call, Throwable t) {
                     Log.e("RETROFIT", t.getMessage());
                 }
             });
@@ -125,37 +142,5 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Firebase - Vérifier si déjà connecté
         mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-//        if (mUser == null) {
-//            Intent i = new Intent(getApplicationContext(), LandingActivity.class);
-//            startActivity(i);
-//            finish();
-//        }
-//        else {
-//            mUser.getIdToken(true)
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//
-//                        // TODO Envoie le token Firebase à notre serveur .NET
-//                        String idToken = task.getResult().getToken();
-//                        //Toast.makeText(getApplicationContext(), "token to server " + idToken, Toast.LENGTH_SHORT).show();
-//
-//                        service.login("\"" + idToken + "\"").enqueue(new Callback<UserDTO>() {
-//                            @Override
-//                            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-//                                Log.i("REQUEST","Ok " + response.body());
-//
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<UserDTO> call, Throwable t) {
-//                                Toast.makeText(MainActivity.this, "Ko " + t.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    } else {
-//                        // Handle error -> task.getException();
-//                    }
-//                });
-//        }
     }
 }

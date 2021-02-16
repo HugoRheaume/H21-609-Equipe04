@@ -17,11 +17,15 @@ import retrofit2.http.Query;
 
 public interface QPService {
 
-    @GET("Quiz/GetQuizByCode")
-    Call<QuizResponseDTO> getQuizByCode(@Query("code") String code);
+    @GET("Quiz/GetObjectByShareCode/{code}")
+    Call<Object> GetObjectByShareCode(@Path("code") String code);
 
     @POST("Question/GetNextQuestion")
     Call<QuestionDTO> getNextQuestion(@Body QuestionResultDTO result);
+
+    @POST("Auth/GenerateAnonymousUser")
+    @Headers("Content-Type: application/json")
+    Call<UserDTO> generateAnonymousUser(@Body String username);
 
     @POST("Auth/Login")
     @Headers("Content-Type: application/json")
@@ -29,6 +33,9 @@ public interface QPService {
 
     @GET("Auth/Logout")
     Call<String> logout();
+
+    @GET("Auth/LogoutAnonymous")
+    Call<Boolean> logoutAnonymous();
 
     @POST("Quiz/GetFinalScore")
     Call<Integer> getFinalScore(@Body QuizResponseDTO quiz);

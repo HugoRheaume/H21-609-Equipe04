@@ -43,25 +43,49 @@ namespace API.Controllers
         }
 
 
+        [TokenAuthorize]
         [HttpPost]
         [QuestionValidation]
         public IHttpActionResult Add(QuestionCreateDTO question)
         {
-            return Ok(service.AddQuestion(question));
+            AuthService authService = new AuthService(new ApplicationDbContext());
+            QuizService quizService = new QuizService(new ApplicationDbContext());
+            ApplicationUser user = authService.GetUserWithToken(Request);
+
+            if (quizService.IsUserOwnerOfQuiz(user.Id, question.QuizId))
+            {
+                return Ok(service.AddQuestion(question));
+            }
+
+            return Unauthorized();
         }
 
+        [TokenAuthorize]
         [HttpGet]
         [Route("api/Question/Delete/{questionId}")]
         public IHttpActionResult Delete(int questionId)
         {
-            return Ok(service.DeleteQuestion(questionId));
+            AuthService authService = new AuthService(new ApplicationDbContext());
+            QuizService quizService = new QuizService(new ApplicationDbContext());
+            ApplicationUser user = authService.GetUserWithToken(Request);
+
+            int quizId = service.GetQuestionById(questionId).QuizId;
+
+            if (quizService.IsUserOwnerOfQuiz(user.Id, quizId))
+            {
+                return Ok(service.DeleteQuestion(questionId));
+
+            }
+
+            return Unauthorized();
         }
 
-
+        [TokenAuthorize]
         [HttpPost]
         [Route("api/question/updatequizindex")]
         public IHttpActionResult UpdateQuizIndex(List<QuestionDTO> questions)
         {
+            
             return Ok(service.UpdateQuizIndex(questions));
         }
 
