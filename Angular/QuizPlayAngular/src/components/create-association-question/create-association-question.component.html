@@ -1,1 +1,150 @@
-<p>create-association-question works!</p>
+<div class="modal-body" [formGroup]="Association">
+	<p>
+		<mat-form-field appearance="outline" class="form-field-full-width">
+			<mat-label>Énoncé de la question</mat-label>
+			<input
+				matInput
+				#questionLabel
+				placeholder="Énoncé de la question"
+				id="inputQuestionLabel"
+				formControlName="questionLabel"
+			/>
+			<mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
+			<mat-error>{{ labelErrorMessage }}</mat-error>
+		</mat-form-field>
+	</p>
+	<div class="mat-form-field-wrapper">
+		<mat-checkbox
+			id="inputQuestionHasTime"
+			formControlName="questionHasTimeLimit"
+			>Ajouter un temps limite
+		</mat-checkbox>
+	</div>
+	<p *ngIf="this.Association.get('questionHasTimeLimit').value">
+		<mat-form-field appearance="outline" class="form-field-full-width">
+			<mat-label>Temps limite de la question</mat-label>
+			<input matInput type="number" formControlName="questionTimeLimit" />
+			<mat-error>{{ timeLimitErrorMessage }}</mat-error>
+		</mat-form-field>
+	</p>
+	<div>
+		<button
+			type="button"
+			class="btn btn-primary"
+			(click)="addChoice()"
+			style="margin-top: 1.34375em; margin-bottom: 1.34375em;"
+			[disabled]="this.asso.length == 5"
+		>
+			Ajouter un choix
+		</button>
+
+        <div cdkDropListGroup>
+            <table class="table-Asso">
+                <thead>
+                    <th class="table-Asso-Header">
+                        <mat-form-field>
+				            <mat-label>Catégorie numéro 1</mat-label>
+				            <input
+				            	matInput
+				            	type="text"
+				            	[(ngModel)]="categories[0]"
+				            	[ngModelOptions]="{standalone: true}"
+				            	style="margin-left: 10px; padding-right: 10px;"
+				            	placeholder="Catégorie numéro 1"
+				            />
+				        </mat-form-field>
+                    </th>
+                    <th class="table-Asso-Header">
+                        <mat-form-field>
+				            <mat-label>Catégorie numéro 2</mat-label>
+				            <input
+				            	matInput
+				            	type="text"
+				            	[(ngModel)]="categories[1]"
+				            	[ngModelOptions]="{standalone: true}"
+				            	style="margin-left: 10px; padding-right: 10px;"
+				            	placeholder="Catégorie numéro 2"
+				            />
+				        </mat-form-field>
+                    </th>
+                    <th *ngIf="showCategory3" class="table-Asso-Header">
+                        <mat-form-field>
+				            <mat-label>Catégorie numéro 3</mat-label>
+				            <input
+				            	matInput
+				            	type="text"
+				            	[(ngModel)]="categories[2]"
+				            	[ngModelOptions]="{standalone: true}"
+				            	style="margin-left: 10px; padding-right: 10px;"
+				            	placeholder="Catégorie numéro 1"
+				            />
+				        </mat-form-field>
+                        <button
+                            (click)="switchCategory3()"
+			                mat-mini-fab
+			                color="primary"
+			                data-bs-toggle="modal"
+			                data-bs-target="#staticBackdrop">
+			                <mat-icon>delete</mat-icon>
+		                </button>
+                    </th>
+                    <th *ngIf="!showCategory3">
+                        <button class="ms-2"
+                            (click)="switchCategory3()"
+			                mat-mini-fab
+			                color="primary"
+			                data-bs-toggle="modal"
+			                data-bs-target="#staticBackdrop">
+			                <mat-icon>add</mat-icon>
+		                </button>
+                    </th>
+                </thead>
+                <tbody *ngIf="asso.length > 0">
+                    <td cdkDropList #category1="cdkDropList" cdkDropListConnectedTo="[category2, category3]" [cdkDropListData]="asso" (cdkDropListDropped)="drop($event, 0)" class="table-Asso-Body">
+                        <div *ngIf="this.asso.length != 0">
+                            <div cdkDrag *ngFor="let a of asso" class="asso" cdkDragBoundary=".table-Asso" (cdkDragStarted)="onDragStarted($event)" [cdkDragData]="a.assoNumber">
+                                <mat-form-field>
+                                    <mat-label>Choix numéro {{a.assoNumber}}</mat-label>
+                                    <span matPrefix><strong>{{a.assoNumber}}. &nbsp;</strong></span>
+                                    <input
+                                        matInput
+                                        type="text"
+                                        [(ngModel)]="a.statement"
+                                        [ngModelOptions]="{standalone: true}"
+                                        style="margin-left: 10px; padding-right: 10px;"
+                                        placeholder="Choix numéro {{a.assoNumber}}"
+                                    />
+                                </mat-form-field>
+                                <button
+                                    mat-mini-fab
+                                    color="primary"
+                                    (click)="removeChoice(a.assoNumber)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+					<td cdkDropList #category2="cdkDropList" cdkDropListConnectedTo="[category1, category3]" [cdkDropListData]="asso" (cdkDropListDropped)="drop($event, 1)" class="table-Asso-Body"></td>
+					<td *ngIf="showCategory3" cdkDropList #category3="cdkDropList" cdkDropListConnectedTo="[category2, category1]" [cdkDropListData]="asso" (cdkDropListDropped)="drop($event, 2)" class="table-Asso-Body"></td>
+                </tbody>
+            </table>
+        </div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button
+		type="button"
+		class="btn btn-secondary"
+		data-bs-dismiss="modal"
+		(click)="this.discard()"
+		>Annuler</button
+	>
+	<button
+		type="button"
+		class="btn btn-primary"
+		data-bs-dismiss="modal"
+		(click)="submit()"
+		[disabled]="checkForm"
+		>Soumettre</button
+	>
+</div>

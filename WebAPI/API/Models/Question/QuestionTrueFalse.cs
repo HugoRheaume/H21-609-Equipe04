@@ -14,8 +14,5 @@ namespace API.Models.Question
         public bool Answer { get; set; }
 
         public int QuestionId { get; set; }
-
-
-
     }
 }

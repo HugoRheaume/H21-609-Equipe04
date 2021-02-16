@@ -291,6 +291,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Question\QuestionAssociation.cs" />
+    <Compile Include="Models\Question\QuestionCategory.cs" />
     <Compile Include="Models\Question\QuestionResult.cs" />
     <Compile Include="Models\Question\QuestionResultDTO.cs" />
     <Compile Include="Models\Quiz\Quiz.cs" />

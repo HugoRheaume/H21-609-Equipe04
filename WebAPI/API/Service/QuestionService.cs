@@ -93,7 +93,7 @@ namespace API.Service
                 QuestionMultipleChoice = question.QuestionMultipleChoice,
                 NeedsAllAnswers = question.NeedsAllAnswers,
                 QuestionAssociation = question.QuestionAssociation,
-                Categories = question.Categories
+                Categories = QuestionCategory.toListCategory(question.Categories)
             };
 
             Question q = db.Question.Add(questionToCreate);
@@ -113,7 +113,7 @@ namespace API.Service
                 QuestionType = q.QuestionType,
                 QuizIndex = q.QuizIndex,
                 NeedsAllAnswers = q.NeedsAllAnswers,
-                Categories = q.Categories
+                Categories = QuestionCategory.toListString(q.Categories)
 
             };
             switch (q.QuestionType)

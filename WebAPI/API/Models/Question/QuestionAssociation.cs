@@ -11,7 +11,7 @@ namespace API.Models.Question
 
         public int QuestionId { get; set; }
 
-        public int Statement { get; set; }
+        public string Statement { get; set; }
 
         public int CategoryIndex { get; set; }
     }

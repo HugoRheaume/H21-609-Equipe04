@@ -21,7 +21,8 @@ namespace API.Models.Question
 
         public bool NeedsAllAnswers { get; set; }
 
-        public List<string> Categories { get; set; }
+        [ForeignKey("QuestionId")]
+        public virtual List<QuestionCategory> Categories { get; set; }
 
         [ForeignKey("QuestionId")]
         public virtual List<QuestionAssociation> QuestionAssociation { get; set; }

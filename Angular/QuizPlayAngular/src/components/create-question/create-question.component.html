@@ -1,14 +1,13 @@
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <div style="display: flex; justify-content: center; flex-direction: column;">
           <h3 class="modal-title mb-0" id="staticBackdropLabel">Créer une question</h3>
           <mat-form-field appearance="outline">
             <mat-label>Type de question</mat-label>
-            <mat-select [(value)]="this.selectedValue">
-              <mat-option>Aucun</mat-option>
+            <mat-select [(value)]="this.selectedValue"><mat-option>Aucun</mat-option>
               <mat-option *ngFor="let i of this.iterator" value="{{this.enumValues[i]}}">
                 {{this.enumFormated[i]}}
               </mat-option>
@@ -19,6 +18,7 @@
       </div>
       <app-create-trueorfalse-question *ngIf="this.selectedValue==='1'"></app-create-trueorfalse-question>
       <app-create-multiplechoices-question *ngIf="this.selectedValue==='2'"></app-create-multiplechoices-question>
+      <app-create-association-question *ngIf="this.selectedValue==='3'"></app-create-association-question>
     </div>
   </div>
 </div>
