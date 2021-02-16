@@ -32,7 +32,7 @@ namespace API.Controllers
             ApplicationUser currentUser = service.GetUser(decodedToken.Uid);
             CookieHeaderValue cookie = new CookieHeaderValue("token", currentUser.Token)
             {
-                Expires = DateTimeOffset.Now.AddYears(1),
+                Expires = DateTimeOffset.Now.AddDays(7),
                 Path = "/",
                 Secure = true,
                 
@@ -65,24 +65,33 @@ namespace API.Controllers
             return resp;
         }
 
+        [HttpPost]
+        public HttpResponseMessage GenerateAnonymousUser([FromBody] string username)
+        {
+            UserDTO anonymousUser = service.GenerateAnonymousUser(username);
+            CookieHeaderValue cookie = new CookieHeaderValue("token", anonymousUser.Token)
+            {
+                Expires = DateTimeOffset.Now.AddDays(7),
+                Path = "/",
+                Secure = true,
+            };
+
+            HttpResponseMessage resp = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ObjectContent<UserDTO>(anonymousUser, GlobalConfiguration.Configuration.Formatters.JsonFormatter),
+            };
+            resp.Headers.AddCookies(new[] {cookie});
+
+            return resp;
+        }
+
         [TokenAuthorize]
-        [HttpPost]
-        public string TestCookie()
+        [HttpGet]
+        public bool LogoutAnonymous()
         {
-            ApplicationUser user = service.GetUserWithToken(Request);
-            return user.Name;
-        }
+            string token = Request.Headers.Authorization.ToString().Split(' ')[1];
 
-        [HttpPost]
-        public UserDTO GenerateAnonymousUser([FromBody] string username)
-        {
-            return service.GenerateAnonymousUser(username);
-        }
-
-        [HttpPost]
-        public bool DeleteUser([FromBody]string tohoken)
-        {
-            return service.DeleteUser(tohoken);
+            return service.DeleteAnonymous(token);
         }
     }
 }

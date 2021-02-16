@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".MultipleChoiceActivity"></activity>
+        <activity android:name=".WaitingRoomActivity"></activity>
         <activity android:name=".ResultActivity" />
         <activity android:name=".TrueFalseActivity" />
         <activity android:name=".QuizActivity" />

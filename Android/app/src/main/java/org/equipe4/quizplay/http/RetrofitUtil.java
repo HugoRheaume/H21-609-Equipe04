@@ -1,10 +1,20 @@
 package org.equipe4.quizplay.http;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
+import org.equipe4.quizplay.LandingActivity;
+import org.equipe4.quizplay.MainActivity;
+
+import java.net.CookieStore;
+import java.net.HttpCookie;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +43,9 @@ public class RetrofitUtil {
 
     public static ClearableCookieJar cookieJar;
 
-
     public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP_MARCO)
+                .baseUrl(IP_XAV)
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -70,10 +79,7 @@ public class RetrofitUtil {
     public static OkHttpClient getClient() {
         try {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-
-            builder = builder.cookieJar(cookieJar);
-
+            builder.cookieJar(cookieJar);
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override

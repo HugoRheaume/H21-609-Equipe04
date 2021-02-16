@@ -22,6 +22,8 @@ namespace API.Validation
             ApplicationDbContext db = new ApplicationDbContext();
             AuthService service = new AuthService(db);
 
+            // COOKIE (ANDROID)
+
             // Get token from Cookie
             string token = actionContext.Request.Headers.GetCookies("token").FirstOrDefault()?.Cookies[0].Value;
             DateTimeOffset? expiration = actionContext.Request.Headers.GetCookies("token").FirstOrDefault()?.Expires;
@@ -40,16 +42,19 @@ namespace API.Validation
                 return true;
             }
 
-            string stringHeader = HttpContext.Current.Request.Headers["Authorization"]?.Split(' ')[1];
-            if (service.GetUserWithToken(stringHeader) != null)
+
+            // HEADER (ANGULAR)
+            string authorization = HttpContext.Current.Request.Headers["Authorization"];
+
+            if (authorization == null || authorization == "Bearer")
+                return false;
+            
+            string headerToken = authorization.Split(' ')[1];
+            
+            if (service.GetUserWithToken(headerToken) != null)
                 return true;
 
             return false;
-        }
-
-        protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
-        {
-            base.HandleUnauthorizedRequest(actionContext);
         }
     }
 }

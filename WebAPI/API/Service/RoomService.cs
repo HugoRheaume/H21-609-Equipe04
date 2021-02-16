@@ -102,13 +102,12 @@ namespace API.Service
         {
             if (!IsShareCodeExist(shareCode))
                 return false;
-            else if (GetUsername(shareCode, client) == null)
+            if (GetUsername(shareCode, client) == null)
                 return false;
-            else
             return true;
-
         }
         #endregion
+
         #region UTIL
         //======================================================
         public static Client GetOwner(string shareCode)
@@ -129,7 +128,7 @@ namespace API.Service
             {
                 users.Add(new UserDTO(u.connectedUser));
             }
-            //users.Add(rooms[shareCode].GetOwner.Username);
+            //users.Add(Rooms[shareCode].GetOwner.Username);
             return users;
         }        
         private static string GetUsername(string shareCode, Client client)

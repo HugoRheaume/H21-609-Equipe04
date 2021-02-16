@@ -1,14 +1,9 @@
 package org.equipe4.quizplay;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,15 +21,14 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.squareup.picasso.Picasso;
+import com.google.gson.Gson;
 
 import org.equipe4.quizplay.databinding.ActivityLandingBinding;
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.transfer.UserDTO;
-
-import java.io.Serializable;
+import org.equipe4.quizplay.util.SharedPrefUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,12 +45,20 @@ public class LandingActivity extends AppCompatActivity {
     private ActivityLandingBinding binding;
 
     private GoogleSignInClient mGoogleSignInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         binding = ActivityLandingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        String toastMessage = getIntent().getStringExtra("message");
+        if (toastMessage != null) {
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+        }
+
+        //region Button events
 
         binding.signInButton.setOnClickListener(v -> {
             startSignIn();
@@ -65,16 +67,29 @@ public class LandingActivity extends AppCompatActivity {
         //Bouton join quiz
         binding.buttonJoin.setOnClickListener(v -> {
             EditText editTextCode = binding.editTextCode;
-
-            if (editTextCode.getText().toString().equals("")){
+            String shareCode = editTextCode.getText().toString().toUpperCase();
+            if (shareCode.equals("")){
                 Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
             }
             else {
-                service.getQuizByCode(editTextCode.getText().toString().toUpperCase()).enqueue(new Callback<QuizResponseDTO>() {
+                service.GetObjectByShareCode(shareCode).enqueue(new Callback<Object>() {
                     @Override
-                    public void onResponse(Call<QuizResponseDTO> call, Response<QuizResponseDTO> response) {
+                    public void onResponse(Call<Object> call, Response<Object> response) {
                         if (response.isSuccessful()){
+
                             Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
+
+                            if (response.body().getClass().getName().equals(String.class.getName())) {
+                                System.out.println("LA RÉPONSE EST UN STRING");
+                                intent.putExtra("isLive", true);
+                                intent.putExtra("shareCode", shareCode);
+                            }
+                            else {
+                                System.out.println("La réponse est un quiz");
+                                intent.putExtra("isLive", false);
+                                Gson gson = new Gson();
+                                intent.putExtra("quiz", gson.fromJson(gson.toJson(response.body()), QuizResponseDTO.class));
+                            }
                             startActivity(intent);
                         }
                         else {
@@ -83,13 +98,14 @@ public class LandingActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<QuizResponseDTO> call, Throwable t) {
+                    public void onFailure(Call<Object> call, Throwable t) {
                         Log.e("RETROFIT", t.getMessage());
                     }
                 });
             }
         });
 
+        //endregion
     }
 
     private void startSignIn() {
@@ -153,12 +169,8 @@ public class LandingActivity extends AppCompatActivity {
 
                                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
 
-                                        SharedPreferences sharedPreferences = getSharedPreferences("connectedUser", Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString("username", user.name);
-                                        editor.putString("picture", user.picture);
-                                        editor.putString("email", user.email);
-                                        editor.apply();
+                                        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
+                                        sharedPrefUtil.setCurrentUser(user);
 
                                         //i.putExtra("name", (Serializable) user);
                                         //i.putExtra("picture", user.picture);
@@ -190,10 +202,14 @@ public class LandingActivity extends AppCompatActivity {
         // Firebase - Vérifier si déjà connecté
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null){
+        if (currentUser != null) {
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
             finish();
+        }
+        else {
+            SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
+            sharedPrefUtil.clearCurrentUser();
         }
     }
 }

@@ -84,7 +84,7 @@ namespace API.Service
             };
             anonymous.Name = username;
             //anonymous.Picture = "https://www.minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg";
-            anonymous.Picture = "../../assets/png_64/" + Global.random.Next(1, 15).ToString() + ".png";
+            anonymous.Picture = "../../assets/png_64/" + Global.random.Next(1, 15) + ".png";
             anonymous.Token = token;
             userManager.Create(anonymous);
 
@@ -92,10 +92,10 @@ namespace API.Service
             return new UserDTO(anonymous);
         }
 
-        public bool DeleteUser(string tohoken)
+        public bool DeleteAnonymous(string token)
         {
-            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == tohoken);
-            if (user != null)
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
+            if (user != null && user.Email == null)
             {
                 db.Users.Remove(user);
                 db.SaveChanges();
