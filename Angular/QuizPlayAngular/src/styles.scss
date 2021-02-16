@@ -5,10 +5,10 @@
 // @import '../src/themes/6.scss'; //change text color
 // @import '../src/themes/8.scss';
 // @import '../src/themes/9.scss'; //change text color
- @import '../src/themes/10.scss';
-// @import '../src/themes/11.scss'; //maybe change text color
+// @import '../src/themes/10.scss';
+// @import '../src/themes/11.scss'; //change text color
 // @import '../src/themes/12.scss';
-// @import '../src/themes/14.scss';
+@import "../src/themes/14.scss";
 // @import '../src/themes/15.scss'; //change text color
 // @import '../src/themes/16.scss';
 // @import "../src/themes/18.scss";
@@ -46,7 +46,6 @@ body * {
   width: auto;
 }
 
-
 #triangleBottomRight {
   position: fixed;
   right: 0px;
@@ -68,7 +67,6 @@ body * {
   clip-path: circle(40% at 90% 0);
   z-index: 0;
 }
-
 #circleBottomLeft {
   position: fixed;
   left: 0px;
@@ -89,7 +87,45 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
 .form-field-full-width {
   width: 100%;
 }
-.mat-fab.mat-primary{
+
+.example-box:hover {
+  background-color: $circles;
+}
+.quizHeader,
+.questionBox {
+  background: $background;
+  border: 7.5px $bubbles-triangle solid !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.questionItem {
+  border-bottom: 2px $bubbles-triangle solid !important;
+}
+.questionItem:hover,
+.activeQuestion {
+  background-color: $bubbles-triangle !important;
+}
+input:not([disabled])[type="text"],
+textarea:not([disabled]) {
+  color: $text;
+}
+.gradient-border {
+  background: $bubbles-triangle;
+}
+.clickableThing:hover {
+  cursor: pointer;
+  color: $text;
+}
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+//Material components
+.mat-fab.mat-primary {
   background-color: $buttons;
 }
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
@@ -101,44 +137,60 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
 .mat-snack-bar-container {
   background: $bubbles-triangle;
 }
-.example-box:hover {
-  background-color: $circles;
+table tr:not(.mat-header-row):hover {
+  background-color: $bubbles-triangle;
 }
-.quizHeader, .questionBox {
+.mat-mini-fab.mat-accent {
+  background-color: $buttons;
+}
+.mat-paginator {
+  color: $text;
   background: $background;
-  border: 7.5px $bubbles-triangle solid !important;
+  border-bottom-left-radius: 7.5px;
+  border-bottom-right-radius: 7.5px;
+  border-left: 7.5px $bubbles-triangle solid !important;
+  border-bottom: 7.5px $bubbles-triangle solid !important;
+  border-right: 7.5px $bubbles-triangle solid !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.questionItem{
-  border-bottom: 2px $bubbles-triangle solid !important;
+.mat-table {
+  color: $text;
+  background: $background;
+  border-top-left-radius: 7.5px;
+  border-top-right-radius: 7.5px;
+  border-collapse: unset;
+  border-left: 7.5px $bubbles-triangle solid !important;
+  border-top: 7.5px $bubbles-triangle solid !important;
+  border-right: 7.5px $bubbles-triangle solid !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.questionItem:hover, .activeQuestion {
-	background-color: $bubbles-triangle !important;
-}
-.mat-raised-button.mat-primary{
+.mat-raised-button.mat-primary,
+.mat-raised-button {
   background-color: $buttons;
+  color: $text;
 }
 .mat-input-element {
   caret-color: $circles;
 }
-.mat-input-element:disabled{
+.mat-input-element:disabled {
   color: $text;
 }
-input:not([disabled])[type="text"], textarea:not([disabled]){
-  color: $text;
+.mat-option.mat-selected:not(.mat-option-disabled) {
+  color: $bubbles-triangle !important;
 }
-.gradient-border{
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $bubbles-triangle;
+}
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: $bubbles-triangle;
+}
+.mat-select-panel {
   background: $bubbles-triangle;
 }
-.clickableThing:hover{
-  cursor: pointer;
-  color: $text;
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple),
+.mat-option:hover {
+  background: rgba(0, 0, 0, 0.12) !important;
 }
-.unselectable {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.mat-option {
+  color: $text !important;
 }

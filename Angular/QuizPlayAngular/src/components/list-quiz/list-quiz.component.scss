@@ -1,15 +1,11 @@
 table {
-	width: 100%;
+  width: 100%;
 }
 
 table td {
-	cursor: pointer;
-}
-
-table tr:not(.mat-header-row):hover {
-	background-color: gray;
+  cursor: pointer;
 }
 
 .deleteButton {
-	z-index: 10;
+  z-index: 10;
 }
