@@ -20,7 +20,10 @@ namespace API.Service
         }
         public static void LogRoom(string shareCode, object value)
         {
-            throw new NotImplementedException();
+            foreach (Client item in RoomService.GetRooms[shareCode].Users)
+            {
+                Log(item, value);
+            }
         }
         public static void LogAll(object value)
         {

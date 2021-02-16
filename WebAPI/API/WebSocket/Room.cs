@@ -14,48 +14,53 @@ namespace API.WebSocket
     {
         public List<Client> Users = new List<Client>();
 
-        private string m_shareCode;
-        public string GetShareCode
-        {
-            get { return m_shareCode; }
-        }
-        private bool m_enable;
 
+        private string m_shareCode; 
+        public string GetShareCode 
+        { 
+            get { return m_shareCode; } 
+        }
+
+        private bool m_enable;
         public bool IsEnable
         {
             get { return m_enable; }
             set { m_enable = value; }
         }
+
         private ApplicationUser m_owner;
         public ApplicationUser GetOwner
         {
             get { return m_owner; }
         }
 
-        public Client handler;
-        public Room(Client client, ApplicationUser owner)
+        private int m_currentIndex = 0;
+        public int GetIndex
         {
-            m_shareCode = GenerateAlphanumeric();
+            get { return m_currentIndex; }
+            set { m_currentIndex = value; }
+        }
+
+        private RoomQuizState m_roomQuizState;
+
+        public RoomQuizState GetRoomQuizState
+        {
+            get { return m_roomQuizState; }
+        }
+
+
+        public Client handler;
+        public Room(Client client, Quiz quiz)
+        {
+            m_shareCode = Global.GenerateAlphanumeric();
             m_enable = true;
-            m_owner = owner;
+            m_owner = client.connectedUser;
             handler = client;
-            
+            m_roomQuizState = new RoomQuizState(quiz);
         }
 
         
-        private string GenerateAlphanumeric()
-        {
-            StringBuilder code = new StringBuilder();
-            char ch;
-            
-            for (int i = 0; i < 6; i++)
-            {
-                ch = Global.ALPHANUMERIC_CHARACTER_LIST[Global.random.Next(0, Global.ALPHANUMERIC_CHARACTER_LIST.Length)];
-                code.Append(ch);
-            }
-            
-            return code.ToString();
-        }
+       
 
 
     }

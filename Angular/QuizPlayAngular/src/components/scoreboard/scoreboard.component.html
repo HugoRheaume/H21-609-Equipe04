@@ -1,0 +1,12 @@
+<h1>Scoreboard</h1>
+
+<div *ngIf="this.quizRoomComponent.wsService.scoreboard">
+    <div *ngFor="let item of this.quizRoomComponent.wsService.scoreboard" class="row">
+        <div class="col-12" style="display:flex;margin: 10px; padding: 10px;">
+            <img src="{{item.user.picture}}" alt="userImage" style="width: 64px; height: 64px; border-radius: 50%;"/>
+            <h3>{{item.user.name}} : {{item.score}}</h3> 
+            
+        </div>
+        
+    </div>
+</div>

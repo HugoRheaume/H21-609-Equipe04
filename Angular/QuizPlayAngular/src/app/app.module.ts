@@ -37,6 +37,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from 'src/components/login/login.component';
 import { NavigationComponent } from '../components/navigation/navigation.component';
+import { QuizRoomComponent } from '../components/quiz-room/quiz-room.component';
+import { ScoreboardComponent } from '../components/scoreboard/scoreboard.component';
 
 @NgModule({
 	declarations: [
@@ -52,6 +54,8 @@ import { NavigationComponent } from '../components/navigation/navigation.compone
 		LoginComponent,
 		WaitingRoomComponent,
 		NavigationComponent,
+		QuizRoomComponent,
+		ScoreboardComponent,
 	],
 	imports: [
 		BrowserModule,

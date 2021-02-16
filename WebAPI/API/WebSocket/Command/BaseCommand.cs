@@ -12,6 +12,6 @@ namespace API.WebSocket.Command
         public string CommandName { get; set; }
         public string Token { get; set; }
         public virtual void Handle(string message) { }
-        public virtual void Run(Client handler) { }
+        public virtual void Run(Client client) { }
     }
 }

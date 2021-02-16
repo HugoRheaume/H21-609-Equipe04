@@ -3,17 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { webSocket } from 'rxjs/webSocket';
+import { Router } from '@angular/router';
+import { Question } from 'src/models/question';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
   
+  public scoreboard: Score[] = []
   public messages$ = new Subject<string[]>();
   public users: User[]= [];
   public currentShareCode: string= '';
   public usersDisplay: Array<number>;
   public usersFormated: string[] = [];
+
+  public currentQuestion$: Subject<Question> = new Subject<Question>();
 
   //subject = webSocket("wss://localhost:44351/api/websocket/joinwaitingroom");
   subject = webSocket<any>({
@@ -25,24 +30,25 @@ export class WebSocketService {
     
   });
 
-	constructor(public http: HttpClient) {}
+	constructor(public http: HttpClient, public router: Router) {}
 
     public connect()
     {
       this.subject.subscribe(
       msg => this.messageReceiver(msg.data));
     }
-    public create()
+    public create(quizShareCode: string)
     {
       let ws = new CreateRoomWS();     
       ws.owner = "Angular Master";
       ws.token = localStorage.getItem('token');
+      ws.quizShareCode = quizShareCode;
       this.subject.next(ws);
     }
     public cancel()
     {
       let ws = new DeleteRoomWS();  
-      ws.name = "Angular Master";   
+      ws.token = localStorage.getItem('token');
       ws.shareCode = this.currentShareCode;
       this.subject.next(ws);
       this.currentShareCode = '';
@@ -51,14 +57,26 @@ export class WebSocketService {
     }
     public beginQuiz()
     {
-      console.log('Quiz Begin!');
+      
         let ws = new BeginQuizWS();
+        ws.token = localStorage.getItem('token');
         ws.shareCode = this.currentShareCode;
         this.subject.next(ws);
     }
-    
-
-    
+    public nextQuestion(questionIndex: number)
+    {
+      let ws = new NextQuestionWS();
+      ws.token = localStorage.getItem('token');
+      ws.questionIndex = questionIndex;
+      this.subject.next(ws);
+    }
+    public resultQuestion()
+    {
+      let ws = new ResultQuestionWS();
+      ws.token = localStorage.getItem('token');
+      this.subject.next(ws);
+    }
+    //----------------------------------------
     private messageReceiver(data: any)
     {
       var d = JSON.parse(data)
@@ -73,6 +91,15 @@ export class WebSocketService {
           break;
         case CommandName.LogMessage:
           this.handleLogMessage(d);
+          break;
+        case CommandName.QuizBegin:
+          this.router.navigate(['live/'+ d.quizShareCode +'/0']);
+          break;
+        case CommandName.QuizScoreboard:
+          this.scoreboard = d.scores;
+          break;
+        case CommandName.QuizNext:
+          this.currentQuestion$.next(d.question);
           break;
       }
       
@@ -106,7 +133,6 @@ export class WebSocketService {
     public logReceive$() : Observable<any>{
       return this.messages$.asObservable();
     }
-    
 
     updateUserDisplay()
     {
@@ -131,24 +157,44 @@ export class CreateRoomWS
     public owner: string;
     public shareCode: string;
     public token: string;
-    private readonly CommandName: string = CommandName.CreateRoom;
+    public quizShareCode: string;
+    private readonly commandName: string = CommandName.CreateRoom;
 }
 export class DeleteRoomWS
 {
-    public name: string;
+  public token: string;
     public shareCode: string;
-    private readonly CommandName: string = CommandName.RoomDestroy;
+    private readonly commandName: string = CommandName.RoomDestroy;
 }
 export class BeginQuizWS
 {
+  public token: string;
   public shareCode: string;
-  private readonly CommandName: string = CommandName.QuizBegin;
+  private readonly commandName: string = CommandName.QuizBegin;
 }
-
+export class NextQuestionWS
+{
+  public token: string;
+  public questionIndex: number;
+  public question: Question;
+  private readonly commandName: string = CommandName.QuizNext;
+}
+export class ResultQuestionWS
+{
+  public token: string;
+  public questionIndex: number;
+  private readonly commandName: string = CommandName.QuizQuestionResult;
+}
 export interface User
 {
   name: string;
   picture: string;
+  isAnswer: boolean;
+}
+export class Score
+{
+  user: User;
+  score: number;
 }
 export enum CommandName { 
   CreateRoom = 'Room.Create', 
@@ -158,6 +204,9 @@ export enum CommandName {
   RoomDestroy = 'Room.Destroy', 
   LogMessage = 'Log.Message', 
   QuizBegin = 'Quiz.Begin',
+  QuizNext = 'Quiz.Next',
+  QuizScoreboard = 'Quiz.Scoreboard',
+  QuizQuestionResult = 'Quiz.QuestionResult',
 }
 export enum MessageType { 
   LogRoomCreated, 
