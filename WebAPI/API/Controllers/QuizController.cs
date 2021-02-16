@@ -150,5 +150,14 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
+        [HttpPost]
+        [ModelValidation]
+        [TokenAuthorize]
+        public IHttpActionResult ModifyQuiz(QuizModifyDTO modifiedDTO)
+        {
+            if (service.ModifyQuiz(modifiedDTO)) return Ok("Quiz modifié.");
+            return BadRequest("Une erreur s'est produite.");
+        }
     }
 }

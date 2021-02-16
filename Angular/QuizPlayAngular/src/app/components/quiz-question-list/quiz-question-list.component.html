@@ -1,135 +1,109 @@
 <app-create-question></app-create-question>
 <div *ngIf="this.service.currentQuiz" class="justify-content-between d-flex">
-	<button
-		[cdkCopyToClipboard]="this.service.currentQuiz.shareCode"
-		class="m-3"
-		style="width: 240px;"
-		mat-raised-button
-		color="primary"
-		>Code de partage: {{this.service.currentQuiz.shareCode}}
-		<mat-icon>content_copy</mat-icon></button
-	>
-	<button
-		[disabled]="this.service.currentQuestions.length < 1"
-		mat-raised-button
-		class="m-3"
-		color="primary"
-		(click)="finish()"
-		[routerLink]="['/list']"
-		>Terminé</button
-	>
+  <button [cdkCopyToClipboard]="this.service.currentQuiz.shareCode" class="m-3" style="width: 240px;" mat-raised-button
+    color="primary">Code de partage: {{this.service.currentQuiz.shareCode}}
+    <mat-icon>content_copy</mat-icon>
+  </button>
+  <button [disabled]="this.service.currentQuestions.length < 1" mat-raised-button class="m-3" color="primary"
+    (click)="finish()" [routerLink]="['/list']">Terminé</button>
 </div>
-<button
-	(click)="goLive()"
-	routerLinkActive="router-link-active"
-	class="ms-3"
-	mat-raised-button
-	color="primary"
-	style="margin-left: 5px;"
->
-	Créer une salle d'attente
+<button (click)="goLive()" routerLinkActive="router-link-active" class="ms-3" mat-raised-button color="primary"
+  style="margin-left: 5px;">
+  Créer une salle d'attente
 </button>
 <h2 class="sectionHeader">Informations du quiz</h2>
-<div class="quizHeader" *ngIf="this.service.currentQuiz">
-	<h1 class="text-center mb-5">{{this.service.currentQuiz.title}}</h1>
-	<h2>
-		{{this.service.currentQuiz.description}}
-	</h2>
-
-	<h3 class="text-end m-0">
-		<mat-icon
-			style="font-size: 30px;"
-			[matTooltip]="this.service.currentQuiz.isPublic ? 'Le quiz est public' : 'Le quiz est privé'"
-			>{{this.service.currentQuiz.isPublic ? 'public' : 'public_off'}}
-		</mat-icon>
-	</h3>
+<div class="quizHeader">
+  <div class="flexcontainer mb-5">
+    <div class="itemcenter">
+      <h1 class="text-center" [class.gradient-border]="this.isModifying == true">
+        <input type="text" matInput [(ngModel)]="this.service.currentQuiz.title" [disabled]="this.isModifying == false"
+          maxlength="100" minlength="4" style="font-family: Titan One; height: auto;"/>
+      </h1>
+    </div>
+    <div class="itemright mb-3">
+      <button mat-fab color="primary" *ngIf="this.isModifying == false" (click)="this.isModifying = true">
+        <i class="fas fa-edit fa-lg"></i>
+      </button>
+      <button mat-fab color="primary" *ngIf="this.isModifying == true" (click)="updateQuiz()">
+        <i class="fas fa-save fa-lg"></i>
+      </button>
+    </div>
+  </div>
+  <h2 [class.gradient-border]="this.isModifying == true">
+    <textarea style="text-align: justify; white-space: normal; text-align-last: left; overflow: hidden; line-height: 1.3em !important;" matInput
+      matTextareaAutosize [disabled]="this.isModifying == false" maxlength=1000
+      [(ngModel)]="this.service.currentQuiz.description">
+    </textarea>
+  </h2>
+  <h3 class="text-end m-0 unselectable">
+    <mat-icon style="font-size: 30px;" *ngIf="this.isModifying == false"
+      [matTooltip]="this.service.currentQuiz.isPublic ? 'Le quiz est public' : 'Le quiz est privé'">
+      {{this.service.currentQuiz.isPublic ? 'public' : 'public_off'}}
+    </mat-icon>
+    <mat-icon style="font-size: 30px;" class="clickableThing"
+      *ngIf="this.isModifying == true" (click)="this.service.currentQuiz.isPublic = !this.service.currentQuiz.isPublic"
+      [matTooltip]="this.service.currentQuiz.isPublic ? 'Le quiz est public' : 'Le quiz est privé'">
+      {{this.service.currentQuiz.isPublic ? 'public' : 'public_off'}}
+    </mat-icon>
+  </h3>
 </div>
 
 <div>
-	<div class="d-flex justify-content-between">
-		<h2 class="sectionHeader">Questions du quiz</h2>
-		<button
-			class="questionButtonAddRemove"
-			mat-fab
-			color="primary"
-			data-bs-toggle="modal"
-			data-bs-target="#staticBackdrop"
-		>
-			<mat-icon>add</mat-icon>
-		</button>
-	</div>
-	<div class="questionBox">
-		<div cdkDropListGroup (mouseleave)="this.selectedQuestion = null;">
-			<div
-				cdkDropList
-				[cdkDropListData]="this.service.currentQuestions"
-				class="question-list"
-				(cdkDropListDropped)="drop($event)"
-			>
-				<div
-					class="questionItem"
-					cdkDragLockAxis="y"
-					cdkDragBoundary=".question-list"
-					*ngFor="let item of this.service.currentQuestions"
-					cdkDrag
-					[class.activeQuestion]="selectedQuestion === item"
-					(mouseover)="selectedQuestion = item"
-					(cdkDragStarted)="selectedQuestion = item"
-				>
-					<div class="row">
-						<div class="col-5">
-							<h2>{{item.label}} </h2>
-						</div>
-						<div class="col-2">
-							<h2 [ngSwitch]="this.enum[item.questionType]">
-								<span *ngSwitchCase="'TrueFalse'">Vrai ou Faux</span>
-								<span *ngSwitchCase="'MultipleChoices'">Choix Multiples</span>
-								<span *ngSwitchDefault></span>
-							</h2>
-						</div>
-						<div class="col-1"></div>
-						<div class="col-3">
-							<button
-								*ngIf="selectedQuestion === item"
-								class="questionButtonAddRemove"
-								mat-fab
-								color="primary"
-								(click)="putFirst()"
-							>
-								<mat-icon>expand_less</mat-icon>
-							</button>
-							<button
-								*ngIf="selectedQuestion === item"
-								class="questionButtonAddRemove"
-								mat-fab
-								color="primary"
-								(click)="putLast()"
-							>
-								<mat-icon>expand_more</mat-icon>
-							</button>
-							<button
-								*ngIf="selectedQuestion === item"
-								class="questionButtonAddRemove"
-								mat-fab
-								color="primary"
-							>
-								<mat-icon>edit</mat-icon>
-							</button>
-						</div>
-						<div class="col-1">
-							<button
-								class="questionButtonAddRemove"
-								id="add-button"
-								mat-fab
-								color="primary"
-								(click)="deleteQuestion(item.id)"
-							>
-								<mat-icon>delete</mat-icon>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="d-flex justify-content-between">
+    <h2 class="sectionHeader">Questions du quiz</h2>
+    <button class="questionButtonAddRemove" mat-fab color="primary" data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div class="questionBox">
+    <div cdkDropListGroup (mouseleave)="this.selectedQuestion = null;">
+      <div cdkDropList [cdkDropListData]="this.service.currentQuestions" class="question-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="questionItem" cdkDragLockAxis="y" cdkDragBoundary=".question-list"
+          *ngFor="let item of this.service.currentQuestions" cdkDrag [class.activeQuestion]="selectedQuestion === item"
+          (mouseover)="selectedQuestion = item" (cdkDragStarted)="selectedQuestion = item">
+          <div class="row">
+            <div class="col-5">
+              <h2>{{item.label}} </h2>
+            </div>
+            <div class="col-2">
+              <h2 [ngSwitch]="this.enum[item.questionType]">
+                <span *ngSwitchCase="'TrueFalse'">Vrai ou Faux</span>
+                <span *ngSwitchCase="'MultipleChoices'">Choix Multiples</span>
+                <span *ngSwitchDefault></span>
+              </h2>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3">
+              <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary"
+                (click)="putFirst()">
+                <mat-icon>expand_less</mat-icon>
+              </button>
+              <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary"
+                (click)="putLast()">
+                <mat-icon>expand_more</mat-icon>
+              </button>
+              <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary"
+                (click)="setQuestionToModify()">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+            <div class="col-1">
+              <button class="questionButtonAddRemove" id="add-button" mat-fab color="primary"
+                (click)="deleteQuestion(item.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <button hidden data-bs-toggle="modal" data-bs-target="#modifyQuestion" id="openModalButton"></button>
+  <app-modify-question [question]="this.modifyingQuestion" *ngIf="showModifyingModal" (isReady)="this.openModal()"
+    (close)="this.updateQuestions($event)"></app-modify-question>
 </div>

@@ -15,7 +15,7 @@
 }
 #drawer-title-content
 {
-    display: inline; 
+    display: inline;
     width: 100%;
     height: 100%;
     background-color: red;
@@ -33,4 +33,8 @@
   }
   .btnLoginLogout img{
     border-radius: 50%;
+  }
+
+  ::ng-deep .mat-drawer-backdrop.mat-drawer-shown {
+    display: none;
   }

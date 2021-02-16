@@ -1,12 +1,11 @@
 import { environment } from './../environments/environment';
 import { WaitingRoomComponent } from './../components/waiting-room/waiting-room.component';
-import { RouterModule } from '@angular/router';
 import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
 import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
-	ListQuizComponent,
-	DeleteQuizDialog,
+  ListQuizComponent,
+  DeleteQuizDialog,
 } from './../components/list-quiz/list-quiz.component';
 import { CreateTrueOrFalseQuestion } from '../components/create-trueorfalse-question/create-trueorfalse-question.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,16 +16,16 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-	CreateQuizComponent,
-	CreateQuizConfirmDialog,
+  CreateQuizComponent,
+  CreateQuizConfirmDialog,
 } from 'src/components/create-quiz/create-quiz.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
 	CommonModule,
-	HashLocationStrategy,
 	LocationStrategy,
 	PathLocationStrategy,
 } from '@angular/common';
+import { HomePageComponent } from '../components/home-page/home-page.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
@@ -39,6 +38,7 @@ import { LoginComponent } from 'src/components/login/login.component';
 import { NavigationComponent } from '../components/navigation/navigation.component';
 import { QuizRoomComponent } from '../components/quiz-room/quiz-room.component';
 import { ScoreboardComponent } from '../components/scoreboard/scoreboard.component';
+import { ModifyQuestionComponent } from 'src/components/modify-question/modify-question.component';
 
 @NgModule({
 	declarations: [
@@ -56,6 +56,8 @@ import { ScoreboardComponent } from '../components/scoreboard/scoreboard.compone
 		NavigationComponent,
 		QuizRoomComponent,
 		ScoreboardComponent,
+    ModifyQuestionComponent,
+    HomePageComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -76,4 +78,4 @@ import { ScoreboardComponent } from '../components/scoreboard/scoreboard.compone
 	providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
 	bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

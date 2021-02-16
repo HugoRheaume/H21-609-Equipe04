@@ -19,8 +19,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSortModule } from '@angular/material/sort';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 @NgModule({
@@ -47,10 +48,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 		ClipboardModule,
 		MatSortModule,
 		DragDropModule,
-        MatTooltipModule,
+		MatTooltipModule,
+    MatSnackBarModule,
 		MatMenuModule,
 		MatSidenavModule,
-
 	],
 	exports: [
 		BrowserAnimationsModule,
@@ -73,7 +74,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 		MatSortModule,
 		ClipboardModule,
 		DragDropModule,
-    	MatTooltipModule,
+		MatTooltipModule,
+    MatSnackBarModule,
 		MatMenuModule,
 		MatSidenavModule,
 	],

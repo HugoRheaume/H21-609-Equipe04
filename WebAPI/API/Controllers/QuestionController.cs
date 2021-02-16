@@ -16,6 +16,12 @@ namespace API.Controllers
 
         private IQuestionService service = new QuestionService(new ApplicationDbContext());
 
+        //public QuestionController(IQuestionService questionService)
+        //{
+        //    service = questionService;
+        //}
+
+
         [HttpGet]
         //Return List<QuestionDTO> 
         public IHttpActionResult Get()
@@ -98,6 +104,16 @@ namespace API.Controllers
             else if (service.StoreQuestionResult(result, Request.Headers.GetCookies("token").FirstOrDefault()))
                 return Ok(service.GetNextQuestion(result.QuizId, result.QuestionId));
             else return BadRequest("Pas de Biscuit");
+        }
+
+
+        [HttpPost]
+        [ModelValidation]
+        [TokenAuthorize]
+        public IHttpActionResult ModifyQuestion(QuestionDTO modifiedDTO)
+        {
+            if (service.ModifyQuesiton(modifiedDTO)) return Ok("Question modifiée.");
+            return BadRequest("Une erreur s'est produite.");
         }
     }
 }

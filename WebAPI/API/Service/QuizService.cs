@@ -11,6 +11,7 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.ModelBinding;
+using System.Xml.Linq;
 using System.Web.Management;
 using System.Web.Security;
 using API.WebSocket;
@@ -189,6 +190,22 @@ namespace API.Service
                 return typeof(Room);
 
             return null;
+        }
+
+
+
+        public bool ModifyQuiz(QuizModifyDTO modifiedDTO)
+        {
+            Quiz quizToModify = db.ListQuiz.FirstOrDefault(q => q.Id == modifiedDTO.Id);
+            if (quizToModify != null)
+            {
+                quizToModify.IsPublic = modifiedDTO.IsPublic;
+                quizToModify.Title = modifiedDTO.Title;
+                quizToModify.Description = modifiedDTO.Description;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

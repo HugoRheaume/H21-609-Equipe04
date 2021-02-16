@@ -1,0 +1,100 @@
+@import '../../styles.scss';
+
+
+.homePageElements {
+    position: absolute;
+    top: 40vh;
+    z-index: 5;
+}
+
+.title {
+    height: 200px;
+    font-family: 'Titan One';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 200px;
+    line-height: 165px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-shadow: 1px 5px 0px $circles, 2px 10px 0px $bubbles-triangle;
+}
+
+#triangleBottomRight {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    width: 30%;
+    height: 50%;
+    background-color: $bubbles-triangle;
+    clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
+    z-index: 1;
+}
+
+.bubble {
+    position: fixed;
+    background-color: $bubbles-triangle;
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: -5px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#bigBubble {
+    left: 90px;
+    bottom: 200px;
+    width: 250px;
+    height: 250px;
+}
+
+#mediumBubble {
+    left: 250px;
+    bottom: 460px;
+    width: 150px;
+    height: 150px;
+}
+
+#smallBubble {
+    left: 100px;
+    bottom: 570px;
+    width: 100px;
+    height: 100px;
+}
+
+
+@keyframes letters {
+    from {transform: translateY(0px);}
+    to {transform: translateY(30px);}
+}
+
+.title > span {
+    animation-name: letters;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+}
+
+#q {
+    animation-delay: -7s;
+}
+#u {
+    animation-delay: -6s;
+}
+#i {
+    animation-delay: -5s;
+}
+#z {
+    animation-delay: -4s;
+}
+#p {
+    animation-delay: -3s;
+}
+#l {
+    animation-delay: -2s;
+}
+#a {
+    animation-delay: -1s;
+}
+#y {
+    animation-delay: 0s;
+}

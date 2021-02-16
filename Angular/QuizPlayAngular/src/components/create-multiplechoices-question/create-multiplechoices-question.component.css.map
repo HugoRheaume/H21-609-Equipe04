@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,AAAA,MAAM,CAAC;EACjB,MAAM,EAAE,OAAO;EACf,WAAW,EAAE,IAAI;CAClB",
+    "sources": [
+        "create-multiplechoices-question.component.scss"
+    ],
+    "names": [],
+    "file": "create-multiplechoices-question.component.css"
+}

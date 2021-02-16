@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Question, QuestionType } from 'src/models/question';
+import { QuestionType } from 'src/models/question';
 
 @Component({
   selector: 'app-create-question',
   templateUrl: './create-question.component.html',
-  styleUrls: ['./create-question.component.scss']
+  styleUrls: ['./create-question.component.scss'],
 })
 export class CreateQuestionComponent implements OnInit {
-
   public enumNames: string[];
   public enumValues: number[];
   public enumFormated: string[];
@@ -39,7 +38,6 @@ export class CreateQuestionComponent implements OnInit {
     });
     for (let i = 0; i < this.enumNames.length; i++) {
       this.enumValues.push(QuestionType[this.enumNames[i]]);
-      console.log(this.enumNames[i]);
       switch (this.enumNames[i]) {
         case 'TrueFalse':
           this.enumFormated.push('Vrai ou faux');
@@ -52,7 +50,8 @@ export class CreateQuestionComponent implements OnInit {
       }
     }
 
-    this.iterator = Array(this.enumNames.length).fill(0).map((x, i) => i);
-
+    this.iterator = Array(this.enumNames.length)
+      .fill(0)
+      .map((x, i) => i);
   }
 }

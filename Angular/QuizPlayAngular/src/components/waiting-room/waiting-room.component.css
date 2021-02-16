@@ -1,0 +1,111 @@
+@import url(https://fonts.googleapis.com/css?family=Patrick+Hand+SC);
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+}
+
+tr.mat-footer-row {
+  font-weight: lighter;
+}
+
+.mat-table-sticky {
+  border-top: 2px solid #e0e0e0;
+}
+
+.mat-column-users {
+  width: 10em;
+}
+
+.userCard {
+  color: salmon;
+  font-weight: bold;
+  font-size: 1.5em;
+  font-family: "Roboto", "sans-serif";
+  border-radius: 8px;
+  height: 85%;
+  width: 85%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.userCard img {
+  border-radius: 50%;
+  margin-right: 10%;
+  margin-left: 3%;
+}
+
+.userCard:hover {
+  background-color: gray;
+}
+
+::ng-deep .toolTipCustom {
+  background-color: whitesmoke;
+  color: salmon !important;
+  border: 0.05em solid salmon;
+  font-weight: bold;
+}
+
+.flexcontainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.itemcenter {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  width: auto;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.itemright {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  width: auto;
+  height: 100%;
+  margin-left: auto;
+  margin-right: 3em;
+}
+
+.itemLeft {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  width: auto;
+  height: 100%;
+  position: absolute;
+  left: 25%;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+
+#shareCodeButton {
+  left: 15%;
+  top: 30px;
+  left: auto;
+  position: fixed;
+}
+/*# sourceMappingURL=waiting-room.component.css.map */

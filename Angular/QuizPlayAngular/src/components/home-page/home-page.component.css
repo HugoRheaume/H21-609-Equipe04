@@ -1,0 +1,235 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #428f13;
+}
+
+body .container {
+  font-family: 'Open Sans', sans-serif;
+  position: relative;
+}
+
+body * {
+  color: #e5e5e5;
+}
+
+.btnEpic {
+  background: #ff5c00;
+  font-family: 'Open Sans', sans-serif;
+  border-radius: 35.5px !important;
+  outline: none !important;
+}
+
+#triangleBottomRight {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  width: 15%;
+  height: 25%;
+  background-color: #d2a609;
+  -webkit-clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
+          clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
+  z-index: 1;
+}
+
+#circleTopRight {
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #649c42;
+  -webkit-clip-path: circle(40% at 90% 0);
+          clip-path: circle(40% at 90% 0);
+  z-index: 0;
+}
+
+#circleBottomLeft {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #649c42;
+  -webkit-clip-path: circle(34.4% at -10% 88%);
+          clip-path: circle(34.4% at -10% 88%);
+  z-index: 0;
+}
+
+.cdk-overlay-container, .cdk-overlay-pane {
+  z-index: 9999 !important;
+}
+
+div.mat-form-field-wrapper.ng-tns-c30-0 {
+  padding-bottom: 0em !important;
+}
+
+.form-field-full-width {
+  width: 100%;
+}
+
+.btnMaterial, .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb, .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent, .mat-fab.mat-primary, .mat-raised-button {
+  background-color: #ff5c00;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #d2a609;
+}
+
+.mat-slide-toggle-thumb {
+  background-color: #e5e5e5;
+}
+
+.questionBox {
+  background-color: #428f13;
+  border: 7.5px #d2a609 solid;
+}
+
+.example-box:hover {
+  background-color: #649c42;
+}
+
+.homePageElements {
+  position: absolute;
+  top: 40vh;
+  z-index: 5;
+}
+
+.title {
+  height: 200px;
+  font-family: 'Titan One';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 200px;
+  line-height: 165px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  text-shadow: 1px 5px 0px #649c42, 2px 10px 0px #d2a609;
+}
+
+#triangleBottomRight {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  width: 30%;
+  height: 50%;
+  background-color: #d2a609;
+  -webkit-clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
+          clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
+  z-index: 1;
+}
+
+.bubble {
+  position: fixed;
+  background-color: #d2a609;
+  border-radius: 50%;
+  z-index: 1;
+  -webkit-box-shadow: -5px 4px 10px rgba(0, 0, 0, 0.3);
+          box-shadow: -5px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#bigBubble {
+  left: 90px;
+  bottom: 200px;
+  width: 250px;
+  height: 250px;
+}
+
+#mediumBubble {
+  left: 250px;
+  bottom: 460px;
+  width: 150px;
+  height: 150px;
+}
+
+#smallBubble {
+  left: 100px;
+  bottom: 570px;
+  width: 100px;
+  height: 100px;
+}
+
+@-webkit-keyframes letters {
+  from {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+  }
+  to {
+    -webkit-transform: translateY(30px);
+            transform: translateY(30px);
+  }
+}
+
+@keyframes letters {
+  from {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+  }
+  to {
+    -webkit-transform: translateY(30px);
+            transform: translateY(30px);
+  }
+}
+
+.title > span {
+  -webkit-animation-name: letters;
+          animation-name: letters;
+  -webkit-animation-duration: 4s;
+          animation-duration: 4s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+
+#q {
+  -webkit-animation-delay: -7s;
+          animation-delay: -7s;
+}
+
+#u {
+  -webkit-animation-delay: -6s;
+          animation-delay: -6s;
+}
+
+#i {
+  -webkit-animation-delay: -5s;
+          animation-delay: -5s;
+}
+
+#z {
+  -webkit-animation-delay: -4s;
+          animation-delay: -4s;
+}
+
+#p {
+  -webkit-animation-delay: -3s;
+          animation-delay: -3s;
+}
+
+#l {
+  -webkit-animation-delay: -2s;
+          animation-delay: -2s;
+}
+
+#a {
+  -webkit-animation-delay: -1s;
+          animation-delay: -1s;
+}
+
+#y {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+}
+/*# sourceMappingURL=home-page.component.css.map */

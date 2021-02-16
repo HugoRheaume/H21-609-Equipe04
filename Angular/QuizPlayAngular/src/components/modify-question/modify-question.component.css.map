@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACb,gBAAgB,EAAE,OAAe;EACjC,KAAK,EAAE,SAAS;CACjB",
+    "sources": [
+        "modify-question.component.scss"
+    ],
+    "names": [],
+    "file": "modify-question.component.css"
+}
