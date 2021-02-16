@@ -1,18 +1,12 @@
 package org.equipe4.quizplay;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.GetChars;
-import android.text.method.CharacterPickerDialog;
-import android.text.method.HideReturnsTransformationMethod;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.equipe4.quizplay.databinding.ActivityWaitingRoomBinding;
 import org.equipe4.quizplay.http.QPService;
@@ -20,9 +14,9 @@ import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.transfer.UserDTO;
 import org.equipe4.quizplay.util.SharedPrefUtil;
+import org.equipe4.quizplay.webSocket.WSClient;
 import org.equipe4.quizplay.webSocket.WebSocketEventListener;
 import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.JoinRoomCommand;
-import org.equipe4.quizplay.webSocket.WSClient;
 import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.LeaveRoomCommand;
 
 import java.security.KeyManagementException;

@@ -10,15 +10,15 @@ import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketExtension;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
-import org.equipe4.quizplay.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.webSocket.webSocketCommand.BaseCommand;
+import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.JoinRoomCommand;
 import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.LeaveRoomCommand;
 import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.LogMessageCommand;
 import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.UserStateCommand;
-import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.JoinRoomCommand;
 import org.equipe4.quizplay.webSocket.webSocketCommand.resultCommand.JoinRoomResponse;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
@@ -29,7 +29,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 
-public class WSClient {
+public class WSClient implements Serializable {
 
     private static final String SERVER_PROD = "wss://api.e4.projet.college-em.info/websocket/connect";
     private static final String SERVER_MARCO = "wss://192.168.0.136:45455/websocket/connect";
@@ -37,7 +37,7 @@ public class WSClient {
     private static final String SERVER_HUGO = "wss://192.168.0.131:45455/websocket/connect";
 
 
-    private static final String SERVER = SERVER_MARCO;
+    private static final String SERVER = SERVER_PROD;
 
     private static WebSocket socket;
 
@@ -124,7 +124,7 @@ public class WSClient {
                 break;
 
         }
-        Log.i("WebSocket", message);
+        Log.i("WebSocket-RECEIVE", message);
     }
 
 
@@ -133,11 +133,13 @@ public class WSClient {
 
     public void joinRoom(JoinRoomCommand joinRoomCommandAction) {
         Gson gson = new Gson();
+        Log.i("WebSocket-SEND", gson.toJson(joinRoomCommandAction));
         socket.sendText(gson.toJson(joinRoomCommandAction));
     }
 
     public void leaveRoom(LeaveRoomCommand leaveRoomCommand) {
         Gson gson = new Gson();
+        Log.i("WebSocket-SEND", gson.toJson(leaveRoomCommand));
         socket.sendText(gson.toJson(leaveRoomCommand));
         socket.disconnect();
     }

@@ -12,14 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MultipleChoiceActivity"></activity>
-        <activity android:name=".WaitingRoomActivity"></activity>
-        <activity android:name=".ResultActivity" />
-        <activity android:name=".TrueFalseActivity" />
-        <activity android:name=".QuizActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".PseudoActivity" />
-        <activity android:name=".LandingActivity">
+        <activity android:name=".MultipleChoiceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".WaitingRoomActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ResultActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TrueFalseActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".QuizActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PseudoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LandingActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
