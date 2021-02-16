@@ -10,7 +10,8 @@ namespace API.WebSocket.Command
     public class CreateRoomCommand : BaseCommand
     {
         public string ShareCode { get; set; }
-        
+        public string QuizShareCode { get; set; }
+
 
         public CreateRoomCommand()
         {
@@ -21,8 +22,8 @@ namespace API.WebSocket.Command
         public override void Handle(string message)
         {
             CreateRoomCommand crc =  Json.Decode<CreateRoomCommand>(message);
-            
             this.Token = crc.Token;
+            this.QuizShareCode = crc.QuizShareCode;
         }
         public override void Run(Client client)
         {
@@ -31,8 +32,13 @@ namespace API.WebSocket.Command
                 LogService.Log(client, MessageType.ErrorNotConnected);
                 return;
             }
+            if(this.QuizShareCode == null)
+            {
+                LogService.Log(client, MessageType.ErrorInvalidQuiz);
+                return;
+            }
 
-            string waitingRoomCode = RoomService.NewRoom(client, client.connectedUser);
+            string waitingRoomCode = RoomService.NewRoom(client, this.QuizShareCode);
             this.ShareCode = waitingRoomCode;
             client.ShareCode = waitingRoomCode;
             LogService.Log(client, this);

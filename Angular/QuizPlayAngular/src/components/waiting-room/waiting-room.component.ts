@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { Message } from './../../models/message';
 import { Component, OnInit } from '@angular/core';
 import { WebSocketService } from 'src/app/web-socket.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-waiting-room',
@@ -22,15 +23,17 @@ export class WaitingRoomComponent implements OnInit {
 	displayedColumns = ['users', 'messages'];
 	constructor(
 		public service: WebSocketService,
-		public quizService: QuizService
+		public quizService: QuizService,
+		private route: ActivatedRoute,
 	) {}
 
 	ngOnInit() {
+		var quizShareCode: string = this.route.snapshot.paramMap.get('quizShareCode');
 		this.service.connect();
 		this.service.logReceive$().subscribe(data => {
 			this.messages$.next(data);
 		});
-		this.service.create();
+		this.service.create(quizShareCode);
 	}
 	cancel() {
 		this.service.cancel();

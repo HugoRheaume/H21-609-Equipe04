@@ -1,4 +1,5 @@
-﻿using API.Service;
+﻿using API.Models;
+using API.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace API.WebSocket.Command
     {
 
         public string ShareCode { get; set; }
-        public string Username { get; set; }
+        public QuizResponseDTO quiz { get; set; }
 
         public JoinRoomCommand() 
         {
@@ -24,7 +25,6 @@ namespace API.WebSocket.Command
             JoinRoomCommand jrc = Json.Decode<JoinRoomCommand>(message);
 
             this.ShareCode = jrc.ShareCode;
-            this.Username = jrc.Username;
         }
         public override void Run(Client client)
         {
@@ -44,6 +44,18 @@ namespace API.WebSocket.Command
             
             RoomService.AddUser(this.ShareCode, client);
             RoomService.Broadcast(this.ShareCode, MessageType.LogRoomJoined);
+
+            Quiz q = RoomService.GetRooms[this.ShareCode].GetRoomQuizState.GetQuiz;
+            this.quiz = new QuizResponseDTO()
+            {
+                Id = q.Id,
+                Title = q.Title,
+                Description = q.Description,
+                IsPublic = q.IsPublic,
+                NumberOfQuestions = q.ListQuestions.Count,
+                ShareCode = q.ShareCode,
+            };
+            LogService.Log(client, this);
             
         }
     }

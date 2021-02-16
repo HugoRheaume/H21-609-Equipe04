@@ -15,10 +15,14 @@ namespace API.Service
     public static class RoomService
     {
         private static Dictionary<string, Room> rooms = new Dictionary<string, Room>();
-
-        internal static string NewRoom(Client client, ApplicationUser applicationUser)
+        internal static Dictionary<string, Room> GetRooms
+        { 
+            get {return rooms; }
+        }
+        public static ApplicationDbContext db = new  ApplicationDbContext();
+        internal static string NewRoom(Client client, string quizShareCode)
         {
-            Room room = new Room(client, applicationUser);
+            Room room = new Room(client, db.ListQuiz.FirstOrDefault(x => x.ShareCode == quizShareCode));
             rooms.Add(room.GetShareCode, room);
             return room.GetShareCode;
         }
@@ -36,13 +40,6 @@ namespace API.Service
             if (!IsShareCodeExist(sharecode))
                 return;
             rooms[sharecode].Users.Remove(client);
-            /*Client r = null;
-            foreach (var item in rooms[sharecode].Users)
-            {
-                if (item.connectedUser == user)
-                    r = item;
-            }
-            rooms[sharecode].Users.Remove(r);*/
         }
         internal static void DestroyRoom(string shareCode)
         {
@@ -114,6 +111,17 @@ namespace API.Service
         #endregion
         #region UTIL
         //======================================================
+        public static Client GetOwner(string shareCode)
+        {
+            return rooms[shareCode].handler;
+        }
+        internal static Quiz GetQuizFromRoom(string shareCode)
+        {
+            if (!IsShareCodeExist(shareCode))
+                return null;
+            return rooms[shareCode].GetRoomQuizState.GetQuiz;
+
+        }
         private static List<UserDTO> GetUsers(string shareCode)
         {
             List<UserDTO> users = new List<UserDTO>();

@@ -29,7 +29,7 @@
 	Créer une salle d'attente
 </button>
 <h2 class="sectionHeader">Informations du quiz</h2>
-<div class="quizHeader">
+<div class="quizHeader" *ngIf="this.service.currentQuiz">
 	<h1 class="text-center mb-5">{{this.service.currentQuiz.title}}</h1>
 	<h2>
 		{{this.service.currentQuiz.description}}

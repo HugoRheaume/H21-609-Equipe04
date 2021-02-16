@@ -300,6 +300,8 @@
     <Compile Include="Models\Question\QuestionDTO.cs" />
     <Compile Include="Models\Question\QuestionMultipleChoice.cs" />
     <Compile Include="Models\Question\QuestionTrueFalse.cs" />
+    <Compile Include="WebSocket\Command\QuizCommand\QuizQuestionResultCommand.cs" />
+    <Compile Include="WebSocket\QuizUserScoreDTO.cs" />
     <Compile Include="Models\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -317,7 +319,10 @@
     <Compile Include="Validation\QuestionValidationAttribute.cs" />
     <Compile Include="Validation\QuizValidationAttribute.cs" />
     <Compile Include="WebSocket\Command\BaseCommand.cs" />
+    <Compile Include="WebSocket\Command\QuizCommand\QuizAnswerCommand.cs" />
     <Compile Include="WebSocket\Command\QuizCommand\QuizBeginCommand.cs" />
+    <Compile Include="WebSocket\Command\QuizCommand\QuizNextQuestionCommand.cs" />
+    <Compile Include="WebSocket\Command\QuizCommand\QuizScoreboardCommand.cs" />
     <Compile Include="WebSocket\Command\RoomCommand\CreateRoomCommand.cs" />
     <Compile Include="WebSocket\Command\RoomCommand\DestroyRoomCommand.cs" />
     <Compile Include="WebSocket\Command\RoomCommand\JoinRoomCommand.cs" />
@@ -326,6 +331,7 @@
     <Compile Include="WebSocket\Command\RoomCommand\RoomUserStateCommand.cs" />
     <Compile Include="WebSocket\Room.cs" />
     <Compile Include="WebSocket\Client.cs" />
+    <Compile Include="WebSocket\RoomQuizState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
