@@ -16,6 +16,12 @@ namespace API.Controllers
 
         private IQuestionService service = new QuestionService(new ApplicationDbContext());
 
+        //public QuestionController(IQuestionService questionService)
+        //{
+        //    service = questionService;
+        //}
+
+
         [HttpGet]
         //Return List<QuestionDTO> 
         public IHttpActionResult Get()
@@ -103,6 +109,7 @@ namespace API.Controllers
 
         [HttpPost]
         [ModelValidation]
+        [TokenAuthorize]
         public IHttpActionResult ModifyQuestion(QuestionDTO modifiedDTO)
         {
             if (service.ModifyQuesiton(modifiedDTO)) return Ok("Question modifiée.");

@@ -1,6 +1,5 @@
 import { environment } from './../environments/environment';
 import { WaitingRoomComponent } from './../components/waiting-room/waiting-room.component';
-import { RouterModule } from '@angular/router';
 import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
 import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { MaterialModule } from 'src/app/material/material.module';
@@ -23,7 +22,6 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
 	CommonModule,
-	HashLocationStrategy,
 	LocationStrategy,
 	PathLocationStrategy,
 } from '@angular/common';
@@ -39,6 +37,7 @@ import { LoginComponent } from 'src/components/login/login.component';
 import { NavigationComponent } from '../components/navigation/navigation.component';
 import { QuizRoomComponent } from '../components/quiz-room/quiz-room.component';
 import { ScoreboardComponent } from '../components/scoreboard/scoreboard.component';
+import { ModifyQuestionComponent } from 'src/components/modify-question/modify-question.component';
 
 @NgModule({
 	declarations: [
@@ -56,6 +55,7 @@ import { ScoreboardComponent } from '../components/scoreboard/scoreboard.compone
 		NavigationComponent,
 		QuizRoomComponent,
 		ScoreboardComponent,
+    ModifyQuestionComponent,
 	],
 	imports: [
 		BrowserModule,

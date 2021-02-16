@@ -97,7 +97,6 @@ export class CreateMultiplechoicesQuestionComponent implements OnInit {
 		this.discard();
 
 		this.service.addQuestion(question.toMultipleChoiceDTO());
-		//this.service.addQuestion(question.toDTO());
 		this.route.navigate['/'];
 
 		return;

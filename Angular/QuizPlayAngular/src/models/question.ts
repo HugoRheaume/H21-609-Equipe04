@@ -1,5 +1,5 @@
 import { QuestionChoice } from './questionChoice';
-export abstract class Question {
+export class Question {
   public id: number;
   public quizId: number;
   public label: string;
