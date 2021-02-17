@@ -39,7 +39,6 @@ public class TrueFalseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_true_false);
-
         question = (QuestionDTO)getIntent().getSerializableExtra("question");
         quiz = (QuizResponseDTO)getIntent().getSerializableExtra("quiz");
 
