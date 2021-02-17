@@ -58,8 +58,12 @@ public class PseudoActivity extends AppCompatActivity {
                         }
                         else {
                             // EN DIFFÉRÉ
+                            SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
+                            response.body().isAnonymous = true;
+                            sharedPrefUtil.setCurrentUser(response.body());
                             Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                             intent.putExtra("quiz", getIntent().getSerializableExtra("quiz"));
+                            startActivity(intent);
                         }
 
                     }

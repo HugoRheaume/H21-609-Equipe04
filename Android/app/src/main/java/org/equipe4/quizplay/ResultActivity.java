@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
+import org.equipe4.quizplay.transfer.UserDTO;
+import org.equipe4.quizplay.util.SharedPrefUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,6 +56,28 @@ public class ResultActivity extends AppCompatActivity {
 
     public void back(View v) {
         Intent i = new Intent(getApplicationContext(), LandingActivity.class);
+        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
+
+        UserDTO user =  sharedPrefUtil.getCurrentUser();
+        // Si l'utilisateur est anonyme, supprime l'utilisateur de la database
+        if (user.isAnonymous){
+            service.logoutAnonymous().enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body()) {
+                            sharedPrefUtil.clearCurrentUser();
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Un erreur est survenu", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 }
