@@ -22,6 +22,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
 	CommonModule,
+	HashLocationStrategy,
 	LocationStrategy,
 	PathLocationStrategy,
 } from '@angular/common';
@@ -39,6 +40,7 @@ import { NavigationComponent } from '../components/navigation/navigation.compone
 import { QuizRoomComponent } from '../components/quiz-room/quiz-room.component';
 import { ScoreboardComponent } from '../components/scoreboard/scoreboard.component';
 import { ModifyQuestionComponent } from 'src/components/modify-question/modify-question.component';
+import { Hash } from 'crypto';
 
 @NgModule({
 	declarations: [
@@ -75,7 +77,7 @@ import { ModifyQuestionComponent } from 'src/components/modify-question/modify-q
 		AngularFireAuthModule,
 	],
 	entryComponents: [CreateQuizComponent],
-	providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
+	providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
