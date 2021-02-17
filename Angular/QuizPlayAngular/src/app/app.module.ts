@@ -40,7 +40,6 @@ import { NavigationComponent } from '../components/navigation/navigation.compone
 import { QuizRoomComponent } from '../components/quiz-room/quiz-room.component';
 import { ScoreboardComponent } from '../components/scoreboard/scoreboard.component';
 import { ModifyQuestionComponent } from 'src/components/modify-question/modify-question.component';
-import { Hash } from 'crypto';
 
 @NgModule({
 	declarations: [

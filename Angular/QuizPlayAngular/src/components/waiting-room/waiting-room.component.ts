@@ -1,7 +1,7 @@
 import { QuizService } from 'src/quiz.service';
 import { Subject } from 'rxjs';
 import { Message } from './../../models/message';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WebSocketService } from 'src/app/web-socket.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 	templateUrl: './waiting-room.component.html',
 	styleUrls: ['./waiting-room.component.scss'],
 })
-export class WaitingRoomComponent implements OnInit {
+export class WaitingRoomComponent implements OnInit, OnDestroy {
 	public messages$ = new Subject<string[]>();
 	//public users: string[];
 	public usersFormated: string[] = [];
@@ -34,6 +34,10 @@ export class WaitingRoomComponent implements OnInit {
 			this.messages$.next(data);
 		});
 		this.service.create(quizShareCode);
+	}
+	ngOnDestroy()
+	{
+		this.service.cancel();
 	}
 	cancel() {
 		this.service.cancel();
