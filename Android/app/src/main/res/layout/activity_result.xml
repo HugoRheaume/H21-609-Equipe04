@@ -6,7 +6,7 @@
     tools:context=".ResultActivity"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"

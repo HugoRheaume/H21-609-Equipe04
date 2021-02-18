@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".WaitingRoomActivity"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="20dp">
 
 
     <LinearLayout
@@ -36,8 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Titre"
-            android:textSize="28sp"
+            android:text=""
+            android:textSize="25sp"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/txtNbQuestion"
