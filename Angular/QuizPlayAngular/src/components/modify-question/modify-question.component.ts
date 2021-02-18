@@ -1,10 +1,10 @@
-import { QuestionMultipleChoice } from './../../models/question';
-import { QuestionService } from './../../question.service';
-import { Question, QuestionTrueOrFalse, QuestionType } from 'src/models/question';
+import { QuestionService } from './../../app/services/question.service';
+import { QuestionMultipleChoice } from '../../app/models/question';
+import { Question, QuestionTrueOrFalse, QuestionType } from 'src/app/models/question';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QuestionChoice } from 'src/models/questionChoice';
+import { QuestionChoice } from 'src/app/models/questionChoice';
 
 @Component({
   selector: 'app-modify-question',

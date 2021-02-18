@@ -1,14 +1,14 @@
-import { QuizModifyDTO } from './models/QuizModifyDTO';
+import { QuizModifyDTO } from '../models/QuizModifyDTO';
 import { Router } from '@angular/router';
-import { UserDTO } from './models/userDTO';
-import { environment } from './environments/environment';
+import { UserDTO } from '../models/userDTO';
+import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { QuizRequest } from './models/QuizRequest';
-import { QuizResponse } from './models/QuizResponse';
-import { Question } from './models/question';
+import { QuizRequest } from '../models/QuizRequest';
+import { QuizResponse } from '../models/QuizResponse';
+import { Question } from '../models/question';
 
 @Injectable({
   providedIn: 'root',

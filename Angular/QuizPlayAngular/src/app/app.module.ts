@@ -30,7 +30,7 @@ import { HomePageComponent } from '../components/home-page/home-page.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
-import { QuizQuestionListComponent } from './components/quiz-question-list/quiz-question-list.component';
+import { QuizQuestionListComponent } from '../components/quiz-question-list/quiz-question-list.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';

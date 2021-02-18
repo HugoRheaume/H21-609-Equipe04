@@ -1,6 +1,6 @@
-import { QuizService } from '../../quiz.service';
+import { QuizService } from '../../app/services/Quiz.service';
 import { Component, OnInit } from '@angular/core';
-import { Question, QuestionTrueOrFalse } from 'src/models/question';
+import { Question, QuestionTrueOrFalse } from 'src/app/models/question';
 import { Router } from '@angular/router';
 import {
 	FormBuilder,

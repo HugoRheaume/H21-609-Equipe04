@@ -1,5 +1,5 @@
 import { AngularFireAuth } from '@angular/fire/auth';
-import { QuizService } from 'src/quiz.service';
+import { QuizService } from 'src/app/services/Quiz.service';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 
@@ -38,5 +38,5 @@ public isMenuOpen: boolean = false;
     return localStorage.getItem('name');
   }
 
-  
+
 }

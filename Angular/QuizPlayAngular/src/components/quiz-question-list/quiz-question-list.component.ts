@@ -1,14 +1,14 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Question, QuestionType } from 'src/models/question';
+import { Question, QuestionType } from 'src/app/models/question';
 import { Component, Input, OnInit } from '@angular/core';
-import { QuizService } from 'src/quiz.service';
+import { QuizService } from 'src/app/services/Quiz.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { QuizResponse } from 'src/models/QuizResponse';
+import { QuizResponse } from 'src/app/models/QuizResponse';
 
 @Component({
   selector: 'app-quiz-question-list',

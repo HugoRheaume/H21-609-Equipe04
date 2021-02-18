@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { QuizRequest } from 'src/models/QuizRequest';
-import { QuizService } from 'src/quiz.service';
+import { QuizRequest } from 'src/app/models/QuizRequest';
+import { QuizService } from 'src/app/services/Quiz.service';
 
 @Component({
 	selector: 'app-create-quiz',

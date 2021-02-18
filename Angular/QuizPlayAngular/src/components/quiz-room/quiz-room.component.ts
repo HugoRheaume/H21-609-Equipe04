@@ -1,8 +1,8 @@
 import { Subject, Observable, timer, Subscription, interval } from 'rxjs';
-import { WebSocketService } from 'src/app/web-socket.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Question, QuestionType } from 'src/models/question';
-import { QuizService } from './../../quiz.service';
+import { Question, QuestionType } from 'src/app/models/question';
+import { QuizService } from '../../app/services/Quiz.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { finalize, take, tap } from 'rxjs/operators';
 
@@ -25,7 +25,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
   public currentQuestion: Question;
 
   constructor(public route: ActivatedRoute, public quizService: QuizService, public router: Router, public wsService: WebSocketService) { }
-  
+
   ngOnInit(): void {
     this.isShowResult = false;
     this.isScoreboardPage = false;
@@ -37,9 +37,9 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
       tap((q) => {
         this.startTimer(q.timeLimit)
       })
-    );    
+    );
   }
-  
+
   ngOnDestroy(): void {
     this.stopTimer();
     this.wsService.cancel();
@@ -53,7 +53,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     this.isScoreboardPage = !this.isScoreboardPage;
     if(this.currentIndex >= this.quizService.currentQuestions.length-1)
       this.isLastQuestion = true;
-    
+
     if(!this.isScoreboardPage)
     {
       this.currentIndex++;
@@ -87,12 +87,12 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
       take(timeLimit)
     );
 
-    this.countdownSub= countdown$.subscribe();  
+    this.countdownSub= countdown$.subscribe();
   }
 
   private stopTimer(): void{
     if(this.countdownSub)
       this.countdownSub.unsubscribe();
-    
+
   }
 }
