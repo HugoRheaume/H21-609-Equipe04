@@ -1,8 +1,8 @@
-import { QuestionType, QuestionCreateTrueFalseDTO, QuestionTrueOrFalse, QuestionMultipleChoice } from './models/question';
-import { Question } from 'src/models/question';
+import { QuestionType, QuestionCreateTrueFalseDTO, QuestionTrueOrFalse, QuestionMultipleChoice } from 'src/app/models/question';
+import { Question } from 'src/app/models/question';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from './environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

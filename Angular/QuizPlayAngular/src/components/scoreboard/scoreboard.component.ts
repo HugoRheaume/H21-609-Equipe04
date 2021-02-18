@@ -1,6 +1,6 @@
 import { QuizRoomComponent } from 'src/components/quiz-room/quiz-room.component';
 import { Component, OnInit } from '@angular/core';
-import { Score, User } from 'src/app/web-socket.service';
+import { Score, User } from 'src/app/services/web-socket.service';
 
 @Component({
   selector: 'app-scoreboard',
@@ -9,11 +9,11 @@ import { Score, User } from 'src/app/web-socket.service';
 })
 export class ScoreboardComponent implements OnInit {
 
- 
+
   constructor(public quizRoomComponent:  QuizRoomComponent) { }
 
-  ngOnInit(): void { 
-    
+  ngOnInit(): void {
+
   }
-  
+
 }

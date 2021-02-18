@@ -1,16 +1,16 @@
-import { environment } from './../environments/environment';
+import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { webSocket } from 'rxjs/webSocket';
 import { Router } from '@angular/router';
-import { Question } from 'src/models/question';
+import { Question } from 'src/app/models/question';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
-  
+
   public scoreboard: Score[] = []
   public messages$ = new Subject<string[]>();
   public users: User[]= [];
@@ -25,9 +25,9 @@ export class WebSocketService {
     //url: "wss://localhost:44351/websocket/connect",
     url: environment.backend.webSocketURL + '/connect',
     deserializer: msg => msg,
-    
-  
-    
+
+
+
   });
 
 	constructor(public http: HttpClient, public router: Router) {}
@@ -39,7 +39,7 @@ export class WebSocketService {
     }
     public create(quizShareCode: string)
     {
-      let ws = new CreateRoomWS();     
+      let ws = new CreateRoomWS();
       ws.owner = "Angular Master";
       ws.token = localStorage.getItem('token');
       ws.quizShareCode = quizShareCode;
@@ -47,7 +47,7 @@ export class WebSocketService {
     }
     public cancel()
     {
-      let ws = new DeleteRoomWS();  
+      let ws = new DeleteRoomWS();
       ws.token = localStorage.getItem('token');
       ws.shareCode = this.currentShareCode;
       this.subject.next(ws);
@@ -57,7 +57,7 @@ export class WebSocketService {
     }
     public beginQuiz()
     {
-      
+
         let ws = new BeginQuizWS();
         ws.token = localStorage.getItem('token');
         ws.shareCode = this.currentShareCode;
@@ -87,7 +87,7 @@ export class WebSocketService {
           break;
           case CommandName.RoomSate:
           this.users = JSON.parse(data).users;
-          this.updateUserDisplay();          
+          this.updateUserDisplay();
           break;
         case CommandName.LogMessage:
           this.handleLogMessage(d);
@@ -102,8 +102,8 @@ export class WebSocketService {
           this.currentQuestion$.next(d.question);
           break;
       }
-      
-      
+
+
     }
     private handleLogMessage(data: any)
     {
@@ -114,7 +114,7 @@ export class WebSocketService {
           break;
         case MessageType.LogRoomJoined:
           this.messages$.next(['Room Created!']);
-          break; 
+          break;
         case MessageType.LogRoomDeleted:
           this.messages$.next(['The room as been deleted']);
           break;
@@ -127,7 +127,7 @@ export class WebSocketService {
         case MessageType.ErrorUserAlreadyJoined:
           this.messages$.next(['User has already joined']);
           break;
-        
+
       }
     }
     public logReceive$() : Observable<any>{
@@ -146,9 +146,9 @@ export class WebSocketService {
         this.usersFormated[i] = user.name;
       }
       this.usersDisplay = Array(this.users.length).fill(0).map((x, i) => i);
-      
+
     }
-    
+
 
 
 }
@@ -196,24 +196,24 @@ export class Score
   user: User;
   score: number;
 }
-export enum CommandName { 
-  CreateRoom = 'Room.Create', 
-  JoinRoom= 'Room.Join', 
-  RoomSate = 'Room.UserState', 
-  RoomLeave = 'Room.Leave', 
-  RoomDestroy = 'Room.Destroy', 
-  LogMessage = 'Log.Message', 
+export enum CommandName {
+  CreateRoom = 'Room.Create',
+  JoinRoom= 'Room.Join',
+  RoomSate = 'Room.UserState',
+  RoomLeave = 'Room.Leave',
+  RoomDestroy = 'Room.Destroy',
+  LogMessage = 'Log.Message',
   QuizBegin = 'Quiz.Begin',
   QuizNext = 'Quiz.Next',
   QuizScoreboard = 'Quiz.Scoreboard',
   QuizQuestionResult = 'Quiz.QuestionResult',
 }
-export enum MessageType { 
-  LogRoomCreated, 
-  LogRoomJoined, 
-  LogRoomLeft, 
-  LogRoomDeleted, 
-  ErrorShareCodeNotExist, 
-  ErrorInvalidRequest, 
-  ErrorUserAlreadyJoined,  
+export enum MessageType {
+  LogRoomCreated,
+  LogRoomJoined,
+  LogRoomLeft,
+  LogRoomDeleted,
+  ErrorShareCodeNotExist,
+  ErrorInvalidRequest,
+  ErrorUserAlreadyJoined,
 }

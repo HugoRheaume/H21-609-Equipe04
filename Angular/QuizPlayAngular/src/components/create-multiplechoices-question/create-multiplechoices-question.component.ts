@@ -1,4 +1,4 @@
-import { QuestionMultipleChoice } from './../../models/question';
+import { QuestionMultipleChoice } from '../../app/models/question';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -7,8 +7,8 @@ import {
 	FormGroup,
 	Validators,
 } from '@angular/forms';
-import { QuizService } from 'src/quiz.service';
-import { QuestionChoice } from 'src/models/questionChoice';
+import { QuizService } from 'src/app/services/Quiz.service';
+import { QuestionChoice } from 'src/app/models/questionChoice';
 @Component({
 	selector: 'app-create-multiplechoices-question',
 	templateUrl: './create-multiplechoices-question.component.html',

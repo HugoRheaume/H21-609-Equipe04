@@ -1,8 +1,8 @@
-import { QuizService } from 'src/quiz.service';
+import { QuizService } from 'src/app/services/Quiz.service';
 import { Subject } from 'rxjs';
-import { Message } from './../../models/message';
+import { Message } from '../../app/models/message';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WebSocketService } from 'src/app/web-socket.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

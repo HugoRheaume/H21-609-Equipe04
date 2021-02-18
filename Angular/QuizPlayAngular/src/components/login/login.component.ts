@@ -1,4 +1,4 @@
-import { QuizService } from 'src/quiz.service';
+import { QuizService } from 'src/app/services/Quiz.service';
 import { Component } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
 import * as firebase from 'firebase/app';

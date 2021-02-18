@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionType } from 'src/models/question';
+import { QuestionType } from 'src/app/models/question';
 
 @Component({
   selector: 'app-create-question',
