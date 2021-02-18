@@ -5,11 +5,11 @@ body {
 
 body {
   margin: 0;
-  background-color: #428f13;
+  background-color: #1f1f1f;
 }
 
 body .container {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
   position: relative;
 }
 
@@ -18,10 +18,14 @@ body * {
 }
 
 .btnEpic {
-  background: #ff5c00;
-  font-family: 'Open Sans', sans-serif;
+  background: rgba(255, 0, 31, 0.75);
+  margin-top: 200px !important;
+  font-size: 30px;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
   border-radius: 35.5px !important;
   outline: none !important;
+  height: auto;
+  width: auto;
 }
 
 #triangleBottomRight {
@@ -30,7 +34,7 @@ body * {
   bottom: 0px;
   width: 15%;
   height: 25%;
-  background-color: #d2a609;
+  background-color: #8e3939;
   -webkit-clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
           clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
   z-index: 1;
@@ -42,7 +46,7 @@ body * {
   top: 0px;
   width: 100%;
   height: 100%;
-  background-color: #649c42;
+  background-color: #545454;
   -webkit-clip-path: circle(40% at 90% 0);
           clip-path: circle(40% at 90% 0);
   z-index: 0;
@@ -54,13 +58,14 @@ body * {
   bottom: 0px;
   width: 100%;
   height: 100%;
-  background-color: #649c42;
+  background-color: #545454;
   -webkit-clip-path: circle(34.4% at -10% 88%);
           clip-path: circle(34.4% at -10% 88%);
   z-index: 0;
 }
 
-.cdk-overlay-container, .cdk-overlay-pane {
+.cdk-overlay-container,
+.cdk-overlay-pane {
   z-index: 9999 !important;
 }
 
@@ -72,25 +77,72 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
   width: 100%;
 }
 
-.btnMaterial, .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb, .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent, .mat-fab.mat-primary, .mat-raised-button {
-  background-color: #ff5c00;
+.mat-fab.mat-primary {
+  background-color: rgba(255, 0, 31, 0.75);
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #d2a609;
+  background-color: #8e3939;
 }
 
 .mat-slide-toggle-thumb {
   background-color: #e5e5e5;
 }
 
-.questionBox {
-  background-color: #428f13;
-  border: 7.5px #d2a609 solid;
+.mat-snack-bar-container {
+  background: #8e3939;
 }
 
 .example-box:hover {
-  background-color: #649c42;
+  background-color: #545454;
+}
+
+.quizHeader, .questionBox {
+  background: #1f1f1f;
+  border: 7.5px #8e3939 solid !important;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.questionItem {
+  border-bottom: 2px #8e3939 solid !important;
+}
+
+.questionItem:hover, .activeQuestion {
+  background-color: #8e3939 !important;
+}
+
+.mat-raised-button.mat-primary {
+  background-color: rgba(255, 0, 31, 0.75);
+}
+
+.mat-input-element {
+  caret-color: #545454;
+}
+
+.mat-input-element:disabled {
+  color: #e5e5e5;
+}
+
+input:not([disabled])[type="text"], textarea:not([disabled]) {
+  color: #e5e5e5;
+}
+
+.gradient-border {
+  background: #8e3939;
+}
+
+.clickableThing:hover {
+  cursor: pointer;
+  color: #e5e5e5;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .homePageElements {
@@ -113,7 +165,7 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
-  text-shadow: 1px 5px 0px #649c42, 2px 10px 0px #d2a609;
+  text-shadow: 1px 5px 0px #545454, 2px 10px 0px #8e3939;
 }
 
 #triangleBottomRight {
@@ -122,7 +174,7 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
   bottom: 0px;
   width: 30%;
   height: 50%;
-  background-color: #d2a609;
+  background-color: #8e3939;
   -webkit-clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
           clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
   z-index: 1;
@@ -130,7 +182,7 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
 
 .bubble {
   position: fixed;
-  background-color: #d2a609;
+  background-color: #8e3939;
   border-radius: 50%;
   z-index: 1;
   -webkit-box-shadow: -5px 4px 10px rgba(0, 0, 0, 0.3);

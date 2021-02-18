@@ -17,6 +17,14 @@ export class QuestionService {
 
     let questionToExport = modifiedTrueFalse == null ? modifiedMultipleChoice as Question : modifiedTrueFalse as Question;
 
+    switch(questionToExport.questionType){
+      case QuestionType.MultipleChoices:
+        break;
+      case QuestionType.TrueFalse:
+        questionToExport.questionTrueFalse.answer = modifiedTrueFalse.answer;
+        break;
+    }
+
     console.log(questionToExport);
     const httpOptions = {
       headers: new HttpHeaders({

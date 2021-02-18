@@ -103,18 +103,20 @@ h2 {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  /* adjustment */
-  position: relative;
   /* new */
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .itemcenter {
   -webkit-box-flex: 0;
       -ms-flex: 0 1 auto;
           flex: 0 1 auto;
-  position: absolute;
+  position: relative;
   /* new */
   left: 50%;
+  width: 60em;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
 }
@@ -174,5 +176,15 @@ textarea {
   50% {
     background-position: 100% 50%;
   }
+}
+
+.inputTitle {
+  width: 100%;
+  overflow: hidden;
+  text-align: justify;
+  white-space: normal;
+  text-align-last: left;
+  font-size: 0.5em;
+  line-height: 1.3em;
 }
 /*# sourceMappingURL=quiz-question-list.component.css.map */

@@ -41,10 +41,10 @@
           <p class="mat-form-field-wrapper">
             <mat-label style="padding-left: 0.75em;">Bonne réponse à la question</mat-label><br />
             <mat-radio-group aria-label="True or False radio" formControlName="questionAnswer"
-              [(value)]="this.questionTrueFalse.answer">
+              [(value)]="this.questionTrueFalse.questionTrueFalse.answer">
               <mat-radio-button [value]="true" style="margin-right: 15px; padding-top: 1em;"
-                [checked]="this.questionTrueFalse.answer">Vrai</mat-radio-button>
-              <mat-radio-button [value]="false" [checked]="!this.questionTrueFalse.answer">Faux</mat-radio-button>
+                [checked]="this.questionTrueFalse.questionTrueFalse.answer">Vrai</mat-radio-button>
+              <mat-radio-button [value]="false" [checked]="!this.questionTrueFalse.questionTrueFalse.answer">Faux</mat-radio-button>
             </mat-radio-group><br />
           </p>
         </div>

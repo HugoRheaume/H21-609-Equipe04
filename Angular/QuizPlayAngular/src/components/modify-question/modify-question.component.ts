@@ -93,9 +93,10 @@ export class ModifyQuestionComponent implements OnInit {
         break;
       case QuestionType.TrueFalse:
         this.questionTrueFalse = this.question as QuestionTrueOrFalse;
-        let answer = this.questionTrueFalse.answer == false ? 'false' : 'true';
+        let answer = this.questionTrueFalse.questionTrueFalse.answer == false ? 'false' : 'true';
         let timeLimitTF = this.questionTrueFalse.timeLimit == (-1) ? '' : this.questionTrueFalse.timeLimit;
         let hasTimeLimitTF = this.questionTrueFalse.timeLimit == (-1) ? false : true;
+        console.log(this.questionTrueFalse);
 
         this.TrueFalse = this.formBuilder.group({
           questionLabel: [
