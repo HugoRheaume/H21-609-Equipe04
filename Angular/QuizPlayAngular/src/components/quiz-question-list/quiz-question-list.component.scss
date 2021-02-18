@@ -88,14 +88,15 @@ h2 {
 
 .flexcontainer {
   display: flex;
-  justify-content: flex-start;   /* adjustment */
-  position: relative;            /* new */
+  justify-content: flex-start;      /* new */
+  height: fit-content;
 }
 
 .itemcenter {
   flex: 0 1 auto;
-  position: absolute;             /* new */
+  position: relative;             /* new */
   left: 50%;
+  width: 60em;
   transform: translateX(-50%);
 }
 
@@ -148,4 +149,14 @@ textarea{
   50% {
     background-position: 100% 50%;
   }
+}
+
+.inputTitle{
+width: 100%;
+overflow: hidden;
+text-align: justify;
+white-space: normal;
+text-align-last: left;
+font-size: 0.5em;
+line-height: 1.3em;
 }

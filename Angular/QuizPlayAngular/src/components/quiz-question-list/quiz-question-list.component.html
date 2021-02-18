@@ -13,11 +13,11 @@
 </button>
 <h2 class="sectionHeader">Informations du quiz</h2>
 <div class="quizHeader">
-  <div class="flexcontainer mb-5">
+  <div class="flexcontainer mb-2">
     <div class="itemcenter">
       <h1 class="text-center" [class.gradient-border]="this.isModifying == true">
-        <input type="text" matInput [(ngModel)]="this.service.currentQuiz.title" [disabled]="this.isModifying == false"
-          maxlength="100" minlength="4" style="font-family: Titan One; height: auto;"/>
+        <textarea type="text" class="inputTitle" matTextareaAutosize matInput [(ngModel)]="this.service.currentQuiz.title" [disabled]="this.isModifying == false"
+          maxlength="100" minlength="4" style="font-family: Titan One; height: auto; resize: none;"></textarea>
       </h1>
     </div>
     <div class="itemright mb-3">
@@ -29,22 +29,21 @@
       </button>
     </div>
   </div>
-  <h2 [class.gradient-border]="this.isModifying == true">
+  <h2 [class.gradient-border]="this.isModifying == true" class="mb-2">
     <textarea style="text-align: justify; white-space: normal; text-align-last: left; overflow: hidden; line-height: 1.3em !important;" matInput
       matTextareaAutosize [disabled]="this.isModifying == false" maxlength=1000
       [(ngModel)]="this.service.currentQuiz.description">
     </textarea>
   </h2>
-  <h3 class="text-end m-0 unselectable">
+  <h3 class="text-end mb-2 unselectable">
     <mat-icon style="font-size: 30px;" *ngIf="this.isModifying == false"
       [matTooltip]="this.service.currentQuiz.isPublic ? 'Le quiz est public' : 'Le quiz est privé'">
       {{this.service.currentQuiz.isPublic ? 'public' : 'public_off'}}
     </mat-icon>
-    <mat-icon style="font-size: 30px;" class="clickableThing"
-      *ngIf="this.isModifying == true" (click)="this.service.currentQuiz.isPublic = !this.service.currentQuiz.isPublic"
-      [matTooltip]="this.service.currentQuiz.isPublic ? 'Le quiz est public' : 'Le quiz est privé'">
-      {{this.service.currentQuiz.isPublic ? 'public' : 'public_off'}}
-    </mat-icon>
+    <mat-checkbox style="font-size: 30px;" class="clickableThing"
+      *ngIf="this.isModifying == true" [(ngModel)]="this.service.currentQuiz.isPublic">
+      Rendre le quiz public ?
+    </mat-checkbox>
   </h3>
 </div>
 
