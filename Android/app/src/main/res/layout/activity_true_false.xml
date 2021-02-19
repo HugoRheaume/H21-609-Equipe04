@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/timeLimit"
         android:visibility="visible">
 
@@ -37,7 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/questionLabel"

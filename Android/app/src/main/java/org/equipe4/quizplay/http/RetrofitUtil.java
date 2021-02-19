@@ -36,7 +36,7 @@ public class RetrofitUtil {
 
     public static QPService get() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP_PROD)
+                .baseUrl(IP_NIC)
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
