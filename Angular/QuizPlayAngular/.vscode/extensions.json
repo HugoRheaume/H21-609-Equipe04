@@ -14,6 +14,10 @@
     "formulahendry.auto-close-tag",
     "coenraads.bracket-pair-colorizer-2",
     "zignd.html-css-class-completion",
-    "visualstudioexptteam.vscodeintellicode"
+    "visualstudioexptteam.vscodeintellicode",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "mike-co.import-sorter",
   ]
 }
+        

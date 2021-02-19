@@ -5,8 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomePageComponent } from 'src/components/home-page/home-page.component';
 import { QuizQuestionListComponent } from '../components/quiz-question-list/quiz-question-list.component';
 import { LoginComponent } from 'src/components/login/login.component';
-import { WaitingRoomComponent } from 'src/components/waiting-room/waiting-room.component';
-import { QuizRoomComponent } from 'src/components/quiz-room/quiz-room.component';
+import { WaitingRoomComponent } from 'src/components/QuizLive/waiting-room/waiting-room.component';
+import { QuizRoomComponent } from 'src/components/QuizLive/quiz-room/quiz-room.component';
 const routes: Routes = [
 	{ path: 'list', component: ListQuizComponent },
 	{ path: 'quiz/:quizShareCode', component: QuizQuestionListComponent },

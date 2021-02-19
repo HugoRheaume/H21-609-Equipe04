@@ -1,4 +1,4 @@
-import { QuizRoomComponent } from 'src/components/quiz-room/quiz-room.component';
+import { QuizRoomComponent } from 'src/components/QuizLive/quiz-room/quiz-room.component';
 import { Component, OnInit } from '@angular/core';
 import { Score, User } from 'src/app/services/web-socket.service';
 

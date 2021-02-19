@@ -1,0 +1,47 @@
+<div *ngIf="this.quizRoomComponent.currentQuestion$ | async as question">
+  <div *ngIf="question.questionType == 1" class="questionDisplay questionBox">
+    <div class="row itemcenter">
+      <div
+        [ngClass]="
+          question.questionTrueFalse.answer &&
+          this.quizRoomComponent.isShowResult
+            ? 'correctTrue'
+            : ''
+        "
+        id="truecircle"
+        class="circle"
+      >
+        <h1>Vrai</h1>
+        <mat-icon
+          *ngIf="
+            question.questionTrueFalse.answer &&
+            this.quizRoomComponent.isShowResult
+          "
+          style="color: green"
+          >check_circle</mat-icon
+        >
+      </div>
+
+      <div
+        [ngClass]="
+          !question.questionTrueFalse.answer &&
+          this.quizRoomComponent.isShowResult
+            ? 'correctTrue'
+            : ''
+        "
+        id="falsecircle"
+        class="circle"
+      >
+        <h1>Faux</h1>
+        <mat-icon
+          *ngIf="
+            !question.questionTrueFalse.answer &&
+            this.quizRoomComponent.isShowResult
+          "
+          style="color: green"
+          >check_circle</mat-icon
+        >
+      </div>
+    </div>
+  </div>
+</div>
