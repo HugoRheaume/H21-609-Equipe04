@@ -238,8 +238,4 @@ public class MultipleChoiceActivity extends AppCompatActivity {
 
         return list;
     }
-
-    public void test(View v) {
-        Log.i("yeetTest", v.toString());
-    }
 }

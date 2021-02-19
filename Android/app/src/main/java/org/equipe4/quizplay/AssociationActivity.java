@@ -24,12 +24,16 @@ import android.widget.Toast;
 
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
+import org.equipe4.quizplay.transfer.QuestionAssociation;
 import org.equipe4.quizplay.transfer.QuestionDTO;
 import org.equipe4.quizplay.transfer.QuestionResultDTO;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,26 +72,26 @@ public class AssociationActivity extends AppCompatActivity {
         categories.add((LinearLayout)findViewById(R.id.zoneCategory2));
 
         TextView asso1 = findViewById(R.id.asso1);
-        asso1.setText(question.questionAssociation.get(0).statement);
+        asso1.setText("1. " + question.questionAssociation.get(0).statement);
         asso1.setTag("out");
         tvList.add(asso1);
         if (question.questionAssociation.size() >= 2) {
             TextView asso2 = findViewById(R.id.asso2);
-            asso2.setText(question.questionAssociation.get(1).statement);
+            asso2.setText("2. " + question.questionAssociation.get(1).statement);
             asso2.setTag("out");
             asso2.setVisibility(View.VISIBLE);
             tvList.add(asso2);
         }
         if (question.questionAssociation.size() >= 3) {
             TextView asso3 = findViewById(R.id.asso3);
-            asso3.setText(question.questionAssociation.get(2).statement);
+            asso3.setText("3. " + question.questionAssociation.get(2).statement);
             asso3.setTag("out");
             asso3.setVisibility(View.VISIBLE);
             tvList.add(asso3);
         }
         if (question.questionAssociation.size() >= 4) {
             TextView asso4 = findViewById(R.id.asso4);
-            asso4.setText(question.questionAssociation.get(3).statement);
+            asso4.setText("4. " + question.questionAssociation.get(3).statement);
             asso4.setTag("out");
             dragListeners.add((LinearLayout)findViewById(R.id.zoneAsso2));
             findViewById(R.id.zoneAsso2).setVisibility(View.VISIBLE);
@@ -95,7 +99,7 @@ public class AssociationActivity extends AppCompatActivity {
         }
         if (question.questionAssociation.size() >= 5) {
             TextView asso5 = findViewById(R.id.asso5);
-            asso5.setText(question.questionAssociation.get(4).statement);
+            asso5.setText("5. " + question.questionAssociation.get(4).statement);
             asso5.setTag("out");
             asso5.setVisibility(View.VISIBLE);
             tvList.add(asso5);
@@ -171,24 +175,60 @@ public class AssociationActivity extends AppCompatActivity {
     public void answer() {
         if (timer != null)
             timer.cancel();
-        boolean rightAnswer = false;
+        boolean rightAnswer = true;
+        boolean[][] goodAnswers = new boolean[question.categories.size()][question.questionAssociation.size()];
+
+        for (int i = 0; i <tvList.size(); i++) {
+            TextView tv = tvList.get(i);
+            QuestionAssociation asso = question.questionAssociation.get(i);
+
+            if(!tv.getTag().equals(asso.categoryIndex + "")) {
+                rightAnswer = false;
+                tv.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wrong), PorterDuff.Mode.SRC_IN);
+                goodAnswers[asso.categoryIndex][i] = true;
+            }
+            else
+                tv.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.good), PorterDuff.Mode.SRC_IN);
+
+            tv.setClickable(false);
+        }
+
+        String text1 = "";
+        String text2 = "";
+        String text3 = "";
+        for(int i = 0; i < goodAnswers.length; i++) {
+            boolean[] a = goodAnswers[i];
+            for(int j = 0; j < a.length; j++) {
+                boolean b = a[j];
+                if (b) {
+                    if (i == 0)
+                        text1 += ((j + 1) + ", ");
+                    if (i == 1)
+                        text2 += ((j + 1) + ", ");
+                    if (i == 2)
+                        text3 += ((j + 1) + ", ");
+                }
+            }
+        }
 
 
-        if (!rightAnswer)
-            //((RadioButton)v).getButtonDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wrong), PorterDuff.Mode.SRC_IN);
-
-
-
-        findViewById(R.id.radioTrue).setClickable(false);
-        findViewById(R.id.radioFalse).setClickable(false);
-
-
-        if (question.questionTrueFalse.answer) {
-            RadioButton radioTrue = findViewById(R.id.radioTrue);
-            radioTrue.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
-        } else {
-            RadioButton radioFalse = findViewById(R.id.radioFalse);
-            radioFalse.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
+        if (!text1.equals("")) {
+            text1 = text1.substring(0, text1.length() - 2);
+            TextView tv = findViewById(R.id.goodAnswerCategory1);
+            tv.setText(text1);
+            tv.setVisibility(View.VISIBLE);
+        }
+        if (!text2.equals("")) {
+            text2 = text2.substring(0, text2.length() - 2);
+            TextView tv = findViewById(R.id.goodAnswerCategory2);
+            tv.setText(text2);
+            tv.setVisibility(View.VISIBLE);
+        }
+        if (!text3.equals("")) {
+            text3 = text3.substring(0, text3.length() - 2);
+            TextView tv = findViewById(R.id.goodAnswerCategory3);
+            tv.setText(text3);
+            tv.setVisibility(View.VISIBLE);
         }
 
         Button button = findViewById(R.id.nextQuestion);
@@ -241,6 +281,9 @@ public class AssociationActivity extends AppCompatActivity {
                 case 2:
                     i = new Intent(getApplicationContext(), MultipleChoiceActivity.class);
                     break;
+                case 3:
+                    i = new Intent(getApplicationContext(), AssociationActivity.class);
+                    break;
                 default:
                     return;
             }
@@ -282,7 +325,6 @@ public class AssociationActivity extends AppCompatActivity {
 
                     ClipData.Item item = event.getClipData().getItemAt(0);
                     String dragData = item.getText().toString();
-                    Toast.makeText(getApplicationContext(), dragData, Toast.LENGTH_SHORT).show();
 
                     v.invalidate();
 
@@ -292,7 +334,7 @@ public class AssociationActivity extends AppCompatActivity {
                     viewGroup.removeView(view);
 
                     if (dragListeners.contains((LinearLayout)viewGroup)) {
-                        if (viewGroup.getChildCount() == 1) {
+                        if (viewGroup.getChildCount() == 1 || ((question.questionAssociation.size() < 3) && (viewGroup.getChildCount() == 1 + (3 - question.questionAssociation.size())))) {
                             viewGroup.setVisibility(View.GONE);
                         } else {
                             View placeholder = viewGroup.getChildAt(viewGroup.getChildCount() - 1);
