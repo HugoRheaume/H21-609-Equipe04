@@ -91,7 +91,8 @@ namespace API.Service
                 TimeLimit = question.TimeLimit,
                 QuestionType = question.QuestionType,
                 QuestionTrueFalse = new List<QuestionTrueFalse>() { question.QuestionTrueFalse },
-                QuestionMultipleChoice = question.QuestionMultipleChoice
+                QuestionMultipleChoice = question.QuestionMultipleChoice,
+                NeedsAllAnswers = question.NeedsAllAnswers
             };
 
             Question q = db.Question.Add(questionToCreate);
