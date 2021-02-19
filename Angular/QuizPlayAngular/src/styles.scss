@@ -5,16 +5,16 @@
 // @import '../src/themes/6.scss'; //change text color
 // @import '../src/themes/8.scss';
 // @import '../src/themes/9.scss'; //change text color
-@import "../src/themes/10.scss";
+// @import "../src/themes/10.scss";
 // @import '../src/themes/11.scss'; //change text color
 // @import '../src/themes/12.scss';
 // @import "../src/themes/14.scss";
 // @import '../src/themes/15.scss'; //change text color
 // @import '../src/themes/16.scss';
-// @import "../src/themes/18.scss";
+@import "../src/themes/18.scss";
 // @import '../src/themes/19.scss';
 // @import '../src/themes/21.scss'; //change everything
-// @import '../src/themes/22.scss';
+// @import "../src/themes/22.scss";
 
 html,
 body {
@@ -134,6 +134,9 @@ textarea:not([disabled]) {
 .navContentButtonLogout:hover {
   background-color: $bubbles-triangle;
 }
+.createQuizDiv {
+  border-radius: 7.5px;
+}
 
 //Material components
 .mat-fab.mat-primary {
@@ -141,6 +144,9 @@ textarea:not([disabled]) {
 }
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
   background-color: $bubbles-triangle;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: $buttons;
 }
 .mat-slide-toggle-thumb {
   background-color: $text;
@@ -175,7 +181,8 @@ table tr:not(.mat-header-row):hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .mat-raised-button.mat-primary,
-.mat-raised-button {
+.mat-raised-button,
+.mat-raised-button.mat-warn {
   background-color: $buttons;
   color: $text;
 }
@@ -208,9 +215,16 @@ table tr:not(.mat-header-row):hover {
   background-color: $background;
   position: fixed !important;
 }
+.mat-cell {
+  color: $text;
+}
 table tr td mat-grid-list div mat-grid-tile:hover {
   background-color: $bubbles-triangle;
 }
 table tr td:not(.mat-cell):hover {
   background-color: $background;
+}
+.mat-dialog-container {
+  color: $text !important;
+  background: $background !important;
 }
