@@ -5,7 +5,7 @@ body {
 
 body {
   margin: 0;
-  background-color: #003d5b;
+  background-color: #1a535c;
 }
 
 body .container {
@@ -14,11 +14,11 @@ body .container {
 }
 
 body * {
-  color: #edae49;
+  color: #f7fff7;
 }
 
 .btnEpic {
-  background: rgba(209, 73, 91, 0.75);
+  background: rgba(255, 107, 107, 0.75);
   margin-top: 200px !important;
   font-size: 30px;
   font-family: "Roboto", "Helvetica Neue", sans-serif;
@@ -34,7 +34,7 @@ body * {
   bottom: 0px;
   width: 15%;
   height: 25%;
-  background-color: #30638e;
+  background-color: #dc753c;
   -webkit-clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
           clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
   z-index: 1;
@@ -46,7 +46,7 @@ body * {
   top: 0px;
   width: 100%;
   height: 100%;
-  background-color: #d1495b;
+  background-color: #4ecdc4;
   -webkit-clip-path: circle(40% at 90% 0);
           clip-path: circle(40% at 90% 0);
   z-index: 0;
@@ -58,7 +58,7 @@ body * {
   bottom: 0px;
   width: 100%;
   height: 100%;
-  background-color: #d1495b;
+  background-color: #4ecdc4;
   -webkit-clip-path: circle(34.4% at -10% 88%);
           clip-path: circle(34.4% at -10% 88%);
   z-index: 0;
@@ -78,38 +78,38 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
 }
 
 .example-box:hover {
-  background-color: #d1495b;
+  background-color: #4ecdc4;
 }
 
 .quizHeader,
 .questionBox {
-  background: #003d5b;
-  border: 7.5px #30638e solid !important;
+  background: #1a535c;
+  border: 7.5px #dc753c solid !important;
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .questionItem {
-  border-bottom: 2px #30638e solid !important;
+  border-bottom: 2px #dc753c solid !important;
 }
 
 .questionItem:hover,
 .activeQuestion {
-  background-color: #30638e !important;
+  background-color: #dc753c !important;
 }
 
 input:not([disabled])[type="text"],
 textarea:not([disabled]) {
-  color: #edae49;
+  color: #f7fff7;
 }
 
 .gradient-border {
-  background: #30638e;
+  background: #dc753c;
 }
 
 .clickableThing:hover {
   cursor: pointer;
-  color: #edae49;
+  color: #f7fff7;
 }
 
 .unselectable {
@@ -122,16 +122,16 @@ textarea:not([disabled]) {
 
 #navContentUserInfo,
 #navContentUserInfo:hover {
-  background-color: #003d5b !important;
-  background: #003d5b !important;
+  background-color: #1a535c !important;
+  background: #1a535c !important;
 }
 
 #navContentUserButton {
-  border-bottom: 2px solid #30638e;
+  border-bottom: 2px solid #dc753c;
 }
 
 .navContentButtonLogout:hover {
-  background-color: #30638e;
+  background-color: #dc753c;
 }
 
 .createQuizDiv {
@@ -139,53 +139,53 @@ textarea:not([disabled]) {
 }
 
 .mat-fab.mat-primary {
-  background-color: rgba(209, 73, 91, 0.75);
+  background-color: rgba(255, 107, 107, 0.75);
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #30638e;
+  background-color: #dc753c;
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: rgba(209, 73, 91, 0.75);
+  background-color: rgba(255, 107, 107, 0.75);
 }
 
 .mat-slide-toggle-thumb {
-  background-color: #edae49;
+  background-color: #f7fff7;
 }
 
 .mat-snack-bar-container {
-  background: #30638e;
+  background: #dc753c;
 }
 
 table tr:not(.mat-header-row):hover {
-  background-color: #30638e;
+  background-color: #dc753c;
 }
 
 .mat-mini-fab.mat-accent {
-  background-color: rgba(209, 73, 91, 0.75);
+  background-color: rgba(255, 107, 107, 0.75);
 }
 
 .mat-paginator {
-  color: #edae49;
-  background: #003d5b;
+  color: #f7fff7;
+  background: #1a535c;
   border-bottom-left-radius: 7.5px;
   border-bottom-right-radius: 7.5px;
-  border-left: 7.5px #30638e solid !important;
-  border-bottom: 7.5px #30638e solid !important;
-  border-right: 7.5px #30638e solid !important;
+  border-left: 7.5px #dc753c solid !important;
+  border-bottom: 7.5px #dc753c solid !important;
+  border-right: 7.5px #dc753c solid !important;
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .mat-table {
-  background: #003d5b;
+  background: #1a535c;
   border-top-left-radius: 7.5px;
   border-top-right-radius: 7.5px;
   border-collapse: unset;
-  border-left: 7.5px #30638e solid !important;
-  border-top: 7.5px #30638e solid !important;
-  border-right: 7.5px #30638e solid !important;
+  border-left: 7.5px #dc753c solid !important;
+  border-top: 7.5px #dc753c solid !important;
+  border-right: 7.5px #dc753c solid !important;
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -193,32 +193,32 @@ table tr:not(.mat-header-row):hover {
 .mat-raised-button.mat-primary,
 .mat-raised-button,
 .mat-raised-button.mat-warn {
-  background-color: rgba(209, 73, 91, 0.75);
-  color: #edae49;
+  background-color: rgba(255, 107, 107, 0.75);
+  color: #f7fff7;
 }
 
 .mat-input-element {
-  caret-color: #d1495b;
+  caret-color: #4ecdc4;
 }
 
 .mat-input-element:disabled {
-  color: #edae49;
+  color: #f7fff7;
 }
 
 .mat-option.mat-selected:not(.mat-option-disabled) {
-  color: #30638e !important;
+  color: #dc753c !important;
 }
 
 .mat-form-field.mat-focused .mat-form-field-ripple {
-  background-color: #30638e;
+  background-color: #dc753c;
 }
 
 .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
-  color: #30638e;
+  color: #dc753c;
 }
 
 .mat-select-panel {
-  background: #30638e;
+  background: #dc753c;
 }
 
 .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple),
@@ -227,28 +227,34 @@ table tr:not(.mat-header-row):hover {
 }
 
 .mat-option {
-  color: #edae49 !important;
+  color: #f7fff7 !important;
 }
 
 .mat-sidenav {
-  background-color: #003d5b;
+  background-color: #1a535c;
   position: fixed !important;
 }
 
 .mat-cell {
-  color: #edae49;
+  color: #f7fff7;
 }
 
 table tr td mat-grid-list div mat-grid-tile:hover {
-  background-color: #30638e;
+  background-color: #dc753c;
 }
 
 table tr td:not(.mat-cell):hover {
-  background-color: #003d5b;
+  background-color: #1a535c;
 }
 
 .mat-dialog-container {
-  color: #edae49 !important;
-  background: #003d5b !important;
+  color: #f7fff7 !important;
+  background: #1a535c !important;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  background-color: #1a535c;
 }
 /*# sourceMappingURL=styles.css.map */

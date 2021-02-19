@@ -8,10 +8,10 @@
 // @import "../src/themes/10.scss";
 // @import '../src/themes/11.scss'; //change text color
 // @import '../src/themes/12.scss';
-// @import "../src/themes/14.scss";
+@import "../src/themes/14.scss";
 // @import '../src/themes/15.scss'; //change text color
-// @import '../src/themes/16.scss';
-@import "../src/themes/18.scss";
+// @import "../src/themes/16.scss";
+// @import "../src/themes/18.scss";
 // @import '../src/themes/19.scss';
 // @import '../src/themes/21.scss'; //change everything
 // @import "../src/themes/22.scss";
@@ -227,4 +227,11 @@ table tr td:not(.mat-cell):hover {
 .mat-dialog-container {
   color: $text !important;
   background: $background !important;
+}
+
+//Bootstrap components
+.modal-header,
+.modal-body,
+.modal-footer {
+  background-color: $background;
 }
