@@ -5,10 +5,10 @@
 // @import '../src/themes/6.scss'; //change text color
 // @import '../src/themes/8.scss';
 // @import '../src/themes/9.scss'; //change text color
-// @import '../src/themes/10.scss';
+@import "../src/themes/10.scss";
 // @import '../src/themes/11.scss'; //change text color
 // @import '../src/themes/12.scss';
-@import "../src/themes/14.scss";
+// @import "../src/themes/14.scss";
 // @import '../src/themes/15.scss'; //change text color
 // @import '../src/themes/16.scss';
 // @import "../src/themes/18.scss";
@@ -123,6 +123,17 @@ textarea:not([disabled]) {
   -ms-user-select: none;
   user-select: none;
 }
+#navContentUserInfo,
+#navContentUserInfo:hover {
+  background-color: $background !important;
+  background: $background !important;
+}
+#navContentUserButton {
+  border-bottom: 2px solid $bubbles-triangle;
+}
+.navContentButtonLogout:hover {
+  background-color: $bubbles-triangle;
+}
 
 //Material components
 .mat-fab.mat-primary {
@@ -154,7 +165,6 @@ table tr:not(.mat-header-row):hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .mat-table {
-  color: $text;
   background: $background;
   border-top-left-radius: 7.5px;
   border-top-right-radius: 7.5px;
@@ -193,4 +203,14 @@ table tr:not(.mat-header-row):hover {
 }
 .mat-option {
   color: $text !important;
+}
+.mat-sidenav {
+  background-color: $background;
+  position: fixed !important;
+}
+table tr td mat-grid-list div mat-grid-tile:hover {
+  background-color: $bubbles-triangle;
+}
+table tr td:not(.mat-cell):hover {
+  background-color: $background;
 }
