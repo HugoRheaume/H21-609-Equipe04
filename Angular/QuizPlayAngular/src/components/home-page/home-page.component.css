@@ -5,7 +5,7 @@ body {
 
 body {
   margin: 0;
-  background-color: #1f1f1f;
+  background-color: #1a535c;
 }
 
 body .container {
@@ -14,11 +14,11 @@ body .container {
 }
 
 body * {
-  color: #e5e5e5;
+  color: #f7fff7;
 }
 
 .btnEpic {
-  background: rgba(255, 0, 31, 0.75);
+  background: rgba(255, 107, 107, 0.75);
   margin-top: 200px !important;
   font-size: 30px;
   font-family: "Roboto", "Helvetica Neue", sans-serif;
@@ -34,7 +34,7 @@ body * {
   bottom: 0px;
   width: 15%;
   height: 25%;
-  background-color: #8e3939;
+  background-color: #dc753c;
   -webkit-clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
           clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
   z-index: 1;
@@ -46,7 +46,7 @@ body * {
   top: 0px;
   width: 100%;
   height: 100%;
-  background-color: #545454;
+  background-color: #4ecdc4;
   -webkit-clip-path: circle(40% at 90% 0);
           clip-path: circle(40% at 90% 0);
   z-index: 0;
@@ -58,7 +58,7 @@ body * {
   bottom: 0px;
   width: 100%;
   height: 100%;
-  background-color: #545454;
+  background-color: #4ecdc4;
   -webkit-clip-path: circle(34.4% at -10% 88%);
           clip-path: circle(34.4% at -10% 88%);
   z-index: 0;
@@ -78,63 +78,63 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
 }
 
 .mat-fab.mat-primary {
-  background-color: rgba(255, 0, 31, 0.75);
+  background-color: rgba(255, 107, 107, 0.75);
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #8e3939;
+  background-color: #dc753c;
 }
 
 .mat-slide-toggle-thumb {
-  background-color: #e5e5e5;
+  background-color: #f7fff7;
 }
 
 .mat-snack-bar-container {
-  background: #8e3939;
+  background: #dc753c;
 }
 
 .example-box:hover {
-  background-color: #545454;
+  background-color: #4ecdc4;
 }
 
 .quizHeader, .questionBox {
-  background: #1f1f1f;
-  border: 7.5px #8e3939 solid !important;
+  background: #1a535c;
+  border: 7.5px #dc753c solid !important;
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .questionItem {
-  border-bottom: 2px #8e3939 solid !important;
+  border-bottom: 2px #dc753c solid !important;
 }
 
 .questionItem:hover, .activeQuestion {
-  background-color: #8e3939 !important;
+  background-color: #dc753c !important;
 }
 
 .mat-raised-button.mat-primary {
-  background-color: rgba(255, 0, 31, 0.75);
+  background-color: rgba(255, 107, 107, 0.75);
 }
 
 .mat-input-element {
-  caret-color: #545454;
+  caret-color: #4ecdc4;
 }
 
 .mat-input-element:disabled {
-  color: #e5e5e5;
+  color: #f7fff7;
 }
 
 input:not([disabled])[type="text"], textarea:not([disabled]) {
-  color: #e5e5e5;
+  color: #f7fff7;
 }
 
 .gradient-border {
-  background: #8e3939;
+  background: #dc753c;
 }
 
 .clickableThing:hover {
   cursor: pointer;
-  color: #e5e5e5;
+  color: #f7fff7;
 }
 
 .unselectable {
@@ -165,7 +165,7 @@ input:not([disabled])[type="text"], textarea:not([disabled]) {
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
-  text-shadow: 1px 5px 0px #545454, 2px 10px 0px #8e3939;
+  text-shadow: 1px 5px 0px #4ecdc4, 2px 10px 0px #dc753c;
 }
 
 #triangleBottomRight {
@@ -174,7 +174,7 @@ input:not([disabled])[type="text"], textarea:not([disabled]) {
   bottom: 0px;
   width: 30%;
   height: 50%;
-  background-color: #8e3939;
+  background-color: #dc753c;
   -webkit-clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
           clip-path: polygon(100% 1%, 0% 100%, 100% 100%);
   z-index: 1;
@@ -182,7 +182,7 @@ input:not([disabled])[type="text"], textarea:not([disabled]) {
 
 .bubble {
   position: fixed;
-  background-color: #8e3939;
+  background-color: #dc753c;
   border-radius: 50%;
   z-index: 1;
   -webkit-box-shadow: -5px 4px 10px rgba(0, 0, 0, 0.3);

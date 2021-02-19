@@ -5,16 +5,16 @@
 // @import '../src/themes/6.scss'; //change text color
 // @import '../src/themes/8.scss';
 // @import '../src/themes/9.scss'; //change text color
- @import '../src/themes/10.scss';
-// @import '../src/themes/11.scss'; //maybe change text color
+// @import "../src/themes/10.scss";
+// @import '../src/themes/11.scss'; //change text color
 // @import '../src/themes/12.scss';
-// @import '../src/themes/14.scss';
+@import "../src/themes/14.scss";
 // @import '../src/themes/15.scss'; //change text color
-// @import '../src/themes/16.scss';
+// @import "../src/themes/16.scss";
 // @import "../src/themes/18.scss";
 // @import '../src/themes/19.scss';
 // @import '../src/themes/21.scss'; //change everything
-// @import '../src/themes/22.scss';
+// @import "../src/themes/22.scss";
 
 html,
 body {
@@ -46,7 +46,6 @@ body * {
   width: auto;
 }
 
-
 #triangleBottomRight {
   position: fixed;
   right: 0px;
@@ -68,7 +67,6 @@ body * {
   clip-path: circle(40% at 90% 0);
   z-index: 0;
 }
-
 #circleBottomLeft {
   position: fixed;
   left: 0px;
@@ -89,48 +87,31 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
 .form-field-full-width {
   width: 100%;
 }
-.mat-fab.mat-primary{
-  background-color: $buttons;
-}
-.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: $bubbles-triangle;
-}
-.mat-slide-toggle-thumb {
-  background-color: $text;
-}
-.mat-snack-bar-container {
-  background: $bubbles-triangle;
-}
+
 .example-box:hover {
   background-color: $circles;
 }
-.quizHeader, .questionBox {
+.quizHeader,
+.questionBox {
   background: $background;
   border: 7.5px $bubbles-triangle solid !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.questionItem{
+.questionItem {
   border-bottom: 2px $bubbles-triangle solid !important;
 }
-.questionItem:hover, .activeQuestion {
-	background-color: $bubbles-triangle !important;
+.questionItem:hover,
+.activeQuestion {
+  background-color: $bubbles-triangle !important;
 }
-.mat-raised-button.mat-primary{
-  background-color: $buttons;
-}
-.mat-input-element {
-  caret-color: $circles;
-}
-.mat-input-element:disabled{
+input:not([disabled])[type="text"],
+textarea:not([disabled]) {
   color: $text;
 }
-input:not([disabled])[type="text"], textarea:not([disabled]){
-  color: $text;
-}
-.gradient-border{
+.gradient-border {
   background: $bubbles-triangle;
 }
-.clickableThing:hover{
+.clickableThing:hover {
   cursor: pointer;
   color: $text;
 }
@@ -141,4 +122,116 @@ input:not([disabled])[type="text"], textarea:not([disabled]){
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+#navContentUserInfo,
+#navContentUserInfo:hover {
+  background-color: $background !important;
+  background: $background !important;
+}
+#navContentUserButton {
+  border-bottom: 2px solid $bubbles-triangle;
+}
+.navContentButtonLogout:hover {
+  background-color: $bubbles-triangle;
+}
+.createQuizDiv {
+  border-radius: 7.5px;
+}
+
+//Material components
+.mat-fab.mat-primary {
+  background-color: $buttons;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: $bubbles-triangle;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: $buttons;
+}
+.mat-slide-toggle-thumb {
+  background-color: $text;
+}
+.mat-snack-bar-container {
+  background: $bubbles-triangle;
+}
+table tr:not(.mat-header-row):hover {
+  background-color: $bubbles-triangle;
+}
+.mat-mini-fab.mat-accent {
+  background-color: $buttons;
+}
+.mat-paginator {
+  color: $text;
+  background: $background;
+  border-bottom-left-radius: 7.5px;
+  border-bottom-right-radius: 7.5px;
+  border-left: 7.5px $bubbles-triangle solid !important;
+  border-bottom: 7.5px $bubbles-triangle solid !important;
+  border-right: 7.5px $bubbles-triangle solid !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.mat-table {
+  background: $background;
+  border-top-left-radius: 7.5px;
+  border-top-right-radius: 7.5px;
+  border-collapse: unset;
+  border-left: 7.5px $bubbles-triangle solid !important;
+  border-top: 7.5px $bubbles-triangle solid !important;
+  border-right: 7.5px $bubbles-triangle solid !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.mat-raised-button.mat-primary,
+.mat-raised-button,
+.mat-raised-button.mat-warn {
+  background-color: $buttons;
+  color: $text;
+}
+.mat-input-element {
+  caret-color: $circles;
+}
+.mat-input-element:disabled {
+  color: $text;
+}
+.mat-option.mat-selected:not(.mat-option-disabled) {
+  color: $bubbles-triangle !important;
+}
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $bubbles-triangle;
+}
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: $bubbles-triangle;
+}
+.mat-select-panel {
+  background: $bubbles-triangle;
+}
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple),
+.mat-option:hover {
+  background: rgba(0, 0, 0, 0.12) !important;
+}
+.mat-option {
+  color: $text !important;
+}
+.mat-sidenav {
+  background-color: $background;
+  position: fixed !important;
+}
+.mat-cell {
+  color: $text;
+}
+table tr td mat-grid-list div mat-grid-tile:hover {
+  background-color: $bubbles-triangle;
+}
+table tr td:not(.mat-cell):hover {
+  background-color: $background;
+}
+.mat-dialog-container {
+  color: $text !important;
+  background: $background !important;
+}
+
+//Bootstrap components
+.modal-header,
+.modal-body,
+.modal-footer {
+  background-color: $background;
 }
