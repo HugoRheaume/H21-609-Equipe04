@@ -38,8 +38,7 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
     this.service.create(this.quizShareCode);
   }
   ngOnDestroy() {
-    console.log('WaitingRoomComponent - ngOnDestroy()');
-    //this.service.cancel();
+    this.service.cancel();
   }
 
   cancel() {

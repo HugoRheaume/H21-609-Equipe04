@@ -19,6 +19,8 @@ export class WebSocketService {
   public defaultTimeLimit: number;
   public currentQuestion$: Subject<Question> = new Subject<Question>();
 
+  public canDestroy: boolean = true;
+
   //subject = webSocket("wss://localhost:44351/api/websocket/joinwaitingroom");
   subject = webSocket<any>({
     //url: "wss://localhost:44351/websocket/connect",
@@ -39,6 +41,7 @@ export class WebSocketService {
     this.subject.next(ws);
   }
   public cancel() {
+    if (!this.canDestroy) return;
     let ws = new DeleteRoomWS();
     ws.token = localStorage.getItem('token');
     ws.shareCode = this.currentShareCode;
@@ -48,6 +51,7 @@ export class WebSocketService {
     this.updateUserDisplay();
   }
   public beginQuiz(time: number) {
+    this.canDestroy = false;
     this.defaultTimeLimit = time;
     let ws = new BeginQuizWS();
     ws.token = localStorage.getItem('token');

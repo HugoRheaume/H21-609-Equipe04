@@ -51,8 +51,8 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('QuizRoomComponent - ngOnDestroy()');
     this.stopTimer();
+    this.wsService.canDestroy = true;
     this.wsService.cancel();
 
     this.isShowResult = false;
