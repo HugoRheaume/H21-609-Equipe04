@@ -1,0 +1,72 @@
+<div>
+  <button
+    mat-raised-button
+    style="float: right"
+    class="mat-primary"
+    (click)="this[this.button.action]()"
+  >
+    {{ this.button.text }}
+  </button>
+</div>
+
+<div *ngIf="!this.isScoreboardPage">
+  <div class="row" *ngIf="this.currentQuestion$ | async as question">
+    <tabe>
+      <tr>
+        <td>
+          <div
+            id="spinnerTimeLeft"
+            style="
+              position: relative;
+              width: 100px;
+              height: 100px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 10px;
+              padding: 2px;
+            "
+          >
+            <mat-progress-spinner
+              style="position: absolute; top: 0; left: 0"
+              mode="determinate"
+              value="{{ this.spinnerValue }}"
+            >
+            </mat-progress-spinner>
+            <h2>{{ this.timeLeft }}</h2>
+          </div>
+        </td>
+        <td>
+          <div>
+            <h1>{{ question.label }}</h1>
+          </div>
+        </td>
+      </tr>
+    </tabe>
+  </div>
+  <app-quiz-room-display-true-false></app-quiz-room-display-true-false>
+  <app-quiz-room-display-multiple-choice></app-quiz-room-display-multiple-choice>
+</div>
+
+<!--div class="col-2" style="height: max; background-color: black;">
+        <button mat-flat-button style="background-color: tomato;" (click)="nextQuestion()" >Force Next </button>
+        
+        <mat-grid-list cols="2" rowHeight="1:1" style="display: flex;">
+            <mat-grid-tile *ngFor="let i of this.wsService.usersDisplay" >
+                <div class="userCard" *ngIf="this.wsService.users[i].isAnswer" style="background-color: green;">
+                    <img src="{{this.wsService.users[i].picture}}" alt="userImage" style="width: 64px; height: 64px;"/>
+                    <span matTooltip="{{this.wsService.users[i].name}}" [matTooltipClass]="'toolTipCustom'" [matTooltipHideDelay]="50" >
+                        {{this.wsService.usersFormated[i]}}
+                    </span>
+                </div>
+                <div class="userCard" *ngIf="!this.wsService.users[i].isAnswer" style="background-color: red;">
+                    <img src="{{this.wsService.users[i].picture}}" alt="userImage" style="width: 64px; height: 64px;"/>
+                    <span matTooltip="{{this.wsService.users[i].name}}" [matTooltipClass]="'toolTipCustom'" [matTooltipHideDelay]="50" >
+                        {{this.wsService.usersFormated[i]}}
+                    </span>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div-->
+
+<app-scoreboard *ngIf="this.isScoreboardPage"></app-scoreboard>

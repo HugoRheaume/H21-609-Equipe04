@@ -15,7 +15,7 @@ namespace API.Service
     {
         public static void Log(Client handler, object value)
         {
-            string m = JsonConvert.SerializeObject(value, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            string m = JsonConvert.SerializeObject(value, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore });
             handler.Send(m);
         }
         public static void LogRoom(string shareCode, object value)
@@ -33,7 +33,7 @@ namespace API.Service
         {
             LogMessageCommand command = new LogMessageCommand();
             command.MessageType = type;
-            string m = JsonConvert.SerializeObject(command, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            string m = JsonConvert.SerializeObject(command, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore });
             handler.Send(m);
         }
 

@@ -1,0 +1,44 @@
+.questionDisplay {
+  background-color: #1f1f1f;
+  border: solid 5px gray;
+  border-radius: 7.5px;
+  width: 100%;
+  height: fit-content;
+  display: block;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.itemcenter {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.circle {
+  height: auto;
+  width: 48%;
+  border-radius: 7.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+  min-height: 100px;
+  text-align: justify;
+  white-space: normal;
+  text-align-last: left;
+}
+
+#truecircle {
+  border: solid 7.5px #3d3d3d;
+  background-color: #292929;
+}
+
+.correctTrue {
+  border: solid 7.5px #34a853 !important;
+}
+.correctFalse {
+  border: solid 10px #ea4335 !important;
+}
