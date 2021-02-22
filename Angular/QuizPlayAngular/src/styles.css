@@ -20,3 +20,11 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
 .form-field-full-width {
 	width: 100%;
 }
+.modal-backdrop
+{
+   z-index: 40 !important;
+}
+.modal
+{
+    z-index: 50;
+}

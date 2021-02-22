@@ -100,20 +100,22 @@
                     </th>
                 </thead>
                 <tbody *ngIf="asso.length > 0">
-                    <td cdkDropList #category1="cdkDropList" cdkDropListConnectedTo="[category2, category3]" [cdkDropListData]="asso" (cdkDropListDropped)="drop($event, 0)" class="table-Asso-Body">
-                        <div *ngIf="this.asso.length != 0">
-                            <div cdkDrag *ngFor="let a of asso" class="asso" cdkDragBoundary=".table-Asso" (cdkDragStarted)="onDragStarted($event)" [cdkDragData]="a.assoNumber">
-                                <mat-form-field>
-                                    <mat-label>Choix numéro {{a.assoNumber}}</mat-label>
-                                    <span matPrefix><strong>{{a.assoNumber}}. &nbsp;</strong></span>
+					<tr>
+                    <td cdkDropList 
+					#category1="cdkDropList" 
+					[cdkDropListData]=" GetListOfCategory(0)" 
+					[cdkDropListConnectedTo]="[category2, category3]" 
+					(cdkDropListDropped)="drop($event, 0)" 
+					class="table-Asso-Body">
+                        <div cdkDrag *ngFor="let a of GetListOfCategory(0)"  class="asso" [cdkDragData]="a">
+							<mat-form-field>
                                     <input
                                         matInput
                                         type="text"
                                         [(ngModel)]="a.statement"
                                         [ngModelOptions]="{standalone: true}"
                                         style="margin-left: 10px; padding-right: 10px;"
-                                        placeholder="Choix numéro {{a.assoNumber}}"
-                                    />
+                                        placeholder="Choix numéro {{a.assoNumber}}"/>
                                 </mat-form-field>
                                 <button
                                     mat-mini-fab
@@ -121,11 +123,63 @@
                                     (click)="removeChoice(a.assoNumber)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
-                            </div>
-                        </div>
+                            </div>                        
                     </td>
-					<td cdkDropList #category2="cdkDropList" cdkDropListConnectedTo="[category1, category3]" [cdkDropListData]="asso" (cdkDropListDropped)="drop($event, 1)" class="table-Asso-Body"></td>
-					<td *ngIf="showCategory3" cdkDropList #category3="cdkDropList" cdkDropListConnectedTo="[category2, category1]" [cdkDropListData]="asso" (cdkDropListDropped)="drop($event, 2)" class="table-Asso-Body"></td>
+					<td cdkDropList 
+					#category2="cdkDropList" 
+					[cdkDropListConnectedTo]="[category1, category3]" 
+					[cdkDropListData]="GetListOfCategory(1)" 
+					(cdkDropListDropped)="drop($event, 1)" 
+					class="table-Asso-Body">
+							<div cdkDrag *ngFor="let assoCategory2 of GetListOfCategory(1)"   cdkDragBoundary=".table-Asso" class="asso" [cdkDragData]="assoCategory2">
+								
+									<mat-form-field>
+										<input
+											matInput
+											type="text"
+											[(ngModel)]="assoCategory2.statement"
+											[ngModelOptions]="{standalone: true}"
+											style="margin-left: 10px; padding-right: 10px;"
+											placeholder="Choix numéro {{assoCategory2.assoNumber}}"
+										/>
+									</mat-form-field>
+									<button
+										mat-mini-fab
+										color="primary"
+										(click)="removeChoice(assoCategory2.assoNumber)">
+										<mat-icon>delete</mat-icon>
+									</button>
+							</div>
+					</td>
+					
+					<td *ngIf="showCategory3" 
+					cdkDropList 
+					#category3="cdkDropList" 
+					[cdkDropListConnectedTo]="[category2, category1]"
+					[cdkDropListData]="GetListOfCategory(2)" 
+					(cdkDropListDropped)="drop($event, 2)" 
+					class="table-Asso-Body">
+							<div cdkDrag *ngFor="let assoCategory3 of GetListOfCategory(2)"   cdkDragBoundary=".table-Asso" class="asso" [cdkDragData]="assoCategory3">
+								
+									<mat-form-field>
+										<input
+											matInput
+											type="text"
+											[(ngModel)]="assoCategory3.statement"
+											[ngModelOptions]="{standalone: true}"
+											style="margin-left: 10px; padding-right: 10px;"
+											placeholder="Choix numéro {{assoCategory3.assoNumber}}"
+										/>
+									</mat-form-field>
+									<button
+										mat-mini-fab
+										color="primary"
+										(click)="removeChoice(assoCategory3.assoNumber)">
+										<mat-icon>delete</mat-icon>
+									</button>
+							</div>
+					</td>
+					</tr>
                 </tbody>
             </table>
         </div>

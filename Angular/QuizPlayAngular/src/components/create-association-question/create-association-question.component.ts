@@ -180,6 +180,17 @@ export class CreateAssociationQuestionComponent implements OnInit {
 	}
 
   switchCategory3(): void {
+    if(this.showCategory3)
+	{
+	  let list: QuestionAsso[] = this.GetListOfCategory(2)
+	  if(list.length > 0)
+	  {
+		console.log(list);
+		list.forEach( item =>{
+		this.removeChoice(item.assoNumber);
+		});
+	  }		
+	}
     this.showCategory3 = !this.showCategory3;
   }
 
@@ -194,9 +205,20 @@ export class CreateAssociationQuestionComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
-	console.log(this.asso[event.item.data - 1].categoryIndex);
-	this.asso[event.item.data - 1].categoryIndex = category;
-	console.log(this.asso[event.item.data - 1].categoryIndex);
+	event.item.data.categoryIndex = category;
+  }
+
+  public GetListOfCategory(index: number): QuestionAsso[]
+  {
+	  
+	let listAsso: QuestionAsso[] = [];
+	  
+	this.asso.forEach( item => {
+		if(item.categoryIndex == index)
+			listAsso.push(item);
+	});
+	return listAsso;
+
   }
 }
 
