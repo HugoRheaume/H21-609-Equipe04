@@ -258,3 +258,11 @@ table tr td:not(.mat-cell):hover {
   background-color: #1a535c;
 }
 /*# sourceMappingURL=styles.css.map */
+.modal-backdrop
+{
+   z-index: 40 !important;
+}
+.modal
+{
+    z-index: 50;
+}

@@ -1,3 +1,4 @@
+import { QuestionAsso } from 'src/models/questionAsso';
 import { QuestionChoice } from './questionChoice';
 export class Question {
   public id: number;
@@ -55,10 +56,34 @@ export class QuestionMultipleChoice extends Question {
   }
 }
 
+export class QuestionAssociation extends Question {
+  public categories: string[];
+  public questionAsso: QuestionAsso[];
+  constructor() {
+    super();
+    this.questionAsso = [];
+    this.categories = [];
+    this.questionType = QuestionType.Association;
+  }
+
+  public toAssociationDTO(): QuestionCreateAssociationDTO {
+    let questionToExport = new QuestionCreateAssociationDTO();
+
+    questionToExport.label = this.label;
+    questionToExport.QuestionType = this.questionType;
+    questionToExport.TimeLimit = this.timeLimit;
+    questionToExport.Categories = this.categories;
+    questionToExport.QuestionAssociation = this.questionAsso;
+    questionToExport.quizId = this.quizId;
+
+    return questionToExport;
+  }
+}
+
 export enum QuestionType {
   'TrueFalse' = 1,
   'MultipleChoices' = 2,
-  // 'Association' = 3,
+  'Association' = 3,
   // 'Image' = 4
 }
 
@@ -78,4 +103,13 @@ export class QuestionCreateMultipleChoiceDTO {
   public QuestionMultipleChoice: QuestionChoice[];
   public quizId: number;
   public NeedsAllAnswers: boolean;
+}
+
+export class QuestionCreateAssociationDTO {
+  public label: string;
+  public QuestionType: QuestionType;
+  public TimeLimit: number;
+  public QuestionAssociation: QuestionAsso[];
+  public quizId: number;
+  public Categories: string[];
 }

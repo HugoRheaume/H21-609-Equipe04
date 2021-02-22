@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#157BD5</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="good">#00c000</color>
+    <color name="goodTransparent">#4000C000</color>
     <color name="wrong">#c00000</color>
+    <color name="black">#000000</color>
 </resources>
