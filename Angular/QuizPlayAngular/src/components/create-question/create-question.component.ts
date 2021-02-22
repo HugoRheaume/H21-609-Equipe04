@@ -45,6 +45,8 @@ export class CreateQuestionComponent implements OnInit {
         case 'MultipleChoices':
           this.enumFormated.push('Choix multiples');
           break;
+        case 'Association':
+          this.enumFormated.push("Association")
         default:
           break;
       }

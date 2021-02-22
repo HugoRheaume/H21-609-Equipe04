@@ -55,6 +55,9 @@ public class QuizActivity extends AppCompatActivity {
                         case 2:
                             i = new Intent(getApplicationContext(), MultipleChoiceActivity.class);
                             break;
+                        case 3:
+                            i = new Intent(getApplicationContext(), AssociationActivity.class);
+                            break;
                         default:
                             return;
                     }

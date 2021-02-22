@@ -91,7 +91,10 @@ namespace API.Service
                 TimeLimit = question.TimeLimit,
                 QuestionType = question.QuestionType,
                 QuestionTrueFalse = new List<QuestionTrueFalse>() { question.QuestionTrueFalse },
-                QuestionMultipleChoice = question.QuestionMultipleChoice
+                QuestionMultipleChoice = question.QuestionMultipleChoice,
+                NeedsAllAnswers = question.NeedsAllAnswers,
+                QuestionAssociation = question.QuestionAssociation,
+                Categories = QuestionCategory.toListCategory(question.Categories)
             };
 
             Question q = db.Question.Add(questionToCreate);
@@ -111,6 +114,7 @@ namespace API.Service
                 QuestionType = q.QuestionType,
                 QuizIndex = q.QuizIndex,
                 NeedsAllAnswers = q.NeedsAllAnswers,
+                Categories = QuestionCategory.toListString(q.Categories)
 
 
             };
@@ -123,6 +127,7 @@ namespace API.Service
                     question.QuestionMultipleChoice = q.QuestionMultipleChoice;
                     break;
                 case QuestionType.Association:
+                    question.QuestionAssociation = q.QuestionAssociation;
                     break;
                 case QuestionType.Image:
                     break;
