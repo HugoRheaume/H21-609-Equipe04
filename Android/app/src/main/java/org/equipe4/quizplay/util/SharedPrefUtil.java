@@ -2,9 +2,11 @@ package org.equipe4.quizplay.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 
+import org.equipe4.quizplay.R;
 import org.equipe4.quizplay.transfer.UserDTO;
 
 import okhttp3.Cookie;

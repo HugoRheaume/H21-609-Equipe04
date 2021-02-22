@@ -1,6 +1,6 @@
 <resources>
     <string name="client_id" translatable="false">453297139558-an8ht01qc9flek0dkrl41sc8e8v8c72p.apps.googleusercontent.com</string>
-    <!-- Main Activity -->
+
     <string name="app_name">Quiz Play</string>
     <string name="joinQuiz">Rejoignez un quiz !</string>
     <string name="enterCode">Entrez un code</string>
@@ -19,6 +19,7 @@
     <string name="toastEnterCode">Vous devez rentrer un code pour rejoindre un quiz.</string>
     <string name="toastEnterName">Vous devez choisir un pseudo pour commencer le quiz.</string>
     <string name="toastNoQuizFound">Le code entré correspond à aucun quiz.</string>
+    <string name="toastNoAcess">Vous n\'avez pas accès au serveur</string>
 
     <string name="answerTrue">Vrai</string>
     <string name="answerFalse">Faux</string>
@@ -47,7 +48,7 @@
         <item quantity="one">%d participant</item>
         <item quantity="other">%d participants</item>
     </plurals>
-    <string name="logout">Déconnexion</string>
+
     <string name="welcome">Bonjour %1$s</string>
     <string name="change_username">Changer de pseudo</string>
     <plurals name="number_of_questions">
@@ -55,4 +56,15 @@
         <item quantity="one">%d question</item>
         <item quantity="other">%d questions</item>
     </plurals>
+
+    <string name="logout">Déconnexion</string>
+    <string name="join">Rejoindre un quiz</string>
+    <string name="list">Liste des quiz</string>
+    
+    <string name="guestLogin">Connexion invité</string>
+
+    <!--Drawer-->
+    <string name="open_drawer">Ouvrir</string>
+    <string name="close_drawer">Fermer</string>
+
 </resources>

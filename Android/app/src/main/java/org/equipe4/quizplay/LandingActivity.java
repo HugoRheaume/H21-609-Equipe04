@@ -3,10 +3,16 @@ package org.equipe4.quizplay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -17,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +35,7 @@ import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.transfer.UserDTO;
+import org.equipe4.quizplay.util.Global;
 import org.equipe4.quizplay.util.SharedPrefUtil;
 
 import retrofit2.Call;
@@ -53,71 +61,50 @@ public class LandingActivity extends AppCompatActivity {
         binding = ActivityLandingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String toastMessage = getIntent().getStringExtra("message");
-        if (toastMessage != null) {
-            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
-        }
+//        String toastMessage = getIntent().getStringExtra("message");
+//        if (toastMessage != null) {
+//            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+//        }
 
         //region Button events
 
+        //Login Google
         binding.signInButton.setOnClickListener(v -> {
             startSignIn();
         });
 
-        //Bouton join quiz
-        binding.buttonJoin.setOnClickListener(v -> {
-            EditText editTextCode = binding.editTextCode;
-            String shareCode = editTextCode.getText().toString().toUpperCase();
-            if (shareCode.equals("")){
-                Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
-            }
-            else {
-                service.GetObjectByShareCode(shareCode).enqueue(new Callback<Object>() {
-                    @Override
-                    public void onResponse(Call<Object> call, Response<Object> response) {
-                        if (response.isSuccessful()){
-
-                            Intent intent = new Intent(getApplicationContext(), PseudoActivity.class);
-
-                            if (response.body().getClass().getName().equals(String.class.getName())) {
-                                System.out.println("LA RÉPONSE EST UN STRING");
-                                intent.putExtra("isLive", true);
-                                intent.putExtra("shareCode", shareCode);
-                            }
-                            else {
-                                System.out.println("La réponse est un quiz");
-                                intent.putExtra("isLive", false);
-                                Gson gson = new Gson();
-                                intent.putExtra("quiz", gson.fromJson(gson.toJson(response.body()), QuizResponseDTO.class));
-                            }
-                            startActivity(intent);
-                        }
-                        else {
-                            Toast.makeText(LandingActivity.this, R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Object> call, Throwable t) {
-                        Log.e("RETROFIT", t.getMessage());
-                    }
-                });
-            }
+        //Login Guest
+        binding.btnGuestLogin.setOnClickListener(v ->{
+            Intent intent = new Intent(this, PseudoActivity.class);
+            startActivity(intent);
         });
 
         //endregion
     }
 
-    private void startSignIn() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.client_id))      // TODO Très important, mauvaise valeur = marche pas
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Ce intent part l'application Google qui va gérer l'authentification
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, GOOGLE_SIGN_IN_CODE);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (RetrofitUtil.cookieJar == null)
+            RetrofitUtil.cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this.getApplicationContext()));
+        service = RetrofitUtil.get();
+        // Firebase - Vérifier si déjà connecté
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            Intent i = new Intent(getApplicationContext(), ListQuizActivity.class);
+            startActivity(i);
+            finish();
+        }
+        else {
+            SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
+
+            if (sharedPrefUtil.getCurrentUser().isAnonymous)
+                Global.logout(getApplicationContext());
+
+            sharedPrefUtil.clearCurrentUser();
+        }
     }
 
     @Override
@@ -133,6 +120,21 @@ public class LandingActivity extends AppCompatActivity {
         //Si plusieurs activités, d'autres IF avec codes différents
 
     }
+
+    //region SignIn with Google Méthode
+
+    private void startSignIn() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.client_id))      // TODO Très important, mauvaise valeur = marche pas
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // Ce intent part l'application Google qui va gérer l'authentification
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, GOOGLE_SIGN_IN_CODE);
+    }
+
 
 
 
@@ -167,7 +169,7 @@ public class LandingActivity extends AppCompatActivity {
                                     public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                                         UserDTO user = response.body();
 
-                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                        Intent i = new Intent(getApplicationContext(), ListQuizActivity.class);
 
                                         SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
                                         sharedPrefUtil.setCurrentUser(user);
@@ -194,22 +196,5 @@ public class LandingActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        RetrofitUtil.cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this.getApplicationContext()));
-        service = RetrofitUtil.get();
-        // Firebase - Vérifier si déjà connecté
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(i);
-            finish();
-        }
-        else {
-            SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
-            sharedPrefUtil.clearCurrentUser();
-        }
-    }
+    //endregion
 }

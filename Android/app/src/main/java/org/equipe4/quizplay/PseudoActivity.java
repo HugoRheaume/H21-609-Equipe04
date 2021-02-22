@@ -1,19 +1,18 @@
 package org.equipe4.quizplay;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.equipe4.quizplay.databinding.ActivityPseudoBinding;
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
 import org.equipe4.quizplay.transfer.UserDTO;
 import org.equipe4.quizplay.util.SharedPrefUtil;
-import org.equipe4.quizplay.webSocket.webSocketCommand.commandImplementation.JoinRoomCommand;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,9 +30,9 @@ public class PseudoActivity extends AppCompatActivity {
         service = RetrofitUtil.get();
     }
 
-    public void JoinWaitingRoom(View v) {
+    public void CreateUser(View v) {
         EditText editTextPseudo = binding.editTextPseudo;
-        String username = editTextPseudo.getText().toString();
+        String username = editTextPseudo.getText().toString().trim();
 
         if (username.equals("")){
             Toast.makeText(this, R.string.toastEnterName, Toast.LENGTH_SHORT).show();
@@ -43,35 +42,19 @@ public class PseudoActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                     if (response.isSuccessful()) {
-                        if (getIntent().getBooleanExtra("isLive", false)) {
-                            // EN DIRECT
-                            String token = SharedPrefUtil.getTokenFromCookie(getApplicationContext(), response.raw().request().url().host());
+                        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
+                        response.body().isAnonymous = true;
+                        sharedPrefUtil.setCurrentUser(response.body());
 
-                            SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
-                            response.body().isAnonymous = true;
-                            sharedPrefUtil.setCurrentUser(response.body());
-
-                            Intent intent = new Intent(getApplicationContext(), WaitingRoomActivity.class);
-                            intent.putExtra("shareCode", getIntent().getStringExtra("shareCode"));
-                            intent.putExtra("token", token);
-                            startActivity(intent);
-                        }
-                        else {
-                            // EN DIFFÉRÉ
-                            SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
-                            response.body().isAnonymous = true;
-                            sharedPrefUtil.setCurrentUser(response.body());
-                            Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-                            intent.putExtra("quiz", getIntent().getSerializableExtra("quiz"));
-                            startActivity(intent);
-                        }
-
+                        Intent intent = new Intent(getApplicationContext(), ListQuizActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<UserDTO> call, Throwable t) {
-                    Toast.makeText(PseudoActivity.this, "SOMETHING WENT WRONG MY GUY", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PseudoActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
                 }
             });
 

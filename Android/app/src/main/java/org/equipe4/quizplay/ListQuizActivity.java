@@ -7,37 +7,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
-import org.equipe4.quizplay.http.QPService;
-import org.equipe4.quizplay.http.RetrofitUtil;
-import org.equipe4.quizplay.transfer.QuestionDTO;
-import org.equipe4.quizplay.transfer.QuestionResultDTO;
-import org.equipe4.quizplay.transfer.QuizResponseDTO;
+import org.equipe4.quizplay.service.AppKilledService;
 import org.equipe4.quizplay.transfer.UserDTO;
 import org.equipe4.quizplay.util.Global;
 import org.equipe4.quizplay.util.SharedPrefUtil;
-import org.w3c.dom.Text;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+public class ListQuizActivity extends AppCompatActivity {
 
-public class QuizActivity extends AppCompatActivity {
-
-
-    QPService service = RetrofitUtil.get();
-    QuizResponseDTO quiz;
     SharedPrefUtil sharedPrefUtil;
     UserDTO user;
     ActionBarDrawerToggle toggle;
@@ -45,56 +35,14 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+        setContentView(R.layout.activity_list_quiz);
+
+        startService(new Intent(getApplicationContext(), AppKilledService.class));
 
         sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
         user = sharedPrefUtil.getCurrentUser();
 
-        quiz = (QuizResponseDTO)getIntent().getSerializableExtra("quiz");
-
-        TextView quizTitle = findViewById(R.id.quizTitle);
-        quizTitle.setText(quiz.title);
-        TextView quizDesc = findViewById(R.id.quizDesc);
-        quizDesc.setText(quiz.description);
-
         configureDrawer();
-    }
-
-    public void startQuiz(View v) {
-        service.getNextQuestion(new QuestionResultDTO(-1, quiz.id,0)).enqueue(new Callback<QuestionDTO>() {
-            @Override
-            public void onResponse(Call<QuestionDTO> call, Response<QuestionDTO> response) {
-                if(response.isSuccessful()) {
-                    QuestionDTO question = response.body();
-                    Log.i("Response", response.body().toString());
-
-                    Intent i;
-                    switch (question.questionType) {
-                        case 1:
-                            i = new Intent(getApplicationContext(), TrueFalseActivity.class);
-                            break;
-                        case 2:
-                            i = new Intent(getApplicationContext(), MultipleChoiceActivity.class);
-                            break;
-                        case 3:
-                            i = new Intent(getApplicationContext(), AssociationActivity.class);
-                            break;
-                        default:
-                            return;
-                    }
-                    i.putExtra("question", question);
-                    i.putExtra("quiz", quiz);
-                    startActivity(i);
-                } else {
-                    Log.i("RETROFIT", response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<QuestionDTO> call, Throwable t) {
-                Log.e("RETROFIT", t.getMessage());
-            }
-        });
     }
 
     private void configureDrawer(){
@@ -112,7 +60,7 @@ public class QuizActivity extends AppCompatActivity {
         Picasso.get().load(user.picture).into(profilePic);
 
         TextView HeaderTitle = txtViewHeader.findViewById(R.id.txtViewCurrentUser);
-        HeaderTitle.setText(user.name);
+        HeaderTitle.setText(sharedPrefUtil.getCurrentUser().name);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -122,7 +70,6 @@ public class QuizActivity extends AppCompatActivity {
 
                 switch(item.getItemId()){
                     case R.id.navigation_item_list_quiz:
-                        startActivity(new Intent(getApplicationContext(), ListQuizActivity.class));
                         break;
 
                     case R.id.navigation_item_join:
@@ -139,7 +86,17 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        toggle = new ActionBarDrawerToggle(this, drawer_layout, R.string.open_drawer, R.string.close_drawer);
+        toggle = new ActionBarDrawerToggle(this, drawer_layout, R.string.open_drawer, R.string.close_drawer){
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
         drawer_layout.addDrawerListener(toggle);
         toggle.syncState();
     }
