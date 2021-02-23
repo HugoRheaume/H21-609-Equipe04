@@ -80,12 +80,12 @@ namespace API.Service
             UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             ApplicationUser anonymous = new ApplicationUser
             {
-                UserName = GenerateCustomToken()
+                UserName = GenerateCustomToken(),
+                Name = username,
+                Picture = "../../assets/png_64/" + Global.random.Next(1, 15) + ".png",
+                Token = token
             };
-            anonymous.Name = username;
             //anonymous.Picture = "https://www.minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg";
-            anonymous.Picture = "../../assets/png_64/" + Global.random.Next(1, 15) + ".png";
-            anonymous.Token = token;
             userManager.Create(anonymous);
 
             db.SaveChanges();

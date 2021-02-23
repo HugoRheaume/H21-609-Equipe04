@@ -37,7 +37,6 @@
         <item quantity="other">%d participants</item>
     </plurals>
     <string name="returnHomePage">Return to home page</string>
-    <string name="logout">Logout</string>
     <string name="submitAnswer">Submit answer</string>
     <string name="welcome">Welcome %1$s</string>
     <string name="change_username">Change username</string>
@@ -46,4 +45,12 @@
         <item quantity="one">%d question</item>
         <item quantity="other">%d questions</item>
     </plurals>
+
+    <string name="logout">Logout</string>
+    <string name="join">Join quiz</string>
+    <string name="list">List of quizzes</string>
+    <string name="guestLogin">" Guest login"</string>
+    <string name="toastNoAcess">You don\'t have access to the server.</string>
+    <string name="open_drawer">Open</string>
+    <string name="close_drawer">Close</string>
 </resources>

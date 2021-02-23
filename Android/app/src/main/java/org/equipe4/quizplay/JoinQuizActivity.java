@@ -13,31 +13,33 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import org.equipe4.quizplay.databinding.ActivityJoinQuizBinding;
 import org.equipe4.quizplay.http.QPService;
 import org.equipe4.quizplay.http.RetrofitUtil;
-import org.equipe4.quizplay.transfer.QuestionDTO;
-import org.equipe4.quizplay.transfer.QuestionResultDTO;
 import org.equipe4.quizplay.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.transfer.UserDTO;
 import org.equipe4.quizplay.util.Global;
 import org.equipe4.quizplay.util.SharedPrefUtil;
-import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuizActivity extends AppCompatActivity {
+public class JoinQuizActivity extends AppCompatActivity {
 
-
-    QPService service = RetrofitUtil.get();
-    QuizResponseDTO quiz;
+    private ActivityJoinQuizBinding binding;
+    private FirebaseAuth mAuth;
+    private QPService service = RetrofitUtil.get();
     SharedPrefUtil sharedPrefUtil;
     UserDTO user;
     ActionBarDrawerToggle toggle;
@@ -45,56 +47,68 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+        binding = ActivityJoinQuizBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
         user = sharedPrefUtil.getCurrentUser();
 
-        quiz = (QuizResponseDTO)getIntent().getSerializableExtra("quiz");
-
-        TextView quizTitle = findViewById(R.id.quizTitle);
-        quizTitle.setText(quiz.title);
-        TextView quizDesc = findViewById(R.id.quizDesc);
-        quizDesc.setText(quiz.description);
-
         configureDrawer();
     }
 
-    public void startQuiz(View v) {
-        service.getNextQuestion(new QuestionResultDTO(-1, quiz.id,0)).enqueue(new Callback<QuestionDTO>() {
-            @Override
-            public void onResponse(Call<QuestionDTO> call, Response<QuestionDTO> response) {
-                if(response.isSuccessful()) {
-                    QuestionDTO question = response.body();
-                    Log.i("Response", response.body().toString());
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Firebase - Vérifier si déjà connecté
+        mAuth = FirebaseAuth.getInstance();
+    }
 
-                    Intent i;
-                    switch (question.questionType) {
-                        case 1:
-                            i = new Intent(getApplicationContext(), TrueFalseActivity.class);
-                            break;
-                        case 2:
-                            i = new Intent(getApplicationContext(), MultipleChoiceActivity.class);
-                            break;
-                        case 3:
-                            i = new Intent(getApplicationContext(), AssociationActivity.class);
-                            break;
-                        default:
-                            return;
+    public void JoinQuiz(View v){
+        EditText editTextCode = binding.editTextCode;
+
+        String shareCode = editTextCode.getText().toString().toUpperCase();
+        if (shareCode.equals("")){
+            Toast.makeText(this, R.string.toastEnterCode, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            service.GetObjectByShareCode(shareCode).enqueue(new Callback<Object>() {
+                @Override
+                public void onResponse(Call<Object> call, Response<Object> response) {
+                    if (response.isSuccessful()){
+
+                        if (response.body().getClass().getName().equals(String.class.getName())) {
+
+                            String token = SharedPrefUtil.getTokenFromCookie(getApplicationContext(), response.raw().request().url().host());
+
+                            Intent intent = new Intent(getApplicationContext(), WaitingRoomActivity.class);
+                            intent.putExtra("shareCode", shareCode);
+                            intent.putExtra("token", token);
+                            startActivity(intent);
+                        }
+                        else {
+                            Gson gson = new Gson();
+                            String json = gson.toJson(response.body());
+                            QuizResponseDTO quiz = gson.fromJson(json, QuizResponseDTO.class);
+
+
+                            Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                            intent.putExtra("quiz", quiz);
+                            startActivity(intent);
+                        }
+
                     }
-                    i.putExtra("question", question);
-                    i.putExtra("quiz", quiz);
-                    startActivity(i);
-                } else {
-                    Log.i("RETROFIT", response.message());
+                    else {
+                        Toast.makeText(getApplicationContext(), R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<QuestionDTO> call, Throwable t) {
-                Log.e("RETROFIT", t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<Object> call, Throwable t) {
+                    Log.e("RETROFIT", t.getMessage());
+                    Toast.makeText(JoinQuizActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void configureDrawer(){
@@ -126,7 +140,6 @@ public class QuizActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item_join:
-                        startActivity(new Intent(getApplicationContext(), JoinQuizActivity.class));
                         break;
 
                     case R.id.navigation_item_logout:

@@ -57,8 +57,7 @@ namespace API.Controllers
             {
                 Expires = DateTimeOffset.Now.AddDays(-1),
                 Path = "/",
-                Domain = Request.RequestUri.Host,
-                Secure = false,
+                Secure = true,
             };
 
             resp.Headers.AddCookies(new[] {cookie});
@@ -87,11 +86,22 @@ namespace API.Controllers
 
         [TokenAuthorize]
         [HttpGet]
-        public bool LogoutAnonymous()
+        public HttpResponseMessage LogoutAnonymous()
         {
             string token = Request.Headers.Authorization.ToString().Split(' ')[1];
 
-            return service.DeleteAnonymous(token);
+            HttpResponseMessage resp = new HttpResponseMessage(HttpStatusCode.OK);
+
+            CookieHeaderValue cookie = new CookieHeaderValue("token", "")
+            {
+                Expires = DateTimeOffset.Now.AddDays(-1),
+                Path = "/",
+                Secure = true,
+            };
+
+            resp.Headers.AddCookies(new[] { cookie });
+            resp.Content = new ObjectContent<bool>(service.DeleteAnonymous(token), GlobalConfiguration.Configuration.Formatters.JsonFormatter);
+            return resp;
         }
     }
 }

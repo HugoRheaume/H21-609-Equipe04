@@ -37,7 +37,7 @@ public class WSClient implements Serializable {
     private static final String SERVER_HUGO = "wss://192.168.0.131:45455/websocket/connect";
 
 
-    private static final String SERVER = SERVER_PROD;
+    private static final String SERVER = SERVER_MARCO;
 
     private static WebSocket socket;
 
