@@ -1,6 +1,6 @@
 <div class="modal fade" id="modifyQuestion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="modifyQuestionLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <div style="display: flex; justify-content: center; flex-direction: column;">
@@ -14,7 +14,8 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseDiscarded()"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="onCloseDiscarded()"></button>
       </div>
       <div *ngIf="this.question.questionType == 1">
         <div class="modal-body" [formGroup]="TrueFalse">
@@ -44,7 +45,8 @@
               [(value)]="this.questionTrueFalse.questionTrueFalse.answer">
               <mat-radio-button [value]="true" style="margin-right: 15px; padding-top: 1em;"
                 [checked]="this.questionTrueFalse.questionTrueFalse.answer">Vrai</mat-radio-button>
-              <mat-radio-button [value]="false" [checked]="!this.questionTrueFalse.questionTrueFalse.answer">Faux</mat-radio-button>
+              <mat-radio-button [value]="false" [checked]="!this.questionTrueFalse.questionTrueFalse.answer">Faux
+              </mat-radio-button>
             </mat-radio-group><br />
           </p>
         </div>
@@ -76,24 +78,27 @@
               style="margin-top: 1.34375em; margin-bottom: 1.34375em;" [disabled]="this.choices.length == 8">
               Ajouter un choix
             </button>
-            <div *ngIf="this.choices.length != 0">
-              <mat-label style="padding-left: 0.75em;">Choix de la question<span
-                  style="font-size: x-small; color: gainsboro; margin-left: 5px;">(min 2, max 8)</span></mat-label>
-              <br />
-              <div *ngFor="let choice of this.choices">
-                <mat-checkbox value="{{choice.answer}}" style="margin-right: 30px;" [(ngModel)]="choice.answer"
-                  [ngModelOptions]="{standalone: true}">
-                  <mat-form-field>
-                    <mat-label>Choix numéro {{choice.choiceNumber}}</mat-label>
-                    <span matPrefix><strong>{{choice.choiceNumber}}. &nbsp;</strong></span>
-                    <input matInput type="text" [(ngModel)]="choice.statement" [ngModelOptions]="{standalone: true}"
-                      style="margin-left: 10px; padding-right: 10px;"
-                      placeholder="Choix numéro {{choice.choiceNumber}}" />
-                  </mat-form-field>
-                </mat-checkbox>
-                <button mat-mini-fab color="primary" (click)="removeChoice(choice.choiceNumber)">
-                  <mat-icon>delete</mat-icon>
-                </button>
+            <div class="d-flex flex-column">
+              <div *ngIf="this.choices.length != 0">
+                <mat-label style="padding-left: 0.75em;">Choix de la question<span
+                    style="font-size: x-small; color: gainsboro; margin-left: 5px;">(min 2, max 8)</span></mat-label>
+                <br />
+                <div *ngFor="let choice of this.choices">
+                  <mat-checkbox value="{{choice.answer}}"
+                    style="margin-right: 30px; width: 90% !important; display: inline-block;"
+                    [(ngModel)]="choice.answer" [ngModelOptions]="{standalone: true}">
+                    <mat-form-field class="form-field-full-width">
+                      <mat-label>Choix numéro {{choice.choiceNumber}}</mat-label>
+                      <span matPrefix><strong>{{choice.choiceNumber}}. &nbsp;</strong></span>
+                      <input matInput type="text" [(ngModel)]="choice.statement" [ngModelOptions]="{standalone: true}"
+                        style="margin-left: 10px; padding-right: 10px;"
+                        placeholder="Choix numéro {{choice.choiceNumber}}" />
+                    </mat-form-field>
+                  </mat-checkbox>
+                  <button mat-mini-fab color="primary" (click)="removeChoice(choice.choiceNumber)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
               </div>
             </div>
             <div *ngIf="this.trueAnswers > 1" class="form-field-full-width d-flex align-items-center"

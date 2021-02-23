@@ -77,27 +77,12 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
   width: 100%;
 }
 
-.mat-fab.mat-primary {
-  background-color: rgba(255, 107, 107, 0.75);
-}
-
-.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #dc753c;
-}
-
-.mat-slide-toggle-thumb {
-  background-color: #f7fff7;
-}
-
-.mat-snack-bar-container {
-  background: #dc753c;
-}
-
 .example-box:hover {
   background-color: #4ecdc4;
 }
 
-.quizHeader, .questionBox {
+.quizHeader,
+.questionBox {
   background: #1a535c;
   border: 7.5px #dc753c solid !important;
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -108,23 +93,13 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
   border-bottom: 2px #dc753c solid !important;
 }
 
-.questionItem:hover, .activeQuestion {
+.questionItem:hover,
+.activeQuestion {
   background-color: #dc753c !important;
 }
 
-.mat-raised-button.mat-primary {
-  background-color: rgba(255, 107, 107, 0.75);
-}
-
-.mat-input-element {
-  caret-color: #4ecdc4;
-}
-
-.mat-input-element:disabled {
-  color: #f7fff7;
-}
-
-input:not([disabled])[type="text"], textarea:not([disabled]) {
+input:not([disabled])[type="text"],
+textarea:not([disabled]) {
   color: #f7fff7;
 }
 
@@ -143,6 +118,149 @@ input:not([disabled])[type="text"], textarea:not([disabled]) {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+#navContentUserInfo,
+#navContentUserInfo:hover {
+  background-color: #1a535c !important;
+  background: #1a535c !important;
+}
+
+#navContentUserButton {
+  border-bottom: 2px solid #dc753c;
+}
+
+.navContentButtonLogout:hover {
+  background-color: #dc753c;
+}
+
+.createQuizDiv {
+  border-radius: 7.5px;
+}
+
+.mat-fab.mat-primary {
+  background-color: rgba(255, 107, 107, 0.75);
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #dc753c;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: rgba(255, 107, 107, 0.75);
+}
+
+.mat-slide-toggle-thumb {
+  background-color: #f7fff7;
+}
+
+.mat-snack-bar-container {
+  background: #dc753c;
+}
+
+table tr:not(.mat-header-row):hover {
+  background-color: #dc753c;
+}
+
+.mat-mini-fab.mat-accent {
+  background-color: rgba(255, 107, 107, 0.75);
+}
+
+.mat-paginator {
+  color: #f7fff7;
+  background: #1a535c;
+  border-bottom-left-radius: 7.5px;
+  border-bottom-right-radius: 7.5px;
+  border-left: 7.5px #dc753c solid !important;
+  border-bottom: 7.5px #dc753c solid !important;
+  border-right: 7.5px #dc753c solid !important;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.mat-table {
+  background: #1a535c;
+  border-top-left-radius: 7.5px;
+  border-top-right-radius: 7.5px;
+  border-collapse: unset;
+  border-left: 7.5px #dc753c solid !important;
+  border-top: 7.5px #dc753c solid !important;
+  border-right: 7.5px #dc753c solid !important;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.mat-raised-button.mat-primary,
+.mat-raised-button,
+.mat-raised-button.mat-warn {
+  background-color: rgba(255, 107, 107, 0.75);
+  color: #f7fff7;
+}
+
+.mat-input-element {
+  caret-color: #4ecdc4;
+}
+
+.mat-input-element:disabled {
+  color: #f7fff7;
+}
+
+.mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #dc753c !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: #dc753c;
+}
+
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: #dc753c;
+}
+
+.mat-select-panel {
+  background: #dc753c;
+}
+
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple),
+.mat-option:hover {
+  background: rgba(0, 0, 0, 0.12) !important;
+}
+
+.mat-option {
+  color: #f7fff7 !important;
+}
+
+.mat-sidenav {
+  background-color: #1a535c;
+  position: fixed !important;
+}
+
+.mat-cell {
+  color: #f7fff7;
+}
+
+table tr td mat-grid-list div mat-grid-tile:hover {
+  background-color: #dc753c;
+}
+
+table tr td:not(.mat-cell):hover {
+  background-color: #1a535c;
+}
+
+.mat-dialog-container {
+  color: #f7fff7 !important;
+  background: #1a535c !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #dc753c !important;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  background-color: #1a535c;
 }
 
 .homePageElements {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionType } from 'src/app/models/question';
 import { QuizRoomComponent } from '../../quiz-room/quiz-room.component';
 
 @Component({
@@ -7,7 +8,8 @@ import { QuizRoomComponent } from '../../quiz-room/quiz-room.component';
   styleUrls: ['./quiz-room-display-multiple-choice.component.css'],
 })
 export class QuizRoomDisplayMultipleChoiceComponent implements OnInit {
-  constructor(public quizRoomComponent: QuizRoomComponent) {}
+  constructor(public quizRoomComponent: QuizRoomComponent) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }
