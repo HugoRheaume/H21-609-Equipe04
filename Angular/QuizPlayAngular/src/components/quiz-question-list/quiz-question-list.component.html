@@ -129,76 +129,46 @@
         <mat-icon>add</mat-icon>
       </button>
     </div>
-    <div class="questionBox">
-      <div cdkDropListGroup (mouseleave)="this.selectedQuestion = null">
-        <div
-          cdkDropList
-          [cdkDropListData]="this.service.currentQuestions"
-          class="question-list"
-          (cdkDropListDropped)="drop($event)"
-        >
-          <div
-            class="questionItem"
-            cdkDragLockAxis="y"
-            cdkDragBoundary=".question-list"
-            *ngFor="let item of this.service.currentQuestions"
-            cdkDrag
-            [class.activeQuestion]="selectedQuestion === item"
-            (mouseover)="selectedQuestion = item"
-            (cdkDragStarted)="selectedQuestion = item"
-          >
-            <div class="row">
-              <div class="col-5">
-                <h2>{{ item.label }}</h2>
-              </div>
-              <div class="col-2">
-                <h2 [ngSwitch]="this.enum[item.questionType]">
-                  <span *ngSwitchCase="'TrueFalse'">Vrai ou Faux</span>
-                  <span *ngSwitchCase="'MultipleChoices'">Choix Multiples</span>
-                  <span *ngSwitchDefault></span>
-                </h2>
-              </div>
-              <div class="col-1"></div>
-              <div class="col-3">
-                <button
-                  *ngIf="selectedQuestion === item"
-                  class="questionButtonAddRemove"
-                  mat-fab
-                  color="primary"
-                  (click)="putFirst()"
-                >
-                  <mat-icon>expand_less</mat-icon>
-                </button>
-                <button
-                  *ngIf="selectedQuestion === item"
-                  class="questionButtonAddRemove"
-                  mat-fab
-                  color="primary"
-                  (click)="putLast()"
-                >
-                  <mat-icon>expand_more</mat-icon>
-                </button>
-                <button
-                  *ngIf="selectedQuestion === item"
-                  class="questionButtonAddRemove"
-                  mat-fab
-                  color="primary"
-                  (click)="setQuestionToModify()"
-                >
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </div>
-              <div class="col-1">
-                <button
-                  class="questionButtonAddRemove"
-                  id="add-button"
-                  mat-fab
-                  color="primary"
-                  (click)="deleteQuestion(item.id)"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
+  </div>
+  <h2 [class.gradient-border]="this.isModifying == true" class="mb-2">
+    <textarea
+      style="text-align: justify; white-space: normal; text-align-last: left; overflow: hidden; line-height: 1.3em !important;"
+      matInput matTextareaAutosize [disabled]="this.isModifying == false" maxlength=1000
+      [(ngModel)]="this.service.currentQuiz.description">
+    </textarea>
+  </h2>
+  <h3 class="text-end mb-2 unselectable">
+    <mat-icon style="font-size: 30px;" *ngIf="this.isModifying == false"
+      [matTooltip]="this.service.currentQuiz.isPublic ? 'Le quiz est public' : 'Le quiz est privé'">
+      {{this.service.currentQuiz.isPublic ? 'public' : 'public_off'}}
+    </mat-icon>
+    <div *ngIf="this.isModifying == true">
+      <span>Rendre le quiz public &nbsp;&nbsp;</span>
+      <mat-checkbox style="font-size: 30px;" class="clickableThing" id="makeTheQuizPublic"
+        [(ngModel)]="this.service.currentQuiz.isPublic">
+      </mat-checkbox>
+    </div>
+  </h3>
+</div>
+
+<div>
+  <div class="d-flex justify-content-between">
+    <h2 class="sectionHeader">Questions du quiz</h2>
+    <button class="questionButtonAddRemove" mat-fab color="primary" data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div class="questionBox">
+    <div cdkDropListGroup (mouseleave)="this.selectedQuestion = null;">
+      <div cdkDropList [cdkDropListData]="this.service.currentQuestions" class="question-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="questionItem" cdkDragLockAxis="y" cdkDragBoundary=".question-list"
+          *ngFor="let item of this.service.currentQuestions" cdkDrag [class.activeQuestion]="selectedQuestion === item"
+          (mouseover)="selectedQuestion = item" (cdkDragStarted)="selectedQuestion = item">
+          <div class="row">
+            <div class="col-5">
+              <h2>{{item.label}} </h2>
             </div>
           </div>
         </div>

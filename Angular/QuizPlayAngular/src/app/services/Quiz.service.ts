@@ -71,6 +71,11 @@ export class QuizService {
       )
       .subscribe(response => {
         this.currentQuestions.push(response as Question);
+      }, (error) => {
+        console.error("from AddQuestion");
+        console.error(error);
+
+        //ouvre un popup ou une indication qu' il y a eu une erreur.
       });
   }
 
@@ -227,7 +232,7 @@ export class QuizService {
         localStorage.setItem('name', '');
         localStorage.setItem('email', '');
         localStorage.setItem('picture', '');
-				this.router.navigate(['/']);
+        this.router.navigate(['/']);
       });
   }
 

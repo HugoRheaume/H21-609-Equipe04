@@ -1,20 +1,4 @@
-// @import '../src/themes/0.scss';
-// @import '../src/themes/3.scss';
-// @import '../src/themes/4.scss';
-// @import '../src/themes/5.scss';
-// @import '../src/themes/6.scss'; //change text color
-// @import '../src/themes/8.scss';
-// @import '../src/themes/9.scss'; //change text color
-// @import "../src/themes/10.scss";
-// @import '../src/themes/11.scss'; //change text color
-// @import '../src/themes/12.scss';
-@import "../src/themes/14.scss";
-// @import '../src/themes/15.scss'; //change text color
-// @import "../src/themes/16.scss";
-// @import "../src/themes/18.scss";
-// @import '../src/themes/19.scss';
-// @import '../src/themes/21.scss'; //change everything
-// @import "../src/themes/22.scss";
+@import "../src/themes/current-theme.scss";
 
 html,
 body {
@@ -92,7 +76,9 @@ div.mat-form-field-wrapper.ng-tns-c30-0 {
   background-color: $circles;
 }
 .quizHeader,
-.questionBox {
+.questionBox,
+.waitingRoom,
+.questionDisplay {
   background: $background;
   border: 7.5px $bubbles-triangle solid !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -134,7 +120,38 @@ textarea:not([disabled]) {
 .navContentButtonLogout:hover {
   background-color: $bubbles-triangle;
 }
-.createQuizDiv {
+.createQuizDiv,
+.waitingRoom,
+.questionDisplay {
+  border-radius: 7.5px;
+}
+#makeTheQuizPublic .mat-checkbox-layout {
+  width: auto !important;
+  display: inline !important;
+}
+#makeTheQuizPublic .mat-checkbox-label {
+  width: auto;
+  display: inline-block;
+  padding-right: 0px;
+}
+.userCard {
+  // border: 0.20em solid salmon;
+  color: $text;
+  font-weight: bold;
+  font-size: 1.5em;
+  border-radius: 8px;
+  height: 85%;
+  width: 85%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.userCard:hover {
+  background-color: $circles;
+}
+
+#trueSquare {
+  background-color: #292929;
   border-radius: 7.5px;
 }
 
@@ -182,7 +199,8 @@ table tr:not(.mat-header-row):hover {
 }
 .mat-raised-button.mat-primary,
 .mat-raised-button,
-.mat-raised-button.mat-warn {
+.mat-raised-button.mat-warn,
+.mat-mini-fab.mat-primary {
   background-color: $buttons;
   color: $text;
 }
@@ -228,10 +246,45 @@ table tr td:not(.mat-cell):hover {
   color: $text !important;
   background: $background !important;
 }
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: $bubbles-triangle !important;
+}
+.mat-ripple-element {
+  display: none !important;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: $bubbles-triangle;
+}
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: $bubbles-triangle !important;
+}
+.mat-checkbox-layout {
+  width: 100% !important;
+  display: inline !important;
+}
+.mat-checkbox-label {
+  width: 100%;
+  display: inline-block;
+  padding-right: 30px;
+}
+.mat-progress-spinner circle {
+  stroke: $bubbles-triangle !important;
+}
 
 //Bootstrap components
 .modal-header,
 .modal-body,
 .modal-footer {
   background-color: $background;
+}
+.btn-primary {
+  background-color: $buttons !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  background: $buttons !important;
+  color: $text !important;
+}
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
 }

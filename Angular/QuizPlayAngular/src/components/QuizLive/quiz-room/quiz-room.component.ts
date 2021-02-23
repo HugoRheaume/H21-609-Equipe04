@@ -31,7 +31,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     public quizService: QuizService,
     public router: Router,
     public wsService: WebSocketService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isShowResult = false;

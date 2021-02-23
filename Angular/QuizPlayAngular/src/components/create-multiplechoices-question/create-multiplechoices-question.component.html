@@ -27,19 +27,22 @@
     <div *ngIf="this.choices.length != 0">
       <mat-label style="padding-left: 0.75em">Choix de la question<span
           style="font-size: x-small; color: gainsboro; margin-left: 5px">(min 2, max 8)</span></mat-label><br />
-      <div *ngFor="let choice of choices">
-        <mat-checkbox value="{{ choice.answer }}" style="margin-right: 30px" [(ngModel)]="choice.answer"
-          [ngModelOptions]="{ standalone: true }">
-          <mat-form-field>
-            <mat-label>Choix numéro {{ choice.choiceNumber }}</mat-label>
-            <span matPrefix><strong>{{ choice.choiceNumber }}. &nbsp;</strong></span>
-            <input matInput type="text" [(ngModel)]="choice.statement" [ngModelOptions]="{ standalone: true }"
-              style="margin-left: 10px; padding-right: 10px" placeholder="Choix numéro {{ choice.choiceNumber }}" />
-          </mat-form-field>
-        </mat-checkbox>
-        <button mat-mini-fab color="primary" (click)="removeChoice(choice.choiceNumber)">
-          <mat-icon>delete</mat-icon>
-        </button>
+      <div class="d-flex flex-column">
+        <div *ngFor="let choice of choices">
+          <mat-checkbox value="{{ choice.answer }}"
+            style="margin-right: 30px; width: 90% !important; display: inline-block;" [(ngModel)]="choice.answer"
+            [ngModelOptions]="{ standalone: true }">
+            <mat-form-field class="form-field-full-width">
+              <mat-label>Choix numéro {{ choice.choiceNumber }}</mat-label>
+              <span matPrefix><strong>{{ choice.choiceNumber }}. &nbsp;</strong></span>
+              <input matInput type="text" [(ngModel)]="choice.statement" [ngModelOptions]="{ standalone: true }"
+                style="margin-left: 10px; padding-right: 10px;" placeholder="Choix numéro {{ choice.choiceNumber }}" />
+            </mat-form-field>
+          </mat-checkbox>
+          <button mat-mini-fab color="primary" (click)="removeChoice(choice.choiceNumber)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
     <div *ngIf="this.trueAnswers > 1" class="form-field-full-width d-flex align-items-center"
