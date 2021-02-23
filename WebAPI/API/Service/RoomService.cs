@@ -19,10 +19,10 @@ namespace API.Service
         { 
             get {return rooms; }
         }
-        public static ApplicationDbContext db = new  ApplicationDbContext();
         internal static string NewRoom(Client client, string quizShareCode)
         {
-            Room room = new Room(client, db.ListQuiz.FirstOrDefault(x => x.ShareCode == quizShareCode));
+
+            Room room = new Room(client, new ApplicationDbContext().ListQuiz.FirstOrDefault(x => x.ShareCode == quizShareCode));
             rooms.Add(room.GetShareCode, room);
             return room.GetShareCode;
         }

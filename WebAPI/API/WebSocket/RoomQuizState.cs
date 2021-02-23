@@ -64,7 +64,7 @@ namespace API.WebSocket
             foreach (var item in this.scores)
             {
                 QuizUserScoreDTO u = new QuizUserScoreDTO();
-                u.user = new UserDTO(RoomService.db.Users.FirstOrDefault(x => x.Token == item.Key));
+                u.user = new UserDTO(new ApplicationDbContext().Users.FirstOrDefault(x => x.Token == item.Key));
                 if (u.user == null)
                     break;
                 u.score = item.Value;
