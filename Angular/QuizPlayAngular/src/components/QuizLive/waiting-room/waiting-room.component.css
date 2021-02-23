@@ -1,4 +1,44 @@
 @import url(https://fonts.googleapis.com/css?family=Patrick+Hand+SC);
+.choice1 {
+  background-color: #ff5c5c !important;
+  color: #f1f1f1 !important;
+}
+
+.choice2 {
+  background-color: #ffac47 !important;
+  color: #101010 !important;
+}
+
+.choice3 {
+  background-color: #faff5c !important;
+  color: #101010 !important;
+}
+
+.choice4 {
+  background-color: #77ff5c !important;
+  color: #101010 !important;
+}
+
+.choice5 {
+  background-color: #70f3ff !important;
+  color: #101010 !important;
+}
+
+.choice6 {
+  background-color: #85b4ff !important;
+  color: #101010 !important;
+}
+
+.choice7 {
+  background-color: #9785ff !important;
+  color: #f1f1f1 !important;
+}
+
+.choice8 {
+  background-color: #ff85ff !important;
+  color: #101010 !important;
+}
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -27,9 +67,9 @@ tr.mat-footer-row {
 }
 
 ::ng-deep .toolTipCustom {
-  background-color: #1a535c;
-  color: #f7fff7 !important;
-  border: 0.05em solid #f7fff7;
+  background-color: #003d5b;
+  color: #edae49 !important;
+  border: 0.05em solid #edae49;
   font-weight: bold;
 }
 

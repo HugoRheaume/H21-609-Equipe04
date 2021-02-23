@@ -8,52 +8,10 @@
 // @import "10.scss";
 // @import '11.scss'; //change text color
 // @import "12.scss";
-// @import "14.scss";
+@import "14.scss";
 // @import '15.scss'; //change text color
 // @import "16.scss";
-@import "18.scss";
+// @import "18.scss";
 // @import '19.scss';
 // @import '21.scss'; //change everything
 // @import "22.scss";
-
-$choice1: #ff5c5c;
-$choice2: #ffac47;
-$choice3: #faff5c;
-$choice4: #77ff5c;
-$choice5: #70f3ff;
-$choice6: #85b4ff;
-$choice7: #9785ff;
-$choice8: #ff85ff;
-
-.choice1 {
-  background-color: $choice1 !important;
-  color: #f1f1f1 !important;
-}
-.choice2 {
-  background-color: $choice2 !important;
-  color: #101010 !important;
-}
-.choice3 {
-  background-color: $choice3 !important;
-  color: #101010 !important;
-}
-.choice4 {
-  background-color: $choice4 !important;
-  color: #101010 !important;
-}
-.choice5 {
-  background-color: $choice5 !important;
-  color: #101010 !important;
-}
-.choice6 {
-  background-color: $choice6 !important;
-  color: #101010 !important;
-}
-.choice7 {
-  background-color: $choice7 !important;
-  color: #f1f1f1 !important;
-}
-.choice8 {
-  background-color: $choice8 !important;
-  color: #101010 !important;
-}

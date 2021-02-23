@@ -1,10 +1,10 @@
 <div *ngIf="this.quizRoomComponent.currentQuestion$ | async as question">
   <div *ngIf="question.questionType == 2" class="questionDisplay questionBox">
     <div class="row itemcenter">
-      <div *ngFor="let itemMultiple of question.questionMultipleChoice;" [ngClass]="
+      <div *ngFor="let itemMultiple of question.questionMultipleChoice; let i = index" [attr.data-index]="i" [ngClass]="
           itemMultiple.answer && this.quizRoomComponent.isShowResult
-            ? 'correctTrue'
-            : ''
+            ? 'correctTrue choice'+(i+1)
+            : 'choice'+(i+1)
         " id="trueSquare" class="square">
         <h4>{{ itemMultiple.statement }}</h4>
         <mat-icon *ngIf="itemMultiple.answer && this.quizRoomComponent.isShowResult" style="color: green">check_circle
