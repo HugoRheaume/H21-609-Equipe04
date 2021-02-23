@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from 'src/app/models/question';
 import { QuizService } from '../../../app/services/Quiz.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { take, tap } from 'rxjs/operators';
+import { delay, take, tap } from 'rxjs/operators';
 import { interval, Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -67,7 +67,6 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
   }
 
   nextQuestion() {
-    console.log('next qestion');
     this.isScoreboardPage = !this.isScoreboardPage;
     if (this.currentIndex >= this.quizService.currentQuestions.length - 1) {
       this.isLastQuestion = true;
@@ -101,6 +100,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     this.timeLeft = timeLimit;
 
     const countdown$ = interval(1000).pipe(
+      delay(3000),
       tap(() => {
         this.timeLeft--;
         this.spinnerValue = parseInt((this.timeLeft * 100) / timeLimit + '');
