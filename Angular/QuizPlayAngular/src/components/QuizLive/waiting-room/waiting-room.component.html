@@ -17,13 +17,13 @@
     <mat-icon>content_copy</mat-icon>
   </button>
 
-  <!-- <div class="m-3 mb-0">
+  <div class="m-3 mb-0">
     <mat-form-field appearance="outline" style="width: 400px">
       <mat-label>Temps limite des questions par défaut</mat-label>
       <input (change)="change($event)" matInput type="number" value="10" />
     </mat-form-field>
     <mat-error>{{ this.timeLimitErrorMessage }}</mat-error>
-  </div> -->
+  </div>
 
   <div class="waitingRoom">
     <div class="d-flex justify-content-evenly align-items-center pt-5 pb-5">
@@ -51,7 +51,7 @@
         <button
           mat-raised-button
           (click)="starQuiz()"
-          [disabled]="this.service.users.length < 0"
+          [disabled]="this.service.users.length < 2"
           class="mat-primary"
         >
           Commencer la partie
