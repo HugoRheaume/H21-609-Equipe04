@@ -1,10 +1,18 @@
 <div *ngIf="!this.service.currentShareCode">
   <mat-spinner color="warn"></mat-spinner>Connexion en cours...
 </div>
-<div *ngIf="this.service.currentShareCode" style="width: 100%; background: transparent; height: 100%"
-  class="d-flex flex-column">
-  <button [cdkCopyToClipboard]="this.service.currentShareCode" class="m-3" style="width: 240px" mat-raised-button
-    color="primary">
+<div
+  *ngIf="this.service.currentShareCode"
+  style="width: 100%; background: transparent; height: 100%"
+  class="d-flex flex-column"
+>
+  <button
+    [cdkCopyToClipboard]="this.service.currentShareCode"
+    class="m-3"
+    style="width: 240px"
+    mat-raised-button
+    color="primary"
+  >
     Code de partage: {{ this.service.currentShareCode }}
     <mat-icon>content_copy</mat-icon>
   </button>
@@ -20,7 +28,12 @@
   <div class="waitingRoom">
     <div class="d-flex justify-content-evenly align-items-center pt-5 pb-5">
       <div>
-        <button mat-raised-button (click)="cancel()" [routerLink]="['/quiz/' + this.quizShareCode]" class="mat-primary">
+        <button
+          mat-raised-button
+          (click)="cancel()"
+          [routerLink]="['/quiz/' + this.quizShareCode]"
+          class="mat-primary"
+        >
           Annuler la partie
         </button>
       </div>
@@ -35,7 +48,12 @@
         </div>
       </div>
       <div>
-        <button mat-raised-button (click)="starQuiz()" [disabled]="this.service.users.length < 2" class="mat-primary">
+        <button
+          mat-raised-button
+          (click)="starQuiz()"
+          [disabled]="this.service.users.length < 0"
+          class="mat-primary"
+        >
           Commencer la partie
         </button>
       </div>
@@ -43,9 +61,17 @@
     <mat-grid-list cols="3" rowHeight="4:1" class="mb-3">
       <mat-grid-tile *ngFor="let i of this.service.usersDisplay">
         <div class="userCard">
-          <img src="{{ this.service.users[i].picture }}" alt="userImage" style="width: 64px; height: 64px" />
-          <span matTooltip="{{ this.service.users[i].name }}" [matTooltipClass]="'toolTipCustom'"
-            [matTooltipHideDelay]="50">{{ this.service.usersFormated[i] }}</span>
+          <img
+            src="{{ this.service.users[i].picture }}"
+            alt="userImage"
+            style="width: 64px; height: 64px"
+          />
+          <span
+            matTooltip="{{ this.service.users[i].name }}"
+            [matTooltipClass]="'toolTipCustom'"
+            [matTooltipHideDelay]="50"
+            >{{ this.service.usersFormated[i] }}</span
+          >
         </div>
       </mat-grid-tile>
     </mat-grid-list>

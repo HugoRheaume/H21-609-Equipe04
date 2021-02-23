@@ -18,6 +18,7 @@ export class WebSocketService {
   public usersFormated: string[] = [];
   public defaultTimeLimit: number;
   public currentQuestion$: Subject<Question> = new Subject<Question>();
+  public nbGoodAnswer: number = 0;
 
   public canDestroy: boolean = true;
 
@@ -59,6 +60,7 @@ export class WebSocketService {
     this.subject.next(ws);
   }
   public nextQuestion(questionIndex: number) {
+    this.nbGoodAnswer = 0;
     let ws = new NextQuestionWS();
     ws.token = localStorage.getItem('token');
     ws.questionIndex = questionIndex;
@@ -87,6 +89,7 @@ export class WebSocketService {
         this.router.navigate(['live/' + d.quizShareCode + '/0']);
         break;
       case CommandName.QuizScoreboard:
+        this.nbGoodAnswer = d.nbGoodAnswer;
         this.scoreboard = d.scores;
         break;
       case CommandName.QuizNext:
