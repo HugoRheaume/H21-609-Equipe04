@@ -9,6 +9,7 @@ namespace API.WebSocket.Command.QuizCommand
     public class QuizScoreboardCommand : BaseCommand
     {
         public List<QuizUserScoreDTO> scores { get; set; }
+        public int nbGoodAnswer { get; set; }
         public string shareCode { get; set; }
         public QuizScoreboardCommand()
         {
@@ -16,8 +17,8 @@ namespace API.WebSocket.Command.QuizCommand
         }
         public override void Run(Client client)
         {
-            
             scores = RoomService.GetRooms[this.shareCode].GetRoomQuizState.GetScores();
+            this.nbGoodAnswer = RoomService.GetRooms[this.shareCode].GetRoomQuizState.GetNbGoodAnswer;
             LogService.Log(RoomService.GetOwner(this.shareCode), this);
         }
     }

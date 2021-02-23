@@ -22,6 +22,12 @@ namespace API.WebSocket
         private Quiz quiz { get; set; }
         public Quiz GetQuiz { get { return quiz; } }
         private List<QuestionDTO> questions { get; set; }
+
+        private int m_nbGoodAnswer = 0;
+        public int GetNbGoodAnswer
+        {
+            get { return m_nbGoodAnswer; }
+        }
         public RoomQuizState(Quiz quiz)
         {
             this.questionIndex = 0;
@@ -32,6 +38,7 @@ namespace API.WebSocket
         public QuestionDTO NextQuestion(int questionIndex)
         {
             IsAcceptingAnswer = true;
+            m_nbGoodAnswer = 0;
             this.questionIndex = questionIndex;
             foreach (var item in questions)
             {
@@ -46,6 +53,8 @@ namespace API.WebSocket
                 return;
             if (!scores.ContainsKey(token))
                 scores.Add(token, 0);
+            if (score > 0)
+                m_nbGoodAnswer++;
 
             scores[token] += score;
         }
