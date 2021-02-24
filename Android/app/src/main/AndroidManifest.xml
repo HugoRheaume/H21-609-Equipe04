@@ -20,6 +20,7 @@
             <activity android:name=".activityDeferredQuiz.TrueFalseActivity" />
             <activity android:name=".activityDeferredQuiz.ResultActivity" />
             <activity android:name=".activityDeferredQuiz.QuizActivity"/>
+            <activity android:name=".activityDeferredQuiz.AssociationActivity"/>
             <!-- Live -->
             <activity android:name=".activityLiveQuiz.LiveTrueFalseActivity"/>
             <activity android:name=".activityLiveQuiz.WaitingRoomActivity"/>

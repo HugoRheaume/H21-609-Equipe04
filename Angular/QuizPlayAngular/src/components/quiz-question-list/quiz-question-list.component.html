@@ -88,6 +88,7 @@
               <h2 [ngSwitch]="this.enum[item.questionType]">
                 <span *ngSwitchCase="'TrueFalse'">Vrai ou Faux</span>
                 <span *ngSwitchCase="'MultipleChoices'">Choix Multiples</span>
+                <span *ngSwitchCase="'Association'">Association</span>
                 <span *ngSwitchDefault></span>
               </h2>
             </div>
