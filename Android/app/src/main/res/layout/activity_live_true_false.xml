@@ -1,4 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <AbsoluteLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="600dp"
+            android:layout_height="600dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="150dp"
+            android:layout_y="-200dp"/>
+
+        <View
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="-200dp"
+            android:layout_y="450dp"/>
+
+        <View
+            android:layout_width="125dp"
+            android:layout_height="250dp"
+            android:background="@drawable/triangle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="300dp"
+            android:layout_y="500dp"/>
+
+    </AbsoluteLayout>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -31,8 +68,13 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:onClick="verifyAnswer"
-                android:text="VRAI"
-                android:textSize="50sp" />
+                android:text="@string/answerTrue"
+                android:textSize="50sp"
+                android:background="@drawable/button_live"
+                android:backgroundTint="@color/liveChoice1"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/titan_one"/>
 
             <Button
                 android:id="@+id/btnFalse"
@@ -41,8 +83,13 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:onClick="verifyAnswer"
-                android:text="FAUX"
-                android:textSize="50sp" />
+                android:text="@string/answerFalse"
+                android:textSize="50sp"
+                android:background="@drawable/button_live"
+                android:backgroundTint="@color/liveChoice2"
+                android:textAllCaps="false"
+                android:textColor="#101010"
+                android:fontFamily="@font/titan_one" />
 
         </LinearLayout>
 
@@ -59,7 +106,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lorem"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/textColor"
+        android:fontFamily="@font/open_sans"/>
 
 
 </LinearLayout>
+</RelativeLayout>

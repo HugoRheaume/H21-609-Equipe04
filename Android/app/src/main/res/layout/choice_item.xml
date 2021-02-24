@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkboxChoice"
-            />
+            android:buttonTint="@color/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,7 +23,9 @@
             android:id="@+id/tvChoice"
             android:text="@string/lorem"
             android:gravity="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/textColor"
+            android:fontFamily="@font/open_sans" />
     </LinearLayout>
 
 </LinearLayout>

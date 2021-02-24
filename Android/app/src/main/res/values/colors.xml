@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0D39D8</color>
-    <color name="colorPrimaryDark">#157BD5</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="good">#00c000</color>
-    <color name="goodTransparent">#4000C000</color>
+    <color name="colorPrimary">#428F13</color>
+    <color name="colorPrimaryDark">#2D600D</color>
+    <color name="colorPrimaryLight">#649C42</color>
+    <color name="colorAccent">#D2A609</color>
+    <color name="colorDark">#2A2A2A</color>
+
+    <color name="buttonColor">#FF5C00</color>
+    <color name="buttonPressedColor">#FF8641</color>
+
+    <color name="textColor">#FFFFFF</color>
+    <color name="borderColor">#BFFFFFFF</color>
+    <color name="backgroundColor">#BF579D2C</color>
+
+    <color name="good">#4BDD4B</color>
+    <color name="goodTransparent">#404BDD4B</color>
     <color name="wrong">#c00000</color>
     <color name="black">#000000</color>
+
+    <color name="liveChoice1">#ff5c5c</color>
+    <color name="liveChoice2">#ffac47</color>
+    <color name="liveChoice3">#faff5c</color>
+    <color name="liveChoice4">#77ff5c</color>
+    <color name="liveChoice5">#70f3ff</color>
+    <color name="liveChoice6">#85b4ff</color>
+    <color name="liveChoice7">#9785ff</color>
+    <color name="liveChoice8">#ff85ff</color>
+
 </resources>
