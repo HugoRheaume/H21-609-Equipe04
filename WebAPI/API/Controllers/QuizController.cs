@@ -159,5 +159,11 @@ namespace API.Controllers
             if (service.ModifyQuiz(modifiedDTO)) return Ok("Quiz modifié.");
             return BadRequest("Une erreur s'est produite.");
         }
+
+        [HttpPost]
+        public IHttpActionResult GetPublicQuiz()
+        {
+            return Ok(service.GetListPublicQuiz());
+        }
     }
 }
