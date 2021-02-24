@@ -168,5 +168,11 @@ namespace API.Controllers
 
             return Unauthorized();
         }
+
+        [HttpPost]
+        public IHttpActionResult GetPublicQuiz()
+        {
+            return Ok(service.GetListPublicQuiz());
+        }
     }
 }

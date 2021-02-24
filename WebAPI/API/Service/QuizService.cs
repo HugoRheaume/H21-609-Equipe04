@@ -220,6 +220,23 @@ namespace API.Service
             }
             return false;
         }
+
+        public List<QuizResponseDTO> GetListPublicQuiz()
+        {
+            List<QuizResponseDTO> listPublicQuiz = db.ListQuiz.Where(q => q.IsPublic == true).Select(q => new QuizResponseDTO()
+                {
+                    Id = q.Id,
+                    Author = db.Users.FirstOrDefault(u => q.OwnerId == u.Id).Name,
+                    Title = q.Title,
+                    IsPublic = q.IsPublic,
+                    Description = q.Description,
+                    ShareCode = q.ShareCode,
+                    Date = q.Date,
+                    NumberOfQuestions = q.ListQuestions.Count
+                }).ToList();
+
+            return listPublicQuiz;
+        }
     }
 
     public class DescriptionIsTooLong : Exception
