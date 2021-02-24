@@ -61,7 +61,7 @@
             tools:context=".QuizActivity"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="30dp">
+            android:padding="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -258,6 +258,6 @@
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer"
         app:itemTextColor="@color/textColor"
-        android:background="@color/colorDark"/>
+        android:background="@color/colorPrimary"/>
 </androidx.drawerlayout.widget.DrawerLayout>
 </RelativeLayout>

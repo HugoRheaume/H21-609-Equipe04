@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AssociationActivity"
+    tools:context=".activityDeferredQuiz.AssociationActivity"
     android:background="@color/colorPrimary"
     >
 
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
         android:gravity="end"
         android:layout_marginBottom="30dp"
         android:id="@+id/timeLimit"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -77,10 +77,18 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="@string/lorem"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textColor="@color/textColor"
         android:fontFamily="@font/titan_one"/>
 
+    <org.equipe4.quizplay.MaxHeightScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:maxHeight="150dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -187,11 +195,13 @@
             android:layout_marginBottom="5dp"
             android:visibility="invisible"/>
     </LinearLayout>
+        </LinearLayout>
+    </org.equipe4.quizplay.MaxHeightScrollView>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="3">
 
             <LinearLayout
                 android:layout_width="match_parent"

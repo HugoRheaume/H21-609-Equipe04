@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.equipe4.quizplay.R;
@@ -123,9 +125,6 @@ public class AssociationActivity extends AppCompatActivity {
         if (question.timeLimit > 0) {
             findViewById(R.id.timeLimit).setVisibility(View.VISIBLE);
             startTimer();
-        }
-        else {
-            findViewById(R.id.timeLimit).setVisibility(View.GONE);
         }
 
         for(TextView tv : tvList) {

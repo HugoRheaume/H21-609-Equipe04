@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:text="@string/quizCompleted"
             android:layout_marginBottom="60dp"
+            android:layout_marginTop="40dp"
             android:textSize="50sp"
             android:textColor="@color/textColor"
             android:fontFamily="@font/titan_one" />

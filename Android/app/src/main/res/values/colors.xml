@@ -17,4 +17,14 @@
     <color name="goodTransparent">#404BDD4B</color>
     <color name="wrong">#c00000</color>
     <color name="black">#000000</color>
+
+    <color name="liveChoice1">#ff5c5c</color>
+    <color name="liveChoice2">#ffac47</color>
+    <color name="liveChoice3">#faff5c</color>
+    <color name="liveChoice4">#77ff5c</color>
+    <color name="liveChoice5">#70f3ff</color>
+    <color name="liveChoice6">#85b4ff</color>
+    <color name="liveChoice7">#9785ff</color>
+    <color name="liveChoice8">#ff85ff</color>
+
 </resources>
