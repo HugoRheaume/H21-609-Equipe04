@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using API.Models.Question;
 using Google.Api.Gax;
 
 namespace API.Service
@@ -97,7 +98,7 @@ namespace API.Service
             ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
             if (user != null && user.Email == null)
             {
-                db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User == user));
+                db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User.Id == user.Id).ToList());
                 db.Users.Remove(user);
                 db.SaveChanges();
                 return true;
