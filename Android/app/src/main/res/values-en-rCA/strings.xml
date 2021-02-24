@@ -51,6 +51,8 @@
     <string name="list">List of quizzes</string>
     <string name="guestLogin">" Guest login"</string>
     <string name="toastNoAcess">You don\'t have access to the server.</string>
+    <string name="toastNoQuestionsInQuiz">You can\'t join a quiz with no questions</string>
+
     <string name="open_drawer">Open</string>
     <string name="close_drawer">Close</string>
 </resources>

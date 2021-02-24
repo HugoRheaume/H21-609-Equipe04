@@ -20,6 +20,7 @@
     <string name="toastEnterName">Vous devez choisir un pseudo pour commencer le quiz.</string>
     <string name="toastNoQuizFound">Le code entré correspond à aucun quiz.</string>
     <string name="toastNoAcess">Vous n\'avez pas accès au serveur</string>
+    <string name="toastNoQuestionsInQuiz">Vous ne pouvez pas rejoindre un quiz sans questions</string>
 
     <string name="answerTrue">Vrai</string>
     <string name="answerFalse">Faux</string>

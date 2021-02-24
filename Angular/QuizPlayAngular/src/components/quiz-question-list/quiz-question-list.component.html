@@ -14,8 +14,8 @@
       Terminé
     </button>
   </div>
-  <button (click)="goLive()" routerLinkActive="router-link-active" class="ms-3" mat-raised-button color="primary"
-    style="margin-left: 5px">
+  <button *ngIf="this.service.currentQuiz && this.service.currentQuiz.numberOfQuestions > 0" (click)="goLive()"
+    routerLinkActive="router-link-active" class="ms-3" mat-raised-button color="primary" style="margin-left: 5px">
     Créer une salle d'attente
   </button>
   <h2 class="sectionHeader">Informations du quiz</h2>
@@ -74,7 +74,7 @@
     </button>
   </div>
   <div class="questionBox">
-    <div cdkDropListGroup (mouseleave)="this.selectedQuestion = null;">
+    <div cdkDropListGroup (mouseleave)="this.selectedQuestion = null">
       <div cdkDropList [cdkDropListData]="this.service.currentQuestions" class="question-list"
         (cdkDropListDropped)="drop($event)">
         <div class="questionItem" cdkDragLockAxis="y" cdkDragBoundary=".question-list"
@@ -82,13 +82,12 @@
           (mouseover)="selectedQuestion = item" (cdkDragStarted)="selectedQuestion = item">
           <div class="row">
             <div class="col-5">
-              <h2>{{item.label}} </h2>
+              <h2>{{ item.label }}</h2>
             </div>
             <div class="col-2">
               <h2 [ngSwitch]="this.enum[item.questionType]">
                 <span *ngSwitchCase="'TrueFalse'">Vrai ou Faux</span>
                 <span *ngSwitchCase="'MultipleChoices'">Choix Multiples</span>
-                <span *ngSwitchCase="'Association'">Association</span>
                 <span *ngSwitchDefault></span>
               </h2>
             </div>
@@ -117,10 +116,11 @@
         </div>
       </div>
     </div>
-
-    <div>
-      <button hidden data-bs-toggle="modal" data-bs-target="#modifyQuestion" id="openModalButton"></button>
-      <app-modify-question [question]="this.modifyingQuestion" *ngIf="showModifyingModal" (isReady)="this.openModal()"
-        (close)="this.updateQuestions($event)"></app-modify-question>
-    </div>
   </div>
+
+  <div>
+    <button hidden data-bs-toggle="modal" data-bs-target="#modifyQuestion" id="openModalButton"></button>
+    <app-modify-question [question]="this.modifyingQuestion" *ngIf="showModifyingModal" (isReady)="this.openModal()"
+      (close)="this.updateQuestions($event)"></app-modify-question>
+  </div>
+</div>

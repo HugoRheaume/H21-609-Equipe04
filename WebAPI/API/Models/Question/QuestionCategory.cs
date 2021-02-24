@@ -13,6 +13,8 @@ namespace API.Models.Question
 
         public static List<QuestionCategory> toListCategory(List<string> pList)
         {
+            if (pList == null)
+                return null;
             List<QuestionCategory> list = new List<QuestionCategory>();
 
             pList.ForEach(c => list.Add(new QuestionCategory() { Category = c }));
@@ -21,6 +23,8 @@ namespace API.Models.Question
         }
         public static List<string> toListString(List<QuestionCategory> pList)
         {
+            if (pList == null)
+                return null;
             List<string> list = new List<string>();
 
             pList.ForEach(c => list.Add(c.Category));

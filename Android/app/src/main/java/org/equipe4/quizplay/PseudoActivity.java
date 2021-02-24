@@ -8,11 +8,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.equipe4.quizplay.activityDeferredQuiz.QuizActivity;
+import org.equipe4.quizplay.activityLiveQuiz.WaitingRoomActivity;
 import org.equipe4.quizplay.databinding.ActivityPseudoBinding;
-import org.equipe4.quizplay.http.QPService;
-import org.equipe4.quizplay.http.RetrofitUtil;
-import org.equipe4.quizplay.transfer.UserDTO;
-import org.equipe4.quizplay.util.SharedPrefUtil;
+import org.equipe4.quizplay.model.http.QPService;
+import org.equipe4.quizplay.model.http.RetrofitUtil;
+import org.equipe4.quizplay.model.transfer.UserDTO;
+import org.equipe4.quizplay.model.util.Global;
+import org.equipe4.quizplay.model.util.SharedPrefUtil;
+import org.equipe4.quizplay.model.webSocket.WSClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +46,7 @@ public class PseudoActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                     if (response.isSuccessful()) {
+
                         SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
                         response.body().isAnonymous = true;
                         sharedPrefUtil.setCurrentUser(response.body());

@@ -97,6 +97,7 @@ namespace API.Service
             ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
             if (user != null && user.Email == null)
             {
+                db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User == user));
                 db.Users.Remove(user);
                 db.SaveChanges();
                 return true;

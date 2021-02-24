@@ -2,17 +2,9 @@ package org.equipe4.quizplay;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -23,20 +15,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.gson.Gson;
 
 import org.equipe4.quizplay.databinding.ActivityLandingBinding;
-import org.equipe4.quizplay.http.QPService;
-import org.equipe4.quizplay.http.RetrofitUtil;
-import org.equipe4.quizplay.transfer.QuizResponseDTO;
-import org.equipe4.quizplay.transfer.UserDTO;
-import org.equipe4.quizplay.util.Global;
-import org.equipe4.quizplay.util.SharedPrefUtil;
+import org.equipe4.quizplay.model.http.QPService;
+import org.equipe4.quizplay.model.http.RetrofitUtil;
+import org.equipe4.quizplay.model.transfer.UserDTO;
+import org.equipe4.quizplay.model.util.Global;
+import org.equipe4.quizplay.model.util.SharedPrefUtil;
+import org.equipe4.quizplay.model.webSocket.WSClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,10 +51,9 @@ public class LandingActivity extends AppCompatActivity {
         binding = ActivityLandingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        String toastMessage = getIntent().getStringExtra("message");
-//        if (toastMessage != null) {
-//            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
-//        }
+        manageExtras();
+
+        WSClient.disconnect();
 
         //region Button events
 
@@ -74,12 +63,23 @@ public class LandingActivity extends AppCompatActivity {
         });
 
         //Login Guest
-        binding.btnGuestLogin.setOnClickListener(v ->{
+        binding.btnGuestLogin.setOnClickListener(v -> {
             Intent intent = new Intent(this, PseudoActivity.class);
             startActivity(intent);
         });
 
         //endregion
+    }
+
+    private void manageExtras() {
+        String toastMessage = getIntent().getStringExtra("message");
+        if (toastMessage != null) {
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+        }
+
+        if (getIntent().getBooleanExtra("expired", false)) {
+            Global.logout(getApplicationContext());
+        }
     }
 
 
@@ -90,14 +90,17 @@ public class LandingActivity extends AppCompatActivity {
             RetrofitUtil.cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this.getApplicationContext()));
         service = RetrofitUtil.get();
         // Firebase - Vérifier si déjà connecté
+        verifyConnected();
+    }
+
+    private void verifyConnected() {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             Intent i = new Intent(getApplicationContext(), ListQuizActivity.class);
             startActivity(i);
             finish();
-        }
-        else {
+        } else {
             SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
 
             if (sharedPrefUtil.getCurrentUser().isAnonymous)
@@ -116,13 +119,9 @@ public class LandingActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-
-        //Si plusieurs activités, d'autres IF avec codes différents
-
     }
 
     //region SignIn with Google Méthode
-
     private void startSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.client_id))      // TODO Très important, mauvaise valeur = marche pas
@@ -135,8 +134,7 @@ public class LandingActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN_CODE);
     }
 
-
-
+    // endregion
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
@@ -155,46 +153,44 @@ public class LandingActivity extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         // TODO C'est ici qu'on envoie la requête à Firebase avec le token google
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
+            .addOnCompleteListener(this, task -> {
+                if (task.isSuccessful()) {
 
-                        // On est connecté
-                        mAuth.getCurrentUser().getIdToken(true).addOnCompleteListener(taskToken -> {
-                            if (taskToken.isSuccessful()){
+                    // On est connecté
+                    mAuth.getCurrentUser().getIdToken(true).addOnCompleteListener(taskToken -> {
+                        if (taskToken.isSuccessful()) {
 
-                                String firebaseToken = taskToken.getResult().getToken();
+                            String firebaseToken = taskToken.getResult().getToken();
 
-                                service.login("\"" + firebaseToken + "\"").enqueue(new Callback<UserDTO>() {
-                                    @Override
-                                    public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-                                        UserDTO user = response.body();
+                            service.login("\"" + firebaseToken + "\"").enqueue(new Callback<UserDTO>() {
+                                @Override
+                                public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                                    UserDTO user = response.body();
 
-                                        Intent i = new Intent(getApplicationContext(), ListQuizActivity.class);
+                                    Intent i = new Intent(getApplicationContext(), ListQuizActivity.class);
 
-                                        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
-                                        sharedPrefUtil.setCurrentUser(user);
+                                    SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
+                                    sharedPrefUtil.setCurrentUser(user);
 
-                                        //i.putExtra("name", (Serializable) user);
-                                        //i.putExtra("picture", user.picture);
+                                    //i.putExtra("name", (Serializable) user);
+                                    //i.putExtra("picture", user.picture);
 
-                                        startActivity(i);
-                                        finish();
-                                    }
+                                    startActivity(i);
+                                    finish();
+                                }
 
-                                    @Override
-                                    public void onFailure(Call<UserDTO> call, Throwable t) {
-                                        Toast.makeText(LandingActivity.this, "Erreur " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                @Override
+                                public void onFailure(Call<UserDTO> call, Throwable t) {
+                                    Toast.makeText(LandingActivity.this, "Erreur " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
-                            }
-                        });
+                        }
+                    });
 
-                    } else {
-                        Toast.makeText(LandingActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                } else {
+                    Toast.makeText(LandingActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                }
+            });
     }
-
-    //endregion
 }

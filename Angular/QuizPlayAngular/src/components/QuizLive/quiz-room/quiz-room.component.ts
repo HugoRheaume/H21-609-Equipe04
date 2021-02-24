@@ -5,7 +5,6 @@ import { QuizService } from '../../../app/services/Quiz.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { delay, take, tap } from 'rxjs/operators';
 import { interval, Observable, Subscription } from 'rxjs';
-
 @Component({
   selector: 'app-quiz-room',
   templateUrl: './quiz-room.component.html',
@@ -109,6 +108,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     );
 
     this.countdownSub = countdown$.subscribe({ complete: () => this.skip() });
+
   }
 
   private stopTimer(): void {

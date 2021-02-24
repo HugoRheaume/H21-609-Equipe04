@@ -23,13 +23,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import org.equipe4.quizplay.activityDeferredQuiz.QuizActivity;
+import org.equipe4.quizplay.activityLiveQuiz.WaitingRoomActivity;
 import org.equipe4.quizplay.databinding.ActivityJoinQuizBinding;
-import org.equipe4.quizplay.http.QPService;
-import org.equipe4.quizplay.http.RetrofitUtil;
-import org.equipe4.quizplay.transfer.QuizResponseDTO;
-import org.equipe4.quizplay.transfer.UserDTO;
-import org.equipe4.quizplay.util.Global;
-import org.equipe4.quizplay.util.SharedPrefUtil;
+import org.equipe4.quizplay.model.http.QPService;
+import org.equipe4.quizplay.model.http.RetrofitUtil;
+import org.equipe4.quizplay.model.transfer.QuizResponseDTO;
+import org.equipe4.quizplay.model.transfer.UserDTO;
+import org.equipe4.quizplay.model.util.Global;
+import org.equipe4.quizplay.model.util.SharedPrefUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,9 +77,7 @@ public class JoinQuizActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Object> call, Response<Object> response) {
                     if (response.isSuccessful()){
-
                         if (response.body().getClass().getName().equals(String.class.getName())) {
-
                             String token = SharedPrefUtil.getTokenFromCookie(getApplicationContext(), response.raw().request().url().host());
 
                             Intent intent = new Intent(getApplicationContext(), WaitingRoomActivity.class);
@@ -90,12 +90,15 @@ public class JoinQuizActivity extends AppCompatActivity {
                             String json = gson.toJson(response.body());
                             QuizResponseDTO quiz = gson.fromJson(json, QuizResponseDTO.class);
 
-
-                            Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-                            intent.putExtra("quiz", quiz);
-                            startActivity(intent);
+                            if (quiz.numberOfQuestions == 0) {
+                                Toast.makeText(JoinQuizActivity.this, getString(R.string.toastNoQuestionsInQuiz), Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                                intent.putExtra("quiz", quiz);
+                                startActivity(intent);
+                            }
                         }
-
                     }
                     else {
                         Toast.makeText(getApplicationContext(), R.string.toastNoQuizFound, Toast.LENGTH_SHORT).show();

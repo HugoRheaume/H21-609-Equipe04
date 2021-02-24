@@ -1,13 +1,4 @@
-package org.equipe4.quizplay;
-
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+package org.equipe4.quizplay.activityDeferredQuiz;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,61 +7,79 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.franmontiel.persistentcookiejar.PersistentCookieJar;
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
+import org.equipe4.quizplay.JoinQuizActivity;
+import org.equipe4.quizplay.ListQuizActivity;
+import org.equipe4.quizplay.R;
+import org.equipe4.quizplay.model.http.QPService;
 import org.equipe4.quizplay.model.http.RetrofitUtil;
-import org.equipe4.quizplay.model.service.AppKilledService;
+import org.equipe4.quizplay.model.transfer.QuestionDTO;
+import org.equipe4.quizplay.model.transfer.QuestionResultDTO;
+import org.equipe4.quizplay.model.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.model.transfer.UserDTO;
 import org.equipe4.quizplay.model.util.Global;
 import org.equipe4.quizplay.model.util.SharedPrefUtil;
-import org.equipe4.quizplay.model.webSocket.WSClient;
 
-public class ListQuizActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    SharedPrefUtil sharedPrefUtil;
-    UserDTO user;
+public class QuizActivity extends AppCompatActivity {
+
+
+    QPService service;
+    QuizResponseDTO quiz;
     ActionBarDrawerToggle toggle;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_quiz);
+        setContentView(R.layout.activity_quiz);
+        service = RetrofitUtil.get();
+        quiz = (QuizResponseDTO)getIntent().getSerializableExtra("quiz");
 
-        startService(new Intent(getApplicationContext(), AppKilledService.class));
-
-        manageExtras();
-
-        WSClient.disconnect();
-
-        sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
-        user = sharedPrefUtil.getCurrentUser();
+        TextView quizTitle = findViewById(R.id.quizTitle);
+        quizTitle.setText(quiz.title);
+        TextView quizDesc = findViewById(R.id.quizDesc);
+        quizDesc.setText(quiz.description);
 
         configureDrawer();
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    public void startQuiz(View v) {
+        service.getNextQuestion(new QuestionResultDTO(-1, quiz.id,0)).enqueue(new Callback<QuestionDTO>() {
+            @Override
+            public void onResponse(Call<QuestionDTO> call, Response<QuestionDTO> response) {
+                if(response.isSuccessful()) {
+                    QuestionDTO question = response.body();
+                    Log.i("Response", response.body().toString());
 
-        if (RetrofitUtil.cookieJar == null)
-            RetrofitUtil.cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this.getApplicationContext()));
+                    Intent i = new Intent(getApplicationContext(), Global.getQuestionTypeDeferred(question.questionType));
+                    i.putExtra("question", question);
+                    i.putExtra("quiz", quiz);
+                    startActivity(i);
+                } else {
+                    Log.i("RETROFIT", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<QuestionDTO> call, Throwable t) {
+                Log.e("RETROFIT", t.getMessage());
+            }
+        });
     }
-
-    private void manageExtras() {
-        String toastMessage = getIntent().getStringExtra("message");
-        if (toastMessage != null) {
-            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
-        }
-
-        if (getIntent().getBooleanExtra("expired", false)) {
-            Global.logout(getApplicationContext());
-        }
-    }
-
 
     // region Configure drawer
 
