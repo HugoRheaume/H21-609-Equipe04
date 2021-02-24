@@ -67,6 +67,9 @@ public class MultipleChoiceActivity extends AppCompatActivity {
             findViewById(R.id.timeLimit).setVisibility(View.VISIBLE);
             startTimer();
         }
+        else {
+            findViewById(R.id.timeLimit).setVisibility(View.GONE);
+        }
     }
 
     private void startTimer() {

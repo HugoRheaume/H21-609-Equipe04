@@ -123,6 +123,9 @@ public class AssociationActivity extends AppCompatActivity {
             findViewById(R.id.timeLimit).setVisibility(View.VISIBLE);
             startTimer();
         }
+        else {
+            findViewById(R.id.timeLimit).setVisibility(View.GONE);
+        }
 
         for(TextView tv : tvList) {
             tv.setOnLongClickListener(v -> {
