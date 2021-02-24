@@ -1,16 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WaitingRoomActivity"
+    android:background="@color/colorPrimary">
+
+    <AbsoluteLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="600dp"
+            android:layout_height="600dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="150dp"
+            android:layout_y="-200dp"/>
+
+        <View
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="-200dp"
+            android:layout_y="450dp"/>
+
+        <View
+            android:layout_width="125dp"
+            android:layout_height="250dp"
+            android:background="@drawable/triangle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="300dp"
+            android:layout_y="500dp"/>
+
+    </AbsoluteLayout>
+
+<androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".WaitingRoomActivity"
         android:orientation="vertical" >
 
         <androidx.appcompat.widget.Toolbar
@@ -40,6 +75,8 @@
                     android:text="@string/welcome"
                     android:textSize="22sp"
                     android:layout_marginBottom="20dp"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/open_sans"
                     />
             </LinearLayout>
             <LinearLayout
@@ -57,7 +94,8 @@
                     android:layout_marginBottom="8dp"
                     android:text="Titre"
                     android:textSize="28sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/titan_one" />
                 <TextView
                     android:id="@+id/txtNbQuestion"
                     android:layout_width="match_parent"
@@ -65,6 +103,8 @@
                     android:textSize="14sp"
                     android:layout_marginBottom="20dp"
                     android:textAlignment="textEnd"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/open_sans"
                     />
                 <ScrollView
                     android:layout_width="match_parent"
@@ -75,14 +115,18 @@
                         android:layout_height="wrap_content"
                         android:text="Description"
                         android:textSize="20sp"
-                        android:layout_marginBottom="20dp"/>
+                        android:layout_marginBottom="20dp"
+                        android:textColor="@color/textColor"
+                        android:fontFamily="@font/open_sans"/>
                 </ScrollView>
 
                 <TextView
                     android:id="@+id/txtUserCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/open_sans"/>
             </LinearLayout>
 
             <Button
@@ -90,7 +134,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="@string/change_username" />
+                android:text="@string/change_username"
+                android:textSize="18sp"
+                android:background="@drawable/button"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/open_sans"/>
 
         </LinearLayout>
 
@@ -102,6 +151,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer"/>
+        app:menu="@menu/drawer"
+        app:itemTextColor="@color/textColor"
+        android:background="@color/colorDark"/>
 </androidx.drawerlayout.widget.DrawerLayout>
-
+</RelativeLayout>

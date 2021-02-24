@@ -112,6 +112,7 @@ public class AssociationActivity extends AppCompatActivity {
             TextView category3 = findViewById(R.id.category3);
             category3.setText(question.categories.get(2));
             findViewById(R.id.zoneCategory3).setVisibility(View.VISIBLE);
+            findViewById(R.id.separationCategory3).setVisibility(View.VISIBLE);
             categories.add((LinearLayout)findViewById(R.id.zoneCategory3));
         }
 

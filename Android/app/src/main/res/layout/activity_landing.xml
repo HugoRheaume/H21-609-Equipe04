@@ -1,36 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     tools:context=".LandingActivity"
+    android:background="@color/colorPrimary">
+
+    <AbsoluteLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="600dp"
+            android:layout_height="600dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="150dp"
+            android:layout_y="-200dp"/>
+
+        <View
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="-200dp"
+            android:layout_y="450dp"/>
+
+        <View
+            android:layout_width="275dp"
+            android:layout_height="550dp"
+            android:background="@drawable/triangle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="150dp"
+            android:layout_y="200dp"/>
+
+        <View
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="30dp"
+            android:layout_y="350dp"/>
+
+        <View
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="12dp"
+            android:layout_y="275dp"/>
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="50dp"
+            android:layout_y="220dp"/>
+
+    </AbsoluteLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/txtAppTitle"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:fontFamily="@font/titan_one"
-        android:text="@string/app_name"
-        android:textSize="50sp" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:paddingBottom="10dp"
+            android:fontFamily="@font/titan_one"
+            android:text="@string/app_name"
+            android:textSize="100sp"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:shadowDx="4"
+            android:shadowDy="20"
+            android:shadowRadius="1"
+            android:shadowColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/txtAppTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:paddingBottom="10dp"
+            android:fontFamily="@font/titan_one"
+            android:text="@string/app_name"
+            android:textSize="100sp"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:shadowDx="2"
+            android:shadowDy="10"
+            android:shadowRadius="1"
+            android:shadowColor="@color/colorPrimaryLight"/>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btnGuestLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/guestLogin"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="30dp"
-        android:layout_marginTop="50dp"/>
+        android:fontFamily="@font/open_sans"
+        android:text="@string/guestLogin"
+        android:textSize="20sp"
+        android:textColor="@color/textColor"
+        android:background="@drawable/button"
+        android:textAllCaps="false"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"/>
-
+        android:layout_marginTop="30dp" />
 </LinearLayout>
+
+</RelativeLayout>

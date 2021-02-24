@@ -100,6 +100,7 @@ namespace API.Service
             {
                 db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User.Id == user.Id).ToList());
                 db.Users.Remove(user);
+                db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User == user));
                 db.SaveChanges();
                 return true;
             }

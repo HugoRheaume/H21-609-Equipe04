@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <AbsoluteLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="600dp"
+            android:layout_height="600dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="150dp"
+            android:layout_y="-200dp"/>
+
+        <View
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="-200dp"
+            android:layout_y="450dp"/>
+
+        <View
+            android:layout_width="125dp"
+            android:layout_height="250dp"
+            android:background="@drawable/triangle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="300dp"
+            android:layout_y="500dp"/>
+
+    </AbsoluteLayout>
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -15,7 +50,9 @@
         android:layout_height="wrap_content"
         android:text="@string/ChooseName"
         android:layout_marginBottom="15dp"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="@color/textColor"
+        android:fontFamily="@font/titan_one" />
 
     <EditText
         android:id="@+id/editTextPseudo"
@@ -24,14 +61,24 @@
         android:ems="10"
         android:inputType="text"
         android:hint="@string/hintPseudo"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/borderColor"
+        android:textColorHint="@color/borderColor"
+        android:fontFamily="@font/open_sans"
+        android:textColor="@color/textColor"/>
 
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btnParti"
-        android:onClick="CreateUser"/>
+        android:onClick="CreateUser"
+        android:textSize="18sp"
+        android:background="@drawable/button"
+        android:textAllCaps="false"
+        android:textColor="@color/textColor"
+        android:fontFamily="@font/open_sans"/>
 
 </LinearLayout>
+</RelativeLayout>
 

@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <AbsoluteLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="600dp"
+            android:layout_height="600dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="150dp"
+            android:layout_y="-200dp"/>
+
+        <View
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="-200dp"
+            android:layout_y="450dp"/>
+
+        <View
+            android:layout_width="125dp"
+            android:layout_height="250dp"
+            android:background="@drawable/triangle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="300dp"
+            android:layout_y="500dp"/>
+
+    </AbsoluteLayout>
+
+<androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -36,7 +71,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/joinQuiz"
                 android:layout_marginBottom="50dp"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                android:fontFamily="@font/titan_one"
+                android:textColor="@color/textColor"/>
 
             <TextView
                 android:id="@+id/textViewEnterCode"
@@ -44,7 +81,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/enterCode"
                 android:layout_marginBottom="15dp"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/textColor" />
 
             <EditText
                 android:id="@+id/editTextCode"
@@ -56,14 +95,23 @@
                 android:hint="@string/hintCode"
                 android:maxLength="6"
                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/borderColor"
+                android:textColorHint="@color/borderColor"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/textColor"/>
 
             <Button
                 android:id="@+id/buttonJoin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btnJoin"
-                android:onClick="JoinQuiz"/>
+                android:textSize="18sp"
+                android:onClick="JoinQuiz"
+                android:background="@drawable/button"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/open_sans" />
         </LinearLayout>
 
     </LinearLayout>
@@ -74,6 +122,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer"/>
+        app:menu="@menu/drawer"
+        app:itemTextColor="@color/textColor"
+        android:background="@color/colorDark"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
+</RelativeLayout>

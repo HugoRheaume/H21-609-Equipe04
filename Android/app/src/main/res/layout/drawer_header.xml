@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#C02F29"
+        android:background="@color/colorPrimaryDark"
         android:padding="10dp">
 
         <ImageView
@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="#fff"/>
+            android:textColor="@color/textColor"
+            android:fontFamily="@font/titan_one"/>
 
     </LinearLayout>
 

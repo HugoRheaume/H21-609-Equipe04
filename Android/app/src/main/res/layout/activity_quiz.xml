@@ -1,13 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <AbsoluteLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="600dp"
+            android:layout_height="600dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="150dp"
+            android:layout_y="-200dp"/>
+
+        <View
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="-200dp"
+            android:layout_y="450dp"/>
+
+        <View
+            android:layout_width="125dp"
+            android:layout_height="250dp"
+            android:background="@drawable/triangle"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_x="300dp"
+            android:layout_y="500dp"/>
+
+    </AbsoluteLayout>
+
+<androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".QuizActivity"
@@ -42,7 +77,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/lorem"
                     android:layout_marginBottom="30dp"
-                    android:textSize="40sp" />
+                    android:textSize="40sp"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/titan_one" />
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
@@ -54,7 +91,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/lorem"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:textColor="@color/textColor"
+                        android:fontFamily="@font/open_sans"/>
                 </androidx.core.widget.NestedScrollView>
 
             </LinearLayout>
@@ -71,7 +110,9 @@
                     android:text="@string/bestScores"
                     android:textSize="30sp"
                     android:textAlignment="center"
-                    android:layout_marginBottom="20dp"/>
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/titan_one"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,27 +131,32 @@
                             android:text="#1"
                             android:textSize="20sp"
                             android:textAlignment="center"
-                            android:textColor="#FFD700"/>
+                            android:textColor="#FFD700"
+                            android:fontFamily="@font/open_sans"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:text="Titouan"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp"
+                            android:textColor="@color/textColor"
+                            android:fontFamily="@font/open_sans"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="35 pts"
                             android:textSize="20sp"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center"
+                            android:textColor="@color/textColor"
+                            android:fontFamily="@font/open_sans"/>
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#111111"/>
+                        android:background="@color/borderColor"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -124,27 +170,32 @@
                             android:text="#2"
                             android:textSize="20sp"
                             android:textAlignment="center"
-                            android:textColor="#C0C0C0"/>
+                            android:textColor="#C0C0C0"
+                            android:fontFamily="@font/open_sans"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:text="Jean-Martin"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp"
+                            android:textColor="@color/textColor"
+                            android:fontFamily="@font/open_sans"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="33 pts"
                             android:textSize="20sp"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center"
+                            android:textColor="@color/textColor"
+                            android:fontFamily="@font/open_sans"/>
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#111111"/>
+                        android:background="@color/borderColor"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -158,20 +209,25 @@
                             android:text="#3"
                             android:textSize="20sp"
                             android:textAlignment="center"
-                            android:textColor="#CD7F32"/>
+                            android:textColor="#CD7F32"
+                            android:fontFamily="@font/open_sans"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:text="Rastipouel"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp"
+                            android:textColor="@color/textColor"
+                            android:fontFamily="@font/open_sans"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="29 pts"
                             android:textSize="20sp"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center"
+                            android:textColor="@color/textColor"
+                            android:fontFamily="@font/open_sans"/>
 
                     </LinearLayout>
 
@@ -184,7 +240,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/startQuiz"
                 android:onClick="startQuiz"
-                android:text="@string/startQuiz" />
+                android:text="@string/startQuiz"
+                android:textSize="20sp"
+                android:background="@drawable/button"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/open_sans" />
         </LinearLayout>
 
     </LinearLayout>
@@ -195,5 +256,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer"/>
+        app:menu="@menu/drawer"
+        app:itemTextColor="@color/textColor"
+        android:background="@color/colorDark"/>
 </androidx.drawerlayout.widget.DrawerLayout>
+</RelativeLayout>
