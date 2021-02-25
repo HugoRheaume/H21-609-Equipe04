@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   constructor(
     public afAuth: AngularFireAuth,
     public http: QuizService,
-    private router: Router,
     private route: ActivatedRoute
   ) { }
   ngOnInit(): void {

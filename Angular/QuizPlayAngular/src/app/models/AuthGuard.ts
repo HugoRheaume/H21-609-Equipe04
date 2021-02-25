@@ -18,3 +18,17 @@ export class AuthGuard implements CanActivate {
     localStorage.clear();
   }
 }
+
+@Injectable()
+export class AntiAuthGuard implements CanActivate {
+
+  constructor(private authService: AuthService, private router: Router) { }
+
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
+    let loginStatus = await this.authService.isAuthenticated();
+    if (!loginStatus) return true;
+
+    this.router.navigate(['/list']);
+  }
+}

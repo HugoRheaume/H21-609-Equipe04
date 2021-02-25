@@ -10,9 +10,6 @@ import { map } from 'rxjs/operators';
 export class AuthService {
 
   constructor(public http: HttpClient) { }
-  /**
-   * name
-   */
   async isAuthenticated() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -24,7 +21,7 @@ export class AuthService {
     let response = this.http.get<boolean>(environment.backend.baseURL + '/auth/CheckAuthorize', httpOptions).toPromise();
 
     return await response.then(res => { return res.valueOf() }).catch(error => {
-      if (error.status == 401)
+      if (error.status == 401 || error.status == 403)
         return false;
     });;
 

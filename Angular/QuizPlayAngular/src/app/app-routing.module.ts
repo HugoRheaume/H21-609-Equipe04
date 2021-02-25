@@ -6,14 +6,14 @@ import { HomePageComponent } from 'src/components/home-page/home-page.component'
 import { QuizQuestionListComponent } from '../components/quiz-question-list/quiz-question-list.component';
 import { WaitingRoomComponent } from 'src/components/QuizLive/waiting-room/waiting-room.component';
 import { QuizRoomComponent } from 'src/components/QuizLive/quiz-room/quiz-room.component';
-import { AuthGuard } from './models/AuthGuard';
+import { AntiAuthGuard, AuthGuard } from './models/AuthGuard';
 const routes: Routes = [
   { path: 'list', component: ListQuizComponent, canActivate: [AuthGuard] },
   { path: 'quiz/:quizShareCode', component: QuizQuestionListComponent, canActivate: [AuthGuard] },
   { path: 'quiz', component: CreateQuizComponent, canActivate: [AuthGuard] },
   { path: 'live/:quizShareCode', component: WaitingRoomComponent, canActivate: [AuthGuard] },
   { path: 'live/:quizShareCode/:questionIndex', component: QuizRoomComponent, canActivate: [AuthGuard] },
-  { path: '', component: HomePageComponent },
+  { path: '', component: HomePageComponent, canActivate: [AntiAuthGuard] },
 ];
 
 @NgModule({
