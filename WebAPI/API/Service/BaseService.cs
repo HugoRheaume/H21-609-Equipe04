@@ -14,6 +14,8 @@ namespace API.Service
         {
             this.db = db;
         }
+
+        public BaseService(){}
         public void Dispose()
         {
             db.Dispose();

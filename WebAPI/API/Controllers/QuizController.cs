@@ -20,20 +20,23 @@ namespace API.Controllers
 {
     public class QuizController : ApiController
     {
-        private QuizService service = new QuizService(new ApplicationDbContext());
+        private QuizService quizService;
         private const string ALPHANUMERIC_CHARACTER_LIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         private static Random random = new Random();
+        private AuthService authService;
+
+        public QuizController()
+        {
+            quizService = new QuizService(new ApplicationDbContext());
+            authService = new AuthService(new ApplicationDbContext());
+        }
 
         [TokenAuthorize]
         [HttpPost]
         [ModelValidation]
         public IHttpActionResult Create(QuizRequestDTO quizRequestDto)
         {
-
-            AuthService authService = new AuthService(new ApplicationDbContext());
-
             ApplicationUser user = authService.GetUserWithToken(Request);
-            // Enlever le "1" lorsque les user seront implémentés
 
             Quiz quiz = new Quiz
             {
@@ -46,9 +49,9 @@ namespace API.Controllers
                 ListQuestions = new List<Question>()
             };
 
-            if (quizRequestDto.Confirm || !service.QuizCheck(user.Id, quizRequestDto.Title))
+            if (quizRequestDto.Confirm || !quizService.QuizCheck(user.Id, quizRequestDto.Title))
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.Created,
-                    service.CreateQuiz(quiz, user.Name)));
+                    quizService.CreateQuiz(quiz, user.Name)));
 
 
             quizRequestDto.Confirm = true;
@@ -65,17 +68,15 @@ namespace API.Controllers
         [HttpGet]
         public IHttpActionResult GetQuizFromUser()
         {
-            AuthService authService = new AuthService(new ApplicationDbContext());
-
             ApplicationUser user = authService.GetUserWithToken(Request);
 
-            return Ok(service.GetQuizFromUser(user.Id, user.Name));
+            return Ok(quizService.GetQuizFromUser(user.Id, user.Name));
         }
 
         [HttpGet]
         public IHttpActionResult DeleteQuiz(int id)
         {
-            if (service.DeleteQuiz(id))
+            if (quizService.DeleteQuiz(id))
                 return Ok();
 
             return BadRequest();
@@ -85,20 +86,20 @@ namespace API.Controllers
         [Route("api/Quiz/GetQuizById/{quizId}")]
         public IHttpActionResult GetQuizById(int quizId)
         {
-            return Ok(service.GetQuizById(quizId));
+            return Ok(quizService.GetQuizById(quizId));
         }
 
         [HttpGet]
         [TokenAuthorize]
         public IHttpActionResult GetQuizByCode([FromUri(Name = "code")] string pCode)
         {
-            QuizResponseDTO response = service.GetQuizByCode(pCode);
+            QuizResponseDTO response = quizService.GetQuizByShareCode(pCode);
 
             if (response == null)
             {
                 return BadRequest("Aucun quiz n'a été trouvé");
             }
-            return Ok(service.GetQuizByCode(pCode));
+            return Ok(quizService.GetQuizByShareCode(pCode));
         }
 
         public string GenerateAlphanumeric()
@@ -113,7 +114,7 @@ namespace API.Controllers
                     ch = ALPHANUMERIC_CHARACTER_LIST[random.Next(0, ALPHANUMERIC_CHARACTER_LIST.Length)];
                     code.Append(ch);
                 }
-            } while (service.CheckCodeExist(code.ToString()));
+            } while (quizService.CheckCodeExist(code.ToString()));
             return code.ToString();
         }
 
@@ -124,9 +125,9 @@ namespace API.Controllers
             CookieHeaderValue cookie = Request.Headers.GetCookies("token").FirstOrDefault();
             if (cookie == null) return BadRequest("Pas de Biscuit");
 
-            int score = service.GetFinalScore(quiz.Id, cookie);
+            int score = quizService.GetFinalScore(quiz.Id, cookie);
 
-            service.DeleteQuestionResults(quiz.Id, cookie);
+            quizService.DeleteQuestionResults(quiz.Id, cookie);
 
             return Ok(score);
         }
@@ -137,10 +138,10 @@ namespace API.Controllers
         [Route("api/Quiz/GetObjectByShareCode/{sharecode}")]
         public IHttpActionResult GetObjectByShareCode(string sharecode)
         {
-            Type objectType = service.VerifyTypeOfShareCode(sharecode);
+            Type objectType = quizService.VerifyTypeOfShareCode(sharecode);
             if (objectType == typeof(Quiz))
             {
-                return Ok(service.GetQuizByShareCode(sharecode));
+                return Ok(quizService.GetQuizByShareCode(sharecode));
             }
             if (objectType == typeof(Room))
             {
@@ -156,7 +157,7 @@ namespace API.Controllers
         [TokenAuthorize]
         public IHttpActionResult ModifyQuiz(QuizModifyDTO modifiedDTO)
         {
-            if (service.ModifyQuiz(modifiedDTO)) return Ok("Quiz modifié.");
+            if (quizService.ModifyQuiz(modifiedDTO)) return Ok("Quiz modifié.");
             return BadRequest("Une erreur s'est produite.");
         }
     }

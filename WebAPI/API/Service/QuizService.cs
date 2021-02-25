@@ -1,20 +1,13 @@
 ﻿using API.Models;
 using API.Models.Question;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Principal;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http.ModelBinding;
-using System.Xml.Linq;
-using System.Web.Management;
-using System.Web.Security;
 using API.WebSocket;
+using Microsoft.Ajax.Utilities;
 
 namespace API.Service
 {
@@ -22,14 +15,36 @@ namespace API.Service
     {
         public QuizService(ApplicationDbContext db) : base(db) { }
 
-
-        public QuizResponseDTO CreateQuiz(Quiz quiz, string username)
+        public QuizService(){}
+        public virtual Quiz AddQuiz(Quiz quiz)
         {
-            Quiz newQuiz = db.ListQuiz.Add(quiz);
+            Quiz createdQuiz = db.ListQuiz.Add(quiz);
             db.SaveChanges();
+            return createdQuiz;
+        }
 
-
-            return GenerateQuizResponseDTO(newQuiz, username);
+        public virtual QuizResponseDTO CreateQuiz(Quiz quiz, string username)
+        {
+            ValidationContext context = new ValidationContext(quiz);
+            List<ValidationResult> results = new List<ValidationResult>();
+            if (Validator.TryValidateObject(quiz, context, results, true))
+            {
+                Quiz newQuiz = AddQuiz(quiz);
+                return GenerateQuizResponseDTO(newQuiz, username);
+            }
+            foreach (ValidationResult validation in results)
+            {
+                switch (validation.ErrorMessage)
+                {
+                    case "The title is too long":
+                        throw new TitleTooLong();
+                    case "The title is too short":
+                        throw new TitleTooShort();
+                    case "Description is too long":
+                        throw new DescriptionIsTooLong();
+                }
+            }
+            return null;
         }
         public bool QuizCheck(string userId, string quizTitle)
         {
@@ -97,38 +112,9 @@ namespace API.Service
             return true;
 
         }
-        public QuizResponseDTO GetQuizByCode(string pCode)
-        {
-            Quiz quiz;
-            try
-            {
-                quiz = db.ListQuiz.First(q => q.ShareCode == pCode);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            if (quiz != null)
-            {
-                QuizResponseDTO response = new QuizResponseDTO()
-                {
-                    Author = db.Users.Find(quiz.OwnerId)?.Name ?? "Nobody",
-                    Id = quiz.Id,
-                    IsPublic = quiz.IsPublic,
-                    Description = quiz.Description,
-                    ShareCode = quiz.ShareCode,
-                    Title = quiz.Title,
-                    Date = quiz.Date,
-                    NumberOfQuestions = quiz.ListQuestions.Count
-                };
-                return response;
-            }
-            return null;
-
-        }
         public QuizResponseDTO GetQuizByShareCode(string shareCode)
         {
-            Quiz quizToShip = db.ListQuiz.Where(x => x.ShareCode == shareCode).FirstOrDefault();
+            Quiz quizToShip = db.ListQuiz.FirstOrDefault(x => x.ShareCode == shareCode);
             if (quizToShip == null)
             {
                 return null;
@@ -207,5 +193,16 @@ namespace API.Service
             }
             return false;
         }
+    }
+
+    public class DescriptionIsTooLong : Exception
+    {
+    }
+    public class TitleTooShort : Exception
+    {
+    }
+
+    public class TitleTooLong : Exception
+    {
     }
 }
