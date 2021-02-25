@@ -51,7 +51,7 @@ namespace API.Service
             return db.Users.Find(id);
         }
 
-        public ApplicationUser GetUserWithToken(HttpRequestMessage request)
+        public virtual ApplicationUser GetUserWithToken(HttpRequestMessage request)
         {
             string token = request.Headers.Authorization.ToString().Split(' ')[1];
             ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
@@ -59,7 +59,7 @@ namespace API.Service
             return user;
         }
 
-        public ApplicationUser GetUserWithToken(string token)
+        public virtual ApplicationUser GetUserWithToken(string token)
         {
             ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
 
