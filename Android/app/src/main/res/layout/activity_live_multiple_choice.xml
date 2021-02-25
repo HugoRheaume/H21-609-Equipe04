@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <AbsoluteLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="600dp"
+            android:layout_height="600dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="150dp"
+            android:layout_y="-200dp"/>
+
+        <View
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:layout_x="-200dp"
+            android:layout_y="450dp"/>
+
+    </AbsoluteLayout>
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="160dp"
+        android:background="@drawable/triangle"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="#C14747"
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:context=".activityLiveQuiz.LiveTrueFalseActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="50dp">
+
+                <Button
+                    android:id="@+id/btnTrue"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:onClick="verifyAnswer"
+                    android:text="@string/answerTrue"
+                    android:textSize="50sp"
+                    android:background="@drawable/button_live"
+                    android:backgroundTint="@color/liveChoice1"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/titan_one"/>
+
+                <Button
+                    android:id="@+id/btnFalse"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:onClick="verifyAnswer"
+                    android:text="@string/answerFalse"
+                    android:textSize="50sp"
+                    android:background="@drawable/button_live"
+                    android:backgroundTint="@color/liveChoice2"
+                    android:textAllCaps="false"
+                    android:textColor="#101010"
+                    android:fontFamily="@font/titan_one" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressQuiz"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/quizTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:fontFamily="@font/open_sans"/>
+
+
+    </LinearLayout>
+</RelativeLayout>

@@ -63,12 +63,9 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
     }
 
     public void verifyAnswer(View v) {
-        Log.i("LIVE", "BUTTON PRESSED");
-
         isGoodAnswer = false;
         if (binding.btnTrue.getId() == v.getId()) {
             if (question.questionTrueFalse.answer) {
-                Log.i("LIVE", "verifyAnswer: Good answer");
                 isGoodAnswer = true;
             }
             selectedButton = binding.btnTrue;
@@ -76,7 +73,6 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
         }
         else if (binding.btnFalse.getId() == v.getId()) {
             if (!question.questionTrueFalse.answer) {
-                Log.i("LIVE", "verifyAnswer: Good answer");
                 isGoodAnswer = true;
             }
             selectedButton = binding.btnFalse;
@@ -116,9 +112,7 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
 
                 @Override
                 public void onQuestionResult() {
-                    Log.i("WebSocket-RECEIVE", "QUESTION RESULT :DDDD");
                     validateButtonState();
-                    Log.i("WebSocket-Event", "onQuestionResult: Affichage réussi");
                 }
 
                 @Override
