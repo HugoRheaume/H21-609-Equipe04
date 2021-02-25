@@ -91,31 +91,6 @@
 
         </LinearLayout>
 
-        <!--        <RadioGroup-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginBottom="10dp"-->
-        <!--            android:orientation="vertical">-->
-
-        <!--            <RadioButton-->
-        <!--                android:id="@+id/radioTrue"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginBottom="10dp"-->
-        <!--                android:onClick="answer"-->
-        <!--                android:text="@string/answerTrue"-->
-        <!--                android:textSize="20sp"/>-->
-
-        <!--            <RadioButton-->
-        <!--                android:id="@+id/radioFalse"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginBottom="10dp"-->
-        <!--                android:onClick="answer"-->
-        <!--                android:text="@string/answerFalse"-->
-        <!--                android:textSize="20sp" />-->
-        <!--        </RadioGroup>-->
-
         <TextView
             android:id="@+id/result"
             android:layout_width="match_parent"

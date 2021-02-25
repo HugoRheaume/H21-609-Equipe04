@@ -100,7 +100,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
                 leaveRoom();
                 Intent i = new Intent(getApplicationContext(), ListQuizActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.putExtra("message", "La salle a été supprimée");
+                i.putExtra("message", getString(R.string.toastRoomDeleted));
                 startActivity(i);
             }
 

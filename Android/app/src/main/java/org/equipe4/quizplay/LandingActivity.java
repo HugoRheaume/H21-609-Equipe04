@@ -181,7 +181,7 @@ public class LandingActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<UserDTO> call, Throwable t) {
-                                    Toast.makeText(LandingActivity.this, "Erreur " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LandingActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -189,7 +189,7 @@ public class LandingActivity extends AppCompatActivity {
                     });
 
                 } else {
-                    Toast.makeText(LandingActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LandingActivity.this, getString(R.string.toastAuthFailed), Toast.LENGTH_SHORT).show();
                 }
             });
     }

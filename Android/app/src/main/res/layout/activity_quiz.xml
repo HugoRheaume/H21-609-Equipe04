@@ -55,7 +55,6 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
         <LinearLayout
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".QuizActivity"
@@ -215,7 +214,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:text="Rastipouel"
+                            android:text="Michel"
                             android:textSize="20sp"
                             android:textColor="@color/textColor"
                             android:fontFamily="@font/open_sans"/>

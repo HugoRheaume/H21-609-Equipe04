@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
@@ -77,6 +78,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<QuestionDTO> call, Throwable t) {
                 Log.e("RETROFIT", t.getMessage());
+                Toast.makeText(QuizActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
             }
         });
     }
