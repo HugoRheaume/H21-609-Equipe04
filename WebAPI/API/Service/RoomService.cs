@@ -48,6 +48,7 @@ namespace API.Service
 
             foreach (var item in rooms[shareCode].Users)
             {
+                item.CurrentScore = 0;
                 LogService.Log(item, MessageType.LogRoomDeleted);
             }
             rooms.Remove(shareCode);

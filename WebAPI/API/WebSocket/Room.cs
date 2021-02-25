@@ -56,7 +56,7 @@ namespace API.WebSocket
             m_enable = true;
             m_owner = client.connectedUser;
             handler = client;
-            m_roomQuizState = new RoomQuizState(quiz);
+            m_roomQuizState = new RoomQuizState(quiz, ref this.Users, ref this.handler);
         }
 
         

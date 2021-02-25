@@ -26,6 +26,7 @@ namespace API.WebSocket.Command.QuizCommand
                 return;
             }
             RoomService.GetRooms[client.ShareCode].GetRoomQuizState.IsAcceptingAnswer = false;
+            new QuizScoreboardCommand() { shareCode = client.ShareCode}.Run(null);
             LogService.LogRoom(client.ShareCode, this);
         }
     }

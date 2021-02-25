@@ -30,12 +30,12 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     public quizService: QuizService,
     public router: Router,
     public wsService: WebSocketService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isShowResult = false;
     this.isScoreboardPage = false;
-
+    this.wsService.scoreboard = [];
     this.quizShareCode = this.route.snapshot.paramMap.get('quizShareCode');
     this.currentIndex = parseInt(
       this.route.snapshot.paramMap.get('questionIndex')
@@ -47,6 +47,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
         this.startTimer(q.timeLimit);
       })
     );
+    this.wsService.forceSkip$.subscribe(() => this.skip());
   }
 
   ngOnDestroy(): void {
@@ -62,6 +63,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     this.wsService.cancel();
     this.isShowResult = false;
     this.isScoreboardPage = false;
+    this.wsService.scoreboard = [];
     this.router.navigate(['/quiz/' + this.quizShareCode]);
   }
 
@@ -78,6 +80,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
       this.currentIndex++;
       this.wsService.nextQuestion(this.currentIndex);
       this.isShowResult = false;
+      this.wsService.scoreboard = [];
       this.router.navigate([
         '/live/' + this.quizShareCode + '/' + this.currentIndex,
       ]);
@@ -108,7 +111,6 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     );
 
     this.countdownSub = countdown$.subscribe({ complete: () => this.skip() });
-
   }
 
   private stopTimer(): void {

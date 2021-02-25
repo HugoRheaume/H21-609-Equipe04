@@ -28,11 +28,6 @@ namespace API.WebSocket.Command.QuizCommand
         public override void Run(Client client)
         {
             RoomService.GetRooms[client.ShareCode].GetRoomQuizState.UpdateScores(client.connectedUser.Token, this.score);
-
-
-
-            QuizScoreboardCommand scoreboardCommand = new QuizScoreboardCommand() { shareCode = client.ShareCode };
-            scoreboardCommand.Run(client);
         }
     }
 }

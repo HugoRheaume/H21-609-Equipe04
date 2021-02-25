@@ -12,10 +12,8 @@ namespace API.WebSocket
     public class RoomQuizState
     {
         private QuestionService questionService = new QuestionService(new ApplicationDbContext());
-        public int defaultTimeLimit { get; set; }
+        
         private int questionIndex { get; set; }
-
-        private Dictionary<string, int> scores = new Dictionary<string, int>();
 
         public bool IsAcceptingAnswer { get; set; }
 
@@ -28,17 +26,27 @@ namespace API.WebSocket
         {
             get { return m_nbGoodAnswer; }
         }
-        public RoomQuizState(Quiz quiz)
+        private List<Client> users { get; set; }
+        private readonly Client owner;
+        public RoomQuizState(Quiz quiz, ref List<Client> users, ref Client owner)
         {
+            this.users = users;
             this.questionIndex = 0;
             this.quiz = quiz;
+            this.owner = owner;
             IsAcceptingAnswer = false;
             questions =  questionService.GetQuestionByQuizId(this.quiz.Id);
+
+            foreach (var item in users)
+            {
+                item.CurrentScore = 0;
+            }
         }
         public QuestionDTO NextQuestion(int questionIndex)
         {
+            ResetIsAnswer();
             IsAcceptingAnswer = true;
-            m_nbGoodAnswer = 0;
+            this.m_nbGoodAnswer = 0;
             this.questionIndex = questionIndex;
             foreach (var item in questions)
             {
@@ -51,26 +59,57 @@ namespace API.WebSocket
         {
             if (IsAcceptingAnswer == false)
                 return;
-            if (!scores.ContainsKey(token))
-                scores.Add(token, 0);
-            if (score > 0)
-                m_nbGoodAnswer++;
+            
+            foreach (var item in this.users)
+            {
+                if(item.connectedUser.Token == token)
+                {
+                    if (score > 0)
+                        this.m_nbGoodAnswer++;
+                    item.CurrentScore += score;
+                    item.IsAnswer = true;
+                }
+            }
+            if (CheckAllAnswer())
+            {
+                ResetIsAnswer();
+                new QuizForceSkipCommand().Run(owner);
+            }
 
-            scores[token] += score;
         }
         public List<QuizUserScoreDTO> GetScores()
         {
-            List<QuizUserScoreDTO> users = new List<QuizUserScoreDTO>();
-            foreach (var item in this.scores)
+            List<QuizUserScoreDTO> userScores = new List<QuizUserScoreDTO>();
+            foreach (var item in this.users)
             {
                 QuizUserScoreDTO u = new QuizUserScoreDTO();
-                u.user = new UserDTO(new ApplicationDbContext().Users.FirstOrDefault(x => x.Token == item.Key));
+                u.user = new UserDTO(new ApplicationDbContext().Users.FirstOrDefault(x => x.Token == item.connectedUser.Token));
                 if (u.user == null)
                     break;
-                u.score = item.Value;
-                users.Add(u);
+                u.score = item.CurrentScore;
+                userScores.Add(u);
             }
-            return users;
+            userScores.OrderBy( x => x.score);
+            return userScores;
+        }
+
+        private bool CheckAllAnswer()
+        {
+            bool allAnswer = true;
+            foreach (var item in this.users)
+            {
+                if (!item.IsAnswer)
+                    allAnswer = false;
+            }
+            return allAnswer;
+
+        }
+        private void ResetIsAnswer()
+        {
+            foreach (var item in this.users)
+            {
+                item.IsAnswer = false;
+            }
         }
         
     }
