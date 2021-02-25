@@ -1,16 +1,22 @@
-<mat-sidenav-container *ngIf="getUsername()" class="example-container"
-  style="width: fit-content; background-color: transparent;">
+<mat-sidenav-container
+  *ngIf="getUsername()"
+  class="example-container"
+  style="width: fit-content; background-color: transparent"
+>
   <mat-sidenav #sidenav mode="slide" closed>
     <div id="drawer-title">
       <div id="toggleButton">
-        <p><a (click)="sidenav.toggle()">
+        <p>
+          <a (click)="sidenav.toggle()">
             <h1 class="unselectable">
-              <mat-icon>arrow_back</mat-icon>&nbsp;<span style="font-family: Titan One;">Quiz Play</span>
+              <mat-icon>arrow_back</mat-icon>&nbsp;<span
+                style="font-family: Titan One"
+                >Quiz Play</span
+              >
             </h1>
-          </a></p>
-
+          </a>
+        </p>
       </div>
-
     </div>
     <div id="drawer-content" class="d-flex justify-content-center">
       <table>
@@ -18,27 +24,47 @@
           <td>
             <div>
               <div *ngIf="auth.user | async as user; else showLogin">
-                <button mat-button class="btnLoginLogout" id="navContentUserButton" style="margin-top: 10px;">
+                <button
+                  mat-button
+                  class="btnLoginLogout"
+                  id="navContentUserButton"
+                  style="margin-top: 10px"
+                >
                   <div class="d-flex align-items-center justify-content-center">
-                    <img [src]="getPicture()" alt="google logo" style="height: 64px; width: 64px;">
+                    <img
+                      [src]="getPicture()"
+                      alt="google logo"
+                      style="height: 64px; width: 64px"
+                    />
                   </div>
-                  <span>{{getUsername()}}</span>
+                  <span>{{ getUsername() }}</span>
                 </button>
               </div>
 
-
               <ng-template #showLogin>
-                <button mat-button class="btnLoginLogout" id="navContentUserButton" style="margin-top: 10px;"
-                  style="background-color: #ea5d4f; border-radius: 35.5px; height: 50px;"
-                  (click)="login(); sidenav.toggle()">
+                <button
+                  mat-button
+                  class="btnLoginLogout"
+                  id="navContentUserButton"
+                  style="margin-top: 10px"
+                  style="
+                    background-color: #ea5d4f;
+                    border-radius: 35.5px;
+                    height: 50px;
+                  "
+                  (click)="login(); sidenav.toggle()"
+                >
                   <div class="d-flex align-items-center justify-content-center">
-                    <img src="../../assets/google_logo.png" alt="google logo" style="height: 32px; width: 32px;">
+                    <img
+                      src="../../assets/google_logo.png"
+                      alt="google logo"
+                      style="height: 32px; width: 32px"
+                    />
                     <span> Connexion avec Google</span>
                     <!--i class="fas fa-arrow-right ms-3 me-4"></i-->
                   </div>
                 </button>
               </ng-template>
-
             </div>
           </td>
         </tr>
@@ -46,39 +72,68 @@
           <td>
             <mat-grid-list cols="1" rowHeight="5:1">
               <mat-grid-tile>
-                <button style="width: 100%;" mat-button [routerLink]="['/list']" (click)="sidenav.toggle()">Mes
-                  Quiz</button>
+                <button
+                  style="width: 100%"
+                  mat-button
+                  [routerLink]="['/list']"
+                  (click)="sidenav.toggle()"
+                >
+                  {{ "app.navigation.quiz" | translate }}
+                </button>
               </mat-grid-tile>
               <mat-grid-tile>
-                <button style="width: 100%;" mat-button [routerLink]="['/quiz']" (click)="sidenav.toggle()">Créer un
-                  quiz</button>
+                <button
+                  style="width: 100%"
+                  mat-button
+                  [routerLink]="['/quiz']"
+                  (click)="sidenav.toggle()"
+                >
+                  {{ "app.navigation.createQuiz" | translate }}
+                </button>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <button
+                  style="width: 100%"
+                  mat-button
+                  (click)="sidenav.toggle(); changeLanguage()"
+                >
+                  {{ "app.navigation.language" | translate }}
+                </button>
               </mat-grid-tile>
             </mat-grid-list>
           </td>
         </tr>
-
       </table>
-      <div *ngIf="auth.user | async as user" style="position: fixed; bottom: 0;"
-        class="navContentButtonLogout d-flex align-items-center justify-content-center">
-        <button mat-button class="btnLoginLogout" (click)="logout(); sidenav.toggle()">
+      <div
+        *ngIf="auth.user | async as user"
+        style="position: fixed; bottom: 0"
+        class="navContentButtonLogout d-flex align-items-center justify-content-center"
+      >
+        <button
+          mat-button
+          class="btnLoginLogout"
+          (click)="logout(); sidenav.toggle()"
+        >
           <div class="d-flex align-items-center justify-content-center">
-            <span>Déconnexion</span>
+            <span>{{ "app.navigation.disconnect" | translate }}</span>
             <i class="fas fa-sign-out-alt ms-3"></i>
           </div>
         </button>
       </div>
     </div>
-
   </mat-sidenav>
 
-  <mat-sidenav-content style="width: fit-content; height: 50px;">
-    <div id="toggleButton" style="position: fixed;">
-      <p><a (click)="sidenav.toggle()">
+  <mat-sidenav-content style="width: fit-content; height: 50px">
+    <div id="toggleButton" style="position: fixed">
+      <p>
+        <a (click)="sidenav.toggle()">
           <h1 class="unselectable">
-            <mat-icon>menu</mat-icon>&nbsp;<span style="font-family: Titan One;">Quiz Play</span>
+            <mat-icon>menu</mat-icon>&nbsp;<span style="font-family: Titan One"
+              >Quiz Play</span
+            >
           </h1>
-        </a></p>
-
+        </a>
+      </p>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

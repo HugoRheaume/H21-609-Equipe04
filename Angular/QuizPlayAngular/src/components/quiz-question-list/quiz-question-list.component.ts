@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Question, QuestionType } from 'src/app/models/question';
 import { Component, Input, OnInit } from '@angular/core';
@@ -18,9 +19,6 @@ import { QuizResponse } from 'src/app/models/QuizResponse';
 export class QuizQuestionListComponent implements OnInit {
   @Input() quizId: number;
   public currentQuiz: QuizResponse;
-  public title: string = "";
-  public description: string = "";
-  public isPublic: boolean;
   public selectedQuestion: Question;
   public isModifying: boolean = false;
   public enum = QuestionType;
@@ -30,7 +28,9 @@ export class QuizQuestionListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public service: QuizService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    public translate: TranslateService
+  ) {}
   ngOnInit(): void {
     var quizShareCode: string = this.route.snapshot.paramMap.get(
       'quizShareCode'
@@ -38,9 +38,6 @@ export class QuizQuestionListComponent implements OnInit {
     this.service.getQuiz(quizShareCode);
     this.service.getQuestionFromQuiz(quizShareCode);
     this.currentQuiz = this.service.currentQuiz;
-    this.title = this.service.currentQuiz.title;
-    this.description = this.service.currentQuiz.description;
-    this.isPublic = this.service.currentQuiz.isPublic;
   }
 
   deleteQuestion(questionId: number): void {
@@ -67,7 +64,7 @@ export class QuizQuestionListComponent implements OnInit {
 
   finish() {
     let i = 0;
-    this.service.currentQuestions.forEach(item => {
+    this.service.currentQuestions.forEach((item) => {
       item.quizIndex = i;
       i++;
     });
@@ -76,7 +73,7 @@ export class QuizQuestionListComponent implements OnInit {
 
   putFirst() {
     let i = 0;
-    this.service.currentQuestions.forEach(item => {
+    this.service.currentQuestions.forEach((item) => {
       if (item.id === this.selectedQuestion.id) {
         moveItemInArray(this.service.currentQuestions, i, 0);
       } else i++;
@@ -85,7 +82,7 @@ export class QuizQuestionListComponent implements OnInit {
 
   putLast() {
     let i = 0;
-    this.service.currentQuestions.forEach(item => {
+    this.service.currentQuestions.forEach((item) => {
       if (item.id === this.selectedQuestion.id) {
         moveItemInArray(
           this.service.currentQuestions,
@@ -98,7 +95,7 @@ export class QuizQuestionListComponent implements OnInit {
   }
 
   goLive() {
-    this.finish()
+    this.finish();
     this.router.navigate([`/live/${this.service.currentQuiz.shareCode}`]);
   }
 
@@ -109,7 +106,7 @@ export class QuizQuestionListComponent implements OnInit {
 
   openSnackBarSaveQuiz() {
     this.isModifying = false;
-    this.snackBar.open("Quiz modifié!", null, {
+    this.snackBar.open(this.translate.instant('app.quiz.edit.modify'), null, {
       duration: 3000,
     });
   }
@@ -117,19 +114,27 @@ export class QuizQuestionListComponent implements OnInit {
   openSnackBarSaveQuestion() {
     this.modifyingQuestion = null;
     this.showModifyingModal = false;
-    this.snackBar.open("Question modifiée!", null, {
-      duration: 3000,
-    });
+    this.snackBar.open(
+      this.translate.instant('app.quiz.edit.questionModify'),
+      null,
+      {
+        duration: 3000,
+      }
+    );
   }
 
   openSnackBarDeleteQuestion() {
-    this.snackBar.open("Question suprimée!", null, {
-      duration: 3000,
-    });
+    this.snackBar.open(
+      this.translate.instant('app.quiz.edit.questionDeleted'),
+      null,
+      {
+        duration: 3000,
+      }
+    );
   }
 
   updateQuestions($event) {
-    $event == "saved" ? this.openSnackBarSaveQuestion() : null;
+    $event == 'saved' ? this.openSnackBarSaveQuestion() : null;
     this.showModifyingModal = false;
   }
 
@@ -139,6 +144,6 @@ export class QuizQuestionListComponent implements OnInit {
   }
 
   openModal() {
-    document.getElementById("openModalButton").click();
+    document.getElementById('openModalButton').click();
   }
 }

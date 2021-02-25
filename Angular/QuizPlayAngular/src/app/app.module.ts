@@ -3,19 +3,30 @@ import { WaitingRoomComponent } from '../components/QuizLive/waiting-room/waitin
 import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
 import { CreateQuestionComponent } from './../components/create-question/create-question.component';
 import { MaterialModule } from 'src/app/material/material.module';
-import {ListQuizComponent,DeleteQuizDialog} from './../components/list-quiz/list-quiz.component';
+import {
+  ListQuizComponent,
+  DeleteQuizDialog,
+} from './../components/list-quiz/list-quiz.component';
 import { CreateTrueOrFalseQuestion } from '../components/create-trueorfalse-question/create-trueorfalse-question.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {CreateQuizComponent,CreateQuizConfirmDialog} from 'src/components/create-quiz/create-quiz.component';
+import {
+  CreateQuizComponent,
+  CreateQuizConfirmDialog,
+} from 'src/components/create-quiz/create-quiz.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomePageComponent } from '../components/home-page/home-page.component';
-import {CommonModule, HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {
+  CommonModule,
+  HashLocationStrategy,
+  LocationStrategy,
+  PathLocationStrategy,
+} from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
@@ -32,7 +43,13 @@ import { ModifyQuestionComponent } from 'src/components/modify-question/modify-q
 import { QuizRoomDisplayTrueFalseComponent } from 'src/components/QuizLive/QuestionDisplay/quiz-room-display-true-false/quiz-room-display-true-false.component';
 import { QuizRoomDisplayMultipleChoiceComponent } from 'src/components/QuizLive/QuestionDisplay/quiz-room-display-multiple-choice/quiz-room-display-multiple-choice.component';
 import { CreateAssociationQuestionComponent } from '../components/create-association-question/create-association-question.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +86,13 @@ import { CreateAssociationQuestionComponent } from '../components/create-associa
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   entryComponents: [CreateQuizComponent],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],

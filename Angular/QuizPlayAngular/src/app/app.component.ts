@@ -1,5 +1,6 @@
 import { QuizService } from './services/Quiz.service';
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'QuizPlayAngular';
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
-  constructor(public service: QuizService) { }
+  constructor(
+    private translate: TranslateService,
+    public service: QuizService
+  ) {
+    if (localStorage.getItem('language')) {
+      translate.setDefaultLang(localStorage.getItem('language'));
+    } else {
+      translate.setDefaultLang('fr');
+    }
+  }
 }

@@ -1,31 +1,40 @@
-<button [routerLink]="['/quiz']" routerLinkActive="router-link-active" class="mb-3" mat-raised-button
-  color="primary">Créer un nouveau quiz</button>
+<button
+  [routerLink]="['/quiz']"
+  routerLinkActive="router-link-active"
+  class="mb-3"
+  mat-raised-button
+  color="primary"
+>
+  {{ "app.listQuiz.btnCreateNew" | translate }}
+</button>
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <!-- Les colonnes -->
   <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ "app.listQuiz.name" | translate }}
+    </th>
     <td mat-cell *matCellDef="let element">
-      {{element.title}}
+      {{ element.title }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="numberOfQuestions">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      Nombre de questions
+      {{ "app.listQuiz.nbQuestion" | translate }}
     </th>
     <td mat-cell *matCellDef="let element">
-      {{element.numberOfQuestions}}
+      {{ element.numberOfQuestions }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      Date de création
+      {{ "app.listQuiz.dateCreation" | translate }}
     </th>
     <td mat-cell *matCellDef="let element">
       <!-- Changer la locale pour i18n -->
-      {{element.date | date: undefined : 'fr' : 'fr' }}
+      {{ element.date | date: undefined:"fr":"fr" }}
     </td>
   </ng-container>
 
@@ -33,12 +42,21 @@
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let row" class="deleteButton">
       <button (click)="openDialog($event, row)" mat-mini-fab>
-        <mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon"
+          >delete</mat-icon
+        >
       </button>
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToQuizDetails(row.shareCode)"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="goToQuizDetails(row.shareCode)"
+  ></tr>
 </table>
 <!-- La pagination -->
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons
+></mat-paginator>

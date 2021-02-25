@@ -1,0 +1,71 @@
+{
+  "app": {
+    "navigation.quiz": "Mes Quiz",
+    "navigation.createQuiz": "Créer un Quiz",
+    "navigation.language": "English",
+    "navigation.disconnect": "Déconnexion",
+
+    "createQuiz.title": "Titre",
+    "createQuiz.description": "Description",
+    "createQuiz.private": "Privé",
+    "createQuiz.public": "Public",
+    "createQuiz.btnCreate": "Créer",
+
+    "createQuizDialog.msg": "Un Quiz avec se titre existe déjà, voulez-vous tout de même le créer?",
+    "createQuizDialog.no": "Non",
+    "createQuizDialog.yes": "Oui",
+
+    "listQuiz.btnCreateNew": "Créer un nouveau quiz",
+    "listQuiz.name": "Nom",
+    "listQuiz.nbQuestion": "Nombre de questions",
+    "listQuiz.dateCreation": "Date de création",
+    "listQuiz.quizPerPage": "Quiz par page",
+    "listQuiz.deleteConfirm": "Êtes-vous sur de vouloir supprimer :",
+    "listQuiz.deleteNo": "Non",
+    "listQuiz.deleteYes": "Oui",
+
+    "quiz.btnShareCode": "Code de partage:",
+    "quiz.btnCreateWaitingRoom": "Créer une salle d'attente",
+    "quiz.btnFinish": "Terminé",
+    "quiz.info": "Information du quiz",
+    "quiz.question": "Questions du quiz",
+    "quiz.questionDelete": "Question suprimée",
+
+    "quiz.edit.public": "Rendre le quiz public",
+    "quiz.edit.modify": "Quiz modifié!",
+    "quiz.edit.questionDeleted": "Question suprimée!",
+    "quiz.edit.questionModify": "Question modifiée!",
+
+    "quiz.question.title": "Modifier une question",
+    "quiz.question.type": "Type de question",
+    "quiz.question.statement": "Énoncé de la question",
+    "quiz.question.timeLimit": "Ajouter un temps limite",
+    "quiz.question.timeLimitPlaceholder": "Temps limite de la question",
+    "quiz.question.btnCancel": "Annuler",
+    "quiz.question.btnConfirm": "Soumettre",
+
+    "quiz.question.tf.answer": "Bonne réponse à la question",
+    "quiz.question.tf.true": "Vrai",
+    "quiz.question.tf.false": "Faux",
+
+    "quiz.question.mc.btnAddChoice": "Ajouter un choix",
+    "quiz.question.mc.title": "Choix de la question",
+    "quiz.question.mc.choiceNumber": "Choix numéro",
+    "quiz.question.mc.oneAnswer": "Une bonne réponse pour avoir le point",
+    "quiz.question.mc.allAnswer": "Toutes les bonnes réponses pour avoir le point",
+
+    "quiz.question.as.btnAddChoice": "Ajouter un choix",
+    "quiz.question.as.categoryNumber": "Catégorie numéro",
+    "quiz.question.as.choiceNumber": "Choix numéro",
+
+    "room.waiting.btnShareCode": "Code de partage:",
+    "room.waiting.cancel": "Annuler la partie",
+    "room.waiting.start": "Commencer la partie",
+    "room.waiting.title": "Utilisateur dans la salle",
+    "room.waiting.playerNumber": "joueurs",
+
+    "room.btnSkip": "Passer",
+    "room.btnNext": "Prochaine question",
+    "room.btnFinish": "Terminé"
+  }
+}
