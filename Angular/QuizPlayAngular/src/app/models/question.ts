@@ -58,10 +58,10 @@ export class QuestionMultipleChoice extends Question {
 
 export class QuestionAssociation extends Question {
   public categories: string[];
-  public questionAsso: QuestionAsso[];
+  public questionAssociation: QuestionAsso[];
   constructor() {
     super();
-    this.questionAsso = [];
+    this.questionAssociation = [];
     this.categories = [];
     this.questionType = QuestionType.Association;
   }
@@ -73,7 +73,7 @@ export class QuestionAssociation extends Question {
     questionToExport.QuestionType = this.questionType;
     questionToExport.TimeLimit = this.timeLimit;
     questionToExport.Categories = this.categories;
-    questionToExport.QuestionAssociation = this.questionAsso;
+    questionToExport.QuestionAssociation = this.questionAssociation;
     questionToExport.quizId = this.quizId;
 
     return questionToExport;

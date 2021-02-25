@@ -234,6 +234,69 @@ namespace API.Service
                             questionToModify.NeedsAllAnswers = modifiedDTO.NeedsAllAnswers;
                             break;
                         }
+                    case QuestionType.Association:
+                        {
+                            List<QuestionAssociation> associationsInDB = questionToModify.QuestionAssociation.ToList();
+                            List<QuestionCategory> categoriesInDB = questionToModify.Categories.ToList();
+
+                            List<QuestionAssociation> newAssociations = modifiedDTO.QuestionAssociation;
+                            List<QuestionCategory> newCategories = QuestionCategory.toListCategory(modifiedDTO.Categories);
+
+                            for (int i = 0; i < newCategories.Count; i++)
+                            {
+                                QuestionCategory newCat = newCategories[i];
+                                QuestionCategory oldCat = categoriesInDB.Count > 0 ? categoriesInDB[0] : null;
+
+                                // Si la categorie est nouvelle
+                                if (oldCat == null)
+                                {
+                                    questionToModify.Categories.Add(new QuestionCategory() { Category = newCat.Category });
+                                    db.SaveChanges();
+                                }
+                                // Si la categorie est modifiee
+                                questionToModify.Categories[i].Category = newCat.Category;
+                                categoriesInDB.Remove(oldCat);
+                            }
+                            // Si une categorie a ete supprimee
+                            if (categoriesInDB.Count > 0)
+                            {
+                                foreach (QuestionCategory category in categoriesInDB)
+                                {
+                                    db.QuestionCategory.Remove(category);
+                                }
+                            }
+
+                            for (int i = 0; i < newAssociations.Count; i++)
+                            {
+                                QuestionAssociation newAsso = newAssociations[i];
+                                QuestionAssociation oldAsso = associationsInDB.Count > 0 ? associationsInDB[0] : null;
+
+                                // Si l'association est nouvelle
+                                if (oldAsso == null)
+                                {
+                                    questionToModify.QuestionAssociation.Add(new QuestionAssociation()
+                                    {
+                                        Statement = newAsso.Statement,
+                                        CategoryIndex = newAsso.CategoryIndex
+                                    });
+                                    db.SaveChanges();
+                                }
+                                // Si l'association est modifiee
+                                questionToModify.QuestionAssociation[i].CategoryIndex = newAsso.CategoryIndex;
+                                questionToModify.QuestionAssociation[i].Statement = newAsso.Statement;
+                                associationsInDB.Remove(oldAsso);
+                            }
+                            // Si une association est supprimee
+                            if (associationsInDB.Count > 0)
+                            {
+                                foreach (QuestionAssociation association in associationsInDB)
+                                {
+                                    db.QuestionAssociation.Remove(association);
+                                }
+                            }
+
+                            break;
+                        }
                 }
 
                 db.SaveChanges();

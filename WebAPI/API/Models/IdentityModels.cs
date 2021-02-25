@@ -45,5 +45,6 @@ namespace API.Models
         public virtual DbSet<QuestionMultipleChoice> QuestionMultiple { get; set; }
         public virtual DbSet<QuestionResult> QuestionResult { get; set; }
         public virtual DbSet<QuestionAssociation> QuestionAssociation { get; set; }
+        public virtual DbSet<QuestionCategory> QuestionCategory { get; set; }
     }
 }
