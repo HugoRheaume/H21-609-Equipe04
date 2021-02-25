@@ -14,7 +14,8 @@ namespace API.WebSocket
     {
         private static WebSocketCollection socketClients = new WebSocketCollection();
         private AuthService service = new AuthService(new ApplicationDbContext());
-        //public string Username;
+        public int CurrentScore = 0;
+        public bool IsAnswer = false;
         public string ShareCode;
         //public string Picture = "../../assets/png_64/" + Global.random.Next(1, 15).ToString() + ".png";
         public ApplicationUser connectedUser;

@@ -29,6 +29,7 @@ namespace API
             { "Quiz.Answer", new QuizAnswerCommand()},
             { "Quiz.Scoreboard", new QuizScoreboardCommand()},
             { "Quiz.QuestionResult", new QuizQuestionResultCommand()},
+            { "Quiz.ForceSkip", new QuizForceSkipCommand()},
 
         };
 

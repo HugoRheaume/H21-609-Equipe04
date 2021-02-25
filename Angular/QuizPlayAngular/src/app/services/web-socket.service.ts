@@ -12,6 +12,7 @@ import { Question } from 'src/app/models/question';
 export class WebSocketService {
   public scoreboard: Score[] = [];
   public messages$ = new Subject<string[]>();
+  public forceSkip$ = new Subject();
   public users: User[] = [];
   public currentShareCode: string = '';
   public usersDisplay: Array<number>;
@@ -96,6 +97,9 @@ export class WebSocketService {
         const q: Question = d.question;
         if (q.timeLimit == -1) q.timeLimit = this.defaultTimeLimit;
         this.currentQuestion$.next(q);
+        break;
+      case CommandName.QuizForceSkip:
+        this.forceSkip$.next();
         break;
     }
   }
@@ -188,6 +192,7 @@ export enum CommandName {
   QuizNext = 'Quiz.Next',
   QuizScoreboard = 'Quiz.Scoreboard',
   QuizQuestionResult = 'Quiz.QuestionResult',
+  QuizForceSkip = 'Quiz.ForceSkip',
 }
 export enum MessageType {
   LogRoomCreated,
