@@ -1,4 +1,4 @@
-import { QuestionType, QuestionCreateTrueFalseDTO, QuestionTrueOrFalse, QuestionMultipleChoice } from 'src/app/models/question';
+import { QuestionType, QuestionCreateTrueFalseDTO, QuestionTrueOrFalse, QuestionMultipleChoice, QuestionAssociation } from 'src/app/models/question';
 import { Question } from 'src/app/models/question';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -12,19 +12,19 @@ export class QuestionService {
   constructor(public http: HttpClient) { }
 
   /// Mettre la question concernée en paramètre et mettre les autres paramètres à null.
-  public modifyQuestion(modifiedTrueFalse?: QuestionTrueOrFalse, modifiedMultipleChoice?: QuestionMultipleChoice) {
-    if ((modifiedTrueFalse == null && modifiedMultipleChoice == null) || (modifiedTrueFalse != null && modifiedMultipleChoice != null)) return;
+  public modifyQuestion(modifiedTrueFalse?: QuestionTrueOrFalse, modifiedMultipleChoice?: QuestionMultipleChoice, modifiedAssociation?: QuestionAssociation) {
+    let questionToExport = modifiedTrueFalse == null ? modifiedMultipleChoice == null ? modifiedAssociation as QuestionAssociation : modifiedMultipleChoice as QuestionMultipleChoice : modifiedTrueFalse as QuestionTrueOrFalse;
 
-    let questionToExport = modifiedTrueFalse == null ? modifiedMultipleChoice as Question : modifiedTrueFalse as Question;
 
-    switch(questionToExport.questionType){
+    switch (questionToExport.questionType) {
       case QuestionType.MultipleChoices:
         break;
       case QuestionType.TrueFalse:
         questionToExport.questionTrueFalse.answer = modifiedTrueFalse.answer;
         break;
+      case QuestionType.Association:
+        break;
     }
-
     console.log(questionToExport);
     const httpOptions = {
       headers: new HttpHeaders({

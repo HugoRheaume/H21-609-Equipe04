@@ -1,3 +1,5 @@
+import { QuestionAssociation } from './../../app/models/question';
+import { QuestionAsso } from './../../models/questionAsso';
 import { QuestionService } from './../../app/services/question.service';
 import { QuestionMultipleChoice } from '../../app/models/question';
 import { Question, QuestionTrueOrFalse, QuestionType } from 'src/app/models/question';
@@ -5,6 +7,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QuestionChoice } from 'src/app/models/questionChoice';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-modify-question',
@@ -29,6 +33,7 @@ export class ModifyQuestionComponent implements OnInit {
 
   public questionTrueFalse: QuestionTrueOrFalse;
   public questionMultipleChoice: QuestionMultipleChoice;
+  public questionAssociation: QuestionAssociation;
   public currentForm;
 
   //#region stuff for true or false
@@ -39,6 +44,13 @@ export class ModifyQuestionComponent implements OnInit {
   public MultipleChoice: FormGroup;
   public choices: QuestionChoice[] = [];
   public needsAllRightAnswers: boolean;
+  //#endregion
+
+  //#region stuff for association
+  public Association: FormGroup;
+  public asso: QuestionAsso[] = [];
+  public categories: string[] = [];
+  public showCategory3: boolean;
   //#endregion
 
   //#region stuff for the mat select
@@ -96,7 +108,6 @@ export class ModifyQuestionComponent implements OnInit {
         let answer = this.questionTrueFalse.questionTrueFalse.answer == false ? 'false' : 'true';
         let timeLimitTF = this.questionTrueFalse.timeLimit == (-1) ? '' : this.questionTrueFalse.timeLimit;
         let hasTimeLimitTF = this.questionTrueFalse.timeLimit == (-1) ? false : true;
-        console.log(this.questionTrueFalse);
 
         this.TrueFalse = this.formBuilder.group({
           questionLabel: [
@@ -112,6 +123,44 @@ export class ModifyQuestionComponent implements OnInit {
           questionHasTimeLimit: [hasTimeLimitTF],
         });
         this.currentForm = this.TrueFalse;
+        break;
+      case QuestionType.Association:
+        this.questionAssociation = this.question as QuestionAssociation;
+
+        let timeLimitA = this.questionAssociation.timeLimit == (-1) ? '' : this.questionAssociation.timeLimit;
+        let hasTimeLimitA = this.questionAssociation.timeLimit == (-1) ? false : true;
+        this.Association = this.formBuilder.group({
+          questionLabel: [
+            this.questionAssociation.label,
+            [
+              Validators.required,
+              Validators.minLength(1),
+              Validators.maxLength(250),
+            ],
+          ],
+          questionTimeLimit: [timeLimitA, [Validators.required, Validators.min(1)]],
+          questionHasTimeLimit: [hasTimeLimitA],
+          questionHasOnlyOneAnswer: [''],
+          questionAnswers: ['', Validators.required],
+        });
+        let i = 1;
+        this.questionAssociation.questionAssociation.forEach(a => {
+          let association = new QuestionAsso();
+          association.assoNumber = i;
+          association.categoryIndex = a.categoryIndex;
+          association.statement = a.statement;
+          this.asso.push(association);
+          i++;
+        });
+        this.questionAssociation.categories.forEach(c => {
+          if (c != null) {
+            let category = c.toString();
+            this.categories.push(category);
+          }
+        });
+        if (this.categories[2] == null) this.categories.splice(2, 1);
+        this.showCategory3 = this.categories.length > 2;
+        this.currentForm = this.Association;
         break;
     }
 
@@ -148,6 +197,10 @@ export class ModifyQuestionComponent implements OnInit {
           this.enumFormated.push('Choix multiples');
           if (this.questionMultipleChoice != null) this.selectedType = '2';
           break;
+        case 'Association':
+          this.enumFormated.push('Association');
+          if (this.questionAssociation != null) this.selectedType = '3';
+          break;
         default:
           break;
       }
@@ -161,8 +214,15 @@ export class ModifyQuestionComponent implements OnInit {
   discard() {
     this.question.questionType == 1 ? this.TrueFalse.reset() : '';
     this.question.questionType == 2 ? this.MultipleChoice.reset() : '';
+    this.question.questionType == 3 ? this.Association.reset() : '';
+
     this.choices = [];
     this.needsAllRightAnswers = true;
+
+    this.asso = [];
+    this.categories = [];
+    this.showCategory3 = false;
+
     this.onCloseDiscarded();
   }
 
@@ -222,12 +282,46 @@ export class ModifyQuestionComponent implements OnInit {
       question.label = this.MultipleChoice.get('questionLabel').value;
       question.quizIndex = this.questionMultipleChoice.quizIndex;
 
-
-      console.log(this.choices);
       this.service.modifyQuestion(null, question);
       this.MultipleChoice.reset();
       this.choices = [];
       this.needsAllRightAnswers = true;
+    }
+    if (this.question.questionType == QuestionType.Association) {
+      let questionTimeLimit = this.Association.get(
+        'questionTimeLimit'
+      ) as FormControl;
+      let questionHasTimeLimit = this.Association.get(
+        'questionHasTimeLimit'
+      ) as FormControl;
+
+      let question = this.questionAssociation;
+
+      if (this.checkForm) return;
+
+      //The question doesn't have a time limit
+      if (
+        questionHasTimeLimit.value == null ||
+        questionHasTimeLimit.value == false ||
+        questionHasTimeLimit.value === ''
+      )
+        question.timeLimit = -1;
+      else question.timeLimit = questionTimeLimit.value;
+
+      question.questionAssociation = this.asso;
+
+      let temp: string[] = []
+      temp[0] = this.categories[0];
+      temp[1] = this.categories[1];
+      if (this.showCategory3)
+        temp[2] = this.categories[2];
+      question.categories = temp;
+      question.label = this.Association.get('questionLabel').value;
+
+      this.service.modifyQuestion(null, null, question);
+      this.asso = [];
+      this.categories = ['', ''];
+      this.showCategory3 = false;
     }
 
     this.onCloseSaved()
@@ -330,6 +424,52 @@ export class ModifyQuestionComponent implements OnInit {
 
       return false;
     }
+    if (this.question.questionType == QuestionType.Association) {
+      let questionLabel = this.Association.get('questionLabel') as FormControl;
+      let questionTimeLimit = this.Association.get(
+        'questionTimeLimit'
+      ) as FormControl;
+      let questionHasTimeLimit = this.Association.get(
+        'questionHasTimeLimit'
+      ) as FormControl;
+
+      if (this.asso.length < 1) return true;
+      if (questionLabel.value === '' || questionLabel.value == null) {
+        // console.log('Label value is nothing');
+        // alert('The label\'s value is nothing.');
+        return true;
+      }
+      if (questionLabel.value.length > 250) {
+        // console.log('Label is too long');
+        // alert('The label\'s value is too long.');
+        return true;
+      }
+      if (
+        questionHasTimeLimit.value &&
+        (questionTimeLimit.value === '' || questionTimeLimit.value == null)
+      ) {
+        // console.log('Time limit not defined');
+        // alert('The time limit has not defined.');
+        return true;
+      }
+      if (
+        questionHasTimeLimit.value !== '' &&
+        questionHasTimeLimit.value != null &&
+        questionHasTimeLimit.value != false &&
+        questionTimeLimit.value < 1
+      ) {
+        // console.log('Time limit less than 1');
+        // alert('The time limit can't be less than 1.');
+        return true;
+      }
+      let oneChoiceEmpty = false;
+      this.asso.forEach(element => {
+        if (element.statement === '') oneChoiceEmpty = true;
+      });
+      if (oneChoiceEmpty) return true;
+
+      if (this.checkEmptyCategories) return true;
+    }
     return false;
   }
 
@@ -359,6 +499,7 @@ export class ModifyQuestionComponent implements OnInit {
   }
   //#endregion
 
+  //#region Methods for multiple choices
   addChoice() {
     let newChoice = new QuestionChoice();
     newChoice.choiceNumber = this.choices.length + 1;
@@ -384,4 +525,81 @@ export class ModifyQuestionComponent implements OnInit {
     });
     return amount;
   }
+  //#endregion
+
+  //#region Methods for association
+  addChoiceAsso() {
+    let newAsso = new QuestionAsso();
+    newAsso.assoNumber = this.asso.length + 1;
+    newAsso.categoryIndex = 0;
+    newAsso.statement = '';
+    this.asso.push(newAsso);
+  }
+
+  removeChoiceAsso(i: number) {
+    this.asso.splice(i - 1, 1);
+
+    let iterator = 1;
+    this.asso.forEach(asso => {
+      asso.assoNumber = iterator;
+      iterator++;
+    });
+  }
+
+  get checkEmptyCategories(): boolean {
+    let hasEmpty = false;
+    this.categories.forEach(cat => {
+      if (cat != null) {
+        cat.trim;
+        if (cat.length == 0) {
+          console.log(cat);
+          hasEmpty = true;
+        }
+      }
+    })
+    return hasEmpty;
+  }
+
+  switchCategory3(): void {
+    if (this.showCategory3) {
+      this.categories.splice(2, 1);
+      let list: QuestionAsso[] = this.GetListOfCategory(2)
+      if (list.length > 0) {
+        list.forEach(item => {
+          this.removeChoiceAsso(item.assoNumber);
+        });
+      }
+    }
+    if (!this.showCategory3) {
+      this.categories[2] = '';
+    }
+    this.showCategory3 = !this.showCategory3;
+  }
+
+  drop(event: CdkDragDrop<string[]>, category: number) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+    event.item.data.categoryIndex = category;
+  }
+
+  public GetListOfCategory(index: number): QuestionAsso[] {
+
+    let listAsso: QuestionAsso[] = [];
+
+    this.asso.forEach(item => {
+      if (item.categoryIndex == index)
+        listAsso.push(item);
+    });
+    return listAsso;
+
+  }
+  //#endregion
 }

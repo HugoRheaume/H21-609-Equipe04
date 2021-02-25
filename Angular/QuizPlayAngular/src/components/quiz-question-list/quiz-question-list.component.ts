@@ -98,6 +98,7 @@ export class QuizQuestionListComponent implements OnInit {
   }
 
   goLive() {
+    this.finish()
     this.router.navigate([`/live/${this.service.currentQuiz.shareCode}`]);
   }
 
@@ -121,13 +122,13 @@ export class QuizQuestionListComponent implements OnInit {
     });
   }
 
-  openSnackBarDeleteQuestion(){
+  openSnackBarDeleteQuestion() {
     this.snackBar.open("Question suprimée!", null, {
       duration: 3000,
     });
   }
 
-  updateQuestions($event){
+  updateQuestions($event) {
     $event == "saved" ? this.openSnackBarSaveQuestion() : null;
     this.showModifyingModal = false;
   }
@@ -137,7 +138,7 @@ export class QuizQuestionListComponent implements OnInit {
     this.modifyingQuestion = this.selectedQuestion;
   }
 
-  openModal(){
+  openModal() {
     document.getElementById("openModalButton").click();
   }
 }

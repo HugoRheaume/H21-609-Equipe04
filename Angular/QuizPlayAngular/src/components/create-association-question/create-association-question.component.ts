@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { QuestionAsso } from 'src/models/questionAsso';
-import { CdkDragDrop, CdkDragEnd, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { QuizService } from 'src/app/services/Quiz.service';
 import { QuestionAssociation } from 'src/app/models/question';
 @Component({
@@ -42,8 +42,9 @@ export class CreateAssociationQuestionComponent implements OnInit {
       questionAnswers: ['', Validators.required],
     });
     this.asso = [];
-    this.categories = [];
+    this.categories = ['', ''];
     this.showCategory3 = false;
+    console.log(this.categories);
   }
 
   //#region Error messages
@@ -93,7 +94,7 @@ export class CreateAssociationQuestionComponent implements OnInit {
       question.timeLimit = -1;
     else question.timeLimit = questionTimeLimit.value;
 
-    question.questionAsso = this.asso;
+    question.questionAssociation = this.asso;
 
     let temp: string[] = []
     temp[0] = this.categories[0];
@@ -183,18 +184,37 @@ export class CreateAssociationQuestionComponent implements OnInit {
     });
     if (oneChoiceEmpty) return true;
 
+    if (this.checkEmptyCategories) return true;
+
     return false;
+  }
+
+  get checkEmptyCategories(): boolean {
+    let hasEmpty = false;
+    this.categories.forEach(cat => {
+      if (cat != null) {
+        cat.trim;
+        if (cat.length == 0) {
+          console.log(cat);
+          hasEmpty = true;
+        }
+      }
+    })
+    return hasEmpty;
   }
 
   switchCategory3(): void {
     if (this.showCategory3) {
-      this.categories[2] = undefined;
+      this.categories.splice(2, 1);
       let list: QuestionAsso[] = this.GetListOfCategory(2)
       if (list.length > 0) {
         list.forEach(item => {
           this.removeChoice(item.assoNumber);
         });
       }
+    }
+    if (!this.showCategory3) {
+      this.categories[2] = '';
     }
     this.showCategory3 = !this.showCategory3;
   }
@@ -222,7 +242,6 @@ export class CreateAssociationQuestionComponent implements OnInit {
         listAsso.push(item);
     });
     return listAsso;
-
   }
 }
 
