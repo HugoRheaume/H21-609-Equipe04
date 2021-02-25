@@ -103,5 +103,12 @@ namespace API.Controllers
             resp.Content = new ObjectContent<bool>(service.DeleteAnonymous(token), GlobalConfiguration.Configuration.Formatters.JsonFormatter);
             return resp;
         }
+
+        [TokenAuthorize]
+        [HttpGet]
+        public bool CheckAuthorize()
+        {
+            return true;
+        }
     }
 }

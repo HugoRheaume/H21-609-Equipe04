@@ -196,7 +196,7 @@ export class QuizService {
       });
   }
 
-  public login(firebaseToken: string) {
+  public login(firebaseToken: string, returnUrl: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -214,7 +214,7 @@ export class QuizService {
         localStorage.setItem('name', response.name);
         localStorage.setItem('email', response.email);
         localStorage.setItem('picture', response.picture);
-        this.router.navigate(['/list']);
+        this.router.navigateByUrl(returnUrl);
       });
   }
 

@@ -16,15 +16,7 @@ export class NavigationComponent implements OnInit {
     public service: QuizService,
     public auth: AngularFireAuth
   ) {}
-  private wasInside = false;
   ngOnInit(): void {}
-  login() {
-    this.auth
-      .signInWithPopup(new firebase.default.auth.GoogleAuthProvider())
-      .then((res) => {
-        this.service.login('"' + res.user['za'] + '"');
-      });
-  }
   logout() {
     this.auth.signOut().then((res) => {
       this.service.logout();

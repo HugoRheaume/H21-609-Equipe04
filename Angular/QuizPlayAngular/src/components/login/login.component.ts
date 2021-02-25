@@ -1,25 +1,33 @@
 import { QuizService } from 'src/app/services/Quiz.service';
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
 import * as firebase from 'firebase/app';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  return: string = '';
 
   constructor(
     public afAuth: AngularFireAuth,
-    public http: QuizService
+    public http: QuizService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
+  ngOnInit(): void {
+    this.route.queryParams
+      .subscribe(params => this.return = params['returnUrl'] || '/list');
+  }
 
   login() {
     this.afAuth.signInWithPopup(new firebase.default.auth.GoogleAuthProvider()).then((res) => {
-      this.http.login("\"" + res.user['za'] + "\"");
+      this.http.login("\"" + res.user['za'] + "\"", this.return);
     });
-
   }
   logout() {
     this.afAuth.signOut().then((res) => {

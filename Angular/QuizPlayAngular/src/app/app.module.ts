@@ -1,3 +1,4 @@
+import { AuthGuard } from './models/AuthGuard';
 import { environment } from './../environments/environment';
 import { WaitingRoomComponent } from '../components/QuizLive/waiting-room/waiting-room.component';
 import { CreateMultiplechoicesQuestionComponent } from './../components/create-multiplechoices-question/create-multiplechoices-question.component';
@@ -95,7 +96,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
   ],
   entryComponents: [CreateQuizComponent],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, AuthGuard],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

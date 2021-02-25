@@ -23,13 +23,8 @@
         <tr id="navContentUserInfo">
           <td>
             <div>
-              <div *ngIf="auth.user | async as user; else showLogin">
-                <button
-                  mat-button
-                  class="btnLoginLogout"
-                  id="navContentUserButton"
-                  style="margin-top: 10px"
-                >
+              <div *ngIf="auth.user | async as user">
+                <button mat-button class="btnLoginLogout" id="navContentUserButton" style="margin-top: 10px;">
                   <div class="d-flex align-items-center justify-content-center">
                     <img
                       [src]="getPicture()"
@@ -41,30 +36,6 @@
                 </button>
               </div>
 
-              <ng-template #showLogin>
-                <button
-                  mat-button
-                  class="btnLoginLogout"
-                  id="navContentUserButton"
-                  style="margin-top: 10px"
-                  style="
-                    background-color: #ea5d4f;
-                    border-radius: 35.5px;
-                    height: 50px;
-                  "
-                  (click)="login(); sidenav.toggle()"
-                >
-                  <div class="d-flex align-items-center justify-content-center">
-                    <img
-                      src="../../assets/google_logo.png"
-                      alt="google logo"
-                      style="height: 32px; width: 32px"
-                    />
-                    <span> Connexion avec Google</span>
-                    <!--i class="fas fa-arrow-right ms-3 me-4"></i-->
-                  </div>
-                </button>
-              </ng-template>
             </div>
           </td>
         </tr>

@@ -29,7 +29,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitUtil {
 
 
-    public static final String SERVER_URL = Global.IP_NIC;
+    public static final String SERVER_URL = Global.IP_PROD;
 
     public static ClearableCookieJar cookieJar;
 
