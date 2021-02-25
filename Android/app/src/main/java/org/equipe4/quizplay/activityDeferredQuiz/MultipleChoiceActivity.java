@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.equipe4.quizplay.ChoiceAdapter;
 import org.equipe4.quizplay.R;
@@ -173,6 +174,7 @@ public class MultipleChoiceActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<QuestionDTO> call, Throwable t) {
                 Log.e("RETROFIT", t.getMessage());
+                Toast.makeText(MultipleChoiceActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
             }
         });
     }

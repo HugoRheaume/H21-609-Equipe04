@@ -197,7 +197,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Rastipouel"
+                    android:text="Michel"
                     android:textSize="20sp"
                     android:textColor="@color/textColor"
                     android:fontFamily="@font/open_sans"/>

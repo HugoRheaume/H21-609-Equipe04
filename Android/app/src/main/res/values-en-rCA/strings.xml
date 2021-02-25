@@ -55,4 +55,6 @@
 
     <string name="open_drawer">Open</string>
     <string name="close_drawer">Close</string>
+    <string name="toastRoomDeleted">The room has been deleted</string>
+    <string name="toastAuthFailed">Authentication Failed.</string>
 </resources>

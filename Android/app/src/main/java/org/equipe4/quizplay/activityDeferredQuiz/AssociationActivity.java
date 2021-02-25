@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.equipe4.quizplay.R;
 import org.equipe4.quizplay.activityDeferredQuiz.MultipleChoiceActivity;
@@ -262,6 +263,7 @@ public class AssociationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<QuestionDTO> call, Throwable t) {
                 Log.e("RETROFIT", t.getMessage());
+                Toast.makeText(AssociationActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -272,7 +274,7 @@ public class AssociationActivity extends AppCompatActivity {
             return;
         }
 
-        Intent i = new Intent(getApplicationContext(), Global.getQuestionTypeDeferred(nextQuestion.questionType));
+        Intent i;
         if (nextQuestion.quizIndex == -1)
             i = new Intent(getApplicationContext(), ResultActivity.class);
         else {

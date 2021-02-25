@@ -55,6 +55,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
                 Log.e("RETROFIT", t.getMessage());
+                Toast.makeText(ResultActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
             }
         });
     }

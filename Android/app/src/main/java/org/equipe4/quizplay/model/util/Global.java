@@ -91,7 +91,7 @@ public class Global {
             public void onFailure(Call<String> call, Throwable t) {
 
                 Log.e("RETROFIT", t.getMessage());
-                Toast.makeText(context, "An error occured", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -112,7 +112,7 @@ public class Global {
             }
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(context, "Un erreur est survenu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
             }
         });
     }

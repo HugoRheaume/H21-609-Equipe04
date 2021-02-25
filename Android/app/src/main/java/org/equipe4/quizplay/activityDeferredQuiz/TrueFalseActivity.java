@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.equipe4.quizplay.R;
 import org.equipe4.quizplay.model.http.QPService;
@@ -149,6 +150,7 @@ public class TrueFalseActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<QuestionDTO> call, Throwable t) {
                 Log.e("RETROFIT", t.getMessage());
+                Toast.makeText(TrueFalseActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
             }
         });
     }
