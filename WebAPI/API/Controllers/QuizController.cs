@@ -168,7 +168,6 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [ModelValidation]
         [TokenAuthorize]
         public IHttpActionResult ModifyQuiz(QuizModifyDTO modifiedDTO)
         {

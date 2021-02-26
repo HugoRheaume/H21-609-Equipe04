@@ -246,34 +246,32 @@ namespace API.Service
 
         public bool ModifyQuiz(QuizModifyDTO modifiedDTO)
         {
-            Quiz quizToModify = db.ListQuiz.FirstOrDefault(q => q.Id == modifiedDTO.Id);
+            if (modifiedDTO == null || modifiedDTO.Title == null || modifiedDTO.Description == null) return false;
+            if (modifiedDTO.Description.Trim().Length < 1 || modifiedDTO.Description.Trim().Length > 1000) return false;
+            if (modifiedDTO.Title.Trim().Length < 4 || modifiedDTO.Title.Trim().Length > 250) return false;
+
+            Quiz quizToModify = getQuizByIdInDB(modifiedDTO.Id);
             if (quizToModify != null)
             {
                 quizToModify.IsPublic = modifiedDTO.IsPublic;
                 quizToModify.Title = modifiedDTO.Title;
                 quizToModify.Description = modifiedDTO.Description;
-                db.SaveChanges();
+                saveQuiz();
                 return true;
             }
             return false;
         }
 
-        public List<QuizResponseDTO> GetListPublicQuiz()
+        public virtual Quiz getQuizByIdInDB(int Id)
         {
-            List<QuizResponseDTO> listPublicQuiz = db.ListQuiz.Where(q => q.IsPublic && q.ListQuestions.Count > 0).Select(q => new QuizResponseDTO()
-                {
-                    Id = q.Id,
-                    Author = db.Users.FirstOrDefault(u => q.OwnerId == u.Id).Name,
-                    Title = q.Title,
-                    IsPublic = q.IsPublic,
-                    Description = q.Description,
-                    ShareCode = q.ShareCode,
-                    Date = q.Date,
-                    NumberOfQuestions = q.ListQuestions.Count
-                }).ToList();
-
-            return listPublicQuiz;
+            return db.ListQuiz.FirstOrDefault(q => q.Id == Id);
         }
+        public virtual bool saveQuiz()
+        {
+            db.SaveChanges();
+            return true;
+        }
+
     }
 
     public class DescriptionIsTooLong : Exception
