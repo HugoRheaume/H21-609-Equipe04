@@ -28,15 +28,15 @@
             android:layout_x="-200dp"
             android:layout_y="450dp"/>
 
-        <View
-            android:layout_width="125dp"
-            android:layout_height="250dp"
-            android:background="@drawable/triangle"
-            android:backgroundTint="@color/colorAccent"
-            android:layout_x="300dp"
-            android:layout_y="500dp"/>
-
     </AbsoluteLayout>
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="160dp"
+        android:background="@drawable/triangle"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,10 +85,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:maxHeight="150dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"

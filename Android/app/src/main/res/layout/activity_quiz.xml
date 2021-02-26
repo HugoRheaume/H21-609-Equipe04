@@ -27,15 +27,15 @@
             android:layout_x="-200dp"
             android:layout_y="450dp"/>
 
-        <View
-            android:layout_width="125dp"
-            android:layout_height="250dp"
-            android:background="@drawable/triangle"
-            android:backgroundTint="@color/colorAccent"
-            android:layout_x="300dp"
-            android:layout_y="500dp"/>
-
     </AbsoluteLayout>
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="160dp"
+        android:background="@drawable/triangle"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
 
 <androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer_layout"
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/lorem"
                     android:layout_marginBottom="30dp"
-                    android:textSize="40sp"
+                    android:textSize="30sp"
                     android:textColor="@color/textColor"
                     android:fontFamily="@font/titan_one" />
 

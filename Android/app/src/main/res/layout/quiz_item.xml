@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:id="@+id/layoutItem">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/textColor"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/quizItem"
+        android:onClick="startQuiz">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:id="@+id/tvQuizTitle"
+            android:text="@string/lorem"
+            android:textSize="20sp"
+            android:textColor="@color/textColor"
+            android:fontFamily="@font/titan_one"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/tvQuizNb"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/open_sans" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/tvQuizAuthor"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/open_sans" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/tvQuizDate"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/textColor"
+            android:fontFamily="@font/open_sans" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

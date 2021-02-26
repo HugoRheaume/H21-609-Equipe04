@@ -12,6 +12,7 @@
     <color name="textColor">#FFFFFF</color>
     <color name="borderColor">#BFFFFFFF</color>
     <color name="backgroundColor">#BF579D2C</color>
+    <color name="lightList">#33FFFFFF</color>
 
     <color name="good">#4BDD4B</color>
     <color name="goodTransparent">#404BDD4B</color>

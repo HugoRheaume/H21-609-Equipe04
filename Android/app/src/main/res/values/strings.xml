@@ -66,6 +66,14 @@
     
     <string name="guestLogin">Connexion invité</string>
 
+    <string name="toastErrorAccessingQuiz">Une erreur est survenu en essayant d\'accéder à ce Quiz</string>
+    <string name="quizTitle">Titre du Quiz</string>
+    <string name="questionNumber">Nombre de questions</string>
+    <string name="questionNb">Nb. de questions</string>
+    <string name="author">Auteur</string>
+    <string name="dateCreation">Date de création</string>
+    <string name="sortBy">Trier par :</string>
+
     <!--Drawer-->
     <string name="open_drawer">Ouvrir</string>
     <string name="close_drawer">Fermer</string>
