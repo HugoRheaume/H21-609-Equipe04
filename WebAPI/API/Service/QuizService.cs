@@ -150,9 +150,14 @@ namespace API.Service
 
         }
 
-        public int GetFinalScore(int quizId, CookieHeaderValue cookie)
+        /// <summary>
+        /// Trouve et renvoie tous les résultats dans la DB associé au Quiz et au User passé en paramètre.
+        /// </summary>
+        /// <param name="quizId">Id du quiz</param>
+        /// <param name="cookie">Token du User</param>
+        /// <returns>int</returns>
+        public int GetFinalScore(int quizId, string token)
         {
-            string token = cookie["token"].Value;
             ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
 
             int scoreTotal = 0;
@@ -163,9 +168,13 @@ namespace API.Service
             return scoreTotal;
         }
 
-        public void DeleteQuestionResults(int quizId, CookieHeaderValue cookie)
+        /// <summary>
+        /// Supprime de la DB tous les résultats associé au Quiz et au User passé en paramètre.
+        /// </summary>
+        /// <param name="quizId">Id du quiz</param>
+        /// <param name="cookie">Token du User</param>
+        public void DeleteQuestionResults(int quizId, string token)
         {
-            string token = cookie["token"].Value;
             ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
 
             db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User.Id == user.Id && q.Question.Quiz.Id == quizId));

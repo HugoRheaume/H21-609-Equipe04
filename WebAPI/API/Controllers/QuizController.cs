@@ -118,16 +118,23 @@ namespace API.Controllers
             return code.ToString();
         }
 
+        /// <summary>
+        /// Prend le score de chaque question pour avoir le score final.
+        /// Enlève de la DB le score pour les questions de ce Quiz de ce User.
+        /// </summary>
+        /// <param name="quiz">Reçoit un QuizResponseDTO</param>
+        /// <returns>int</returns>
         [HttpPost]
         [TokenAuthorize]
         public IHttpActionResult GetFinalScore(QuizResponseDTO quiz)
         {
             CookieHeaderValue cookie = Request.Headers.GetCookies("token").FirstOrDefault();
             if (cookie == null) return BadRequest("Pas de Biscuit");
+            string token = cookie["token"].Value;
 
-            int score = quizService.GetFinalScore(quiz.Id, cookie);
+            int score = quizService.GetFinalScore(quiz.Id, token);
 
-            quizService.DeleteQuestionResults(quiz.Id, cookie);
+            quizService.DeleteQuestionResults(quiz.Id, token);
 
             return Ok(score);
         }
@@ -172,7 +179,7 @@ namespace API.Controllers
         [HttpGet]
         public IHttpActionResult GetPublicQuiz()
         {
-            return Ok(service.GetListPublicQuiz());
+            return Ok(quizService.GetListPublicQuiz());
         }
     }
 }

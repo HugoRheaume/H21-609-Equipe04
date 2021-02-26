@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace API.Controllers
@@ -95,15 +96,24 @@ namespace API.Controllers
             return Ok(service.UpdateQuizIndex(questions));
         }
 
+        /// <summary>
+        /// Si le QuestionId égale -1, donc qu'il n'y a pas de résultat puisqu'on veut la première question, retourne seulement celle-ci.
+        /// Sinon, met le résultat dans la DB et retourne la prochaine question.
+        /// </summary>
+        /// <param name="result">Résultat de la question</param>
+        /// <returns>QuestionDTO</returns>
         [TokenAuthorize]
         [HttpPost]
         public IHttpActionResult GetNextQuestion(QuestionResultDTO result)
         {
-            if (result.QuestionId == -1)
-                return Ok(service.GetNextQuestion(result.QuizId ,result.QuestionId));
-            else if (service.StoreQuestionResult(result, Request.Headers.GetCookies("token").FirstOrDefault()))
-                return Ok(service.GetNextQuestion(result.QuizId, result.QuestionId));
-            else return BadRequest("Pas de Biscuit");
+            CookieHeaderValue  cookie = Request.Headers.GetCookies("token").FirstOrDefault();
+            if (cookie == null) return BadRequest("Pas de Biscuit");
+            string token = cookie["token"].Value;
+
+            if (result.QuestionId != -1)
+                service.StoreQuestionResult(result, token);
+
+            return Ok(service.GetNextQuestion(result.QuizId, result.QuestionId));
         }
 
 

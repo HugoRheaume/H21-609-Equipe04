@@ -238,9 +238,10 @@ public class ListQuizActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = (String)parent.getItemAtPosition(position);
-
-        sortListQuiz(item);
-        initRecycler();
+        if (listQuiz != null) {
+            sortListQuiz(item);
+            initRecycler();
+        }
     }
 
     @Override

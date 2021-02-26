@@ -47,38 +47,6 @@ namespace API.Service
             return questionList.Select(item => GenerateQuestionDTO(item)).OrderBy(x => x.QuizIndex).ToList();
         }
 
-
-        public List<QuestionDTO> GetQuestionByQuizId(int quizId)
-        {
-            Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.Id == quizId);
-            if (quiz == null)
-                return null;
-            List<Question> questionList = db.Question.Where(x => x.Quiz.Id == quizId).ToList();
-
-            return questionList.Select(item => GenerateQuestionDTO(item)).OrderBy(x => x.QuizIndex).ToList();
-        }
-
-        public QuestionDTO GetNextQuestion(int quizId, int questionId)
-        {
-            List<QuestionDTO> list = GetQuestionByQuizId(quizId);
-            Question question = db.Question.Find(questionId);
-            int index = -1;
-            if (questionId > -1)
-                index = question.QuizIndex;
-            if (list.Count <= index + 1)
-                return new QuestionDTO()
-                {
-                    Id = 0,
-                    QuizId = quizId,
-                    Label = "",
-                    TimeLimit = 0,
-                    QuestionType = QuestionType.TrueFalse,
-                    QuizIndex = -1,
-                    NeedsAllAnswers = false,
-                };
-            return list[index + 1];
-        }
-
         public QuestionDTO AddQuestion(QuestionCreateDTO question)
         {
 
@@ -165,10 +133,57 @@ namespace API.Service
 
         }
 
-        public bool StoreQuestionResult(QuestionResultDTO result, CookieHeaderValue cookie)
+
+        /// <summary>
+        /// Obtient la liste des questions pour un Quiz à partir de l'Id.
+        /// </summary>
+        /// <param name="quizId">Id du quiz dont on veut les questions</param>
+        /// <returns>List<QuestionDTO></returns>
+        public List<QuestionDTO> GetQuestionByQuizId(int quizId)
         {
-            if (cookie == null) return false;
-            string token = cookie["token"].Value;
+            Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.Id == quizId);
+            if (quiz == null)
+                return null;
+            List<Question> questionList = db.Question.Where(x => x.Quiz.Id == quizId).ToList();
+
+            return questionList.Select(item => GenerateQuestionDTO(item)).OrderBy(x => x.QuizIndex).ToList();
+        }
+
+        /// <summary>
+        /// Renvoie la première question d'un Quiz si le questionId est -1.
+        /// Sinon renvoie la question suivante.
+        /// </summary>
+        /// <param name="quizId">Id du quiz</param>
+        /// <param name="questionId">Id de la question</param>
+        /// <returns>QuestionDTO</returns>
+        public QuestionDTO GetNextQuestion(int quizId, int questionId)
+        {
+            List<QuestionDTO> list = GetQuestionByQuizId(quizId);
+            Question question = db.Question.Find(questionId);
+            int index = -1;
+            if (questionId > -1)
+                index = question.QuizIndex;
+            if (list.Count <= index + 1)
+                return new QuestionDTO()
+                {
+                    Id = 0,
+                    QuizId = quizId,
+                    Label = "",
+                    TimeLimit = 0,
+                    QuestionType = QuestionType.TrueFalse,
+                    QuizIndex = -1,
+                    NeedsAllAnswers = false,
+                };
+            return list[index + 1];
+        }
+        
+        /// <summary>
+        /// Sauvegarde un résultat à une question associé à un User dans la DB
+        /// </summary>
+        /// <param name="result">Résultat</param>
+        /// <param name="cookie">Token du User</param>
+        public void StoreQuestionResult(QuestionResultDTO result, string token)
+        {
             ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
 
             db.QuestionResult.Add(new QuestionResult()
@@ -179,7 +194,6 @@ namespace API.Service
             });
 
             db.SaveChanges();
-            return true;
         }
 
 

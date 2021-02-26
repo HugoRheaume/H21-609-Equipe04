@@ -20,7 +20,7 @@ namespace API.Service
 
         List<QuestionDTO> DeleteQuestion(int id);
         bool UpdateQuizIndex(List<QuestionDTO> questions);
-        bool StoreQuestionResult(QuestionResultDTO result, CookieHeaderValue cookie);
+        void StoreQuestionResult(QuestionResultDTO result, string token);
         bool ModifyQuesiton(QuestionDTO modifiedDTO);
     }
 }
