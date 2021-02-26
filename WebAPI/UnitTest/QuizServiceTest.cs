@@ -31,7 +31,7 @@ namespace UnitTest
                 ListQuestions = new List<Question>()
             };
             quiz.ListQuestions.Add(new Question());
-            QuizResponseDTO responseExprected = new QuizResponseDTO
+            QuizResponseDTO responseExpected = new QuizResponseDTO
             {
                 Id = 1,
                 Author = "Tester",
@@ -51,10 +51,10 @@ namespace UnitTest
             // Vérifications
 
             quizServiceMock.Verify(q => q.AddQuiz(It.IsAny<Quiz>()));
-            Assert.AreEqual(responseExprected.Id , responseActual.Id);
-            Assert.AreEqual(responseExprected.Title , responseActual.Title);
-            Assert.AreEqual(responseExprected.Description , responseActual.Description);
-            Assert.AreEqual(responseExprected.NumberOfQuestions , responseActual.NumberOfQuestions);
+            Assert.AreEqual(responseExpected.Id , responseActual.Id);
+            Assert.AreEqual(responseExpected.Title , responseActual.Title);
+            Assert.AreEqual(responseExpected.Description , responseActual.Description);
+            Assert.AreEqual(responseExpected.NumberOfQuestions , responseActual.NumberOfQuestions);
 
         }
 
