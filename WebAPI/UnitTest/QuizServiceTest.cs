@@ -157,5 +157,44 @@ namespace UnitTest
             };
             Assert.ThrowsException<NullReferenceException>(() => quizServiceMock.Object.CreateQuiz(quiz, null));
         }
+
+        [TestMethod]
+        public void TestServiceGetFinalScore()
+        {
+            Mock<QuizService> quizServiceMock = new Mock<QuizService> { CallBase = true };
+
+            List<QuestionResult> questionResults = new List<QuestionResult>();
+            QuestionResult questionResult1 = new QuestionResult
+            {
+                Id = 1,
+                Question = new Question(),
+                Score = 1,
+                User = new ApplicationUser()
+            };
+            questionResults.Add(questionResult1);
+            QuestionResult questionResult2 = new QuestionResult
+            {
+                Id = 2,
+                Question = new Question(),
+                Score = 2,
+                User = new ApplicationUser()
+            };
+            questionResults.Add(questionResult2);
+            QuestionResult questionResult3 = new QuestionResult
+            {
+                Id = 3,
+                Question = new Question(),
+                Score = 3,
+                User = new ApplicationUser()
+            };
+            questionResults.Add(questionResult3);
+
+            quizServiceMock.Setup(q => q.GetQuestionResults(It.IsAny<string>(), It.IsAny<int>())).Returns(questionResults);
+            quizServiceMock.Setup(q => q.GetUserByToken(It.IsAny<string>())).Returns(new ApplicationUser { Id = "user1" });
+
+            int expectedScore = questionResult1.Score + questionResult2.Score + questionResult3.Score;
+
+            Assert.AreEqual(expectedScore, quizServiceMock.Object.GetFinalScore(1, "token"));
+        }
     }
 }

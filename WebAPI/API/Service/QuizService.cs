@@ -158,14 +158,24 @@ namespace API.Service
         /// <returns>int</returns>
         public int GetFinalScore(int quizId, string token)
         {
-            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
+            ApplicationUser user = GetUserByToken(token);
 
             int scoreTotal = 0;
 
-            List<QuestionResult> list = db.QuestionResult.Where(q => q.User.Id == user.Id && q.Question.Quiz.Id == quizId).ToList();
+            List<QuestionResult> list = GetQuestionResults(user.Id, quizId);
             list.ForEach(q => scoreTotal += q.Score);
 
             return scoreTotal;
+        }
+
+        public virtual ApplicationUser GetUserByToken(string token)
+        {
+            return db.Users.FirstOrDefault(u => u.Token == token);
+        }
+
+        public virtual List<QuestionResult> GetQuestionResults(string userId, int quizId)
+        {
+            return db.QuestionResult.Where(q => q.User.Id == userId && q.Question.Quiz.Id == quizId).ToList();
         }
 
         /// <summary>
@@ -175,7 +185,7 @@ namespace API.Service
         /// <param name="cookie">Token du User</param>
         public void DeleteQuestionResults(int quizId, string token)
         {
-            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
+            ApplicationUser user = GetUserByToken(token);
 
             db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User.Id == user.Id && q.Question.Quiz.Id == quizId));
             db.SaveChanges();
