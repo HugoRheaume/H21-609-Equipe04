@@ -7,7 +7,7 @@ using System.Web;
 
 namespace API.Models.Question
 {
-    public enum QuestionType { TrueFalse = 1, MultipleChoice = 2 , Association= 3, Image = 4}
+    public enum QuestionType { TrueFalse = 1, MultipleChoice = 2 , Association = 3, Image = 4}
     public class Question
     {
         [Key]
