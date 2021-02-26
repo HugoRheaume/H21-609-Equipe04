@@ -57,4 +57,11 @@
     <string name="close_drawer">Close</string>
     <string name="toastRoomDeleted">The room has been deleted</string>
     <string name="toastAuthFailed">Authentication Failed.</string>
+    <string name="toastErrorAccessingQuiz">There was an error trying to access this Quiz</string>
+    <string name="quizTitle">Quiz title</string>
+    <string name="questionNumber">Number of question</string>
+    <string name="author">Author</string>
+    <string name="dateCreation">Creation date</string>
+    <string name="sortBy">Sort by :</string>
+    <string name="questionNb">Nb. of question</string>
 </resources>

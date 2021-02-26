@@ -223,7 +223,7 @@ namespace API.Service
 
         public List<QuizResponseDTO> GetListPublicQuiz()
         {
-            List<QuizResponseDTO> listPublicQuiz = db.ListQuiz.Where(q => q.IsPublic == true).Select(q => new QuizResponseDTO()
+            List<QuizResponseDTO> listPublicQuiz = db.ListQuiz.Where(q => q.IsPublic && q.ListQuestions.Count > 0).Select(q => new QuizResponseDTO()
                 {
                     Id = q.Id,
                     Author = db.Users.FirstOrDefault(u => q.OwnerId == u.Id).Name,

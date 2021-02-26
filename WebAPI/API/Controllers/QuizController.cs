@@ -169,7 +169,7 @@ namespace API.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]
+        [HttpGet]
         public IHttpActionResult GetPublicQuiz()
         {
             return Ok(service.GetListPublicQuiz());

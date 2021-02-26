@@ -1,6 +1,8 @@
 package org.equipe4.quizplay.model.http;
 
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.equipe4.quizplay.model.util.Global;
 
@@ -34,11 +36,15 @@ public class RetrofitUtil {
     public static ClearableCookieJar cookieJar;
 
     public static QPService get() {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER_URL)
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         return retrofit.create(QPService.class);
     }

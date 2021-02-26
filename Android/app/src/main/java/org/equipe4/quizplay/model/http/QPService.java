@@ -5,6 +5,8 @@ import org.equipe4.quizplay.model.transfer.QuestionResultDTO;
 import org.equipe4.quizplay.model.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.model.transfer.UserDTO;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -36,4 +38,7 @@ public interface QPService {
 
     @POST("Quiz/GetFinalScore")
     Call<Integer> getFinalScore(@Body QuizResponseDTO quiz);
+
+    @GET("Quiz/GetPublicQuiz")
+    Call<List<QuizResponseDTO>> getPublicQuiz();
 }

@@ -1,6 +1,7 @@
 package org.equipe4.quizplay.model.transfer;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class QuizResponseDTO implements Serializable {
     public int id;
@@ -16,4 +17,6 @@ public class QuizResponseDTO implements Serializable {
     public String shareCode;
 
     public int numberOfQuestions;
+
+    public Date date;
 }

@@ -28,15 +28,15 @@
             android:layout_x="-200dp"
             android:layout_y="450dp"/>
 
-        <View
-            android:layout_width="125dp"
-            android:layout_height="250dp"
-            android:background="@drawable/triangle"
-            android:backgroundTint="@color/colorAccent"
-            android:layout_x="300dp"
-            android:layout_y="500dp"/>
-
     </AbsoluteLayout>
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="160dp"
+        android:background="@drawable/triangle"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
 
 <androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer_layout"
@@ -69,9 +69,102 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/list"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 android:fontFamily="@font/titan_one"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor"
+                android:layout_marginBottom="20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/sortBy"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/open_sans"/>
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"
+                    android:id="@+id/dropdownSort"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/questionNb"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/open_sans"
+                    android:layout_marginEnd="5dp"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/textColor"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="@string/author"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/open_sans"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/textColor"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="@string/dateCreation"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/open_sans"
+                    android:layout_marginStart="5dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/textColor"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/quizRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"/>
 
         </LinearLayout>
 

@@ -203,11 +203,11 @@ public class MultipleChoiceActivity extends AppCompatActivity {
 
         choiceRecyclerView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager memeLayoutManager = new LinearLayoutManager(this);
-        choiceRecyclerView.setLayoutManager(memeLayoutManager);
+        RecyclerView.LayoutManager choiceLayoutManager = new LinearLayoutManager(this);
+        choiceRecyclerView.setLayoutManager(choiceLayoutManager);
 
-        RecyclerView.Adapter memeAdapter = new ChoiceAdapter(question.questionMultipleChoice);
-        choiceRecyclerView.setAdapter(memeAdapter);
+        RecyclerView.Adapter choiceAdapter = new ChoiceAdapter(question.questionMultipleChoice);
+        choiceRecyclerView.setAdapter(choiceAdapter);
     }
 
     private List<CheckBox> getCheckboxList()

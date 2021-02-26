@@ -1,11 +1,16 @@
 package org.equipe4.quizplay;
 
+import android.content.ComponentCallbacks;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +20,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -22,18 +29,31 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
+import org.equipe4.quizplay.activityDeferredQuiz.QuizActivity;
+import org.equipe4.quizplay.model.http.QPService;
 import org.equipe4.quizplay.model.http.RetrofitUtil;
 import org.equipe4.quizplay.model.service.AppKilledService;
+import org.equipe4.quizplay.model.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.model.transfer.UserDTO;
 import org.equipe4.quizplay.model.util.Global;
 import org.equipe4.quizplay.model.util.SharedPrefUtil;
 import org.equipe4.quizplay.model.webSocket.WSClient;
 
-public class ListQuizActivity extends AppCompatActivity {
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ListQuizActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     SharedPrefUtil sharedPrefUtil;
     UserDTO user;
     ActionBarDrawerToggle toggle;
+    List<QuizResponseDTO> listQuiz;
+    QPService service = RetrofitUtil.get();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +70,49 @@ public class ListQuizActivity extends AppCompatActivity {
         user = sharedPrefUtil.getCurrentUser();
 
         configureDrawer();
+
+        Spinner dropdown = findViewById(R.id.dropdownSort);
+        String[] items = new String[]{getString(R.string.quizTitle), getString(R.string.questionNumber), getString(R.string.author), getString(R.string.dateCreation)};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(this);
+
+        service.getPublicQuiz().enqueue(new Callback<List<QuizResponseDTO>>() {
+            @Override
+            public void onResponse(Call<List<QuizResponseDTO>> call, Response<List<QuizResponseDTO>> response) {
+                if (response.isSuccessful()) {
+                    listQuiz = response.body();
+
+                    sortListQuiz(getString(R.string.quizTitle));
+
+                    initRecycler();
+                }
+                else {
+                    Log.i("RETROFIT", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<QuizResponseDTO>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
+                Log.i("RETROFIT", t.getMessage());
+            }
+        });
+    }
+
+    private void sortListQuiz(String sort) {
+        if (listQuiz == null) return;
+        Collections.sort(listQuiz, (Comparator<QuizResponseDTO>) (o1, o2) -> {
+            if (sort.equals(getString(R.string.quizTitle)))
+                return o1.title.toLowerCase().compareTo(o2.title.toLowerCase());
+            if (sort.equals(getString(R.string.questionNumber)))
+                return o2.numberOfQuestions - o1.numberOfQuestions;
+            if (sort.equals(getString(R.string.author)))
+                return o1.author.toLowerCase().compareTo(o2.author.toLowerCase());
+            if (sort.equals(getString(R.string.dateCreation)))
+                return o2.date.compareTo(o1.date);
+            return 0;
+        });
     }
 
     @Override
@@ -69,6 +132,36 @@ public class ListQuizActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("expired", false)) {
             Global.logout(getApplicationContext());
         }
+    }
+
+    private void initRecycler() {
+        RecyclerView quizRecyclerView = findViewById(R.id.quizRecyclerView);
+
+        quizRecyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager quizLayoutManager = new LinearLayoutManager(this);
+        quizRecyclerView.setLayoutManager(quizLayoutManager);
+
+        RecyclerView.Adapter quizAdapter = new QuizAdapter(listQuiz, getApplicationContext());
+        quizRecyclerView.setAdapter(quizAdapter);
+    }
+
+    public void startQuiz(View v) {
+        QuizResponseDTO quiz = null;
+
+        for(QuizResponseDTO q : listQuiz) {
+            if (q.id == (int)v.getTag())
+                quiz = q;
+        }
+
+        if (quiz == null) {
+            Toast.makeText(getApplicationContext(), getString(R.string.toastErrorAccessingQuiz), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+        intent.putExtra("quiz", quiz);
+        startActivity(intent);
     }
 
 
@@ -100,7 +193,6 @@ public class ListQuizActivity extends AppCompatActivity {
 
                 switch(item.getItemId()){
                     case R.id.navigation_item_list_quiz:
-                        startActivity(new Intent(getApplicationContext(), ListQuizActivity.class));
                         break;
 
                     case R.id.navigation_item_join:
@@ -141,6 +233,19 @@ public class ListQuizActivity extends AppCompatActivity {
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         toggle.onConfigurationChanged(newConfig);
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String item = (String)parent.getItemAtPosition(position);
+
+        sortListQuiz(item);
+        initRecycler();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     // endregion
