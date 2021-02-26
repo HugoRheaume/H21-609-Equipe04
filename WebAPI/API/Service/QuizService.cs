@@ -16,6 +16,12 @@ namespace API.Service
         public QuizService(ApplicationDbContext db) : base(db) { }
 
         public QuizService(){}
+
+        /// <summary>
+        /// Ajoute le quiz dans la database
+        /// </summary>
+        /// <param name="quiz">Quiz à ajouter</param>
+        /// <returns>Le quiz qui viens d'être ajouté</returns>
         public virtual Quiz AddQuiz(Quiz quiz)
         {
             Quiz createdQuiz = db.ListQuiz.Add(quiz);
@@ -23,12 +29,26 @@ namespace API.Service
             return createdQuiz;
         }
 
+        /// <summary>
+        /// Crée le quiz et retourne un QuizResponseDTO
+        /// </summary>
+        /// <param name="quiz">Le quiz à ajouter</param>
+        /// <param name="username">Le username de l'utilisateur qui crée le quiz</param>
+        /// <returns></returns>
         public virtual QuizResponseDTO CreateQuiz(Quiz quiz, string username)
         {
+            if (quiz == null || username == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            // Valide les attributs du Quiz
             ValidationContext context = new ValidationContext(quiz);
             List<ValidationResult> results = new List<ValidationResult>();
             if (Validator.TryValidateObject(quiz, context, results, true))
             {
+                // Crée le quiz si il est valide
+
                 Quiz newQuiz = AddQuiz(quiz);
                 return GenerateQuizResponseDTO(newQuiz, username);
             }
@@ -63,6 +83,13 @@ namespace API.Service
                 return null;
             return GenerateQuizResponseDTO(quizToShip, null);
         }
+
+        /// <summary>
+        /// Génère un QuizResponseDTO à partir d'un Quiz et du username qui l'a créer
+        /// </summary>
+        /// <param name="quiz">Le quiz à ajouter</param>
+        /// <param name="username">Le username de l'utilisateur qui a créer le quiz</param>
+        /// <returns>Un QuizResponseDTO à envoyer au client</returns>
         private QuizResponseDTO GenerateQuizResponseDTO(Quiz quiz, string username)
         {
             return new QuizResponseDTO()

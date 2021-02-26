@@ -157,8 +157,16 @@ namespace API.Controllers
         [TokenAuthorize]
         public IHttpActionResult ModifyQuiz(QuizModifyDTO modifiedDTO)
         {
-            if (quizService.ModifyQuiz(modifiedDTO)) return Ok("Quiz modifié.");
-            return BadRequest("Une erreur s'est produite.");
+            AuthService authService = new AuthService(new ApplicationDbContext());
+            QuizService quizService = new QuizService(new ApplicationDbContext());
+            ApplicationUser user = authService.GetUserWithToken(Request);
+            if (quizService.IsUserOwnerOfQuiz(user.Id, modifiedDTO.Id))
+            {
+                if (quizService.ModifyQuiz(modifiedDTO)) return Ok("Quiz modifié.");
+                return BadRequest("Une erreur s'est produite.");
+            }
+
+            return Unauthorized();
         }
     }
 }
