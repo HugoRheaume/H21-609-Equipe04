@@ -69,6 +69,16 @@
 
     "room.btnSkip": "Passer",
     "room.btnNext": "Prochaine question",
-    "room.btnFinish": "Terminé"
+    "room.btnFinish": "Terminé",
+
+    "choice.tf": "Vrai ou faux",
+    "choice.mc": "Choix multiples",
+    "choice.as": "Association",
+
+    "error.question.create.labelRequired": "L'énoncé est requis",
+    "error.question.create.labelMax": "Vous avez dépassé le nombre de caractères maximum",
+    "error.question.create.timeMin": "La valeur minimale est 1",
+    "error.question.create.timeMax": "Le temps maximum est 3600",
+    "error.question.create.timeRequired": "Le temps limite est requis"
   }
 }

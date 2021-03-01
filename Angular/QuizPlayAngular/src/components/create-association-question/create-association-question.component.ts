@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -7,13 +8,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { QuestionAsso } from 'src/models/questionAsso';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { QuizService } from 'src/app/services/Quiz.service';
 import { QuestionAssociation } from 'src/app/models/question';
 @Component({
   selector: 'app-create-association-question',
   templateUrl: './create-association-question.component.html',
-  styleUrls: ['./create-association-question.component.css']
+  styleUrls: ['./create-association-question.component.css'],
 })
 export class CreateAssociationQuestionComponent implements OnInit {
   public Association: FormGroup;
@@ -23,8 +28,9 @@ export class CreateAssociationQuestionComponent implements OnInit {
   constructor(
     public service: QuizService,
     public route: Router,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    public translate: TranslateService
+  ) {}
 
   ngOnInit() {
     this.Association = this.formBuilder.group({
@@ -36,7 +42,10 @@ export class CreateAssociationQuestionComponent implements OnInit {
           Validators.maxLength(250),
         ],
       ],
-      questionTimeLimit: ['', [Validators.required, Validators.min(1)]],
+      questionTimeLimit: [
+        '',
+        [Validators.required, Validators.min(1), Validators.max(3600)],
+      ],
       questionHasTimeLimit: [''],
       questionHasOnlyOneAnswer: [''],
       questionAnswers: ['', Validators.required],
@@ -53,12 +62,12 @@ export class CreateAssociationQuestionComponent implements OnInit {
       'questionLabel'
     ) as FormControl;
     return formField.hasError('required')
-      ? "L'énoncé est requis"
+      ? this.translate.instant('app.error.question.create.labelRequired')
       : formField.hasError('maxlength')
-        ? 'Vous avez dépassé le nombre de caractères maximum'
-        : formField.hasError('nowhitespaceerror')
-          ? ''
-          : ''; // Default
+      ? this.translate.instant('app.error.question.create.labelMax')
+      : formField.hasError('nowhitespaceerror')
+      ? ''
+      : ''; // Default
   }
 
   get timeLimitErrorMessage(): string {
@@ -66,10 +75,12 @@ export class CreateAssociationQuestionComponent implements OnInit {
       'questionTimeLimit'
     ) as FormControl;
     return formField.hasError('min')
-      ? 'La valeur minimale est 1'
+      ? this.translate.instant('app.error.question.create.timeMin')
+      : formField.hasError('max')
+      ? this.translate.instant('app.error.question.create.timeMax')
       : formField.hasError('required')
-        ? 'Le temps limite est requis'
-        : ''; // Default
+      ? this.translate.instant('app.error.question.create.timeRequired')
+      : ''; // Default
   }
   //#endregion
 
@@ -96,11 +107,10 @@ export class CreateAssociationQuestionComponent implements OnInit {
 
     question.questionAssociation = this.asso;
 
-    let temp: string[] = []
+    let temp: string[] = [];
     temp[0] = this.categories[0];
     temp[1] = this.categories[1];
-    if (this.showCategory3)
-      temp[2] = this.categories[2];
+    if (this.showCategory3) temp[2] = this.categories[2];
     question.categories = temp;
     question.label = this.Association.get('questionLabel').value;
 
@@ -132,7 +142,7 @@ export class CreateAssociationQuestionComponent implements OnInit {
     this.asso.splice(i - 1, 1);
 
     let iterator = 1;
-    this.asso.forEach(asso => {
+    this.asso.forEach((asso) => {
       asso.assoNumber = iterator;
       iterator++;
     });
@@ -169,17 +179,18 @@ export class CreateAssociationQuestionComponent implements OnInit {
       return true;
     }
     if (
-      questionHasTimeLimit.value !== '' &&
-      questionHasTimeLimit.value != null &&
-      questionHasTimeLimit.value != false &&
-      questionTimeLimit.value < 1
+      (questionHasTimeLimit.value !== '' &&
+        questionHasTimeLimit.value != null &&
+        questionHasTimeLimit.value != false &&
+        questionTimeLimit.value < 1) ||
+      questionTimeLimit.value > 3600
     ) {
       // console.log('Time limit less than 1');
       // alert('The time limit can't be less than 1.');
       return true;
     }
     let oneChoiceEmpty = false;
-    this.asso.forEach(element => {
+    this.asso.forEach((element) => {
       if (element.statement === '') oneChoiceEmpty = true;
     });
     if (oneChoiceEmpty) return true;
@@ -191,7 +202,7 @@ export class CreateAssociationQuestionComponent implements OnInit {
 
   get checkEmptyCategories(): boolean {
     let hasEmpty = false;
-    this.categories.forEach(cat => {
+    this.categories.forEach((cat) => {
       if (cat != null) {
         cat.trim;
         if (cat.length == 0) {
@@ -199,16 +210,16 @@ export class CreateAssociationQuestionComponent implements OnInit {
           hasEmpty = true;
         }
       }
-    })
+    });
     return hasEmpty;
   }
 
   switchCategory3(): void {
     if (this.showCategory3) {
       this.categories.splice(2, 1);
-      let list: QuestionAsso[] = this.GetListOfCategory(2)
+      let list: QuestionAsso[] = this.GetListOfCategory(2);
       if (list.length > 0) {
-        list.forEach(item => {
+        list.forEach((item) => {
           this.removeChoice(item.assoNumber);
         });
       }
@@ -221,27 +232,28 @@ export class CreateAssociationQuestionComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>, category: number) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
+      moveItemInArray(
         event.container.data,
         event.previousIndex,
-        event.currentIndex);
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
     event.item.data.categoryIndex = category;
   }
 
   public GetListOfCategory(index: number): QuestionAsso[] {
-
     let listAsso: QuestionAsso[] = [];
 
-    this.asso.forEach(item => {
-      if (item.categoryIndex == index)
-        listAsso.push(item);
+    this.asso.forEach((item) => {
+      if (item.categoryIndex == index) listAsso.push(item);
     });
     return listAsso;
   }
 }
-

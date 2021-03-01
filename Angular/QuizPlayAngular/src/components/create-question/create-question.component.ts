@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { QuestionType } from 'src/app/models/question';
 
@@ -12,7 +13,7 @@ export class CreateQuestionComponent implements OnInit {
   public enumFormated: string[];
   public iterator: Array<number>;
   public selectedValue: string;
-  constructor() { }
+  constructor(public translate: TranslateService) {}
 
   ngOnInit() {
     this.enumNames = [];
@@ -40,13 +41,13 @@ export class CreateQuestionComponent implements OnInit {
       this.enumValues.push(QuestionType[this.enumNames[i]]);
       switch (this.enumNames[i]) {
         case 'TrueFalse':
-          this.enumFormated.push('Vrai ou faux');
+          this.enumFormated.push(this.translate.instant('app.choice.tf'));
           break;
         case 'MultipleChoices':
-          this.enumFormated.push('Choix multiples');
+          this.enumFormated.push(this.translate.instant('app.choice.mc'));
           break;
         case 'Association':
-          this.enumFormated.push("Association")
+          this.enumFormated.push(this.translate.instant('app.choice.as'));
         default:
           break;
       }

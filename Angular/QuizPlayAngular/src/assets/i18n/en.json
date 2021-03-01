@@ -69,6 +69,16 @@
 
     "room.btnSkip": "Skip",
     "room.btnNext": "Next question",
-    "room.btnFinish": "Complete"
+    "room.btnFinish": "Complete",
+
+    "choice.tf": "True or False",
+    "choice.mc": "Multiple choices",
+    "choice.as": "Association",
+
+    "error.question.create.labelRequired": "The statement is required",
+    "error.question.create.labelMax": "You have exceeded the maximum amount of charaters",
+    "error.question.create.timeMin": "The minimum value is 1",
+    "error.question.create.timeMax": "The maximum value is 3600",
+    "error.question.create.timeRequired": "The time limit is required"
   }
 }
