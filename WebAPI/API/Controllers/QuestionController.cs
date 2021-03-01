@@ -16,6 +16,8 @@ namespace API.Controllers
     {
 
         private IQuestionService service = new QuestionService(new ApplicationDbContext());
+        private AuthService authService = new AuthService(new ApplicationDbContext());
+        private QuizService quizService = new QuizService(new ApplicationDbContext());
 
         //public QuestionController(IQuestionService questionService)
         //{
@@ -50,13 +52,16 @@ namespace API.Controllers
         }
 
 
+        /// <summary>
+        /// Ajouter une questions au quiz.
+        /// </summary>
+        /// <param name="question">La questions reçu par requête http</param>
+        /// <returns></returns>
         [TokenAuthorize]
         [HttpPost]
         [QuestionValidation]
         public IHttpActionResult Add(QuestionCreateDTO question)
         {
-            AuthService authService = new AuthService(new ApplicationDbContext());
-            QuizService quizService = new QuizService(new ApplicationDbContext());
             ApplicationUser user = authService.GetUserWithToken(Request);
 
             if (quizService.IsUserOwnerOfQuiz(user.Id, question.QuizId))
