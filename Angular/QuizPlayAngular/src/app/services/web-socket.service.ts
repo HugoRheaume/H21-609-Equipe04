@@ -12,7 +12,7 @@ import { Question } from 'src/app/models/question';
 export class WebSocketService {
   public scoreboard: Score[] = [];
   public messages$ = new Subject<string[]>();
-  public forceSkip$ = new Subject();
+  public _forceSkip$ = new Subject();
   public users: User[] = [];
   public currentShareCode: string = '';
   public usersDisplay: Array<number>;
@@ -99,9 +99,12 @@ export class WebSocketService {
         this.currentQuestion$.next(q);
         break;
       case CommandName.QuizForceSkip:
-        this.forceSkip$.next();
+        this._forceSkip$.next('skip');
         break;
     }
+  }
+  public get forceSkip$(): Observable<any> {
+    return this._forceSkip$.asObservable();
   }
   private handleLogMessage(data: any) {
     switch (data.messageType) {
