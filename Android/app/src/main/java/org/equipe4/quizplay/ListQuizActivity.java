@@ -1,6 +1,5 @@
 package org.equipe4.quizplay;
 
-import android.content.ComponentCallbacks;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -53,12 +52,14 @@ public class ListQuizActivity extends AppCompatActivity implements AdapterView.O
     UserDTO user;
     ActionBarDrawerToggle toggle;
     List<QuizResponseDTO> listQuiz;
-    QPService service = RetrofitUtil.get();
+    QPService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_quiz);
+
+        service = RetrofitUtil.get();
 
         startService(new Intent(getApplicationContext(), AppKilledService.class));
 

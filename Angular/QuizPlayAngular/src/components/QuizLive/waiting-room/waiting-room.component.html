@@ -1,18 +1,10 @@
 <div *ngIf="!this.service.currentShareCode">
   <mat-spinner color="warn"></mat-spinner>Connexion en cours...
 </div>
-<div
-  *ngIf="this.service.currentShareCode"
-  style="width: 100%; background: transparent; height: 100%"
-  class="d-flex flex-column"
->
-  <button
-    [cdkCopyToClipboard]="this.service.currentShareCode"
-    class="m-3"
-    style="width: 240px"
-    mat-raised-button
-    color="primary"
-  >
+<div *ngIf="this.service.currentShareCode" style="width: 100%; background: transparent; height: 100%"
+  class="d-flex flex-column">
+  <button [cdkCopyToClipboard]="this.service.currentShareCode" class="m-3" style="width: 240px" mat-raised-button
+    color="primary">
     {{ "app.room.waiting.btnShareCode" | translate }}
     {{ this.service.currentShareCode }}
     <mat-icon>content_copy</mat-icon>
@@ -29,12 +21,7 @@
   <div class="waitingRoom">
     <div class="d-flex justify-content-evenly align-items-center pt-5 pb-5">
       <div>
-        <button
-          mat-raised-button
-          (click)="cancel()"
-          [routerLink]="['/quiz/' + this.quizShareCode]"
-          class="mat-primary"
-        >
+        <button mat-raised-button (click)="cancel()" [routerLink]="['/quiz/' + this.quizShareCode]" class="mat-primary">
           {{ "app.room.waiting.cancel" | translate }}
         </button>
       </div>
@@ -44,20 +31,13 @@
             <strong>{{ "app.room.waiting.title" | translate }}</strong>
           </h1>
           <h3>
-            <strong
-              >{{ this.service.users.length }}
-              {{ "app.room.waiting.playerNumber" | translate }}</strong
-            >
+            <strong>{{ this.service.users.length }}
+              {{ "app.room.waiting.playerNumber" | translate }}</strong>
           </h3>
         </div>
       </div>
       <div>
-        <button
-          mat-raised-button
-          (click)="starQuiz()"
-          [disabled]="this.service.users.length < 2"
-          class="mat-primary"
-        >
+        <button mat-raised-button (click)="starQuiz()" [disabled]="this.service.users.length < 2" class="mat-primary">
           {{ "app.room.waiting.start" | translate }}
         </button>
       </div>

@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +20,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
 import org.equipe4.quizplay.JoinQuizActivity;
-import org.equipe4.quizplay.LandingActivity;
 import org.equipe4.quizplay.ListQuizActivity;
 import org.equipe4.quizplay.R;
 import org.equipe4.quizplay.databinding.ActivityWaitingRoomBinding;
-import org.equipe4.quizplay.model.http.QPService;
-import org.equipe4.quizplay.model.http.RetrofitUtil;
 import org.equipe4.quizplay.model.transfer.QuizResponseDTO;
 import org.equipe4.quizplay.model.transfer.UserDTO;
 import org.equipe4.quizplay.model.util.Global;
@@ -40,10 +36,6 @@ import org.equipe4.quizplay.model.webSocket.webSocketCommand.resultCommand.NextQ
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WaitingRoomActivity extends AppCompatActivity {
 
@@ -65,10 +57,6 @@ public class WaitingRoomActivity extends AppCompatActivity {
 
         SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
 
-        if(!sharedPrefUtil.getCurrentUser().isAnonymous) {
-            binding.btnChangeUsername.setVisibility(View.GONE);
-        }
-
         binding.txtWelcome.setText(getString(R.string.welcome,sharedPrefUtil.getCurrentUser().name));
 
         if (savedInstanceState != null) {
@@ -78,11 +66,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
 
         setWebSocketEvents();
         configureDrawer();
-        // Événement click pour changer de pseudo
-        binding.btnChangeUsername.setOnClickListener(v -> {
-            leaveRoom();
-            finish();
-        });
+
     }
 
     // Set websocket event listeners

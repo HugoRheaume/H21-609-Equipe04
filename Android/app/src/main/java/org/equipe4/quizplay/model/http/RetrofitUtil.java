@@ -31,7 +31,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitUtil {
 
 
-    public static final String SERVER_URL = Global.IP_RENAUD;
+    public static final String SERVER_URL = Global.IP_XAV;
 
     public static ClearableCookieJar cookieJar;
 

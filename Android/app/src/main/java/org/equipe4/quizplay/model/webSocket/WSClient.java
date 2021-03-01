@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
@@ -34,7 +35,7 @@ import javax.net.ssl.X509TrustManager;
 public class WSClient implements Serializable {
 
 
-    private static final String SERVER = Global.SERVER_RENAUD;
+    private static final String SERVER = Global.SERVER_XAV;
 
     private static WebSocket socket;
     public static String roomShareCode;
@@ -44,7 +45,9 @@ public class WSClient implements Serializable {
         if (socket == null) {
             socket = getWSClient().get();
         }
-        gson = new Gson();
+        gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
         events = null;
     }
 
@@ -99,7 +102,6 @@ public class WSClient implements Serializable {
         BaseCommand command = gson.fromJson(message, BaseCommand.class);
 
         Log.i("WebSocket-RECEIVE", message);
-
 
         // Handle message received
         handleMessage(command.commandName, message);

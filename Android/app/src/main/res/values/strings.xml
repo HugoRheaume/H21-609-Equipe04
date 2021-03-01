@@ -68,7 +68,7 @@
     <string name="logout">Déconnexion</string>
     <string name="join">Rejoindre un quiz</string>
     <string name="list">Liste des quiz</string>
-    
+
     <string name="guestLogin">Connexion invité</string>
 
     <string name="toastErrorAccessingQuiz">Une erreur est survenu en essayant d\'accéder à ce Quiz</string>
