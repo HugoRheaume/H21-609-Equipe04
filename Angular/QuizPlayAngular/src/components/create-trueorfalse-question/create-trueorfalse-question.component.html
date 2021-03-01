@@ -1,66 +1,71 @@
 <div class="modal-body" [formGroup]="TrueFalse">
-	<p>
-		<mat-form-field appearance="outline" class="form-field-full-width">
-			<mat-label>Énoncé de la question</mat-label>
-			<input
-				matInput
-				#questionLabel
-				placeholder="Énoncé de la question"
-				id="inputQuestionLabel"
-				formControlName="questionLabel"
-			/>
-			<mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
-			<mat-error>{{ labelErrorMessage }}</mat-error>
-		</mat-form-field>
-	</p>
-	<p class="mat-form-field-wrapper">
-		<mat-checkbox
-			id="inputQuestionHasTime"
-			formControlName="questionHasTimeLimit"
-			>Ajouter un temps limite
-		</mat-checkbox>
-	</p>
-	<p *ngIf="this.TrueFalse.get('questionHasTimeLimit').value">
-		<mat-form-field appearance="outline" class="form-field-full-width">
-			<mat-label>Temps limite de la question</mat-label>
-			<input matInput type="number" formControlName="questionTimeLimit" />
-			<mat-error>{{ timeLimitErrorMessage }}</mat-error>
-		</mat-form-field>
-	</p>
-	<p class="mat-form-field-wrapper">
-		<mat-label style="padding-left: 0.75em;"
-			>Bonne réponse à la question</mat-label
-		><br />
-		<mat-radio-group
-			aria-label="True or False radio"
-			formControlName="questionAnswer"
-		>
-			<mat-radio-button
-				[value]="true"
-				style="margin-right: 15px; padding-top: 1em;"
-				>Vrai</mat-radio-button
-			>
-			<mat-radio-button [value]="false"
-				>Faux</mat-radio-button
-			> </mat-radio-group
-		><br />
-	</p>
+  <p>
+    <mat-form-field appearance="outline" class="form-field-full-width">
+      <mat-label>{{ "app.quiz.question.statement" | translate }}</mat-label>
+      <input
+        matInput
+        #questionLabel
+        placeholder="{{ 'app.quiz.question.statement' | translate }}"
+        id="inputQuestionLabel"
+        formControlName="questionLabel"
+      />
+      <mat-hint align="end">{{ questionLabel.value.length }} / 250</mat-hint>
+      <mat-error>{{ labelErrorMessage }}</mat-error>
+    </mat-form-field>
+  </p>
+  <p class="mat-form-field-wrapper">
+    <mat-checkbox
+      id="inputQuestionHasTime"
+      formControlName="questionHasTimeLimit"
+      >{{ "app.quiz.question.timeLimit" | translate }}
+    </mat-checkbox>
+  </p>
+  <p *ngIf="this.TrueFalse.get('questionHasTimeLimit').value">
+    <mat-form-field appearance="outline" class="form-field-full-width">
+      <mat-label>{{
+        "app.quiz.question.timeLimitPlaceholder" | translate
+      }}</mat-label>
+      <input matInput type="number" formControlName="questionTimeLimit" />
+      <mat-error>{{ timeLimitErrorMessage }}</mat-error>
+    </mat-form-field>
+  </p>
+  <p class="mat-form-field-wrapper">
+    <mat-label style="padding-left: 0.75em">{{
+      "app.quiz.question.tf.answer" | translate
+    }}</mat-label
+    ><br />
+    <mat-radio-group
+      aria-label="True or False radio"
+      formControlName="questionAnswer"
+    >
+      <mat-radio-button
+        [value]="true"
+        style="margin-right: 15px; padding-top: 1em"
+        >{{ "app.quiz.question.tf.true" | translate }}</mat-radio-button
+      >
+      <mat-radio-button [value]="false">{{
+        "app.quiz.question.tf.false" | translate
+      }}</mat-radio-button> </mat-radio-group
+    ><br />
+  </p>
 </div>
 
 <div class="modal-footer">
-	<button
-		type="button"
-		class="btn btn-secondary"
-		data-bs-dismiss="modal"
-		(click)="this.TrueFalse.reset()"
-		>Annuler</button
-	>
-	<button
-		type="button"
-		class="btn btn-primary"
-		data-bs-dismiss="modal"
-		(click)="sumbit()"
-		[disabled]="this.checkForm ? true : false"
-		>Soumettre</button
-	>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    data-bs-dismiss="modal"
+    (click)="this.TrueFalse.reset()"
+  >
+    {{ "app.quiz.question.btnCancel" | translate }}
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-dismiss="modal"
+    (click)="sumbit()"
+    [disabled]="this.checkForm ? true : false"
+  >
+    {{ "app.quiz.question.btnConfirm" | translate }}
+  </button>
 </div>

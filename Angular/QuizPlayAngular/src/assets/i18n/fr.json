@@ -36,8 +36,10 @@
     "quiz.edit.questionDeleted": "Question suprimée!",
     "quiz.edit.questionModify": "Question modifiée!",
 
-    "quiz.question.title": "Modifier une question",
+    "quiz.question.titleCreate": "Créer une question",
+    "quiz.question.titleModify": "Modifier une question",
     "quiz.question.type": "Type de question",
+    "quiz.question.none": "Aucun",
     "quiz.question.statement": "Énoncé de la question",
     "quiz.question.timeLimit": "Ajouter un temps limite",
     "quiz.question.timeLimitPlaceholder": "Temps limite de la question",
@@ -63,6 +65,7 @@
     "room.waiting.start": "Commencer la partie",
     "room.waiting.title": "Utilisateur dans la salle",
     "room.waiting.playerNumber": "joueurs",
+    "room.waiting.timeLimit": "Temps limite des questions par défaut",
 
     "room.btnSkip": "Passer",
     "room.btnNext": "Prochaine question",

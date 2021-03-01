@@ -36,8 +36,10 @@
     "quiz.edit.questionDeleted": "Question deleted!",
     "quiz.edit.questionModify": "Question modfied!",
 
-    "quiz.question.title": "Edit question",
+    "quiz.question.titleCreate": "Create a question",
+    "quiz.question.titleModify": "Edit question",
     "quiz.question.type": "Question type",
+    "quiz.question.none": "None",
     "quiz.question.statement": "Question statement",
     "quiz.question.timeLimit": "Add time limit",
     "quiz.question.timeLimitPlaceholder": "Question time limit",
@@ -51,7 +53,7 @@
     "quiz.question.mc.btnAddChoice": "Add choice",
     "quiz.question.mc.title": "Question choice",
     "quiz.question.mc.choiceNumber": "Choice number",
-    "quiz.question.mc.oneAnswer": "A good answer to get the point",
+    "quiz.question.mc.oneAnswer": "One good answer to get the point",
     "quiz.question.mc.allAnswer": "All the right answers to get the point",
 
     "quiz.question.as.btnAddChoice": "Add choice",
@@ -63,9 +65,10 @@
     "room.waiting.start": "Start game",
     "room.waiting.title": "User in the room",
     "room.waiting.playerNumber": "players",
+    "room.waiting.timeLimit": "Default questions time limit",
 
     "room.btnSkip": "Skip",
     "room.btnNext": "Next question",
-    "room.btnFinish": "Completed"
+    "room.btnFinish": "Complete"
   }
 }

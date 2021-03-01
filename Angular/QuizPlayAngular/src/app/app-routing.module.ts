@@ -9,10 +9,14 @@ import { QuizRoomComponent } from 'src/components/QuizLive/quiz-room/quiz-room.c
 import { AntiAuthGuard, AuthGuard } from './models/AuthGuard';
 const routes: Routes = [
   { path: 'list', component: ListQuizComponent, canActivate: [AuthGuard] },
-  { path: 'quiz/:quizShareCode', component: QuizQuestionListComponent, canActivate: [AuthGuard] },
+  {
+    path: 'quiz/:quizShareCode',
+    component: QuizQuestionListComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'quiz', component: CreateQuizComponent, canActivate: [AuthGuard] },
-  { path: 'live/:quizShareCode', component: WaitingRoomComponent, canActivate: [AuthGuard] },
-  { path: 'live/:quizShareCode/:questionIndex', component: QuizRoomComponent, canActivate: [AuthGuard] },
+  { path: 'live/:quizShareCode', component: WaitingRoomComponent },
+  { path: 'live/:quizShareCode/:questionIndex', component: QuizRoomComponent },
   { path: '', component: HomePageComponent, canActivate: [AntiAuthGuard] },
 ];
 
@@ -20,4 +24,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

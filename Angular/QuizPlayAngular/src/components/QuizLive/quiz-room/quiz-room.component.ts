@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from 'src/app/models/question';
@@ -23,13 +24,17 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
   private countdownSub: Subscription;
   public currentQuestion: Question;
 
-  public button = { action: 'skip', text: 'Passer' };
+  public button = {
+    action: 'skip',
+    text: this.translate.instant('app.room.btnSkip'),
+  };
   public spinnerValue: number = 100;
   constructor(
     public route: ActivatedRoute,
     public quizService: QuizService,
     public router: Router,
-    public wsService: WebSocketService
+    public wsService: WebSocketService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -71,11 +76,11 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     this.isScoreboardPage = !this.isScoreboardPage;
     if (this.currentIndex >= this.quizService.currentQuestions.length - 1) {
       this.isLastQuestion = true;
-      this.updateButton('Terminé', 'finish');
+      this.updateButton(this.translate.instant('app.room.btnFinish'), 'finish');
     }
 
     if (!this.isScoreboardPage) {
-      this.updateButton('Passer', 'skip');
+      this.updateButton(this.translate.instant('app.room.btnSkip'), 'skip');
 
       this.currentIndex++;
       this.wsService.nextQuestion(this.currentIndex);
@@ -89,7 +94,10 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
   }
 
   skip(): void {
-    this.updateButton('Prochaine question', 'nextQuestion');
+    this.updateButton(
+      this.translate.instant('app.room.btnNext'),
+      'nextQuestion'
+    );
 
     this.stopTimer();
     this.wsService.resultQuestion();
