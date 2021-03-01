@@ -13,13 +13,14 @@
     mat-raised-button
     color="primary"
   >
-    Code de partage: {{ this.service.currentShareCode }}
+    {{ "app.room.waiting.btnShareCode" | translate }}
+    {{ this.service.currentShareCode }}
     <mat-icon>content_copy</mat-icon>
   </button>
 
   <div class="m-3 mb-0">
     <mat-form-field appearance="outline" style="width: 400px">
-      <mat-label>Temps limite des questions par défaut</mat-label>
+      <mat-label>{{ "app.room.waiting.timeLimit" | translate }}</mat-label>
       <input (change)="change($event)" matInput type="number" value="10" />
     </mat-form-field>
     <mat-error>{{ this.timeLimitErrorMessage }}</mat-error>
@@ -34,16 +35,19 @@
           [routerLink]="['/quiz/' + this.quizShareCode]"
           class="mat-primary"
         >
-          Annuler la partie
+          {{ "app.room.waiting.cancel" | translate }}
         </button>
       </div>
       <div>
         <div class="d-flex flex-column align-items-center">
           <h1 style="margin-bottom: 0px">
-            <strong>Utilisateurs dans la salle</strong>
+            <strong>{{ "app.room.waiting.title" | translate }}</strong>
           </h1>
           <h3>
-            <strong>{{ this.service.users.length }} joueurs</strong>
+            <strong
+              >{{ this.service.users.length }}
+              {{ "app.room.waiting.playerNumber" | translate }}</strong
+            >
           </h3>
         </div>
       </div>
@@ -54,7 +58,7 @@
           [disabled]="this.service.users.length < 2"
           class="mat-primary"
         >
-          Commencer la partie
+          {{ "app.room.waiting.start" | translate }}
         </button>
       </div>
     </div>
