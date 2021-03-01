@@ -1,53 +1,106 @@
-<div class="modal fade" id="modifyQuestion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="modifyQuestionLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="modifyQuestion"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="modifyQuestionLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <div style="display: flex; justify-content: center; flex-direction: column;">
-          <h3 class="modal-title mb-0" id="modifyQuestionLabel">Modifier une question</h3>
+        <div
+          style="display: flex; justify-content: center; flex-direction: column"
+        >
+          <h3 class="modal-title mb-0" id="modifyQuestionLabel">
+            Modifier une question
+          </h3>
           <mat-form-field appearance="outline" disabled>
-            <mat-label>Type de question</mat-label>
+            <mat-label>{{
+              "app.quiz.question.titleModify" | translate
+            }}</mat-label>
             <mat-select [(value)]="this.selectedType" disabled>
-              <mat-option *ngFor="let i of this.iterator" value="{{this.enumValues[i]}}">
-                {{this.enumFormated[i]}}
+              <mat-option
+                *ngFor="let i of this.iterator"
+                value="{{ this.enumValues[i] }}"
+              >
+                {{ this.enumFormated[i] }}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-          (click)="onCloseDiscarded()"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="onCloseDiscarded()"
+        ></button>
       </div>
       <div *ngIf="this.question.questionType == 1">
         <div class="modal-body" [formGroup]="TrueFalse">
           <p>
             <mat-form-field appearance="outline" class="form-field-full-width">
-              <mat-label>Énoncé de la question</mat-label>
-              <input matInput #questionLabel placeholder="Énoncé de la question" id="inputQuestionLabel"
-                formControlName="questionLabel" value="{{this.questionTrueFalse.label}}" />
-              <mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
+              <mat-label>{{
+                "app.quiz.question.statement" | translate
+              }}</mat-label>
+              <input
+                matInput
+                #questionLabel
+                placeholder="{{ 'app.quiz.question.statement' | translate }}"
+                id="inputQuestionLabel"
+                formControlName="questionLabel"
+                value="{{ this.questionTrueFalse.label }}"
+              />
+              <mat-hint align="end"
+                >{{ questionLabel.value.length }} / 250</mat-hint
+              >
               <mat-error>{{ labelErrorMessage }}</mat-error>
             </mat-form-field>
           </p>
           <p class="mat-form-field-wrapper">
-            <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Ajouter un temps limite
+            <mat-checkbox
+              id="inputQuestionHasTime"
+              formControlName="questionHasTimeLimit"
+              >{{ "app.quiz.question.timeLimit" | translate }}
             </mat-checkbox>
           </p>
           <p *ngIf="this.TrueFalse.get('questionHasTimeLimit').value">
             <mat-form-field appearance="outline" class="form-field-full-width">
-              <mat-label>Temps limite de la question</mat-label>
-              <input matInput type="number" formControlName="questionTimeLimit" />
+              <mat-label>{{
+                "app.quiz.question.timeLimitPlaceholder" | translate
+              }}</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="questionTimeLimit"
+              />
               <mat-error>{{ timeLimitErrorMessage }}</mat-error>
             </mat-form-field>
           </p>
           <p class="mat-form-field-wrapper">
-            <mat-label style="padding-left: 0.75em;">Bonne réponse à la question</mat-label><br />
-            <mat-radio-group aria-label="True or False radio" formControlName="questionAnswer"
-              [(value)]="this.questionTrueFalse.questionTrueFalse.answer">
-              <mat-radio-button [value]="true" style="margin-right: 15px; padding-top: 1em;"
-                [checked]="this.questionTrueFalse.questionTrueFalse.answer">Vrai</mat-radio-button>
-              <mat-radio-button [value]="false" [checked]="!this.questionTrueFalse.questionTrueFalse.answer">Faux
-              </mat-radio-button>
-            </mat-radio-group><br />
+            <mat-label style="padding-left: 0.75em">{{
+              "app.quiz.question.tf.answer" | translate
+            }}</mat-label
+            ><br />
+            <mat-radio-group
+              aria-label="True or False radio"
+              formControlName="questionAnswer"
+              [(value)]="this.questionTrueFalse.questionTrueFalse.answer"
+            >
+              <mat-radio-button
+                [value]="true"
+                style="margin-right: 15px; padding-top: 1em"
+                [checked]="this.questionTrueFalse.questionTrueFalse.answer"
+                >{{ "app.quiz.question.tf.true" | translate }}</mat-radio-button
+              >
+              <mat-radio-button
+                [value]="false"
+                [checked]="!this.questionTrueFalse.questionTrueFalse.answer"
+                >{{ "app.quiz.question.tf.false" | translate }}
+              </mat-radio-button> </mat-radio-group
+            ><br />
           </p>
         </div>
       </div>
@@ -55,62 +108,132 @@
         <div class="modal-body" [formGroup]="MultipleChoice">
           <p>
             <mat-form-field appearance="outline" class="form-field-full-width">
-              <mat-label>Énoncé de la question</mat-label>
-              <input matInput #questionLabel placeholder="Énoncé de la question" id="inputQuestionLabel"
-                formControlName="questionLabel" value="{{this.questionMultipleChoice.label}}" />
-              <mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
+              <mat-label>{{
+                "app.quiz.question.statement" | translate
+              }}</mat-label>
+              <input
+                matInput
+                #questionLabel
+                placeholder="{{ 'app.quiz.question.statement' | translate }}"
+                id="inputQuestionLabel"
+                formControlName="questionLabel"
+                value="{{ this.questionMultipleChoice.label }}"
+              />
+              <mat-hint align="end"
+                >{{ questionLabel.value.length }} / 250</mat-hint
+              >
               <mat-error>{{ labelErrorMessage }}</mat-error>
             </mat-form-field>
           </p>
           <div class="mat-form-field-wrapper">
-            <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Ajouter un temps limite
+            <mat-checkbox
+              id="inputQuestionHasTime"
+              formControlName="questionHasTimeLimit"
+              >{{ "app.quiz.question.timeLimit" | translate }}
             </mat-checkbox>
           </div>
           <p *ngIf="this.MultipleChoice.get('questionHasTimeLimit').value">
             <mat-form-field appearance="outline" class="form-field-full-width">
-              <mat-label>Temps limite de la question</mat-label>
-              <input matInput type="number" formControlName="questionTimeLimit" />
+              <mat-label>{{
+                "app.quiz.question.timeLimitPlaceholder" | translate
+              }}</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="questionTimeLimit"
+              />
               <mat-error>{{ timeLimitErrorMessage }}</mat-error>
             </mat-form-field>
           </p>
           <div>
-            <button type="button" class="btn btn-primary" (click)="addChoice()"
-              style="margin-top: 1.34375em; margin-bottom: 1.34375em;" [disabled]="this.choices.length == 8">
-              Ajouter un choix
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="addChoice()"
+              style="margin-top: 1.34375em; margin-bottom: 1.34375em"
+              [disabled]="this.choices.length == 8"
+            >
+              {{ "app.quiz.question.mc.btnAddChoice" | translate }}
             </button>
             <div class="d-flex flex-column">
               <div *ngIf="this.choices.length != 0">
-                <mat-label style="padding-left: 0.75em;">Choix de la question<span
-                    style="font-size: x-small; color: gainsboro; margin-left: 5px;">(min 2, max 8)</span></mat-label>
+                <mat-label style="padding-left: 0.75em"
+                  >{{ "app.quiz.question.mc.title" | translate
+                  }}<span
+                    style="
+                      font-size: x-small;
+                      color: gainsboro;
+                      margin-left: 5px;
+                    "
+                    >(min 2, max 8)</span
+                  ></mat-label
+                >
                 <br />
                 <div *ngFor="let choice of this.choices">
-                  <mat-checkbox value="{{choice.answer}}"
-                    style="margin-right: 30px; width: 90% !important; display: inline-block;"
-                    [(ngModel)]="choice.answer" [ngModelOptions]="{standalone: true}">
+                  <mat-checkbox
+                    value="{{ choice.answer }}"
+                    style="
+                      margin-right: 30px;
+                      width: 90% !important;
+                      display: inline-block;
+                    "
+                    [(ngModel)]="choice.answer"
+                    [ngModelOptions]="{ standalone: true }"
+                  >
                     <mat-form-field class="form-field-full-width">
-                      <mat-label>Choix numéro {{choice.choiceNumber}}</mat-label>
-                      <span matPrefix><strong>{{choice.choiceNumber}}. &nbsp;</strong></span>
-                      <input matInput type="text" [(ngModel)]="choice.statement" [ngModelOptions]="{standalone: true}"
-                        style="margin-left: 10px; padding-right: 10px;"
-                        placeholder="Choix numéro {{choice.choiceNumber}}" />
+                      <mat-label
+                        >{{ "app.quiz.question.mc.choiceNumber" | translate }}
+                        {{ choice.choiceNumber }}</mat-label
+                      >
+                      <span matPrefix
+                        ><strong
+                          >{{ choice.choiceNumber }}. &nbsp;</strong
+                        ></span
+                      >
+                      <input
+                        matInput
+                        type="text"
+                        [(ngModel)]="choice.statement"
+                        [ngModelOptions]="{ standalone: true }"
+                        style="margin-left: 10px; padding-right: 10px"
+                        placeholder="Choix numéro {{ choice.choiceNumber }}"
+                      />
                     </mat-form-field>
                   </mat-checkbox>
-                  <button mat-mini-fab color="primary" (click)="removeChoice(choice.choiceNumber)">
+                  <button
+                    mat-mini-fab
+                    color="primary"
+                    (click)="removeChoice(choice.choiceNumber)"
+                  >
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
               </div>
             </div>
-            <div *ngIf="this.trueAnswers > 1" class="form-field-full-width d-flex align-items-center"
-              style="margin-top: 1.34375em;">
-              <mat-radio-group aria-label="Need all the answers" [(ngModel)]="this.needsAllRightAnswers"
-                [ngModelOptions]="{standalone: true}">
-                <mat-radio-button [value]="false" style="margin-bottom: 0.75em;" [checked]="!this.needsAllRightAnswers">
-                  1 bonne réponse pour avoir le point
+            <div
+              *ngIf="this.trueAnswers > 1"
+              class="form-field-full-width d-flex align-items-center"
+              style="margin-top: 1.34375em"
+            >
+              <mat-radio-group
+                aria-label="Need all the answers"
+                [(ngModel)]="this.needsAllRightAnswers"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <mat-radio-button
+                  [value]="false"
+                  style="margin-bottom: 0.75em"
+                  [checked]="!this.needsAllRightAnswers"
+                  >{{ "app.quiz.question.mc.oneAnswer" | translate }}
                 </mat-radio-button>
                 <br />
-                <mat-radio-button [value]="true" [checked]="this.needsAllRightAnswers">Toutes les bonnes réponses pour
-                  avoir le point</mat-radio-button>
+                <mat-radio-button
+                  [value]="true"
+                  [checked]="this.needsAllRightAnswers"
+                  >{{
+                    "app.quiz.question.mc.allAnswer" | translate
+                  }}</mat-radio-button
+                >
               </mat-radio-group>
             </div>
           </div>
@@ -120,28 +243,52 @@
         <div class="modal-body" [formGroup]="Association">
           <p>
             <mat-form-field appearance="outline" class="form-field-full-width">
-              <mat-label>Énoncé de la question</mat-label>
-              <input matInput #questionLabel placeholder="Énoncé de la question" id="inputQuestionLabel"
-                formControlName="questionLabel" value="{{this.questionAssociation.label}}" />
-              <mat-hint align="end">{{questionLabel.value.length}} / 250</mat-hint>
+              <mat-label>{{
+                "app.quiz.question.statement" | translate
+              }}</mat-label>
+              <input
+                matInput
+                #questionLabel
+                placeholder="{{ 'app.quiz.question.statement' | translate }}"
+                id="inputQuestionLabel"
+                formControlName="questionLabel"
+                value="{{ this.questionAssociation.label }}"
+              />
+              <mat-hint align="end"
+                >{{ questionLabel.value.length }} / 250</mat-hint
+              >
               <mat-error>{{ labelErrorMessage }}</mat-error>
             </mat-form-field>
           </p>
           <div class="mat-form-field-wrapper">
-            <mat-checkbox id="inputQuestionHasTime" formControlName="questionHasTimeLimit">Ajouter un temps limite
+            <mat-checkbox
+              id="inputQuestionHasTime"
+              formControlName="questionHasTimeLimit"
+              >{{ "app.quiz.question.timeLimit" | translate }}
             </mat-checkbox>
           </div>
           <p *ngIf="this.Association.get('questionHasTimeLimit').value">
             <mat-form-field appearance="outline" class="form-field-full-width">
-              <mat-label>Temps limite de la question</mat-label>
-              <input matInput type="number" formControlName="questionTimeLimit" />
+              <mat-label>{{
+                "app.quiz.question.timeLimitPlaceholder" | translate
+              }}</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="questionTimeLimit"
+              />
               <mat-error>{{ timeLimitErrorMessage }}</mat-error>
             </mat-form-field>
           </p>
           <div>
-            <button type="button" class="btn btn-primary" (click)="addChoiceAsso()"
-              style="margin-top: 1.34375em; margin-bottom: 1.34375em;" [disabled]="this.asso.length == 5">
-              Ajouter un choix
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="addChoiceAsso()"
+              style="margin-top: 1.34375em; margin-bottom: 1.34375em"
+              [disabled]="this.asso.length == 5"
+            >
+              {{ "app.quiz.question.as.btnAddChoice" | translate }}
             </button>
 
             <div cdkDropListGroup>
@@ -149,78 +296,188 @@
                 <thead>
                   <th class="table-Asso-Header">
                     <mat-form-field>
-                      <mat-label>Catégorie numéro 1</mat-label>
-                      <input matInput type="text" [(ngModel)]="categories[0]" [ngModelOptions]="{standalone: true}"
-                        style="margin-left: 10px; padding-right: 10px;" placeholder="Catégorie numéro 1" />
+                      <mat-label
+                        >{{
+                          "app.quiz.question.as.categoryNumber" | translate
+                        }}
+                        1</mat-label
+                      >
+                      <input
+                        matInput
+                        type="text"
+                        [(ngModel)]="categories[0]"
+                        [ngModelOptions]="{ standalone: true }"
+                        style="margin-left: 10px; padding-right: 10px"
+                        placeholder="{{
+                          'app.quiz.question.as.categoryNumber' | translate
+                        }} 1"
+                      />
                     </mat-form-field>
                   </th>
                   <th class="table-Asso-Header">
                     <mat-form-field>
-                      <mat-label>Catégorie numéro 2</mat-label>
-                      <input matInput type="text" [(ngModel)]="categories[1]" [ngModelOptions]="{standalone: true}"
-                        style="margin-left: 10px; padding-right: 10px;" placeholder="Catégorie numéro 2" />
+                      <mat-label
+                        >{{
+                          "app.quiz.question.as.categoryNumber" | translate
+                        }}
+                        2</mat-label
+                      >
+                      <input
+                        matInput
+                        type="text"
+                        [(ngModel)]="categories[1]"
+                        [ngModelOptions]="{ standalone: true }"
+                        style="margin-left: 10px; padding-right: 10px"
+                        placeholder="{{
+                          'app.quiz.question.as.categoryNumber' | translate
+                        }} 2"
+                      />
                     </mat-form-field>
                   </th>
                   <th *ngIf="showCategory3" class="table-Asso-Header">
                     <mat-form-field class="me-2">
-                      <mat-label>Catégorie numéro 3</mat-label>
-                      <input matInput type="text" [(ngModel)]="categories[2]" [ngModelOptions]="{standalone: true}"
-                        style="margin-left: 10px; padding-right: 10px;" placeholder="Catégorie numéro 3" />
+                      <mat-label
+                        >{{
+                          "app.quiz.question.as.categoryNumber" | translate
+                        }}
+                        3</mat-label
+                      >
+                      <input
+                        matInput
+                        type="text"
+                        [(ngModel)]="categories[2]"
+                        [ngModelOptions]="{ standalone: true }"
+                        style="margin-left: 10px; padding-right: 10px"
+                        placeholder="{{
+                          'app.quiz.question.as.categoryNumber' | translate
+                        }} 3"
+                      />
                     </mat-form-field>
-                    <button (click)="switchCategory3()" mat-mini-fab color="primary">
+                    <button
+                      (click)="switchCategory3()"
+                      mat-mini-fab
+                      color="primary"
+                    >
                       <mat-icon>delete</mat-icon>
                     </button>
                   </th>
                   <th *ngIf="!showCategory3">
-                    <button class="ms-2" (click)="switchCategory3()" mat-mini-fab color="primary">
+                    <button
+                      class="ms-2"
+                      (click)="switchCategory3()"
+                      mat-mini-fab
+                      color="primary"
+                    >
                       <mat-icon>add</mat-icon>
                     </button>
                   </th>
                 </thead>
                 <tbody *ngIf="asso.length > 0">
                   <tr class="table-Asso-Row">
-                    <td cdkDropList #category1="cdkDropList" [cdkDropListData]=" GetListOfCategory(0)"
-                      [cdkDropListConnectedTo]="[category2, category3]" (cdkDropListDropped)="drop($event, 0)"
-                      class="table-Asso-Body">
-                      <div cdkDrag *ngFor="let a of GetListOfCategory(0)" class="asso" [cdkDragData]="a">
+                    <td
+                      cdkDropList
+                      #category1="cdkDropList"
+                      [cdkDropListData]="GetListOfCategory(0)"
+                      [cdkDropListConnectedTo]="[category2, category3]"
+                      (cdkDropListDropped)="drop($event, 0)"
+                      class="table-Asso-Body"
+                    >
+                      <div
+                        cdkDrag
+                        *ngFor="let a of GetListOfCategory(0)"
+                        class="asso"
+                        [cdkDragData]="a"
+                      >
                         <mat-form-field class="me-2">
-                          <input matInput type="text" [(ngModel)]="a.statement" [ngModelOptions]="{standalone: true}"
-                            style="margin-left: 10px; padding-right: 10px;"
-                            placeholder="Choix numéro {{a.assoNumber}}" />
+                          <input
+                            matInput
+                            type="text"
+                            [(ngModel)]="a.statement"
+                            [ngModelOptions]="{ standalone: true }"
+                            style="margin-left: 10px; padding-right: 10px"
+                            placeholder="{{
+                              'app.quiz.question.as.choiceNumber' | translate
+                            }} {{ a.assoNumber }}"
+                          />
                         </mat-form-field>
-                        <button mat-mini-fab color="primary" (click)="removeChoiceAsso(a.assoNumber)">
+                        <button
+                          mat-mini-fab
+                          color="primary"
+                          (click)="removeChoiceAsso(a.assoNumber)"
+                        >
                           <mat-icon>delete</mat-icon>
                         </button>
                       </div>
                     </td>
-                    <td cdkDropList #category2="cdkDropList" [cdkDropListConnectedTo]="[category1, category3]"
-                      [cdkDropListData]="GetListOfCategory(1)" (cdkDropListDropped)="drop($event, 1)"
-                      class="table-Asso-Body">
-                      <div cdkDrag *ngFor="let assoCategory2 of GetListOfCategory(1)" cdkDragBoundary=".table-Asso"
-                        class="asso" [cdkDragData]="assoCategory2">
-
+                    <td
+                      cdkDropList
+                      #category2="cdkDropList"
+                      [cdkDropListConnectedTo]="[category1, category3]"
+                      [cdkDropListData]="GetListOfCategory(1)"
+                      (cdkDropListDropped)="drop($event, 1)"
+                      class="table-Asso-Body"
+                    >
+                      <div
+                        cdkDrag
+                        *ngFor="let assoCategory2 of GetListOfCategory(1)"
+                        cdkDragBoundary=".table-Asso"
+                        class="asso"
+                        [cdkDragData]="assoCategory2"
+                      >
                         <mat-form-field class="me-2">
-                          <input matInput type="text" [(ngModel)]="assoCategory2.statement"
-                            [ngModelOptions]="{standalone: true}" style="margin-left: 10px; padding-right: 10px;"
-                            placeholder="Choix numéro {{assoCategory2.assoNumber}}" />
+                          <input
+                            matInput
+                            type="text"
+                            [(ngModel)]="assoCategory2.statement"
+                            [ngModelOptions]="{ standalone: true }"
+                            style="margin-left: 10px; padding-right: 10px"
+                            placeholder="{{
+                              'app.quiz.question.as.choiceNumber' | translate
+                            }} {{ assoCategory2.assoNumber }}"
+                          />
                         </mat-form-field>
-                        <button mat-mini-fab color="primary" (click)="removeChoiceAsso(assoCategory2.assoNumber)">
+                        <button
+                          mat-mini-fab
+                          color="primary"
+                          (click)="removeChoiceAsso(assoCategory2.assoNumber)"
+                        >
                           <mat-icon>delete</mat-icon>
                         </button>
                       </div>
                     </td>
-                    <td *ngIf="showCategory3" cdkDropList #category3="cdkDropList"
-                      [cdkDropListConnectedTo]="[category2, category1]" [cdkDropListData]="GetListOfCategory(2)"
-                      (cdkDropListDropped)="drop($event, 2)" class="table-Asso-Body">
-                      <div cdkDrag *ngFor="let assoCategory3 of GetListOfCategory(2)" cdkDragBoundary=".table-Asso"
-                        class="asso" [cdkDragData]="assoCategory3">
-
+                    <td
+                      *ngIf="showCategory3"
+                      cdkDropList
+                      #category3="cdkDropList"
+                      [cdkDropListConnectedTo]="[category2, category1]"
+                      [cdkDropListData]="GetListOfCategory(2)"
+                      (cdkDropListDropped)="drop($event, 2)"
+                      class="table-Asso-Body"
+                    >
+                      <div
+                        cdkDrag
+                        *ngFor="let assoCategory3 of GetListOfCategory(2)"
+                        cdkDragBoundary=".table-Asso"
+                        class="asso"
+                        [cdkDragData]="assoCategory3"
+                      >
                         <mat-form-field class="me-2">
-                          <input matInput type="text" [(ngModel)]="assoCategory3.statement"
-                            [ngModelOptions]="{standalone: true}" style="margin-left: 10px; padding-right: 10px;"
-                            placeholder="Choix numéro {{assoCategory3.assoNumber}}" />
+                          <input
+                            matInput
+                            type="text"
+                            [(ngModel)]="assoCategory3.statement"
+                            [ngModelOptions]="{ standalone: true }"
+                            style="margin-left: 10px; padding-right: 10px"
+                            placeholder="{{
+                              'app.quiz.question.as.choiceNumber' | translate
+                            }} {{ assoCategory3.assoNumber }}"
+                          />
                         </mat-form-field>
-                        <button mat-mini-fab color="primary" (click)="removeChoiceAsso(assoCategory3.assoNumber)">
+                        <button
+                          mat-mini-fab
+                          color="primary"
+                          (click)="removeChoiceAsso(assoCategory3.assoNumber)"
+                        >
                           <mat-icon>delete</mat-icon>
                         </button>
                       </div>
@@ -233,10 +490,23 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-          (click)="this.discard()">Annuler</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sumbit()"
-          [disabled]="this.checkForm ? true : false">Soumettre</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="this.discard()"
+        >
+          {{ "app.quiz.question.btnCancel" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="sumbit()"
+          [disabled]="this.checkForm ? true : false"
+        >
+          {{ "app.quiz.question.btnConfirm" | translate }}
+        </button>
       </div>
     </div>
   </div>
