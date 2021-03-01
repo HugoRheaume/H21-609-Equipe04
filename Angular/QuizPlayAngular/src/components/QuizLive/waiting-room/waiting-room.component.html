@@ -65,17 +65,9 @@
     <mat-grid-list cols="3" rowHeight="4:1" class="mb-3">
       <mat-grid-tile *ngFor="let i of this.service.usersDisplay">
         <div class="userCard">
-          <img
-            src="{{ this.service.users[i].picture }}"
-            alt="userImage"
-            style="width: 64px; height: 64px"
-          />
-          <span
-            matTooltip="{{ this.service.users[i].name }}"
-            [matTooltipClass]="'toolTipCustom'"
-            [matTooltipHideDelay]="50"
-            >{{ this.service.usersFormated[i] }}</span
-          >
+          <img src="{{ this.service.users[i].picture }}" alt="userImage" style="width: 64px; height: 64px" />
+          <span matTooltip="{{ this.service.users[i].name }}" [matTooltipClass]="'toolTipCustom'"
+            [matTooltipHideDelay]="50">{{ this.service.usersFormated[i] }}</span>
         </div>
       </mat-grid-tile>
     </mat-grid-list>

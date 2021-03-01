@@ -30,7 +30,7 @@ export class WebSocketService {
     deserializer: (msg) => msg,
   });
 
-  constructor(public http: HttpClient, public router: Router) {}
+  constructor(public http: HttpClient, public router: Router) { }
 
   public connect() {
     this.subject.subscribe((msg) => this.messageReceiver(msg.data));

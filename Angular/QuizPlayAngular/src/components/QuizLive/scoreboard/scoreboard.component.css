@@ -1,0 +1,7 @@
+::ng-deep .toolTipCustom {
+  background-color: #1a535c;
+  color: #f7fff7 !important;
+  border: 0.05em solid #f7fff7;
+  font-weight: bold;
+}
+/*# sourceMappingURL=scoreboard.component.css.map */

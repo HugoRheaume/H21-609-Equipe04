@@ -1,0 +1,11 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,SAAS,CAAC,cAAc,CAAC;EACvB,gBAAgB,EEHL,OAAmB;EFI9B,KAAK,EEDD,OAAsB,CFCb,UAAU;EACvB,MAAM,EAAE,MAAM,CAAC,KAAK,CEFhB,OAAsB;EFG1B,WAAW,EAAE,IAAI;CAClB",
+    "sources": [
+        "scoreboard.component.scss",
+        "../../../themes/current-theme.scss",
+        "../../../themes/14.scss"
+    ],
+    "names": [],
+    "file": "scoreboard.component.css"
+}

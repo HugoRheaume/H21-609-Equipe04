@@ -1,0 +1,8 @@
+@import "../../../themes/current-theme.scss";
+
+::ng-deep .toolTipCustom {
+  background-color: $background;
+  color: $text !important;
+  border: 0.05em solid $text;
+  font-weight: bold;
+}

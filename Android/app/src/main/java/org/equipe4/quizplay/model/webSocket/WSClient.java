@@ -34,7 +34,7 @@ import javax.net.ssl.X509TrustManager;
 public class WSClient implements Serializable {
 
 
-    private static final String SERVER = Global.SERVER_PROD;
+    private static final String SERVER = Global.SERVER_RENAUD;
 
     private static WebSocket socket;
     public static String roomShareCode;

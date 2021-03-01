@@ -35,11 +35,13 @@ public class Global {
     public static final String IP_XAV = "https://192.168.0.172:45455/api/";
     public static final String IP_NIC = "https://192.168.2.28:45455/api/";
     public static final String IP_HUGO = "https://192.168.0.131:45455/api/";
+    public static final String IP_RENAUD = "https://192.168.0.107:45455/api/";
 
     public static final String SERVER_PROD = "wss://api.e4.projet.college-em.info/websocket/connect";
     public static final String SERVER_MARCO = "wss://192.168.0.136:45455/websocket/connect";
     public static final String SERVER_XAV = "wss://192.168.0.172:45455/websocket/connect";
     public static final String SERVER_HUGO = "wss://192.168.0.131:45455/websocket/connect";
+    public static final String SERVER_RENAUD = "wss://192.168.0.107:45455/websocket/connect";
 
 
     public static String getCurrentUri() {
