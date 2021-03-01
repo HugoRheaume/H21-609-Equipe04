@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { QuizService } from 'src/app/services/Quiz.service';
 import { Subject } from 'rxjs';
 import { Message } from '../../../app/models/message';
@@ -26,7 +27,8 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
   constructor(
     public service: WebSocketService,
     public quizService: QuizService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -55,8 +57,9 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
 
   starQuiz() {
     if (this.defaultTimeLimit < 1 || this.defaultTimeLimit > 3600) {
-      this.timeLimitErrorMessage =
-        'Le temps limite doit être entre 1 et 3600 secondes';
+      this.timeLimitErrorMessage = this.translate.instant(
+        'app.error.waitingRoom.timeMinMax'
+      );
       return;
     } else this.service.beginQuiz(this.defaultTimeLimit);
   }

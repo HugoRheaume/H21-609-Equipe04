@@ -79,6 +79,8 @@
     "error.question.create.labelMax": "You have exceeded the maximum amount of charaters",
     "error.question.create.timeMin": "The minimum value is 1",
     "error.question.create.timeMax": "The maximum value is 3600",
-    "error.question.create.timeRequired": "The time limit is required"
+    "error.question.create.timeRequired": "The time limit is required",
+
+    "error.waitingRoom.timeMinMax": "The time limit must be between 1 and 3600 secondes"
   }
 }

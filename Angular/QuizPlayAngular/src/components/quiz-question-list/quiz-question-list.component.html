@@ -158,9 +158,15 @@
             </div>
             <div class="col-2">
               <h2 [ngSwitch]="this.enum[item.questionType]">
-                <span *ngSwitchCase="'TrueFalse'">Vrai ou Faux</span>
-                <span *ngSwitchCase="'MultipleChoices'">Choix Multiples</span>
-                <span *ngSwitchCase="'Association'">Association</span>
+                <span *ngSwitchCase="'TrueFalse'">{{
+                  "app.choice.tf" | translate
+                }}</span>
+                <span *ngSwitchCase="'MultipleChoices'">{{
+                  "app.choice.mc" | translate
+                }}</span>
+                <span *ngSwitchCase="'Association'">{{
+                  "app.choice.as" | translate
+                }}</span>
                 <span *ngSwitchDefault></span>
               </h2>
             </div>

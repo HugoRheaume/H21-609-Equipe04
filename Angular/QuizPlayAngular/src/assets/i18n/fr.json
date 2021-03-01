@@ -79,6 +79,8 @@
     "error.question.create.labelMax": "Vous avez dépassé le nombre de caractères maximum",
     "error.question.create.timeMin": "La valeur minimale est 1",
     "error.question.create.timeMax": "Le temps maximum est 3600",
-    "error.question.create.timeRequired": "Le temps limite est requis"
+    "error.question.create.timeRequired": "Le temps limite est requis",
+
+    "error.waitingRoom.timeMinMax": "Le temps limite doit être entre 1 et 3600 secondes"
   }
 }

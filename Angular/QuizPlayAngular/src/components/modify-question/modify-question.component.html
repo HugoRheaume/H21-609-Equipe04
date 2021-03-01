@@ -14,12 +14,10 @@
           style="display: flex; justify-content: center; flex-direction: column"
         >
           <h3 class="modal-title mb-0" id="modifyQuestionLabel">
-            Modifier une question
+            {{ "app.quiz.question.titleModify" | translate }}
           </h3>
           <mat-form-field appearance="outline" disabled>
-            <mat-label>{{
-              "app.quiz.question.titleModify" | translate
-            }}</mat-label>
+            <mat-label>{{ "app.quiz.question.type" | translate }}</mat-label>
             <mat-select [(value)]="this.selectedType" disabled>
               <mat-option
                 *ngFor="let i of this.iterator"
