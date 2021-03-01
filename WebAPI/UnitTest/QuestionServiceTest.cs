@@ -30,12 +30,14 @@ namespace UnitTest
             };
         }
 
+        #region Unit test marco
+
         [TestMethod]
         public void TestCreateQuestion()
         {
             Mock<QuestionService> mock = new Mock<QuestionService> { CallBase = true };
             List<QuestionTrueFalse> questionTrueFalses = new List<QuestionTrueFalse>();
-            questionTrueFalses.Add(new QuestionTrueFalse() { Id = 1, Answer = true, QuestionId = 1});
+            questionTrueFalses.Add(new QuestionTrueFalse() { Id = 1, Answer = true, QuestionId = 1 });
 
             QuestionCreateDTO questionCreate = new QuestionCreateDTO()
             {
@@ -216,5 +218,8 @@ namespace UnitTest
             Assert.ThrowsException<NoQuestionType>(() => mock.Object.AddQuestion(questionCreate));
 
         }
+
+        #endregion
+
     }
 }
