@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,9 +29,13 @@ import org.equipe4.quizplay.model.http.RetrofitUtil;
 import org.equipe4.quizplay.model.transfer.QuestionDTO;
 import org.equipe4.quizplay.model.transfer.QuestionResultDTO;
 import org.equipe4.quizplay.model.transfer.QuizResponseDTO;
+import org.equipe4.quizplay.model.transfer.QuizTopScore;
 import org.equipe4.quizplay.model.transfer.UserDTO;
 import org.equipe4.quizplay.model.util.Global;
 import org.equipe4.quizplay.model.util.SharedPrefUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,8 +59,48 @@ public class QuizActivity extends AppCompatActivity {
         TextView quizDesc = findViewById(R.id.quizDesc);
         quizDesc.setText(quiz.description);
 
+        loadScoreboard();
+
         configureDrawer();
 
+    }
+
+    private void loadScoreboard() {
+        service.getTopScores(quiz).enqueue(new Callback<List<QuizTopScore>>() {
+            @Override
+            public void onResponse(Call<List<QuizTopScore>> call, Response<List<QuizTopScore>> response) {
+                if (response.isSuccessful()) {
+                    Resources res = getResources();
+                    List<QuizTopScore> list = response.body();
+
+                    for (int i = 0; i < list.size(); i++) {
+                        QuizTopScore topScore = list.get(i);
+
+                        if (i == 0) {
+                            ((TextView)findViewById(R.id.place1Name)).setText(topScore.userName);
+                            ((TextView)findViewById(R.id.place1Score)).setText(res.getQuantityString(R.plurals.pts, topScore.score, topScore.score));
+                        }
+                        else if (i == 1) {
+                            ((TextView)findViewById(R.id.place2Name)).setText(topScore.userName);
+                            ((TextView)findViewById(R.id.place2Score)).setText(res.getQuantityString(R.plurals.pts, topScore.score, topScore.score));
+                        }
+                        else if (i == 2) {
+                            ((TextView)findViewById(R.id.place3Name)).setText(topScore.userName);
+                            ((TextView)findViewById(R.id.place3Score)).setText(res.getQuantityString(R.plurals.pts, topScore.score, topScore.score));
+                        }
+                    }
+                }
+                else {
+                    Log.i("RETROFIT", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<QuizTopScore>> call, Throwable t) {
+                Log.e("RETROFIT", t.getMessage());
+                Toast.makeText(QuizActivity.this, getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void startQuiz(View v) {

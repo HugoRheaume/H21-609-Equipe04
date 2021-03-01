@@ -32,6 +32,10 @@
         <item quantity="one">%d point</item>
         <item quantity="other">%d points</item>
     </plurals>
+    <plurals name="pts">
+        <item quantity="one">%d pt</item>
+        <item quantity="other">%d pts</item>
+    </plurals>
     <plurals name="participants">
         <item quantity="one">%d participant</item>
         <item quantity="other">%d participants</item>

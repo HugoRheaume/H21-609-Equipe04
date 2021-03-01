@@ -11,13 +11,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/profilePicDrawer"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/txtViewCurrentUser"
@@ -25,7 +28,8 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="@color/textColor"
-            android:fontFamily="@font/titan_one"/>
+            android:fontFamily="@font/titan_one"
+            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
 

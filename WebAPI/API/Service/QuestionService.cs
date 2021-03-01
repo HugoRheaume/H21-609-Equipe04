@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Net.Http.Headers;
+using API.Models.Quiz;
 
 namespace API.Service
 {

@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Models.Quiz;
 using API.Service;
 using System;
 using System.Collections.Generic;

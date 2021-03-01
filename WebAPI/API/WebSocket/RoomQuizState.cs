@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using API.Models.Question;
+using API.Models.Quiz;
 using API.Service;
 using API.WebSocket.Command.QuizCommand;
 using System;

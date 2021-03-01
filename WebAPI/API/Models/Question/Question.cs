@@ -33,7 +33,7 @@ namespace API.Models.Question
         [ForeignKey("QuestionId")]
         public virtual List<QuestionMultipleChoice> QuestionMultipleChoice { get; set; }
 
-        public Quiz Quiz { get; set; }
+        public Quiz.Quiz Quiz { get; set; }
 
         public int QuizIndex { get; set; }
 

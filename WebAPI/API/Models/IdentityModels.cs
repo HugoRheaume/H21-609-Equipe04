@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Models.Question;
+using API.Models.Quiz;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -39,12 +40,13 @@ namespace API.Models
             return new ApplicationDbContext();
         }
 
-        public virtual DbSet<Quiz> ListQuiz { get; set; }
+        public virtual DbSet<Quiz.Quiz> ListQuiz { get; set; }
         public virtual DbSet<Question.Question> Question { get; set; }
         public virtual DbSet<QuestionTrueFalse> QuestionTrueFalse { get; set; }
         public virtual DbSet<QuestionMultipleChoice> QuestionMultiple { get; set; }
         public virtual DbSet<QuestionResult> QuestionResult { get; set; }
         public virtual DbSet<QuestionAssociation> QuestionAssociation { get; set; }
         public virtual DbSet<QuestionCategory> QuestionCategory { get; set; }
+        public virtual DbSet<QuizTopScore> QuizTopScore { get; set; }
     }
 }

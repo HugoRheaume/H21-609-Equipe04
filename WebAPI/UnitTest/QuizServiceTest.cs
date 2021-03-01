@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using API.Models;
 using API.Models.Question;
+using API.Models.Quiz;
 using API.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
