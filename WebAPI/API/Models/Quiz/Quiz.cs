@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace API.Models
+namespace API.Models.Quiz
 {
     [Table("Quiz")]
     public class Quiz
@@ -23,9 +23,12 @@ namespace API.Models
         [MinLength(0, ErrorMessage = "You need to have a description"), MaxLength(1000, ErrorMessage = "Description is too long")]
         public string Description { get; set; }
         public string ShareCode { get; set; }
-        
+
         public virtual List<Question.Question> ListQuestions { get; set; }
 
         public DateTime Date { get; set; }
+
+        [ForeignKey("QuizId")]
+        public virtual List<QuizTopScore> QuizTopScores { get; set; }
     }
 }

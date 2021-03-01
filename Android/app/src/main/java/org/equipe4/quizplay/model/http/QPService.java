@@ -3,6 +3,7 @@ package org.equipe4.quizplay.model.http;
 import org.equipe4.quizplay.model.transfer.QuestionDTO;
 import org.equipe4.quizplay.model.transfer.QuestionResultDTO;
 import org.equipe4.quizplay.model.transfer.QuizResponseDTO;
+import org.equipe4.quizplay.model.transfer.QuizTopScore;
 import org.equipe4.quizplay.model.transfer.UserDTO;
 
 import java.util.List;
@@ -41,4 +42,7 @@ public interface QPService {
 
     @GET("Quiz/GetPublicQuiz")
     Call<List<QuizResponseDTO>> getPublicQuiz();
+
+    @POST("Quiz/GetTopScores")
+    Call<List<QuizTopScore>> getTopScores(@Body QuizResponseDTO quiz);
 }

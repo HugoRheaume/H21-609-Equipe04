@@ -15,6 +15,7 @@ using API.Models.Question;
 using Microsoft.AspNet.Identity;
 using System.Net.Http.Headers;
 using API.WebSocket;
+using API.Models.Quiz;
 
 namespace API.Controllers
 {
@@ -134,11 +135,18 @@ namespace API.Controllers
 
             int score = quizService.GetFinalScore(quiz.Id, token);
 
+            quizService.VerifyForTopScore(quiz.Id, token, score);
+
             quizService.DeleteQuestionResults(quiz.Id, token);
 
             return Ok(score);
         }
 
+        [HttpPost]
+        public IHttpActionResult GetTopScores(QuizResponseDTO quiz)
+        {
+            return Ok(quizService.GetTopScoresByQuiz(quiz.Id));
+        }
 
 
         [HttpGet]

@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using API.Models;
+using API.Models.Quiz;
 using Microsoft.ServiceModel.WebSockets;
 using Microsoft.Web.WebSockets;
 using System;

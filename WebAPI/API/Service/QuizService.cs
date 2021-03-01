@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using API.WebSocket;
 using Microsoft.Ajax.Utilities;
+using API.Models.Quiz;
 
 namespace API.Service
 {
@@ -179,6 +180,33 @@ namespace API.Service
 
             db.QuestionResult.RemoveRange(db.QuestionResult.Where(q => q.User.Id == user.Id && q.Question.Quiz.Id == quizId));
             db.SaveChanges();
+        }
+
+        public void VerifyForTopScore(int quizId, string token, int score)
+        {
+            List<QuizTopScore> list = db.QuizTopScore.Where(q => q.QuizId == quizId).OrderByDescending(q => q.Score).Take(3).ToList();
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Token == token);
+            
+            if (list.Count < 3 || score > list[list.Count - 1].Score)
+            {
+                QuizTopScore topScore = new QuizTopScore
+                {
+                    QuizId = quizId,
+                    Score = score,
+                    UserName = user.Name
+                };
+                db.QuizTopScore.Add(topScore);
+
+                if (list.Count == 3)
+                    db.QuizTopScore.Remove(list[2]);
+
+                db.SaveChanges();
+            }
+        }
+
+        public List<QuizTopScore> GetTopScoresByQuiz(int quizId)
+        {
+            return db.QuizTopScore.Where(q => q.QuizId == quizId).OrderByDescending(q => q.Score).Take(3).ToList();
         }
 
         /// <summary>

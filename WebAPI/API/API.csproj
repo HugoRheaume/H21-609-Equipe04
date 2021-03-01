@@ -322,6 +322,7 @@
     <Compile Include="Models\Question\QuestionDTO.cs" />
     <Compile Include="Models\Question\QuestionMultipleChoice.cs" />
     <Compile Include="Models\Question\QuestionTrueFalse.cs" />
+    <Compile Include="Models\Quiz\QuizTopScore.cs" />
     <Compile Include="WebSocket\Command\QuizCommand\QuizForceSkipCommand.cs" />
     <Compile Include="WebSocket\Command\QuizCommand\QuizQuestionResultCommand.cs" />
     <Compile Include="WebSocket\QuizUserScoreDTO.cs" />

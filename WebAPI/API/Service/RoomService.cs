@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Models.Quiz;
 using API.WebSocket;
 using API.WebSocket.Command;
 using Microsoft.Web.WebSockets;
