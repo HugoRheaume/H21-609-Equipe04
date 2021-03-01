@@ -41,7 +41,10 @@
     <div cdkDropListGroup>
       <table class="table-Asso">
         <thead>
-          <th class="table-Asso-Header">
+          <th
+            class="table-Asso-Header"
+            style="border-right: solid 3px #ccc; border-bottom: solid 3px #ccc"
+          >
             <mat-form-field>
               <mat-label
                 >{{
@@ -61,7 +64,12 @@
               />
             </mat-form-field>
           </th>
-          <th class="table-Asso-Header">
+          <th
+            class="table-Asso-Header"
+            style="{{
+              showCategory3 ? 'border-right: solid 3px #ccc;' : ''
+            }} border-bottom: solid 3px #ccc;"
+          >
             <mat-form-field>
               <mat-label
                 >{{
@@ -81,7 +89,11 @@
               />
             </mat-form-field>
           </th>
-          <th *ngIf="showCategory3" class="table-Asso-Header">
+          <th
+            *ngIf="showCategory3"
+            class="table-Asso-Header"
+            style="border-bottom: solid 3px #ccc"
+          >
             <mat-form-field class="me-2">
               <mat-label
                 >{{
@@ -126,6 +138,7 @@
         <tbody *ngIf="asso.length > 0">
           <tr class="table-Asso-Row">
             <td
+              style="border-right: solid 3px #ccc"
               cdkDropList
               #category1="cdkDropList"
               [cdkDropListData]="GetListOfCategory(0)"
@@ -161,6 +174,7 @@
               </div>
             </td>
             <td
+              style="{{ showCategory3 ? 'border-right: solid 3px #ccc;' : '' }}"
               cdkDropList
               #category2="cdkDropList"
               [cdkDropListConnectedTo]="[category1, category3]"
