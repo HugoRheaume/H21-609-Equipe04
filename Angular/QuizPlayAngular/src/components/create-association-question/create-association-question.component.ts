@@ -30,7 +30,7 @@ export class CreateAssociationQuestionComponent implements OnInit {
     public route: Router,
     private formBuilder: FormBuilder,
     public translate: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.Association = this.formBuilder.group({
@@ -64,10 +64,10 @@ export class CreateAssociationQuestionComponent implements OnInit {
     return formField.hasError('required')
       ? this.translate.instant('app.error.question.create.labelRequired')
       : formField.hasError('maxlength')
-      ? this.translate.instant('app.error.question.create.labelMax')
-      : formField.hasError('nowhitespaceerror')
-      ? ''
-      : ''; // Default
+        ? this.translate.instant('app.error.question.create.labelMax')
+        : formField.hasError('nowhitespaceerror')
+          ? ''
+          : ''; // Default
   }
 
   get timeLimitErrorMessage(): string {
@@ -77,10 +77,10 @@ export class CreateAssociationQuestionComponent implements OnInit {
     return formField.hasError('min')
       ? this.translate.instant('app.error.question.create.timeMin')
       : formField.hasError('max')
-      ? this.translate.instant('app.error.question.create.timeMax')
-      : formField.hasError('required')
-      ? this.translate.instant('app.error.question.create.timeRequired')
-      : ''; // Default
+        ? this.translate.instant('app.error.question.create.timeMax')
+        : formField.hasError('required')
+          ? this.translate.instant('app.error.question.create.timeRequired')
+          : ''; // Default
   }
   //#endregion
 
@@ -237,6 +237,7 @@ export class CreateAssociationQuestionComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      console.log(event.container.data);
     } else {
       transferArrayItem(
         event.previousContainer.data,
