@@ -140,6 +140,12 @@ namespace API.Service
             return true;
 
         }
+
+        /// <summary>
+        /// Reçoit un quiz selon le code de partage reçu.
+        /// </summary>
+        /// <param name="shareCode">Le code de partage</param>
+        /// <returns></returns>
         public QuizResponseDTO GetQuizByShareCode(string shareCode)
         {
             Quiz quizToShip = db.ListQuiz.FirstOrDefault(x => x.ShareCode == shareCode);

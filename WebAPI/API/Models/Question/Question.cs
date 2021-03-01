@@ -7,13 +7,14 @@ using System.Web;
 
 namespace API.Models.Question
 {
-    public enum QuestionType { TrueFalse = 1, MultipleChoice = 2 , Association = 3, Image = 4}
+    public enum QuestionType { TrueFalse = 1, MultipleChoice = 2 , Association= 3}
     public class Question
     {
         [Key]
         public int Id { get; set; }
-        
-        public string Label { get; set; }        
+
+        [MinLength(1, ErrorMessage = "You need to have a label"), MaxLength(250, ErrorMessage = "The label is too long")]
+        public string Label { get; set; }
 
         public QuestionType QuestionType { get; set; }
 

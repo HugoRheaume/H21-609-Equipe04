@@ -1,4 +1,6 @@
-﻿using API.WebSocket.Command;
+﻿using API.Models;
+using API.Service;
+using API.WebSocket.Command;
 using API.WebSocket.Command.QuizCommand;
 using System;
 using System.Collections.Generic;
@@ -33,17 +35,25 @@ namespace API
 
         };
 
+        /// <summary>
+        /// Génère un code alpahnumérique
+        /// </summary>
+        /// <returns></returns>
         public static string GenerateAlphanumeric()
         {
-            StringBuilder code = new StringBuilder();
-            char ch;
+            QuizService quizService = new QuizService(new ApplicationDbContext());
 
-            for (int i = 0; i < 6; i++)
+            StringBuilder code;
+            do
             {
-                ch = ALPHANUMERIC_CHARACTER_LIST[random.Next(0, ALPHANUMERIC_CHARACTER_LIST.Length)];
-                code.Append(ch);
-            }
-
+                code = new StringBuilder();
+                char ch;
+                for (int i = 0; i < 6; i++)
+                {
+                    ch = ALPHANUMERIC_CHARACTER_LIST[random.Next(0, ALPHANUMERIC_CHARACTER_LIST.Length)];
+                    code.Append(ch);
+                }
+            } while (quizService.CheckCodeExist(code.ToString()));
             return code.ToString();
         }
     }

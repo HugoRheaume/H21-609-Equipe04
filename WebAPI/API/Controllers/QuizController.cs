@@ -22,7 +22,6 @@ namespace API.Controllers
     public class QuizController : ApiController
     {
         private QuizService quizService;
-        private const string ALPHANUMERIC_CHARACTER_LIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         private static Random random = new Random();
         private AuthService authService;
 
@@ -45,7 +44,7 @@ namespace API.Controllers
                 Description = quizRequestDto.Description,
                 IsPublic = quizRequestDto.IsPublic,
                 OwnerId = user.Id,
-                ShareCode = GenerateAlphanumeric(),
+                ShareCode = Global.GenerateAlphanumeric(),
                 Date = DateTime.Now,
                 ListQuestions = new List<Question>()
             };
@@ -103,28 +102,12 @@ namespace API.Controllers
             return Ok(quizService.GetQuizByShareCode(pCode));
         }
 
-        public string GenerateAlphanumeric()
-        {
-            StringBuilder code;
-            do
-            {
-                code = new StringBuilder();
-                char ch;
-                for (int i = 0; i < 6; i++)
-                {
-                    ch = ALPHANUMERIC_CHARACTER_LIST[random.Next(0, ALPHANUMERIC_CHARACTER_LIST.Length)];
-                    code.Append(ch);
-                }
-            } while (quizService.CheckCodeExist(code.ToString()));
-            return code.ToString();
-        }
-
         /// <summary>
         /// Prend le score de chaque question pour avoir le score final.
         /// Enlève de la DB le score pour les questions de ce Quiz de ce User.
         /// </summary>
-        /// <param name="quiz">Reçoit un QuizResponseDTO</param>
         /// <returns>int</returns>
+        /// <param name="quiz">Reçoit un QuizResponseDTO</param>
         [HttpPost]
         [TokenAuthorize]
         public IHttpActionResult GetFinalScore(QuizResponseDTO quiz)

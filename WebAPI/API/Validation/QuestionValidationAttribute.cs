@@ -10,6 +10,7 @@ using System.Web.Http.Filters;
 
 namespace API.Validation
 {
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class QuestionValidationAttribute : ActionFilterAttribute
     {
 
@@ -25,7 +26,7 @@ namespace API.Validation
             {
                 SetBadRequest(actionContext);
             }
-            if(q.Label.Length > 250 || q.Label.Length < 1)
+            if(q.Label.Length > 250)
             {
                 SetBadRequest(actionContext);
             }
@@ -39,14 +40,11 @@ namespace API.Validation
                     if (q.QuestionMultipleChoice == null) SetBadRequest(actionContext);
                     break;
                 case QuestionType.Association:
-                    break;
-                case QuestionType.Image:
+                    if (q.QuestionAssociation == null) SetBadRequest(actionContext);
                     break;
                 default:
                     break;
             }
-
-
         }
 
         private void SetBadRequest(HttpActionContext actionContext)

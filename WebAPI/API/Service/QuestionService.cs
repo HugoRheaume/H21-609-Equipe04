@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Net.Http.Headers;
+using API.Validation;
+using System.ComponentModel.DataAnnotations;
 using API.Models.Quiz;
 
 namespace API.Service
@@ -14,6 +16,8 @@ namespace API.Service
     {
 
         public QuestionService(ApplicationDbContext db) : base(db) { }
+
+        public QuestionService() { }
 
         public List<QuestionDTO> GetQuestions()
         {
@@ -48,15 +52,34 @@ namespace API.Service
             return questionList.Select(item => GenerateQuestionDTO(item)).OrderBy(x => x.QuizIndex).ToList();
         }
 
+        public virtual Quiz GetQuizById(int quizId)
+        {
+            Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.Id == quizId);
+            if (quiz == null)
+                return null;
+            return quiz;
+        }
+
+        public virtual Question AddQuestionToDB(Question question)
+        {
+            Question q = db.Question.Add(question);
+            db.SaveChanges();
+            return q;
+        }
+
+        /// <summary>
+        /// Ajouter une questions à un quiz
+        /// </summary>
+        /// <param name="question">La question à créer</param>
+        /// <returns></returns>
         public QuestionDTO AddQuestion(QuestionCreateDTO question)
         {
-
-            Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.Id == question.QuizId);
+            Quiz quiz = GetQuizById(question.QuizId);
 
             Question questionToCreate = new Question()
             {
                 Quiz = quiz,
-                Label = question.Label,
+                Label = question.Label.Trim(),
                 TimeLimit = question.TimeLimit,
                 QuestionType = question.QuestionType,
                 QuestionTrueFalse = new List<QuestionTrueFalse>() { question.QuestionTrueFalse },
@@ -66,9 +89,34 @@ namespace API.Service
                 Categories = QuestionCategory.toListCategory(question.Categories)
             };
 
-            Question q = db.Question.Add(questionToCreate);
-            db.SaveChanges();
-            return GenerateQuestionDTO(q);
+            ValidationContext context = new ValidationContext(questionToCreate);
+            List<ValidationResult> results = new List<ValidationResult>();
+
+            //Vérifie si le temps est trop haut ou trop bas
+            if (questionToCreate.TimeLimit < -1 || questionToCreate.TimeLimit == 0 || questionToCreate.TimeLimit > 3600)
+                throw new TimeNotInRange();
+
+            //Vérifie si il y a un type à la question
+            if (questionToCreate.QuestionType == 0)
+                throw new NoQuestionType();
+
+            //Vérifie si la longueur de l'énoncé est trop grande ou trop petite
+            if (Validator.TryValidateObject(questionToCreate, context, results, true))
+            {
+                Question questionToDTO = AddQuestionToDB(questionToCreate); 
+                return GenerateQuestionDTO(questionToDTO);
+            }
+            foreach (ValidationResult validation in results)
+            {
+                switch (validation.ErrorMessage)
+                {
+                    case "You need to have a label":
+                        throw new LabelNeeded();
+                    case "The label is too long":
+                        throw new LabelTooLong();
+                }
+            }
+            return null;
         }
 
 
@@ -82,10 +130,7 @@ namespace API.Service
                 TimeLimit = q.TimeLimit,
                 QuestionType = q.QuestionType,
                 QuizIndex = q.QuizIndex,
-                NeedsAllAnswers = q.NeedsAllAnswers,
-                Categories = QuestionCategory.toListString(q.Categories)
-
-
+                NeedsAllAnswers = q.NeedsAllAnswers
             };
             switch (q.QuestionType)
             {
@@ -97,8 +142,7 @@ namespace API.Service
                     break;
                 case QuestionType.Association:
                     question.QuestionAssociation = q.QuestionAssociation;
-                    break;
-                case QuestionType.Image:
+                    question.Categories = QuestionCategory.toListString(q.Categories);
                     break;
                 default:
                     break;
@@ -320,4 +364,22 @@ namespace API.Service
             return false;
         }
     }
+
+    #region Exception
+    public class LabelNeeded : Exception
+    {
+    }
+
+    public class LabelTooLong : Exception
+    {
+    }
+
+    public class TimeNotInRange : Exception
+    {
+    }
+
+    public class NoQuestionType : Exception
+    {
+    }
+    #endregion
 }
