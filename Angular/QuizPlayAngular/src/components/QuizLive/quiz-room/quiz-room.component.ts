@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from 'src/app/models/question';
 import { QuizService } from '../../../app/services/Quiz.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { delay, take, tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { interval, Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-quiz-room',
@@ -13,6 +13,7 @@ import { interval, Observable, Subscription } from 'rxjs';
 })
 export class QuizRoomComponent implements OnInit, OnDestroy {
   public currentQuestion$: Observable<Question>;
+  public forceSkipSub: Subscription;
 
   public isShowResult: boolean = false;
   public isScoreboardPage: boolean = false;
@@ -52,7 +53,7 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
         this.startTimer(q.timeLimit);
       })
     );
-    this.wsService.forceSkip$.subscribe(() => this.skip());
+    this.forceSkipSub = this.wsService.forceSkip$.subscribe(() => this.skip());
   }
 
   ngOnDestroy(): void {
@@ -62,6 +63,8 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
 
     this.isShowResult = false;
     this.isScoreboardPage = false;
+
+    this.forceSkipSub.unsubscribe();
   }
   finish() {
     this.stopTimer();
@@ -110,10 +113,9 @@ export class QuizRoomComponent implements OnInit, OnDestroy {
     this.timeLeft = timeLimit;
 
     const countdown$ = interval(1000).pipe(
-      delay(3000),
       tap(() => {
         this.timeLeft--;
-        this.spinnerValue = parseInt((this.timeLeft * 100) / timeLimit + '');
+        this.spinnerValue = (this.timeLeft * 100) / timeLimit;
       }),
       take(timeLimit)
     );
