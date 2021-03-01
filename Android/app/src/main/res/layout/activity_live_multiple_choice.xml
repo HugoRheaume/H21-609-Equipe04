@@ -57,40 +57,192 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="50dp">
+                android:padding="20dp">
 
-                <Button
-                    android:id="@+id/btnTrue"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <ToggleButton
+                        android:id="@+id/btnChoix1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:background="@drawable/button_multiple_choice1"
+                        android:fontFamily="@font/titan_one"
+                        android:textAllCaps="false"
+                        android:textColor="@color/choiceTextColorDark"
+                        android:textOff="1"
+                        android:textOn="1"
+                        android:text="1"
+                        android:textSize="50sp" />
+
+                    <ToggleButton
+                    android:id="@+id/btnChoix2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:onClick="verifyAnswer"
-                    android:text="@string/answerTrue"
                     android:textSize="50sp"
-                    android:background="@drawable/button_live"
-                    android:backgroundTint="@color/liveChoice1"
+                    android:textOff="2"
+                    android:textOn="2"
+                    android:background="@drawable/button_multiple_choice2"
                     android:textAllCaps="false"
-                    android:textColor="@color/textColor"
-                    android:fontFamily="@font/titan_one"/>
+                    android:textColor="@color/choiceTextColorDark"
+                    android:fontFamily="@font/titan_one"
+                    android:layout_marginStart="4dp"/>
 
-                <Button
-                    android:id="@+id/btnFalse"
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:onClick="verifyAnswer"
-                    android:text="@string/answerFalse"
-                    android:textSize="50sp"
-                    android:background="@drawable/button_live"
-                    android:backgroundTint="@color/liveChoice2"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                <ToggleButton
+                        android:id="@+id/btnChoix3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:textSize="50sp"
+                        android:textOff="3"
+                        android:textOn="3"
+                        android:background="@drawable/button_multiple_choice3"
+                        android:textAllCaps="false"
+                        android:textColor="@color/choiceTextColorDark"
+                        android:fontFamily="@font/titan_one"
+                        android:layout_marginEnd="4dp"/>
+
+                    <ToggleButton
+                        android:id="@+id/btnChoix4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:textSize="50sp"
+                        android:textOff="4"
+                        android:textOn="4"
+                        android:background="@drawable/button_multiple_choice4"
+                        android:textAllCaps="false"
+                        android:textColor="@color/choiceTextColorDark"
+                        android:fontFamily="@font/titan_one"
+                        android:layout_marginStart="4dp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                <ToggleButton
+                        android:id="@+id/btnChoix5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:textSize="50sp"
+                        android:textOff="5"
+                        android:textOn="5"
+                        android:background="@drawable/button_multiple_choice5"
+                        android:textAllCaps="false"
+                    android:textColor="@color/choiceTextColorDark"
+                        android:fontFamily="@font/titan_one"
+                        android:layout_marginEnd="4dp"/>
+
+                    <ToggleButton
+                        android:id="@+id/btnChoix6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:textSize="50sp"
+                        android:textOff="6"
+                        android:textOn="6"
+                        android:background="@drawable/button_multiple_choice6"
+                        android:textAllCaps="false"
+                        android:textColor="@color/choiceTextColorDark"
+                        android:fontFamily="@font/titan_one"
+                        android:layout_marginStart="4dp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                <ToggleButton
+                        android:id="@+id/btnChoix7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:textSize="50sp"
+                        android:textOff="7"
+                        android:textOn="7"
+                        android:background="@drawable/button_multiple_choice7"
+                        android:textAllCaps="false"
+                        android:textColor="@color/choiceTextColorDark"
+                        android:fontFamily="@font/titan_one"
+                        android:layout_marginEnd="4dp"/>
+
+                    <ToggleButton
+                        android:id="@+id/btnChoix8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:textSize="50sp"
+                        android:textOff="8"
+                        android:textOn="8"
+                        android:background="@drawable/button_multiple_choice8"
+                        android:textAllCaps="false"
+                        android:textColor="@color/choiceTextColorDark"
+                        android:fontFamily="@font/titan_one"
+                        android:layout_marginStart="4dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/titan_one"
+                    android:shadowColor="#000000"
+                    android:shadowDx="1.5"
+                    android:shadowDy="1.3"
+                    android:shadowRadius="1.6"/>
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submitAnswer"
+                    android:background="@drawable/button"
                     android:textAllCaps="false"
-                    android:textColor="#101010"
-                    android:fontFamily="@font/titan_one" />
-
+                    android:textColor="@color/textColor"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="18sp"
+                    />
             </LinearLayout>
-
         </LinearLayout>
 
         <ProgressBar

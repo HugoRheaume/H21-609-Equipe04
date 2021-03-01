@@ -18,6 +18,7 @@
     <color name="goodTransparent">#404BDD4B</color>
     <color name="wrong">#c00000</color>
     <color name="black">#000000</color>
+    <color name="choiceTextColorDark">#323030</color>
 
     <color name="liveChoice1">#ff5c5c</color>
     <color name="liveChoice2">#ffac47</color>

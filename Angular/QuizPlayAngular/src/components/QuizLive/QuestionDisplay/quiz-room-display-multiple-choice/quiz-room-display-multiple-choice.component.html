@@ -6,25 +6,16 @@
           {{ this.quizRoomComponent.wsService.nbGoodAnswer }} bonnes réponses
         </h5>
       </div>
-      <div
-        *ngFor="
+      <div *ngFor="
           let itemMultiple of question.questionMultipleChoice;
           let i = index
-        "
-        [attr.data-index]="i"
-        [ngClass]="
+        " [attr.data-index]="i" [ngClass]="
           itemMultiple.answer && this.quizRoomComponent.isShowResult
             ? 'correctTrue choice' + (i + 1)
             : 'choice' + (i + 1)
-        "
-        id="trueSquare"
-        class="square"
-      >
-        <h4>{{ itemMultiple.statement }}</h4>
-        <mat-icon
-          *ngIf="itemMultiple.answer && this.quizRoomComponent.isShowResult"
-          style="color: green"
-          >check_circle
+        " id="trueSquare" class="square">
+        <h4> {{i + 1 + ") " + itemMultiple.statement }}</h4>
+        <mat-icon *ngIf="itemMultiple.answer && this.quizRoomComponent.isShowResult" style="color: green">check_circle
         </mat-icon>
       </div>
     </div>

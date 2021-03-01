@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import org.equipe4.quizplay.ListQuizActivity;
 import org.equipe4.quizplay.R;
+import org.equipe4.quizplay.databinding.ActivityLiveMultipleChoiceBinding;
 import org.equipe4.quizplay.databinding.ActivityLiveTrueFalseBinding;
 import org.equipe4.quizplay.model.transfer.QuestionDTO;
 import org.equipe4.quizplay.model.transfer.QuizResponseDTO;
@@ -31,9 +33,9 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
     WSClient client;
 
     QuestionDTO question;
-    Button selectedButton;
+    ToggleButton selectedButton;
     QuizResponseDTO currentQuiz;
-    boolean isGoodAnswer;
+    boolean isGoodAnswer = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,36 +65,37 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
     }
 
     public void verifyAnswer(View v) {
-        isGoodAnswer = false;
         if (binding.btnTrue.getId() == v.getId()) {
             if (question.questionTrueFalse.answer) {
                 isGoodAnswer = true;
             }
-            selectedButton = binding.btnTrue;
-            binding.btnTrue.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_border_selected));
+            selectedButton =(ToggleButton) binding.btnTrue;
+            selectedButton.setChecked(true);
         }
         else if (binding.btnFalse.getId() == v.getId()) {
             if (!question.questionTrueFalse.answer) {
                 isGoodAnswer = true;
+
             }
-            selectedButton = binding.btnFalse;
-            binding.btnFalse.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_border_selected));
+            selectedButton = (ToggleButton)binding.btnFalse;
+            selectedButton.setChecked(true);
         }
 
+        binding.result.setVisibility(View.VISIBLE);
+        if (isGoodAnswer) {
+            binding.result.setText(R.string.rightAnswer);
+            binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.good));
+        } else {
+            binding.result.setText(R.string.wrongAnswer);
+            binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wrong));
+        }
         binding.btnFalse.setClickable(false);
         binding.btnTrue.setClickable(false);
 
         sendAnswer();
     }
 
-    private void validateButtonState() {
-        if (selectedButton != null){
-            selectedButton.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_border_wrong));
-        }
-
-        if (isGoodAnswer) {
-            selectedButton.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_border_good));
-        }
+    private void updateButtonState() {
         binding.btnTrue.setClickable(false);
         binding.btnFalse.setClickable(false);
     }
@@ -112,7 +115,7 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
 
                 @Override
                 public void onQuestionResult() {
-                    validateButtonState();
+                    updateButtonState();
                 }
 
                 @Override

@@ -17,6 +17,7 @@ import org.equipe4.quizplay.LandingActivity;
 import org.equipe4.quizplay.R;
 import org.equipe4.quizplay.activityDeferredQuiz.MultipleChoiceActivity;
 import org.equipe4.quizplay.activityDeferredQuiz.TrueFalseActivity;
+import org.equipe4.quizplay.activityLiveQuiz.LiveMultipleChoiceActivity;
 import org.equipe4.quizplay.activityLiveQuiz.LiveTrueFalseActivity;
 import org.equipe4.quizplay.model.http.RetrofitUtil;
 
@@ -138,8 +139,8 @@ public class Global {
         switch (questionType) {
             case 1:
                 return LiveTrueFalseActivity.class;
-            //case 2:
-            //    return MultipleChoiceActivity.class;
+            case 2:
+                return LiveMultipleChoiceActivity.class;
             default:
                 break;
         }

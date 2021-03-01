@@ -14,11 +14,13 @@
             <padding android:top="10dp" android:bottom="10dp" android:left="30dp" android:right="30dp"/>
         </shape>
     </item>
-    <item >
+
+    <item>
         <shape android:shape="rectangle"  >
             <corners android:radius="100dp" />
             <solid android:color="@android:color/white"/>
             <padding android:top="10dp" android:bottom="10dp" android:left="30dp" android:right="30dp"/>
         </shape>
     </item>
+
 </selector>
