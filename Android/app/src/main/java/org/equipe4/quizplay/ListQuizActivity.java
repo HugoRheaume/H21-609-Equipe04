@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,7 @@ public class ListQuizActivity extends AppCompatActivity implements AdapterView.O
     ActionBarDrawerToggle toggle;
     List<QuizResponseDTO> listQuiz;
     QPService service;
+    String itemSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,18 +80,35 @@ public class ListQuizActivity extends AppCompatActivity implements AdapterView.O
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(this);
 
+        itemSelected = getString(R.string.quizTitle);
+
+        getListQuiz(null);
+    }
+
+    public void getListQuiz(View v) {
+        View refresh = findViewById(R.id.refresh);
+        ProgressBar loading = findViewById(R.id.loading);
+
+        refresh.setVisibility(View.GONE);
+        loading.setVisibility(View.VISIBLE);
+
         service.getPublicQuiz().enqueue(new Callback<List<QuizResponseDTO>>() {
             @Override
             public void onResponse(Call<List<QuizResponseDTO>> call, Response<List<QuizResponseDTO>> response) {
                 if (response.isSuccessful()) {
                     listQuiz = response.body();
 
-                    sortListQuiz(getString(R.string.quizTitle));
+                    sortListQuiz();
 
                     initRecycler();
+
+                    refresh.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
                 }
                 else {
                     Log.i("RETROFIT", response.message());
+                    refresh.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
                 }
             }
 
@@ -97,20 +116,22 @@ public class ListQuizActivity extends AppCompatActivity implements AdapterView.O
             public void onFailure(Call<List<QuizResponseDTO>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), getString(R.string.toastNoAcess), Toast.LENGTH_SHORT).show();
                 Log.i("RETROFIT", t.getMessage());
+                refresh.setVisibility(View.VISIBLE);
+                loading.setVisibility(View.GONE);
             }
         });
     }
 
-    private void sortListQuiz(String sort) {
+    private void sortListQuiz() {
         if (listQuiz == null) return;
         Collections.sort(listQuiz, (Comparator<QuizResponseDTO>) (o1, o2) -> {
-            if (sort.equals(getString(R.string.quizTitle)))
+            if (itemSelected.equals(getString(R.string.quizTitle)))
                 return o1.title.toLowerCase().compareTo(o2.title.toLowerCase());
-            if (sort.equals(getString(R.string.questionNumber)))
+            if (itemSelected.equals(getString(R.string.questionNumber)))
                 return o2.numberOfQuestions - o1.numberOfQuestions;
-            if (sort.equals(getString(R.string.author)))
+            if (itemSelected.equals(getString(R.string.author)))
                 return o1.author.toLowerCase().compareTo(o2.author.toLowerCase());
-            if (sort.equals(getString(R.string.dateCreation)))
+            if (itemSelected.equals(getString(R.string.dateCreation)))
                 return o2.date.compareTo(o1.date);
             return 0;
         });
@@ -238,9 +259,9 @@ public class ListQuizActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = (String)parent.getItemAtPosition(position);
+        itemSelected = (String)parent.getItemAtPosition(position);
         if (listQuiz != null) {
-            sortListQuiz(item);
+            sortListQuiz();
             initRecycler();
         }
     }
