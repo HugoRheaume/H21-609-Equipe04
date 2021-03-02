@@ -79,7 +79,7 @@ export class ModifyQuestionComponent implements OnInit {
     public route: Router,
     private formBuilder: FormBuilder,
     public translate: TranslateService
-  ) { }
+  ) {}
 
   ngOnInit() {
     switch (this.question.questionType) {
@@ -406,8 +406,7 @@ export class ModifyQuestionComponent implements OnInit {
         questionHasTimeLimit.value !== '' &&
         questionHasTimeLimit.value != null &&
         questionHasTimeLimit.value != false &&
-        (questionTimeLimit.value < 1 ||
-          questionTimeLimit.value > 3600)
+        (questionTimeLimit.value < 1 || questionTimeLimit.value > 3600)
       ) {
         // console.log('Time limit less than 1');
         // alert('The time limit can't be less than 1.');
@@ -449,8 +448,7 @@ export class ModifyQuestionComponent implements OnInit {
         questionHasTimeLimit.value !== '' &&
         questionHasTimeLimit.value != null &&
         questionHasTimeLimit.value != false &&
-        (questionTimeLimit.value < 1 ||
-          questionTimeLimit.value > 3600)
+        (questionTimeLimit.value < 1 || questionTimeLimit.value > 3600)
       ) {
         // console.log('Time limit less than 1');
         // alert('The time limit can't be less than 1.');
@@ -499,8 +497,7 @@ export class ModifyQuestionComponent implements OnInit {
         questionHasTimeLimit.value !== '' &&
         questionHasTimeLimit.value != null &&
         questionHasTimeLimit.value != false &&
-        (questionTimeLimit.value < 1 ||
-          questionTimeLimit.value > 3600)
+        (questionTimeLimit.value < 1 || questionTimeLimit.value > 3600)
       ) {
         // console.log('Time limit less than 1');
         // alert('The time limit can't be less than 1.');
@@ -525,10 +522,10 @@ export class ModifyQuestionComponent implements OnInit {
     return formField.hasError('required')
       ? this.translate.instant('app.error.question.create.labelRequired')
       : formField.hasError('maxlength')
-        ? this.translate.instant('app.error.question.create.labelMax')
-        : formField.hasError('nowhitespaceerror')
-          ? ''
-          : ''; // Default
+      ? this.translate.instant('app.error.question.create.labelMax')
+      : formField.hasError('nowhitespaceerror')
+      ? ''
+      : ''; // Default
   }
 
   get timeLimitErrorMessage(): string {
@@ -538,10 +535,10 @@ export class ModifyQuestionComponent implements OnInit {
     return formField.hasError('min')
       ? this.translate.instant('app.error.question.create.timeMin')
       : formField.hasError('max')
-        ? this.translate.instant('app.error.question.create.timeMax')
-        : formField.hasError('required')
-          ? this.translate.instant('app.error.question.create.timeRequired')
-          : ''; // Default
+      ? this.translate.instant('app.error.question.create.timeMax')
+      : formField.hasError('required')
+      ? this.translate.instant('app.error.question.create.timeRequired')
+      : ''; // Default
   }
   //#endregion
 
@@ -598,7 +595,7 @@ export class ModifyQuestionComponent implements OnInit {
       if (cat != null) {
         cat.trim;
         if (cat.length == 0) {
-          console.log(cat);
+          //console.log(cat);
           hasEmpty = true;
         }
       }
@@ -629,9 +626,6 @@ export class ModifyQuestionComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      console.log(event.container.data,
-        event.previousIndex,
-        event.currentIndex);
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -649,7 +643,6 @@ export class ModifyQuestionComponent implements OnInit {
     this.asso.forEach((item) => {
       if (item.categoryIndex == index) listAsso.push(item);
     });
-    console.log(listAsso);
     return listAsso;
   }
   //#endregion
