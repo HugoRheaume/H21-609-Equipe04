@@ -14,6 +14,8 @@ namespace API.Service
 
         public QuestionService(ApplicationDbContext db) : base(db) { }
 
+        public QuestionService() { }
+
         public List<QuestionDTO> GetQuestions()
         {
 
@@ -139,7 +141,7 @@ namespace API.Service
         /// </summary>
         /// <param name="quizId">Id du quiz dont on veut les questions</param>
         /// <returns>List<QuestionDTO></returns>
-        public List<QuestionDTO> GetQuestionByQuizId(int quizId)
+        public virtual List<QuestionDTO> GetQuestionByQuizId(int quizId)
         {
             Quiz quiz = db.ListQuiz.FirstOrDefault(x => x.Id == quizId);
             if (quiz == null)
@@ -148,6 +150,7 @@ namespace API.Service
 
             return questionList.Select(item => GenerateQuestionDTO(item)).OrderBy(x => x.QuizIndex).ToList();
         }
+
 
         /// <summary>
         /// Renvoie la première question d'un Quiz si le questionId est -1.
@@ -159,7 +162,7 @@ namespace API.Service
         public QuestionDTO GetNextQuestion(int quizId, int questionId)
         {
             List<QuestionDTO> list = GetQuestionByQuizId(quizId);
-            Question question = db.Question.Find(questionId);
+            Question question = GetDBQuestionById(questionId);
             int index = -1;
             if (questionId > -1)
                 index = question.QuizIndex;
@@ -175,6 +178,11 @@ namespace API.Service
                     NeedsAllAnswers = false,
                 };
             return list[index + 1];
+        }
+
+        public virtual Question GetDBQuestionById(int questionId)
+        {
+            return db.Question.Find(questionId);
         }
         
         /// <summary>
