@@ -115,7 +115,12 @@ namespace API.Controllers
             if (cookie == null) return BadRequest("Pas de Biscuit");
             string token = cookie["token"].Value;
 
-            if (result.QuestionId != -1)
+            if (result.QuestionId == -1)
+            {
+                QuizService s = new QuizService(new ApplicationDbContext());
+                s.DeleteQuestionResults(result.QuizId, token);
+            }
+            else
                 service.StoreQuestionResult(result, token);
 
             return Ok(service.GetNextQuestion(result.QuizId, result.QuestionId));
