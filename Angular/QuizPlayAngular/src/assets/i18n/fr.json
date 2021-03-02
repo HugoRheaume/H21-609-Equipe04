@@ -63,7 +63,7 @@
     "room.waiting.btnShareCode": "Code de partage:",
     "room.waiting.cancel": "Annuler la partie",
     "room.waiting.start": "Commencer la partie",
-    "room.waiting.title": "Utilisateur dans la salle",
+    "room.waiting.title": "Utilisateurs dans la salle",
     "room.waiting.playerNumber": "joueurs",
     "room.waiting.timeLimit": "Temps limite des questions par défaut",
 
@@ -82,6 +82,6 @@
     "error.question.create.timeRequired": "Le temps limite est requis",
 
     "error.waitingRoom.timeMinMax": "Le temps limite doit être entre 1 et 3600 secondes",
-    "error.containAsso": "Ce quiz contient une question de type \"association\" et la fonctionnalité de quiz en direct ne supporte pas ce type."
+    "error.containAsso": "Ce quiz contient une question de type \"association\" et la fonctionnalité de quiz en direct ne le supporte pas."
   }
 }

@@ -1,7 +1,7 @@
 {
   "app": {
-    "navigation.quiz": "My Quiz",
-    "navigation.createQuiz": "Create Quiz",
+    "navigation.quiz": "My Quizzes",
+    "navigation.createQuiz": "Create a Quiz",
     "navigation.language": "Français",
     "navigation.disconnect": "Log out",
 
@@ -11,11 +11,11 @@
     "createQuiz.public": "Public",
     "createQuiz.btnCreate": "Create",
 
-    "createQuizDialog.msg": "A quiz with this title already exist, do you want to create it anyway?",
+    "createQuizDialog.msg": "A quiz with this title already exists, do you want to create it anyway?",
     "createQuizDialog.no": "No",
     "createQuizDialog.yes": "Yes",
 
-    "listQuiz.btnCreateNew": "Create new quiz",
+    "listQuiz.btnCreateNew": "Create a new quiz",
     "listQuiz.name": "Name",
     "listQuiz.nbQuestion": "Number of questions",
     "listQuiz.dateCreation": "Creation date",
@@ -25,8 +25,8 @@
     "listQuiz.deleteYes": "Yes",
 
     "quiz.btnShareCode": "Share code:",
-    "quiz.btnCreateWaitingRoom": "Create waiting room",
-    "quiz.btnFinish": "Complete",
+    "quiz.btnCreateWaitingRoom": "Create a waiting room",
+    "quiz.btnFinish": "Save",
     "quiz.info": "Quiz information",
     "quiz.question": "Quiz questions",
     "quiz.questionDelete": "Question deleted",
@@ -37,35 +37,35 @@
     "quiz.edit.questionModify": "Question modfied!",
 
     "quiz.question.titleCreate": "Create a question",
-    "quiz.question.titleModify": "Edit question",
+    "quiz.question.titleModify": "Edit a question",
     "quiz.question.type": "Question type",
     "quiz.question.none": "None",
     "quiz.question.statement": "Question statement",
-    "quiz.question.timeLimit": "Add time limit",
+    "quiz.question.timeLimit": "Add a time limit",
     "quiz.question.timeLimitPlaceholder": "Question time limit",
     "quiz.question.btnCancel": "Cancel",
     "quiz.question.btnConfirm": "Submit",
 
-    "quiz.question.tf.answer": "Correct question answer",
+    "quiz.question.tf.answer": "Correct answer",
     "quiz.question.tf.true": "True",
     "quiz.question.tf.false": "False",
 
-    "quiz.question.mc.btnAddChoice": "Add choice",
+    "quiz.question.mc.btnAddChoice": "Add a choice",
     "quiz.question.mc.title": "Question choice",
     "quiz.question.mc.choiceNumber": "Choice number",
-    "quiz.question.mc.oneAnswer": "One good answer to get the point",
-    "quiz.question.mc.allAnswer": "All the right answers to get the point",
+    "quiz.question.mc.oneAnswer": "One good answer to have the point",
+    "quiz.question.mc.allAnswer": "All the right answers to have the point",
 
     "quiz.question.as.btnAddChoice": "Add choice",
     "quiz.question.as.categoryNumber": "Category number",
     "quiz.question.as.choiceNumber": "Choice number",
 
     "room.waiting.btnShareCode": "Share code:",
-    "room.waiting.cancel": "Cancel game",
-    "room.waiting.start": "Start game",
-    "room.waiting.title": "User in the room",
+    "room.waiting.cancel": "Cancel the game",
+    "room.waiting.start": "Start the game",
+    "room.waiting.title": "Users in the room",
     "room.waiting.playerNumber": "players",
-    "room.waiting.timeLimit": "Default questions time limit",
+    "room.waiting.timeLimit": "Default time limit for the questions",
 
     "room.btnSkip": "Skip",
     "room.btnNext": "Next question",
@@ -81,7 +81,7 @@
     "error.question.create.timeMax": "The maximum value is 3600",
     "error.question.create.timeRequired": "The time limit is required",
 
-    "error.waitingRoom.timeMinMax": "The time limit must be between 1 and 3600 secondes",
-    "error.containAsso": "This quiz contains a question of type \"association\" and the live feature does not support it"
+    "error.waitingRoom.timeMinMax": "The time limit must be between 1 and 3600 seconds",
+    "error.containAsso": "This quiz contains a question of type \"association\" and the live feature does not support it."
   }
 }
