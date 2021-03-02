@@ -4,64 +4,123 @@
 </div>
 <div *ngIf="this.service.currentQuiz">
   <div class="justify-content-between d-flex">
-    <button [cdkCopyToClipboard]="this.service.currentQuiz.shareCode" class="m-3" style="width: 240px" mat-raised-button
-      color="primary">
+    <button
+      [cdkCopyToClipboard]="this.service.currentQuiz.shareCode"
+      class="m-3"
+      style="width: 240px"
+      mat-raised-button
+      color="primary"
+    >
       {{ "app.quiz.btnShareCode" | translate }}
       {{ this.service.currentQuiz.shareCode }}
       <mat-icon>content_copy</mat-icon>
     </button>
-    <button [disabled]="this.service.currentQuestions.length < 1" mat-raised-button class="m-3" color="primary"
-      (click)="finish()" [routerLink]="['/list']">
+    <button
+      [disabled]="this.service.currentQuestions.length < 1"
+      mat-raised-button
+      class="m-3"
+      color="primary"
+      (click)="finish()"
+      [routerLink]="['/list']"
+    >
       {{ "app.quiz.btnFinish" | translate }}
     </button>
   </div>
-  <button *ngIf="
-      this.service.currentQuiz && this.service.currentQuestions.length > 0
-    " (click)="goLive()" routerLinkActive="router-link-active" class="ms-3" mat-raised-button color="primary"
-    style="margin-left: 5px">
+  <button
+    *ngIf="this.service.currentQuiz && this.service.currentQuestions.length > 0"
+    (click)="goLive()"
+    routerLinkActive="router-link-active"
+    class="ms-3"
+    mat-raised-button
+    color="primary"
+    style="margin-left: 5px"
+    [disabled]="this.service.containAssoQuestion"
+  >
     {{ "app.quiz.btnCreateWaitingRoom" | translate }}
   </button>
+
+  <mat-error
+    style="margin-left: 20px"
+    *ngIf="this.service.containAssoQuestion"
+    >{{ "app.error.containAsso" | translate }}</mat-error
+  >
+
   <h2 class="sectionHeader">{{ "app.quiz.info" | translate }}</h2>
   <div class="quizHeader">
     <div class="flexcontainer mb-2">
       <div class="itemcenter">
-        <h1 class="text-center" [class.gradient-border]="this.isModifying == true">
-          <textarea type="text" class="inputTitle" matTextareaAutosize matInput
-            [(ngModel)]="this.service.currentQuiz.title" [disabled]="this.isModifying == false" maxlength="100"
-            minlength="4" style="font-family: Titan One; height: auto; resize: none"></textarea>
+        <h1
+          class="text-center"
+          [class.gradient-border]="this.isModifying == true"
+        >
+          <textarea
+            type="text"
+            class="inputTitle"
+            matTextareaAutosize
+            matInput
+            [(ngModel)]="this.service.currentQuiz.title"
+            [disabled]="this.isModifying == false"
+            maxlength="100"
+            minlength="4"
+            style="font-family: Titan One; height: auto; resize: none"
+          ></textarea>
         </h1>
       </div>
       <div class="itemright mb-3">
-        <button mat-fab color="primary" *ngIf="this.isModifying == false" (click)="this.isModifying = true">
+        <button
+          mat-fab
+          color="primary"
+          *ngIf="this.isModifying == false"
+          (click)="this.isModifying = true"
+        >
           <i class="fas fa-edit fa-lg"></i>
         </button>
-        <button mat-fab color="primary" *ngIf="this.isModifying == true" (click)="updateQuiz()">
+        <button
+          mat-fab
+          color="primary"
+          *ngIf="this.isModifying == true"
+          (click)="updateQuiz()"
+        >
           <i class="fas fa-save fa-lg"></i>
         </button>
       </div>
     </div>
     <h2 [class.gradient-border]="this.isModifying == true" class="mb-2">
-      <textarea style="
+      <textarea
+        style="
           text-align: justify;
           white-space: normal;
           text-align-last: left;
           overflow: hidden;
           line-height: 1.3em !important;
-        " matInput matTextareaAutosize [disabled]="this.isModifying == false" maxlength="1000"
-        [(ngModel)]="this.service.currentQuiz.description">
+        "
+        matInput
+        matTextareaAutosize
+        [disabled]="this.isModifying == false"
+        maxlength="1000"
+        [(ngModel)]="this.service.currentQuiz.description"
+      >
       </textarea>
     </h2>
     <h3 class="text-end mb-2 unselectable">
-      <mat-icon style="font-size: 30px" *ngIf="this.isModifying == false" [matTooltip]="
+      <mat-icon
+        style="font-size: 30px"
+        *ngIf="this.isModifying == false"
+        [matTooltip]="
           this.service.currentQuiz.isPublic
             ? 'Le quiz est public'
             : 'Le quiz est privé'
-        ">
+        "
+      >
         {{ this.service.currentQuiz.isPublic ? "public" : "public_off" }}
       </mat-icon>
       <div *ngIf="this.isModifying == true" id="makeTheQuizPublic">
         <span>{{ "app.quiz.edit.public" | translate }} &nbsp;&nbsp;</span>
-        <mat-checkbox style="font-size: 30px" class="clickableThing" [(ngModel)]="this.service.currentQuiz.isPublic">
+        <mat-checkbox
+          style="font-size: 30px"
+          class="clickableThing"
+          [(ngModel)]="this.service.currentQuiz.isPublic"
+        >
         </mat-checkbox>
       </div>
     </h3>
@@ -71,18 +130,34 @@
 <div>
   <div class="d-flex justify-content-between">
     <h2 class="sectionHeader">{{ "app.quiz.question" | translate }}</h2>
-    <button class="questionButtonAddRemove" mat-fab color="primary" data-bs-toggle="modal"
-      data-bs-target="#staticBackdrop">
+    <button
+      class="questionButtonAddRemove"
+      mat-fab
+      color="primary"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+    >
       <mat-icon>add</mat-icon>
     </button>
   </div>
   <div class="questionBox">
     <div cdkDropListGroup (mouseleave)="this.selectedQuestion = null">
-      <div cdkDropList [cdkDropListData]="this.service.currentQuestions" class="question-list"
-        (cdkDropListDropped)="drop($event)">
-        <div class="questionItem" cdkDragLockAxis="y" cdkDragBoundary=".question-list"
-          *ngFor="let item of this.service.currentQuestions" cdkDrag [class.activeQuestion]="selectedQuestion === item"
-          (mouseover)="selectedQuestion = item" (cdkDragStarted)="selectedQuestion = item">
+      <div
+        cdkDropList
+        [cdkDropListData]="this.service.currentQuestions"
+        class="question-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="questionItem"
+          cdkDragLockAxis="y"
+          cdkDragBoundary=".question-list"
+          *ngFor="let item of this.service.currentQuestions"
+          cdkDrag
+          [class.activeQuestion]="selectedQuestion === item"
+          (mouseover)="selectedQuestion = item"
+          (cdkDragStarted)="selectedQuestion = item"
+        >
           <div class="row">
             <div class="col-5">
               <h2>{{ item.label }}</h2>
@@ -103,22 +178,42 @@
             </div>
             <div class="col-1"></div>
             <div class="col-3">
-              <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary"
-                (click)="putFirst()">
+              <button
+                *ngIf="selectedQuestion === item"
+                class="questionButtonAddRemove"
+                mat-fab
+                color="primary"
+                (click)="putFirst()"
+              >
                 <mat-icon>expand_less</mat-icon>
               </button>
-              <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary"
-                (click)="putLast()">
+              <button
+                *ngIf="selectedQuestion === item"
+                class="questionButtonAddRemove"
+                mat-fab
+                color="primary"
+                (click)="putLast()"
+              >
                 <mat-icon>expand_more</mat-icon>
               </button>
-              <button *ngIf="selectedQuestion === item" class="questionButtonAddRemove" mat-fab color="primary"
-                (click)="setQuestionToModify()">
+              <button
+                *ngIf="selectedQuestion === item"
+                class="questionButtonAddRemove"
+                mat-fab
+                color="primary"
+                (click)="setQuestionToModify()"
+              >
                 <mat-icon>edit</mat-icon>
               </button>
             </div>
             <div class="col-1">
-              <button class="questionButtonAddRemove" id="add-button" mat-fab color="primary"
-                (click)="deleteQuestion(item.id)">
+              <button
+                class="questionButtonAddRemove"
+                id="add-button"
+                mat-fab
+                color="primary"
+                (click)="deleteQuestion(item.id)"
+              >
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -129,8 +224,17 @@
   </div>
 
   <div>
-    <button hidden data-bs-toggle="modal" data-bs-target="#modifyQuestion" id="openModalButton"></button>
-    <app-modify-question [question]="this.modifyingQuestion" *ngIf="showModifyingModal" (isReady)="this.openModal()"
-      (close)="this.updateQuestions($event)"></app-modify-question>
+    <button
+      hidden
+      data-bs-toggle="modal"
+      data-bs-target="#modifyQuestion"
+      id="openModalButton"
+    ></button>
+    <app-modify-question
+      [question]="this.modifyingQuestion"
+      *ngIf="showModifyingModal"
+      (isReady)="this.openModal()"
+      (close)="this.updateQuestions($event)"
+    ></app-modify-question>
   </div>
 </div>

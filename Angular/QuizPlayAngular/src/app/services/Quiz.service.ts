@@ -14,10 +14,11 @@ import { Question } from '../models/question';
   providedIn: 'root',
 })
 export class QuizService {
-  constructor(public http: HttpClient, public router: Router) { }
+  constructor(public http: HttpClient, public router: Router) {}
 
   public currentQuestions: Question[] = [];
   public currentQuiz: QuizResponse;
+  public containAssoQuestion: boolean = false;
 
   public createQuiz(quiz: QuizRequest): Observable<QuizResponse> {
     const httpOptions = {
@@ -33,7 +34,7 @@ export class QuizService {
         observe: 'response',
       })
       .pipe(
-        map(r => {
+        map((r) => {
           if (r.status == 201) return r.body as QuizResponse;
           else if (r.status == 202) {
             return new QuizResponse(
@@ -69,14 +70,18 @@ export class QuizService {
         pQuestion,
         httpOptions
       )
-      .subscribe(response => {
-        this.currentQuestions.push(response as Question);
-      }, (error) => {
-        console.error("from AddQuestion");
-        console.error(error);
+      .subscribe(
+        (response) => {
+          this.currentQuestions.push(response as Question);
+          this.checkAsso();
+        },
+        (error) => {
+          console.error('from AddQuestion');
+          console.error(error);
 
-        //ouvre un popup ou une indication qu' il y a eu une erreur.
-      });
+          //ouvre un popup ou une indication qu' il y a eu une erreur.
+        }
+      );
   }
 
   deleteQuestion(questionId: number) {
@@ -92,8 +97,9 @@ export class QuizService {
         environment.backend.baseURL + '/question/delete/' + questionId,
         httpOptions
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         this.currentQuestions = response;
+        this.checkAsso();
       });
   }
   getQuiz(quizShareCode: string) {
@@ -107,10 +113,10 @@ export class QuizService {
     this.http
       .get<QuizResponse>(
         environment.backend.baseURL +
-        `/quiz/GetQuizByCode?code=${quizShareCode}`,
+          `/quiz/GetQuizByCode?code=${quizShareCode}`,
         httpOptions
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         this.currentQuiz = response;
       });
   }
@@ -124,14 +130,15 @@ export class QuizService {
     this.http
       .get<Question[]>(
         environment.backend.baseURL +
-        `/question/GetQuizQuestionsFromShareCode/${quizShareCode}`,
+          `/question/GetQuizQuestionsFromShareCode/${quizShareCode}`,
         httpOptions
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         this.currentQuestions = response;
         this.currentQuestions.sort((a, b) =>
           a.quizIndex > b.quizIndex ? 1 : -1
         );
+        this.checkAsso();
       });
   }
 
@@ -159,7 +166,7 @@ export class QuizService {
         httpOptions
       )
       .pipe(
-        map(res => {
+        map((res) => {
           return res;
         })
       );
@@ -169,10 +176,10 @@ export class QuizService {
       .get<boolean>(environment.backend.baseURL + `/Quiz/DeleteQuiz/${quiz.id}`)
       .pipe(
         map(
-          r => {
+          (r) => {
             return true;
           },
-          e => {
+          (e) => {
             return false;
           }
         )
@@ -191,7 +198,7 @@ export class QuizService {
         this.currentQuestions,
         httpOptions
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         response;
       });
   }
@@ -209,7 +216,7 @@ export class QuizService {
         firebaseToken,
         httpOptions
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('name', response.name);
         localStorage.setItem('email', response.email);
@@ -227,7 +234,7 @@ export class QuizService {
 
     this.http
       .get<any>(environment.backend.baseURL + '/auth/logout', httpOptions)
-      .subscribe(response => {
+      .subscribe((response) => {
         localStorage.setItem('token', '');
         localStorage.setItem('name', '');
         localStorage.setItem('email', '');
@@ -235,7 +242,6 @@ export class QuizService {
         this.router.navigate(['/']);
       });
   }
-
 
   public modifyQuiz(modifiedQuiz: QuizResponse) {
     let quizToSend = this.toModifyDTO(modifiedQuiz);
@@ -246,8 +252,13 @@ export class QuizService {
       }),
     };
 
-    this.http.post<any>(environment.backend.baseURL + '/quiz/modifyquiz', quizToSend, httpOptions).subscribe(response => {
-    })
+    this.http
+      .post<any>(
+        environment.backend.baseURL + '/quiz/modifyquiz',
+        quizToSend,
+        httpOptions
+      )
+      .subscribe((response) => {});
   }
 
   //Ça c'est ici pcq si on le met direct dans la classe QuizResponse, c'est tellement bien fait que sa marche pas :)
@@ -258,5 +269,12 @@ export class QuizService {
     quizToExport.isPublic = q.isPublic;
     quizToExport.description = q.description;
     return quizToExport;
+  }
+
+  checkAsso() {
+    this.containAssoQuestion = false;
+    this.currentQuestions.forEach((item) => {
+      if (item.questionType == 3) this.containAssoQuestion = true;
+    });
   }
 }

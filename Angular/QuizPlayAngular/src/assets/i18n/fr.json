@@ -81,6 +81,7 @@
     "error.question.create.timeMax": "Le temps maximum est 3600",
     "error.question.create.timeRequired": "Le temps limite est requis",
 
-    "error.waitingRoom.timeMinMax": "Le temps limite doit être entre 1 et 3600 secondes"
+    "error.waitingRoom.timeMinMax": "Le temps limite doit être entre 1 et 3600 secondes",
+    "error.containAsso": "Ce quiz contient une question de type \"association\" et la fonctionnalité de quiz en direct ne supporte pas ce type."
   }
 }
