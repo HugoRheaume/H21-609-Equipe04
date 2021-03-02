@@ -40,8 +40,7 @@ import retrofit2.Response;
 public class JoinQuizActivity extends AppCompatActivity {
 
     private ActivityJoinQuizBinding binding;
-    private FirebaseAuth mAuth;
-    private QPService service;
+    QPService service;
     SharedPrefUtil sharedPrefUtil;
     UserDTO user;
     ActionBarDrawerToggle toggle;
@@ -51,19 +50,15 @@ public class JoinQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityJoinQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        service = RetrofitUtil.get();
+        runOnUiThread(() -> {
+            service = RetrofitUtil.get();
+        });
         sharedPrefUtil = new SharedPrefUtil(getApplicationContext());
         user = sharedPrefUtil.getCurrentUser();
 
         configureDrawer();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Firebase - Vérifier si déjà connecté
-        mAuth = FirebaseAuth.getInstance();
-    }
 
     public void JoinQuiz(View v){
         EditText editTextCode = binding.editTextCode;

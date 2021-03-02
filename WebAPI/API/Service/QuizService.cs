@@ -101,7 +101,8 @@ namespace API.Service
                 IsPublic = quiz.IsPublic,
                 ShareCode = quiz.ShareCode,
                 Title = quiz.Title,
-                NumberOfQuestions = quiz.ListQuestions.Count
+                NumberOfQuestions = quiz.ListQuestions.Count,
+                Date = quiz.Date
             };
         }
 
