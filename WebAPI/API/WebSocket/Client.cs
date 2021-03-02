@@ -16,8 +16,7 @@ namespace API.WebSocket
         private AuthService service = new AuthService(new ApplicationDbContext());
         public int CurrentScore = 0;
         public bool IsAnswer = false;
-        public string ShareCode;
-        //public string Picture = "../../assets/png_64/" + Global.random.Next(1, 15).ToString() + ".png";
+        public string ShareCode;        
         public ApplicationUser connectedUser;
 
         public override void OnOpen()
@@ -31,25 +30,28 @@ namespace API.WebSocket
         public override void OnMessage(string message)
         {
             BaseCommand bc = Json.Decode<BaseCommand>(message);
-            
+            //Regarde si la commande est valide
             if (bc.CommandName == null || bc.CommandName == "" || !Global.CommandList.ContainsKey(bc.CommandName))
             {
                 LogService.Log(this, MessageType.ErrorInvalidRequest);
                 return;
             }
+            //Si le tokent est présent dans la requête
             if (bc.Token == null)
             {
                 LogService.Log(this, MessageType.ErrorInvalidToken);
                 return;
             }
-            
+            //Get l'utilisateur dans la database selon le token
             connectedUser = service.GetUserWithToken(bc.Token);
             if (connectedUser == null)
             {
                 LogService.Log(this, MessageType.ErrorInvalidToken);
                 return;
             }
+            //Cast de la commande selon le nom de la commande
             var command = Global.CommandList[bc.CommandName];
+            //Execuition de la commande
             command.Handle(message);
             command.Run(this);
          
@@ -67,7 +69,7 @@ namespace API.WebSocket
                 RoomService.DestroyRoom(this.ShareCode);
                 return;
             }
-
+            //Lorsqu'un client perd la connection il est retiré de la salle d'attente/quiz en direct
             RoomService.RemoveUser(this.ShareCode, this);
             RoomService.Broadcast(this.ShareCode, MessageType.LogRoomLeft);
             socketClients.Remove(this);

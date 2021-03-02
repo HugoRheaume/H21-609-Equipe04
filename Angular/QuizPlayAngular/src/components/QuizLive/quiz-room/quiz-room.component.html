@@ -48,25 +48,4 @@
   <app-quiz-room-display-multiple-choice></app-quiz-room-display-multiple-choice>
 </div>
 
-<!--div class="col-2" style="height: max; background-color: black;">
-        <button mat-flat-button style="background-color: tomato;" (click)="nextQuestion()" >Force Next </button>
-        
-        <mat-grid-list cols="2" rowHeight="1:1" style="display: flex;">
-            <mat-grid-tile *ngFor="let i of this.wsService.usersDisplay" >
-                <div class="userCard" *ngIf="this.wsService.users[i].isAnswer" style="background-color: green;">
-                    <img src="{{this.wsService.users[i].picture}}" alt="userImage" style="width: 64px; height: 64px;"/>
-                    <span matTooltip="{{this.wsService.users[i].name}}" [matTooltipClass]="'toolTipCustom'" [matTooltipHideDelay]="50" >
-                        {{this.wsService.usersFormated[i]}}
-                    </span>
-                </div>
-                <div class="userCard" *ngIf="!this.wsService.users[i].isAnswer" style="background-color: red;">
-                    <img src="{{this.wsService.users[i].picture}}" alt="userImage" style="width: 64px; height: 64px;"/>
-                    <span matTooltip="{{this.wsService.users[i].name}}" [matTooltipClass]="'toolTipCustom'" [matTooltipHideDelay]="50" >
-                        {{this.wsService.usersFormated[i]}}
-                    </span>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-    </div-->
-
 <app-scoreboard *ngIf="this.isScoreboardPage"></app-scoreboard>

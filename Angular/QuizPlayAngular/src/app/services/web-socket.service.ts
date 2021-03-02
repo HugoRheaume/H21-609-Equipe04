@@ -5,36 +5,74 @@ import { Subject, Observable } from 'rxjs';
 import { webSocket } from 'rxjs/webSocket';
 import { Router } from '@angular/router';
 import { Question } from 'src/app/models/question';
+import {
+  BeginQuizWS,
+  CommandName,
+  CreateRoomWS,
+  DeleteRoomWS,
+  NextQuestionWS,
+  ResultQuestionWS,
+} from '../models/Command';
+
+import { Score } from '../models/Score';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebSocketService {
-  public scoreboard: Score[] = [];
-  public messages$ = new Subject<string[]>();
+  public currentQuestion$: Subject<Question> = new Subject<Question>();
   public _forceSkip$ = new Subject();
+  public scoreboard: Score[] = [];
   public users: User[] = [];
   public currentShareCode: string = '';
   public usersDisplay: Array<number>;
   public usersFormated: string[] = [];
   public defaultTimeLimit: number;
-  public currentQuestion$: Subject<Question> = new Subject<Question>();
   public nbGoodAnswer: number = 0;
 
   public canDestroy: boolean = true;
 
-  //subject = webSocket("wss://localhost:44351/api/websocket/joinwaitingroom");
   subject = webSocket<any>({
-    //url: "wss://localhost:44351/websocket/connect",
     url: environment.backend.webSocketURL + '/connect',
     deserializer: (msg) => msg,
   });
 
-  constructor(public http: HttpClient, public router: Router) { }
+  constructor(public http: HttpClient, public router: Router) {}
 
   public connect() {
     this.subject.subscribe((msg) => this.messageReceiver(msg.data));
   }
+
+  //----------------------------------------
+  private messageReceiver(data: any) {
+    var d = JSON.parse(data);
+    switch (d.commandName) {
+      case CommandName.CreateRoom:
+        this.currentShareCode = JSON.parse(data).shareCode;
+        break;
+      case CommandName.RoomSate:
+        this.users = JSON.parse(data).users;
+        this.updateUserDisplay();
+        break;
+      case CommandName.QuizBegin:
+        this.router.navigate(['live/' + d.quizShareCode + '/0']);
+        break;
+      case CommandName.QuizScoreboard:
+        this.nbGoodAnswer = d.nbGoodAnswer;
+        this.scoreboard = d.scores;
+        break;
+      case CommandName.QuizNext:
+        const q: Question = d.question;
+        if (q.timeLimit == -1) q.timeLimit = this.defaultTimeLimit;
+        this.currentQuestion$.next(q);
+        break;
+      case CommandName.QuizForceSkip:
+        this._forceSkip$.next('skip');
+        break;
+    }
+  }
+  //----------------------------------------
   public create(quizShareCode: string) {
     let ws = new CreateRoomWS();
     ws.owner = 'Angular Master';
@@ -72,64 +110,8 @@ export class WebSocketService {
     ws.token = localStorage.getItem('token');
     this.subject.next(ws);
   }
-  //----------------------------------------
-  private messageReceiver(data: any) {
-    var d = JSON.parse(data);
-    switch (d.commandName) {
-      case CommandName.CreateRoom:
-        this.currentShareCode = JSON.parse(data).shareCode;
-        break;
-      case CommandName.RoomSate:
-        this.users = JSON.parse(data).users;
-        this.updateUserDisplay();
-        break;
-      case CommandName.LogMessage:
-        this.handleLogMessage(d);
-        break;
-      case CommandName.QuizBegin:
-        this.router.navigate(['live/' + d.quizShareCode + '/0']);
-        break;
-      case CommandName.QuizScoreboard:
-        this.nbGoodAnswer = d.nbGoodAnswer;
-        this.scoreboard = d.scores;
-        break;
-      case CommandName.QuizNext:
-        const q: Question = d.question;
-        if (q.timeLimit == -1) q.timeLimit = this.defaultTimeLimit;
-        this.currentQuestion$.next(q);
-        break;
-      case CommandName.QuizForceSkip:
-        this._forceSkip$.next('skip');
-        break;
-    }
-  }
   public get forceSkip$(): Observable<any> {
     return this._forceSkip$.asObservable();
-  }
-  private handleLogMessage(data: any) {
-    switch (data.messageType) {
-      case MessageType.LogRoomCreated:
-        this.messages$.next(['Room Created!']);
-        break;
-      case MessageType.LogRoomJoined:
-        this.messages$.next(['Room Created!']);
-        break;
-      case MessageType.LogRoomDeleted:
-        this.messages$.next(['The room as been deleted']);
-        break;
-      case MessageType.ErrorShareCodeNotExist:
-        this.messages$.next(['Share code does not exist']);
-        break;
-      case MessageType.ErrorInvalidRequest:
-        this.messages$.next(['Invalid Request']);
-        break;
-      case MessageType.ErrorUserAlreadyJoined:
-        this.messages$.next(['User has already joined']);
-        break;
-    }
-  }
-  public logReceive$(): Observable<any> {
-    return this.messages$.asObservable();
   }
 
   updateUserDisplay() {
@@ -146,63 +128,4 @@ export class WebSocketService {
       .fill(0)
       .map((x, i) => i);
   }
-}
-export class CreateRoomWS {
-  public owner: string;
-  public shareCode: string;
-  public token: string;
-  public quizShareCode: string;
-  private readonly commandName: string = CommandName.CreateRoom;
-}
-export class DeleteRoomWS {
-  public token: string;
-  public shareCode: string;
-  private readonly commandName: string = CommandName.RoomDestroy;
-}
-export class BeginQuizWS {
-  public token: string;
-  public shareCode: string;
-  private readonly commandName: string = CommandName.QuizBegin;
-}
-export class NextQuestionWS {
-  public token: string;
-  public questionIndex: number;
-  public question: Question;
-  private readonly commandName: string = CommandName.QuizNext;
-}
-export class ResultQuestionWS {
-  public token: string;
-  public questionIndex: number;
-  private readonly commandName: string = CommandName.QuizQuestionResult;
-}
-export interface User {
-  name: string;
-  picture: string;
-  isAnswer: boolean;
-}
-export class Score {
-  user: User;
-  score: number;
-}
-export enum CommandName {
-  CreateRoom = 'Room.Create',
-  JoinRoom = 'Room.Join',
-  RoomSate = 'Room.UserState',
-  RoomLeave = 'Room.Leave',
-  RoomDestroy = 'Room.Destroy',
-  LogMessage = 'Log.Message',
-  QuizBegin = 'Quiz.Begin',
-  QuizNext = 'Quiz.Next',
-  QuizScoreboard = 'Quiz.Scoreboard',
-  QuizQuestionResult = 'Quiz.QuestionResult',
-  QuizForceSkip = 'Quiz.ForceSkip',
-}
-export enum MessageType {
-  LogRoomCreated,
-  LogRoomJoined,
-  LogRoomLeft,
-  LogRoomDeleted,
-  ErrorShareCodeNotExist,
-  ErrorInvalidRequest,
-  ErrorUserAlreadyJoined,
 }

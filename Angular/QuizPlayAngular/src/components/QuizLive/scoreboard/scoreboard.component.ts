@@ -1,11 +1,6 @@
 import { QuizRoomComponent } from 'src/components/QuizLive/quiz-room/quiz-room.component';
 import { Component, OnInit } from '@angular/core';
-import {
-  Score,
-  User,
-  WebSocketService,
-} from 'src/app/services/web-socket.service';
-
+import { Score } from 'src/app/models/Score';
 @Component({
   selector: 'app-scoreboard',
   templateUrl: './scoreboard.component.html',

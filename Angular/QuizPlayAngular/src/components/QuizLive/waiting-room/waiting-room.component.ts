@@ -12,8 +12,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./waiting-room.component.scss'],
 })
 export class WaitingRoomComponent implements OnInit, OnDestroy {
-  public messages$ = new Subject<string[]>();
-  //public users: string[];
   public usersFormated: string[] = [];
   public iterator: Array<number>;
   public shareCode: string;
@@ -24,6 +22,7 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
   displayedColumns = ['users', 'messages'];
   public defaultTimeLimit: number = 10;
   public timeLimitErrorMessage: string = '';
+
   constructor(
     public service: WebSocketService,
     public quizService: QuizService,
@@ -34,9 +33,6 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.quizShareCode = this.route.snapshot.paramMap.get('quizShareCode');
     this.service.connect();
-    this.service.logReceive$().subscribe((data) => {
-      this.messages$.next(data);
-    });
     this.service.create(this.quizShareCode);
   }
   ngOnDestroy() {
@@ -45,14 +41,6 @@ export class WaitingRoomComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.service.cancel();
-  }
-
-  addMessage($event) {
-    this.messages.push(
-      new Message(this.currentInput, 'User Test tres tres tres tres long')
-    );
-    this.dataSource = [...this.messages];
-    this.currentInput = '';
   }
 
   starQuiz() {
