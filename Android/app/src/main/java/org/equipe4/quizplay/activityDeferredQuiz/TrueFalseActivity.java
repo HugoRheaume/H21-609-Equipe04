@@ -87,8 +87,10 @@ public class TrueFalseActivity extends AppCompatActivity {
     }
 
     public void answer(View v) {
+        //Stop le timer
         if (timer != null)
             timer.cancel();
+
         boolean rightAnswer = false;
 
         if (v != null) {
@@ -104,15 +106,17 @@ public class TrueFalseActivity extends AppCompatActivity {
                         rightAnswer = true;
                     break;
             }
+            //Change la couleur du RadioButton coché en rouge si ce n'est pas la bonne réponse
             if (!rightAnswer)
                 ((RadioButton)v).getButtonDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.wrong), PorterDuff.Mode.SRC_IN);
 
         }
 
+        //Désactive les RadioButton
         findViewById(R.id.radioTrue).setClickable(false);
         findViewById(R.id.radioFalse).setClickable(false);
 
-
+        //Encercle la bonne réponse
         if (question.questionTrueFalse.answer) {
             RadioButton radioTrue = findViewById(R.id.radioTrue);
             radioTrue.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
@@ -121,9 +125,11 @@ public class TrueFalseActivity extends AppCompatActivity {
             radioFalse.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.right_answer));
         }
 
+        //Change le texte du bouton
         Button button = findViewById(R.id.nextQuestion);
         button.setText(R.string.nextQuestion);
 
+        //Affiche "Bonne" ou "Mauvaise réponse" de la bonne couleur
         TextView result = findViewById(R.id.result);
         result.setVisibility(View.VISIBLE);
         if (rightAnswer) {
@@ -134,13 +140,20 @@ public class TrueFalseActivity extends AppCompatActivity {
             result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wrong));
         }
 
+        SendResultAndGetNextQ(rightAnswer);
+    }
+
+    private void SendResultAndGetNextQ(boolean rightAnswer) {
         service.getNextQuestion(new QuestionResultDTO(question.id, quiz.id, rightAnswer ? 1 : 0)).enqueue(new Callback<QuestionDTO>() {
             @Override
             public void onResponse(Call<QuestionDTO> call, Response<QuestionDTO> response) {
                 if(response.isSuccessful()) {
                     nextQuestion = response.body();
+
+                    //Si c'est la dernière question du quiz, change le texte du bouton pour dire: "Terminer le Quiz"
                     if (nextQuestion.quizIndex == -1)
-                        button.setText(R.string.finishQuiz);
+                        ((Button)findViewById(R.id.nextQuestion)).setText(R.string.finishQuiz);
+
                     Log.i("Response", response.body().toString());
                 } else {
                     Log.i("RETROFIT", response.message());
