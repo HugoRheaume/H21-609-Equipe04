@@ -181,11 +181,24 @@
                 android:layout_height="1dp"
                 android:background="@color/textColor"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/quizRecyclerView"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"/>
+                android:scrollbars="vertical"
+                android:scrollbarFadeDuration="0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/quizRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="false"/>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
 
