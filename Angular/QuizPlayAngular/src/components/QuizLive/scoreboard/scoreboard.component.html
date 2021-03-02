@@ -1,21 +1,40 @@
-<div class="d-flex flex-column align-items-center justify-content-center unselectable">
-  <h1 style="margin-bottom: 30px; font-size: 5em;">
+<div
+  class="d-flex flex-column align-items-center justify-content-center unselectable"
+>
+  <h1 style="margin-bottom: 30px; font-size: 5em">
     <strong>Scoreboard</strong>
   </h1>
 
   <div *ngIf="this.quizRoomComponent.wsService.scoreboard" class="w-75">
-    <div *ngFor="let item of this.top5; let i = index" class="row" [attr.data-index]="i">
-      <div style="margin: 10px; padding: 10px;">
-        <div class="d-flex align-items-center justify-content-between questionBox py-3 px-2"
-          style="border-radius: 7.5px;">
+    <div
+      *ngFor="let item of this.top5; let i = index"
+      class="row"
+      [attr.data-index]="i"
+    >
+      <div style="margin: 10px; padding: 10px">
+        <div
+          class="d-flex align-items-center justify-content-between questionBox py-3 px-2"
+          style="border-radius: 7.5px"
+        >
           <div class="d-flex align-items-center me-1">
-            <img src="{{item.user.picture}}" alt="userImage" style="width: 64px; height: 64px; border-radius: 50%;"
-              class="me-2" />
-            <h1 matTooltip="{{item.user.name}}" [matTooltipClass]="'toolTipCustom'" [matTooltipHideDelay]="50">{{
-              this.usernamesFormated[i] }}</h1>
+            <img
+              src="{{ item.user.picture }}"
+              alt="userImage"
+              style="width: 64px; height: 64px; border-radius: 50%"
+              class="me-2"
+            />
+            <h1
+              class="mb-0"
+              matTooltip="{{ item.user.name }}"
+              [matTooltipClass]="'toolTipCustom'"
+              [matTooltipHideDelay]="50"
+            >
+              {{ this.usernamesFormated[i] }}
+            </h1>
           </div>
-          <h3 style="color: {{this.topColors[i]}}; margin: 0px;">
-            {{item.score}} {{item.score > 1 ? "points" : "point"}}</h3>
+          <h3 style="color: {{ this.topColors[i] }}; margin: 0px;">
+            {{ item.score }} {{ item.score > 1 ? "points" : "point" }}
+          </h3>
         </div>
       </div>
     </div>
