@@ -2,9 +2,12 @@ package org.equipe4.quizplay.activityLiveQuiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +36,6 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
     WSClient client;
 
     QuestionDTO question;
-    ToggleButton selectedButton;
     QuizResponseDTO currentQuiz;
     boolean isGoodAnswer = false;
     @Override
@@ -50,11 +52,11 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
         Log.i("WebSocket", currentQuiz.numberOfQuestions + "");
         binding.progressQuiz.setProgress(question.quizIndex + 1);
         binding.quizTitle.setText("" + currentQuiz.title);
+
+        setButtonEvents();
     }
 
     private void sendAnswer() {
-
-        // TODO Envoyer la réponse
         int score = 0;
         if (isGoodAnswer)
             score = 1;
@@ -64,40 +66,23 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
         client.sendAnswer(answerQuizCommand);
     }
 
-    public void verifyAnswer(View v) {
-        if (binding.btnTrue.getId() == v.getId()) {
-            if (question.questionTrueFalse.answer) {
-                isGoodAnswer = true;
-            }
-            selectedButton =(ToggleButton) binding.btnTrue;
-            selectedButton.setChecked(true);
-        }
-        else if (binding.btnFalse.getId() == v.getId()) {
-            if (!question.questionTrueFalse.answer) {
-                isGoodAnswer = true;
-
-            }
-            selectedButton = (ToggleButton)binding.btnFalse;
-            selectedButton.setChecked(true);
-        }
-
-        binding.result.setVisibility(View.VISIBLE);
-        if (isGoodAnswer) {
-            binding.result.setText(R.string.rightAnswer);
-            binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.good));
-        } else {
-            binding.result.setText(R.string.wrongAnswer);
-            binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wrong));
-        }
+    public void verifyAnswer() {
         binding.btnFalse.setClickable(false);
         binding.btnTrue.setClickable(false);
-
         sendAnswer();
     }
 
     private void updateButtonState() {
         binding.btnTrue.setClickable(false);
         binding.btnFalse.setClickable(false);
+        if (isGoodAnswer) {
+            binding.result.setText(R.string.rightAnswer);
+            binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.good));
+        }
+        else {
+            binding.result.setText(R.string.wrongAnswer);
+            binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wrong));
+        }
     }
 
     private void setWebSocketEvents() {
@@ -116,6 +101,15 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
                 @Override
                 public void onQuestionResult() {
                     updateButtonState();
+                    binding.result.setVisibility(View.VISIBLE);
+                    if (isGoodAnswer) {
+                        binding.result.setText(R.string.rightAnswer);
+                        binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.good));
+                    }
+                    else {
+                        binding.result.setText(R.string.wrongAnswer);
+                        binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wrong));
+                    }
                 }
 
                 @Override
@@ -128,5 +122,32 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
         } catch (KeyManagementException | NoSuchAlgorithmException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setButtonEvents() {
+        binding.btnFalse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    if (!question.questionTrueFalse.answer) {
+                        isGoodAnswer = true;
+                    }
+                    verifyAnswer();
+                    updateButtonState();
+                    }
+            }
+        });
+        binding.btnTrue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    if (question.questionTrueFalse.answer) {
+                        isGoodAnswer = true;
+                    }
+                    verifyAnswer();
+                    updateButtonState();
+                }
+            }
+        });
     }
 }

@@ -113,22 +113,12 @@ public class LiveMultipleChoiceActivity extends AppCompatActivity {
         else
             isGoodAnswer = oneAnswer;
 
-        binding.result.setVisibility(View.VISIBLE);
-        if (isGoodAnswer) {
-            binding.result.setText(R.string.rightAnswer);
-            binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.good));
-        }
-        else {
-            binding.result.setText(R.string.wrongAnswer);
-            binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wrong));
-        }
         sendAnswer();
     }
 
     private void updateButtonState() {
         binding.btnSubmit.setClickable(false);
-        for (ToggleButton btn :
-                mapToggleButton.values()) {
+        for (ToggleButton btn : mapToggleButton.values()) {
             btn.setClickable(false);
         }
     }
@@ -149,6 +139,15 @@ public class LiveMultipleChoiceActivity extends AppCompatActivity {
                 @Override
                 public void onQuestionResult() {
                     updateButtonState();
+                    binding.result.setVisibility(View.VISIBLE);
+                    if (isGoodAnswer) {
+                        binding.result.setText(R.string.rightAnswer);
+                        binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.good));
+                    }
+                    else {
+                        binding.result.setText(R.string.wrongAnswer);
+                        binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wrong));
+                    }
                 }
 
                 @Override

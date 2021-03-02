@@ -67,7 +67,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_multiple_choice1"
                 android:fontFamily="@font/titan_one"
-                android:onClick="verifyAnswer"
                 android:textOn="@string/answerTrue"
                 android:textOff="@string/answerTrue"
                 android:textAllCaps="false"
@@ -80,14 +79,13 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:onClick="verifyAnswer"
-                android:textOn="@string/answerFalse"
-                android:textOff="@string/answerFalse"
-                android:textSize="50sp"
                 android:background="@drawable/button_multiple_choice2"
+                android:fontFamily="@font/titan_one"
                 android:textAllCaps="false"
                 android:textColor="@color/choiceTextColorDark"
-                android:fontFamily="@font/titan_one" />
+                android:textOff="@string/answerFalse"
+                android:textOn="@string/answerFalse"
+                android:textSize="50sp" />
         </LinearLayout>
     </LinearLayout>
 
