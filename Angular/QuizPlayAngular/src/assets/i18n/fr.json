@@ -82,6 +82,8 @@
     "error.question.create.timeRequired": "Le temps limite est requis",
 
     "error.waitingRoom.timeMinMax": "Le temps limite doit être entre 1 et 3600 secondes",
-    "error.containAsso": "Ce quiz contient une question de type \"association\" et la fonctionnalité de quiz en direct ne le supporte pas."
+    "error.containAsso": "Ce quiz contient une question de type \"association\" et la fonctionnalité de quiz en direct ne le supporte pas.",
+
+    "scoreboard.title": "Classement"
   }
 }
