@@ -5,6 +5,7 @@ using API.WebSocket.Command;
 using Microsoft.Web.WebSockets;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,33 +17,46 @@ namespace API.Service
     public static class RoomService
     {
         private static Dictionary<string, Room> rooms = new Dictionary<string, Room>();
-        internal static Dictionary<string, Room> GetRooms
+        public static ApplicationDbContext db;
+        public static Dictionary<string, Room> GetRooms
         { 
             get {return rooms; }
+            set { rooms = value; }
         }
-        internal static string NewRoom(Client client, string quizShareCode)
+        //Crée une nouvelle salle d'attente dont le client est le owner
+        public static string NewRoom(Client client, string quizShareCode)
         {
-
-            Room room = new Room(client, new ApplicationDbContext().ListQuiz.FirstOrDefault(x => x.ShareCode == quizShareCode));
+            Quiz q = new ApplicationDbContext().ListQuiz.FirstOrDefault(x => x.ShareCode == quizShareCode);
+            if(q == null)
+                return MessageType.ErrorInvalidQuiz.ToString();
+            Room room = new Room(client, q);
             rooms.Add(room.GetShareCode, room);
             return room.GetShareCode;
         }
-        internal static void AddUser(string shareCode, Client client)
+        //Ajout d'un nouveau client dans la salle d'attente spécifié
+        public static void AddUser(string shareCode, Client client)
         {
-            if(!rooms[shareCode].IsEnable)
+            if(!IsShareCodeExist(shareCode))
+            {
+                LogService.Log(client, MessageType.ErrorShareCodeNotExist);
+                return;
+            }
+            if (!rooms[shareCode].IsEnable)
             {
                 LogService.Log(client, MessageType.LogRoomDisable);
                 return;
             }    
             rooms[shareCode].Users.Add(client);
         }
-        internal static void RemoveUser(string sharecode, Client client)
+        //Retire le client spécifié de la salle d'attente spécifié
+        public static void RemoveUser(string sharecode, Client client)
         {
             if (!IsShareCodeExist(sharecode))
                 return;
             rooms[sharecode].Users.Remove(client);
         }
-        internal static void DestroyRoom(string shareCode)
+        //Détruit la salle d'attente, disponible uniquement par le owner de la salle d'attente
+        public static void DestroyRoom(string shareCode)
         {
             if(!IsShareCodeExist(shareCode))
                 return;
@@ -54,12 +68,14 @@ namespace API.Service
             }
             rooms.Remove(shareCode);
         }
-        internal static void SetRoomDisable(string shareCode)
+        //Lorsque le quiz est commencé,la salle d'attente n'est plus disponnible
+        public static void SetRoomDisable(string shareCode)
         {
             rooms[shareCode].IsEnable = false;
 
         }
-        internal static void Broadcast(string shareCode, MessageType messageType)
+        //Pour envoyer des messages aux clients d'une salle d'attente spécifié
+        public static void Broadcast(string shareCode, MessageType messageType)
         {
             WebSocketCollection clients = new WebSocketCollection();
             foreach (var u in rooms[shareCode].Users)
@@ -69,7 +85,6 @@ namespace API.Service
             }
             clients.Add(rooms[shareCode].handler);
 
-            //clients.Broadcast(Json.Encode(LogService.Log()));
             RoomUserStateCommand command = Global.CommandList["Room.UserState"] as RoomUserStateCommand;
             command.users = GetUsers(shareCode);
 
@@ -79,6 +94,7 @@ namespace API.Service
         }
         #region CHECKER
         //======================================================
+        //Si le user est le owner de la salle d'attente
         internal static bool IsRoomOwner(string shareCode, ApplicationUser user)
         {
             if (!IsShareCodeExist(shareCode))
@@ -91,6 +107,7 @@ namespace API.Service
                 return false;
 
         }
+        //Si le sharecode de la salle d'attente existe
         internal static bool IsShareCodeExist(string shareCode)
         {
             if (shareCode == null)
@@ -100,6 +117,7 @@ namespace API.Service
                 return false;
             return true;
         }
+        //Si le client existe dans une salle d'attente spécifé
         internal static bool IsUserExist(string shareCode, Client client)
         {
             if (!IsShareCodeExist(shareCode))
@@ -116,7 +134,7 @@ namespace API.Service
         {
             return rooms[shareCode].handler;
         }
-        internal static Quiz GetQuizFromRoom(string shareCode)
+        public static Quiz GetQuizFromRoom(string shareCode)
         {
             if (!IsShareCodeExist(shareCode))
                 return null;
