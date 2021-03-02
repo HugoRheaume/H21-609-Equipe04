@@ -22,7 +22,7 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     public route: Router,
     private formBuilder: FormBuilder,
     public translate: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.TrueFalse = this.formBuilder.group({
@@ -115,11 +115,11 @@ export class CreateTrueOrFalseQuestion implements OnInit {
       return true;
     }
     if (
-      (questionHasTimeLimit.value !== '' &&
-        questionHasTimeLimit.value != null &&
-        questionHasTimeLimit.value != false &&
-        questionTimeLimit.value < 1) ||
-      questionTimeLimit.value > 3600
+      questionHasTimeLimit.value !== '' &&
+      questionHasTimeLimit.value != null &&
+      questionHasTimeLimit.value != false &&
+      (questionTimeLimit.value < 1 ||
+        questionTimeLimit.value > 3600)
     ) {
       // console.log('Time limit less than 1');
       // alert('The time limit can't be less than 1.');
@@ -137,10 +137,10 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     return formField.hasError('required')
       ? this.translate.instant('app.error.question.create.labelRequired')
       : formField.hasError('maxlength')
-      ? this.translate.instant('app.error.question.create.labelMax')
-      : formField.hasError('nowhitespaceerror')
-      ? ''
-      : ''; // Default
+        ? this.translate.instant('app.error.question.create.labelMax')
+        : formField.hasError('nowhitespaceerror')
+          ? ''
+          : ''; // Default
   }
 
   get timeLimitErrorMessage(): string {
@@ -150,10 +150,10 @@ export class CreateTrueOrFalseQuestion implements OnInit {
     return formField.hasError('min')
       ? this.translate.instant('app.error.question.create.timeMin')
       : formField.hasError('max')
-      ? this.translate.instant('app.error.question.create.timeMax')
-      : formField.hasError('required')
-      ? this.translate.instant('app.error.question.create.timeRequired')
-      : ''; // Default
+        ? this.translate.instant('app.error.question.create.timeMax')
+        : formField.hasError('required')
+          ? this.translate.instant('app.error.question.create.timeRequired')
+          : ''; // Default
   }
   //#endregion
 }
