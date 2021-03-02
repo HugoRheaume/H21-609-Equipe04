@@ -179,11 +179,11 @@ export class CreateAssociationQuestionComponent implements OnInit {
       return true;
     }
     if (
-      (questionHasTimeLimit.value !== '' &&
-        questionHasTimeLimit.value != null &&
-        questionHasTimeLimit.value != false &&
-        questionTimeLimit.value < 1) ||
-      questionTimeLimit.value > 3600
+      questionHasTimeLimit.value !== '' &&
+      questionHasTimeLimit.value != null &&
+      questionHasTimeLimit.value != false &&
+      (questionTimeLimit.value < 1 ||
+        questionTimeLimit.value > 3600)
     ) {
       // console.log('Time limit less than 1');
       // alert('The time limit can't be less than 1.');
