@@ -38,7 +38,6 @@ public class WSClient implements Serializable {
     private static final String SERVER = Global.SERVER_PROD;
 
     private static WebSocket socket;
-    public static String roomShareCode;
     private static WebSocketEventListener events;
     private static Gson gson;
     public WSClient() throws KeyManagementException, NoSuchAlgorithmException, ExecutionException, InterruptedException {

@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/lorem"
                     android:layout_marginBottom="30dp"
-                    android:textSize="30sp"
+                    android:textSize="24sp"
                     android:textColor="@color/textColor"
                     android:fontFamily="@font/titan_one" />
 
@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/bestScores"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textAlignment="center"
                     android:layout_marginBottom="20dp"
                     android:textColor="@color/textColor"
