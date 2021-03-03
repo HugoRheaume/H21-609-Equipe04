@@ -70,6 +70,9 @@
     "room.btnSkip": "Passer",
     "room.btnNext": "Prochaine question",
     "room.btnFinish": "Terminé",
+    "room.goodAnwser": "bonnes réponses",
+    "room.true": "Vrai",
+    "room.false": "Faux",
 
     "choice.tf": "Vrai ou faux",
     "choice.mc": "Choix multiples",
