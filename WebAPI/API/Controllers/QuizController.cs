@@ -70,7 +70,7 @@ namespace API.Controllers
         {
             ApplicationUser user = authService.GetUserWithToken(Request);
 
-            return Ok(quizService.GetQuizFromUser(user.Id, user.Name));
+            return Ok(quizService.GetQuizFromUser(user.Id, user.Name).OrderByDescending(q => q.Date));
         }
 
         [HttpGet]

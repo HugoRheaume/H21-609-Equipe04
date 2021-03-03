@@ -80,10 +80,31 @@
                     android:orientation="horizontal"
                     android:layout_marginBottom="5dp">
 
-                    <View
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <View
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/ic_baseline_refresh_24"
+                            android:onClick="getListQuiz"
+                            android:id="@+id/refresh"
+                            android:visibility="visible"/>
+
+                        <ProgressBar
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:indeterminate="true"
+                            android:indeterminateTintMode="src_atop"
+                            android:indeterminateTint="@color/textColor"
+                            android:id="@+id/loading"
+                            android:visibility="gone"/>
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
@@ -160,11 +181,24 @@
                     android:layout_height="1dp"
                     android:background="@color/textColor"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/quizRecyclerView"
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false"/>
+                    android:scrollbars="vertical"
+                    android:scrollbarFadeDuration="0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/quizRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:nestedScrollingEnabled="false"/>
+
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
 
             </LinearLayout>
 
