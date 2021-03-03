@@ -75,6 +75,7 @@ public class LiveTrueFalseActivity extends AppCompatActivity {
     private void updateButtonState() {
         binding.btnTrue.setClickable(false);
         binding.btnFalse.setClickable(false);
+        binding.result.setVisibility(View.VISIBLE);
         if (isGoodAnswer) {
             binding.result.setText(R.string.rightAnswer);
             binding.result.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.good));

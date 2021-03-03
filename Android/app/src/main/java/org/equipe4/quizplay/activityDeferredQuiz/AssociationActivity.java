@@ -127,6 +127,9 @@ public class AssociationActivity extends AppCompatActivity {
             findViewById(R.id.timeLimit).setVisibility(View.VISIBLE);
             startTimer();
         }
+        else {
+            findViewById(R.id.timeLimit).setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
+        }
 
         for(TextView tv : tvList) {
             tv.setOnLongClickListener(v -> {

@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -56,6 +58,9 @@ public class TrueFalseActivity extends AppCompatActivity {
         if (question.timeLimit > 0) {
             findViewById(R.id.timeLimit).setVisibility(View.VISIBLE);
             startTimer();
+        }
+        else {
+            findViewById(R.id.timeLimit).setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
         }
 
     }

@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activityDeferredQuiz.AssociationActivity"
     android:background="@color/colorPrimary"
-    >
+    tools:context=".activityDeferredQuiz.AssociationActivity">
 
     <AbsoluteLayout
         android:layout_width="wrap_content"
@@ -15,28 +14,28 @@
         <View
             android:layout_width="600dp"
             android:layout_height="600dp"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/colorPrimaryLight"
             android:layout_x="150dp"
-            android:layout_y="-200dp"/>
+            android:layout_y="-200dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight" />
 
         <View
             android:layout_width="400dp"
             android:layout_height="400dp"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/colorPrimaryLight"
             android:layout_x="-200dp"
-            android:layout_y="450dp"/>
+            android:layout_y="450dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimaryLight" />
 
     </AbsoluteLayout>
 
     <View
         android:layout_width="80dp"
         android:layout_height="160dp"
-        android:background="@drawable/triangle"
-        android:backgroundTint="@color/colorAccent"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/triangle"
+        android:backgroundTint="@color/colorAccent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,356 +43,362 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:layout_marginBottom="30dp"
-        android:id="@+id/timeLimit"
-        android:visibility="invisible">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/tvTime"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_marginEnd="20dp"
-            android:textColor="@color/textColor"
-            android:fontFamily="@font/open_sans"/>
-
-        <ProgressBar
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/progressTime"
-            android:indeterminate="false"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:progressDrawable="@drawable/progress_circle" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/questionLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="@string/lorem"
-        android:textSize="30sp"
-        android:textColor="@color/textColor"
-        android:fontFamily="@font/titan_one"/>
-
-    <org.equipe4.quizplay.MaxHeightScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:maxHeight="150dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/zoneAsso1"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/timeLimit"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/asso1"
-            android:text="@string/lorem"
-            android:textSize="16sp"
-            android:background="@drawable/round_border"
-            android:layout_marginTop="2dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:textColor="@color/textColor"
-            android:fontFamily="@font/open_sans" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/asso2"
-            android:text="@string/lorem"
-            android:textSize="16sp"
-            android:background="@drawable/round_border"
-            android:layout_marginTop="2dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:visibility="invisible"
-            android:textColor="@color/textColor"
-            android:fontFamily="@font/open_sans"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/asso3"
-            android:text="@string/lorem"
-            android:textSize="16sp"
-            android:background="@drawable/round_border"
-            android:layout_marginTop="2dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:visibility="invisible"
-            android:textColor="@color/textColor"
-            android:fontFamily="@font/open_sans"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:id="@+id/placeholder1"
-            android:layout_marginBottom="5dp"
-            android:visibility="invisible"/>
-    </LinearLayout>
+            android:layout_marginBottom="30dp"
+            android:gravity="end"
+            android:visibility="invisible">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/zoneAsso2"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="5dp"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:textColor="@color/textColor"
+                android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/asso4"
-            android:text="@string/lorem"
-            android:textSize="16sp"
-            android:background="@drawable/round_border"
-            android:layout_marginTop="2dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:textColor="@color/textColor"
-            android:fontFamily="@font/open_sans"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/asso5"
-            android:text="@string/lorem"
-            android:textSize="16sp"
-            android:background="@drawable/round_border"
-            android:layout_marginTop="2dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:visibility="invisible"
-            android:textColor="@color/textColor"
-            android:fontFamily="@font/open_sans"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/placeholder2"
-            android:layout_marginBottom="5dp"
-            android:visibility="invisible"/>
-    </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progressTime"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/progress_circle" />
         </LinearLayout>
-    </org.equipe4.quizplay.MaxHeightScrollView>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3">
+        <TextView
+            android:id="@+id/questionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/titan_one"
+            android:text="@string/lorem"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
+
+        <org.equipe4.quizplay.MaxHeightScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:maxHeight="150dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/zoneAsso1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/asso1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_border"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="10dp"
+                        android:text="@string/lorem"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/asso2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_border"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="10dp"
+                        android:text="@string/lorem"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/asso3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_border"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="10dp"
+                        android:text="@string/lorem"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:visibility="invisible" />
+
+                    <View
+                        android:id="@+id/placeholder1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/zoneAsso2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/asso4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_border"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="10dp"
+                        android:text="@string/lorem"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/asso5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_border"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="10dp"
+                        android:text="@string/lorem"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:visibility="invisible" />
+
+                    <View
+                        android:id="@+id/placeholder2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:visibility="invisible" />
+                </LinearLayout>
+            </LinearLayout>
+        </org.equipe4.quizplay.MaxHeightScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/round_border"
                 android:minHeight="150dp"
                 android:orientation="horizontal"
-                android:background="@drawable/round_border"
                 android:padding="5dp">
 
                 <LinearLayout
+                    android:id="@+id/zoneCategory1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:id="@+id/zoneCategory1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:padding="5dp"
-                    android:gravity="center_horizontal">
+                    android:padding="5dp">
 
                     <TextView
+                        android:id="@+id/category1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/category1"
+                        android:fontFamily="@font/open_sans"
                         android:text="@string/lorem"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
-                        android:fontFamily="@font/open_sans"/>
+                        android:textSize="18sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/borderColor"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/borderColor" />
 
                     <TextView
+                        android:id="@+id/goodAnswerCategory1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/goodAnswerCategory1"
-                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:background="@drawable/good_answers"
                         android:backgroundTint="@color/good"
+                        android:fontFamily="@font/open_sans"
                         android:padding="5dp"
                         android:paddingStart="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:visibility="gone"
                         android:textColor="@color/textColor"
-                        android:fontFamily="@font/open_sans"/>
+                        android:textSize="16sp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    android:background="@color/borderColor"/>
+                    android:background="@color/borderColor" />
 
                 <LinearLayout
+                    android:id="@+id/zoneCategory2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:id="@+id/zoneCategory2"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:padding="5dp"
-                    android:gravity="center_horizontal">
+                    android:padding="5dp">
 
                     <TextView
+                        android:id="@+id/category2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/category2"
+                        android:fontFamily="@font/open_sans"
                         android:text="@string/lorem"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
-                        android:fontFamily="@font/open_sans"/>
+                        android:textSize="18sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/borderColor"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/borderColor" />
 
                     <TextView
+                        android:id="@+id/goodAnswerCategory2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/goodAnswerCategory2"
-                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:background="@drawable/good_answers"
                         android:backgroundTint="@color/good"
+                        android:fontFamily="@font/open_sans"
                         android:padding="5dp"
                         android:paddingStart="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:visibility="gone"
                         android:textColor="@color/textColor"
-                        android:fontFamily="@font/open_sans"/>
+                        android:textSize="16sp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/separationCategory3"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
                     android:background="@color/borderColor"
-                    android:id="@+id/separationCategory3"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <LinearLayout
+                    android:id="@+id/zoneCategory3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:id="@+id/zoneCategory3"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="5dp"
-                    android:gravity="center_horizontal"
                     android:visibility="gone">
 
                     <TextView
+                        android:id="@+id/category3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/category3"
+                        android:fontFamily="@font/open_sans"
                         android:text="@string/lorem"
-                        android:textSize="18sp"
                         android:textColor="@color/textColor"
-                        android:fontFamily="@font/open_sans"/>
+                        android:textSize="18sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/borderColor"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/borderColor" />
 
                     <TextView
+                        android:id="@+id/goodAnswerCategory3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/goodAnswerCategory3"
-                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:background="@drawable/good_answers"
                         android:backgroundTint="@color/good"
+                        android:fontFamily="@font/open_sans"
                         android:padding="5dp"
                         android:paddingStart="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:visibility="gone"
                         android:textColor="@color/textColor"
-                        android:fontFamily="@font/open_sans"/>
+                        android:textSize="16sp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-    </ScrollView>
+        </ScrollView>
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lorem"
-        android:textSize="18sp"
-        android:layout_marginBottom="20dp"
-        android:visibility="invisible"
-        android:textColor="@color/good"
-        android:fontFamily="@font/titan_one"
-        android:shadowColor="#000000"
-        android:shadowDx="1.5"
-        android:shadowDy="1.3"
-        android:shadowRadius="1.6"/>
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/titan_one"
+            android:shadowColor="#000000"
+            android:shadowDx="1.5"
+            android:shadowDy="1.3"
+            android:shadowRadius="1.6"
+            android:text="@string/lorem"
+            android:textColor="@color/good"
+            android:textSize="18sp"
+            android:visibility="invisible" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/nextQuestion"
-        android:onClick="nextQuestion"
-        android:text="@string/submitAnswer"
-        android:textSize="20sp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button"
-        android:textAllCaps="false"
-        android:textColor="@color/textColor"
-        android:fontFamily="@font/open_sans"/>
+        <Button
+            android:id="@+id/nextQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/open_sans"
+            android:onClick="nextQuestion"
+            android:text="@string/submitAnswer"
+            android:textAllCaps="false"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
 
-    <ProgressBar
-        android:id="@+id/progressQuiz"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+        <ProgressBar
+            android:id="@+id/progressQuiz"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/quizTitle"
-        android:text="@string/lorem"
-        android:textAlignment="center"
-        android:textColor="@color/textColor"
-        android:fontFamily="@font/open_sans" />
+        <TextView
+            android:id="@+id/quizTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/lorem"
+            android:textAlignment="center"
+            android:textColor="@color/textColor" />
 
 
-</LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
